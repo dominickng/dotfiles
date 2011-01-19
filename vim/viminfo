@@ -1231,18 +1231,19 @@ $
 
 # File marks:
 'M  50  8  ~/USYD/2009/sem1/COMP3608/Assignments/assignment2/preprocess.py
-'0  1  0  ~/dotfiles/Makefile
-'1  1  0  ~/dotfiles/Mnak
-'2  29  0  ~/.bash/local
-'3  23  2  ~/.bash/interactive
-'4  50  0  ~/.bash/colors
-'5  35  16  ~/.bash/local
-'6  40  0  ~/.bash/colors
-'7  10  0  ~/.bash/environment
-'8  124  20  ~/Desktop/DOM/process/student.py
-'9  65  40  ~/Desktop/DOM/process/main.py
+'0  1  0  ~/dotfiles/add
+'1  1  0  ~/dotfiles/Makefile
+'2  1  0  ~/dotfiles/Mnak
+'3  29  0  ~/.bash/local
+'4  23  2  ~/.bash/interactive
+'5  50  0  ~/.bash/colors
+'6  35  16  ~/.bash/local
+'7  40  0  ~/.bash/colors
+'8  10  0  ~/.bash/environment
+'9  124  20  ~/Desktop/DOM/process/student.py
 
 # Jumplist (newest first):
+-'  1  0  ~/dotfiles/add
 -'  1  0  ~/dotfiles/Makefile
 -'  1  0  ~/dotfiles/Mnak
 -'  29  0  ~/.bash/local
@@ -1341,12 +1342,17 @@ $
 -'  40  29  ~/USYD/ncss/ncss2011/ncss113/model.py
 -'  60  0  ~/USYD/ncss/ncss2011/ncss113/model.py
 -'  61  13  ~/USYD/ncss/ncss2011/ncss113/model.py
--'  59  0  ~/USYD/ncss/ncss2011/ncss113/model.py
 
 # Buffer list:
+%~/dotfiles/add	1	0
+%~/dotfiles/.gitignore	1	0
 %~/dotfiles/Makefile	1	0
+%~/dotfiles/ * adding utility files	1	0
 
 # History of marks within files (newest to oldest):
+
+> ~/dotfiles/add
+	"	1	0
 
 > ~/dotfiles/Makefile
 	"	1	0
@@ -2107,13 +2113,3 @@ $
 
 > ~/USYD/schwa/repos/ncss/crypto/code/2010/crypto_challenge/init.py
 	"	15	17
-
-> ~/USYD/schwa/repos/ncss/crypto/code/2010/crypto_challenge/sandbox.py
-	"	6	0
-	^	5	0
-	.	6	0
-	+	26	76
-	+	32	0
-	+	1	0
-	+	5	0
-	+	6	0
