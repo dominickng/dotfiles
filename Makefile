@@ -2,6 +2,7 @@ ALL = $(HOME)/.bash $(HOME)/.bashrc \
       $(HOME)/.inputrc \
       $(HOME)/.pythonrc.py \
       $(HOME)/.vim $(HOME)/.vimrc \
+      $(HOME)/.inputrc
 
 .PHONY	: all unlink
 
