@@ -1,0 +1,33 @@
+#include system wide settings
+$include /etc/inputrc
+
+#if we're in vi mode, set the more convenient emacs bindings for beginning
+#and end of line
+$if mode=vi
+"\C-a": beginning-of-line
+"\C-e": end-of-line
+$endif
+
+set completion-ignore-case On
+
+"\C-b": backward-word
+"\C-f": forward-word
+
+set match-hidden-files off 
+
+"\M-w": backward-kill-word
+
+#TAB: menu-complete
+
+#"\e[1~": beginning-of-line
+#"\e[4~": end-of-line
+#"\e[5~": history-search-backward
+#"\e[6~": history-search-forward
+#"\e[3~": delete-char
+#"\e[2~": quoted-insert
+#"\e[5C": forward-word
+#"\e[5D": backward-word
+#"\e\e[C": forward-word
+#"\e\e[D": backward-word
+
+
