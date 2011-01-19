@@ -1,0 +1,23 @@
+#! bash
+
+# Sets up the shell for interactive commands
+
+# Use the terminfo backspace character as the erase character. This is not
+# enabled by default because terminfo is often broken.
+#stty erase $(tput kbs)
+
+# Prompt: user@host:directory$
+PS1='\u@\h:\w`\$ '
+
+# The all important colours!
+ssource "${HOME}/.bash/colors"
+
+# Pull in local aliases
+ssource ${HOME}/.bash/local
+
+# Bash should check the terminal size after every command terminates
+shopt -s checkwinsize
+# Don't attempt to tab-complete an empty line
+shopt -s no_empty_cmd_completion
+
+ssource "/etc/bash_completion"

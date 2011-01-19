@@ -1,0 +1,106 @@
+#! bash
+
+# Useful bash functions. This is sourced by the environment file.
+# These are available to scripts, but you shouldn't use them in scripts if you
+# want them to be portable.
+
+
+# Usage: pathremove /path/to/bin [PATH]
+# Eg, to remove ~/bin from $PATH
+#     pathremove ~/bin PATH
+function pathremove {
+	local IFS=':'
+	local NEWPATH
+	local DIR
+	local PATHVARIABLE=${2:-PATH}
+	for DIR in ${!PATHVARIABLE} ; do
+		if [ "${DIR}" != "${1}" ] ; then
+			NEWPATH="${NEWPATH:+${NEWPATH}:}${DIR}"
+		fi
+	done
+	export ${PATHVARIABLE}="${NEWPATH}"
+}
+
+# Usage: pathprepend /path/to/bin [PATH]
+# Eg, to prepend ~/bin to $PATH
+#     pathprepend ~/bin PATH
+function pathprepend {
+	pathremove "${1}" "${2}"
+	[ -d "${1}" ] || return
+	local PATHVARIABLE="${2:-PATH}"
+	export ${PATHVARIABLE}="${1}${!PATHVARIABLE:+:${!PATHVARIABLE}}"
+}
+
+# Usage: pathappend /path/to/bin [PATH]
+# Eg, to append ~/bin to $PATH
+#     pathappend ~/bin PATH
+function pathappend {
+	pathremove "${1}" "${2}"
+	[ -d "${1}" ] || return
+	local PATHVARIABLE=${2:-PATH}
+	export $PATHVARIABLE="${!PATHVARIABLE:+${!PATHVARIABLE}:}${1}"
+}
+
+# Usage: ssource /path/to/shellscript
+# Checks if the file exists before sourcing it
+function ssource {
+	[ -r "${1}" ] && source "${1}"
+}
+
+
+# Usage: mcd somedir
+# Creates the directory if it doesn't exist, and changes into it
+function mcd {
+	mkdir -p "${1}" &&
+	cd "${1}"
+}
+
+CD_FILE="$HOME/.bash/cd"
+
+function cds {
+	if [ $# -eq 0 ]; then
+            dir=`cat $CD_FILE` && cd $dir
+        else
+            echo $1 > $CD_FILE && cd $1
+        fi
+}
+
+#go up a dir or up(num) dirs or up to (dir)
+function up {
+    dir=""
+    if [ -z "$1" ]; then
+        dir=..
+    elif [[ $1 =~ ^[0-9]+$ ]]; then
+        x=0
+        while [ $x -lt ${1:-1} ]; do
+            dir=${dir}../
+            x=$(($x+1))
+        done
+    else
+        dir=${PWD%/$1/*}/$1
+    fi
+    cd "$dir";
+}
+
+function upstr {
+    echo "$(up "$1" && pwd)";
+}
+
+function fargs() {
+    dir=$1
+    shift
+    name=$2
+    shift
+    find $dir -name $name -print0 | xargs -0 $@
+}
+
+#grep through files returned by grep
+function grepfind { find . -type f -iname "$2" -print0 | xargs -0 grep "$1" ; }
+alias findgrep='grepfind'
+
+#go up and double up
+alias ..='cd ..'  
+alias ...='cd ../..'
+
+#useful aliases
+alias pw="tr -dc 'A-Za-z0-9!@#$%^&*' < /dev/urandom | fold -w 12 | head -n 1"

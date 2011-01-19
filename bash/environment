@@ -1,0 +1,28 @@
+#! bash
+
+# This file sets up the environment correctly. It gets run for every shell,
+# so it must be fast. Also, starting a shell within a shell shouldn't change
+# the environment. The path manipulation functions are useful for this.
+
+# Files will be created by default rwx user only
+umask 0077
+
+# General environment settings
+export PAGER="less"
+export EDITOR="vim"
+export CVS_RSH="ssh"
+export RSYNC_RSH="ssh"
+export PYTHONSTARTUP="${HOME}/.pythonrc.py"
+export HISTCONTROL="ignoredups"
+export HISTSIZE="10000"
+export HISTFILESIZE="1000000"
+export HISTIGNORE="&:ls:[bf]g:exit[ \t]*"
+export INPUTRC=~/.inputrc
+shopt -s histappend
+shopt -s cmdhist
+
+# Load the bash functions
+source "${HOME}/.bash/functions"
+
+# The current directory shouldn't be in the path
+pathremove .
