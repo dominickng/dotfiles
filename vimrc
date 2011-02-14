@@ -12,7 +12,9 @@ let g:yankring_history_dir = '$HOME/.vim'
 let g:yankring_history_file = 'yankring_history'
 
 "set supertab prefs
-let g:SuperTabDefaultCompletionType = "context"
+"let g:SuperTabDefaultCompletionType = "context"
+"disable supertab
+let g:complType = 1
 
 " Read files from ~/.vim
 """source ~/.vim/commenter.vim
