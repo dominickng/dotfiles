@@ -1,33 +1,74 @@
-" Don't try to be like vi
+filetype off
 set nocompatible
-
-" Backspace should work across lines
-set bs=2
-
-"set leader key to ,
 let mapleader=","
 
-"set yankring prefs
+call pathogen#runtime_append_all_bundles()
+
+" general settings
+set history=1000
+set viminfo=%,'100,\"100,:100,n~/.vim/viminfo
+set backup
+
+" create ~/tmp/ if it doesn't exist and use ~/tmp to save the backups into
+if has("unix")
+  if !isdirectory(expand("~/tmp/vim/."))
+    !mkdir -p ~/tmp/vim
+  endif
+endif
+set backupdir=~/tmp/vim
+set directory=~/tmp/vim,.,/var/tmp,/tmp
+
 let g:yankring_history_dir = '$HOME/.vim'
 let g:yankring_history_file = 'yankring_history'
 
-"set supertab prefs
-"let g:SuperTabDefaultCompletionType = "context"
-"disable supertab
-let g:complType = 1
 
-" Read files from ~/.vim
-"""source ~/.vim/commenter.vim
-source ~/.vim/display.vim
-source ~/.vim/filetypes.vim
-source ~/.vim/indent.vim
-source ~/.vim/macros.vim
-source ~/.vim/mappings.vim
-source ~/.vim/state.vim
-if !filereadable(expand("~/.vim/abbrsout.vim"))
-	!python ~/.vim/abbrs2vim.py
-endif
-source ~/.vim/abbrsout.vim
-if filereadable(expand("~/.vimrc.local"))
-	source ~/.vimrc.local
-endif
+" tabs and indentation
+set autoindent
+set copyindent
+set smartindent
+set expandtab
+set softtabstop=4
+set smarttab
+set tabstop=8
+set nojoinspaces
+set shiftwidth=4
+set shiftround
+
+" filetypes
+filetype plugin indent on
+autocmd BufNewFile,BufRead *.tex setlocal ft=tex spell!
+autocmd FileType tex setlocal textwidth=78 nosmartindent
+
+" syntax highlighting and colors
+syntax on
+set backspace=indent,eol,start
+set display+=lastline
+set hlsearch
+set ignorecase
+set incsearch
+set mouse=a
+set number
+set smartcase
+set ruler
+set scrolloff=3
+set showmatch
+set title
+set wildmode=list:longest
+set wildignore=.svn,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.png,*.xpm,*.gif
+
+highlight Comment ctermfg=lightblue
+highlight Search ctermfg=grey ctermbg=yellow
+highlight LeadingTab ctermbg=blue guibg=blue
+highlight LeadingSpace ctermbg=darkgreen guibg=darkgreen
+highlight EvilSpace ctermbg=darkred guibg=darkred
+highlight StatusLine ctermfg=black ctermbg=green cterm=NONE
+highlight StatusLineNC ctermfg=black ctermbg=lightblue cterm=NONE
+
+highlight WhitespaceEOL ctermbg=lightblue
+
+" highlight tabs
+syntax match Tab /\t/
+highlight Tab gui=underline guifg=blue ctermbg=blue 
+
+" Load other macros
+source $HOME/.vim/macros.vim
