@@ -1,63 +1,7 @@
-" Python Calculator
-command! -nargs=+ Calc :r! python -c "from math import *; print <args>"
-
-" I frequently type :Q or :WQ, etc instead of :q, :wq
-command! WQA :wqa
-command! WqA :wqa
-command! WQa :wqa
-command! Wqa :wqa
-command! WA :wa
-command! Wa :wa
-command! WQ :wq
-command! Wq :wq
-command! W :w
-command! Wn :wn
-command! WN :wn
-command! Wp :wp
-command! WP :wp
-command! QA :qa
-command! Qa :qa
-command! Q :q
-
-" Spell checking mode toggle
-function s:spell()
-	if !exists("s:spell_check") || s:spell_check == 0
-		echo  "Spell check on"
-		let s:spell_check = 1
-		setlocal spell spelllang=en_au
-	else
-		echo "Spell check off"
-		let s:spell_check = 0
-		setlocal spell spelllang=
-	endif
-endfunction
-map <F8> :call <SID>spell()<CR>
-imap <F8> <C-o>:call <SID>spell()<CR>
-
-"make % jump between more stuff
-runtime macros/matchit.vim
-
-"use tab intelligently to autocomplete or insert tabs based on context
-"also check for :: for c++ code
-"function! SuperCleverTab()
-    "if strpart(getline('.'), 0, col('.') - 1) =~ '^\s*$'
-        "return "\<Tab>"
-    "else
-        "if &omnifunc != ''
-            "return "\<C-X>\<C-O>"
-        "elseif &dictionary != ''
-            "return "\<C-K>"
-        "else
-            "return "\<C-N>"
-        "endif
-    "endif
-"endfunction
-
-"inoremap <Tab> <C-R>=SuperCleverTab()<CR>
-
+" make tab autocomplete or insert tab as defined by prior context
 function! InsertTabWrapper(direction)
   let col = col('.') - 1
-  if !col || getline('.')[col - 1] !~ '\k' && getline('.')[col - 1] !~ ':'
+  if !col || getline('.')[col-1] !~ '\k' && getline('.')[col-1] !~ ':'
     return "\<tab>"
   elseif "backward" == a:direction
     return "\<c-p>"
@@ -66,15 +10,60 @@ function! InsertTabWrapper(direction)
   endif
 endfunction
 
-inoremap <tab> <c-r>=InsertTabWrapper ("forward")<CR>
-inoremap <s-tab> <c-r>=InsertTabWrapper ("backward")<CR>
+inoremap <TAB> <C-R>=InsertTabWrapper("forward")<CR>
+inoremap <S-TAB> <C-R>=InsertTabWrapper("backward")<CR>
 
-function! CheckForShebang()
-   if (match( getline(1) , '^\#!') == 0)
-       map <F5> :!./%<CR>
-   else
-       unmap <F%>
-   endif  
-endfunction
-map <F5> :call CheckForShebang()
+" search for visually highlighted text
+vmap // y/<C-R>"<CR>
+
+" tab to switch between split windows
+noremap <Tab> <C-w><C-w>
+
+" toggle spell
+nnoremap <leader>s :setlocal spell!<CR>
+
+" make enter, space, and delete work in normal mode like insert mode
+nnoremap <CR> i<CR><ESC>
+nnoremap <Space> i<Space><ESC>
+"nnoremap <Del> a<Del><Esc>
+
+" use ,x to clear search highlight
+noremap <leader>x :nohlsearch<CR>/<BS><CR>
+
+" show whitespace at EOL with <leader>e
+set listchars=tab:>-,trail:·,eol:$
+nmap <silent> <leader>e :set nolist!<CR>
+
+" don't jump to the start of a line when typing #
+inoremap # X<c-h>#
+
+" map Y to be consistent with D, C, etc
+noremap Y y$
+
+" map CTRL-f and CTRL-b to move forward and back a word in insert mode
+imap <C-f> <C-o>w
+imap <C-b> <C-o>b
+
+" CTRL-J/K to move up and down, collapsing open windows
+map <C-J> <C-W>j<C-W>_
+map <C-K> <C-W>k<C-W>_
+
+" select visual block after in/dedent so we can in/dedent more
+vnoremap < <gv
+vnoremap > >gv
+
+" hard re-wrap text
+nnoremap <leader>q gqip
+
+" paste mode
+map <leader>p :setlocal paste!<CR>
+
+" re-select pasted text
+nnoremap <leader>v V`]
+
+" clear out all trailing whitespace
+nnoremap <leader>w :%s/\s\+$//<CR>:let @/=''<CR>"
+
+" sort CSS properties
+nnoremap <leader>css ?{<CR>jV/^\s*\}?$<CR>k:sort<CR>:noh<CR>
 
