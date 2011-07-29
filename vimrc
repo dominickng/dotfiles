@@ -18,14 +18,9 @@ endif
 set backupdir=~/tmp/vim
 set directory=~/tmp/vim,.,/var/tmp,/tmp
 
-let g:yankring_history_dir = '$HOME/.vim'
-let g:yankring_history_file = 'yankring_history'
-
-
 " tabs and indentation
 set autoindent
 set copyindent
-set smartindent
 set expandtab
 set softtabstop=4
 set smarttab
@@ -38,6 +33,7 @@ set shiftround
 filetype plugin indent on
 autocmd BufNewFile,BufRead *.tex setlocal ft=tex spell!
 autocmd FileType tex setlocal textwidth=78 nosmartindent
+autocmd FileType tex source $HOME/.vim/auctex.vim
 
 " syntax highlighting and colors
 syntax on
