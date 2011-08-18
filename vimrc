@@ -59,6 +59,7 @@ highlight LeadingSpace ctermbg=darkgreen guibg=darkgreen
 highlight EvilSpace ctermbg=darkred guibg=darkred
 highlight StatusLine ctermfg=black ctermbg=green cterm=NONE
 highlight StatusLineNC ctermfg=black ctermbg=lightblue cterm=NONE
+highlight Pmenu ctermbg=238 gui=bold
 
 highlight WhitespaceEOL ctermbg=lightblue
 
