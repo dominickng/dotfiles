@@ -19,5 +19,3 @@ ssource ${HOME}/.bash/local
 shopt -s checkwinsize
 # Don't attempt to tab-complete an empty line
 shopt -s no_empty_cmd_completion
-
-ssource "/etc/bash_completion"
