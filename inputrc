@@ -4,18 +4,17 @@ $include /etc/inputrc
 #if we're in vi mode, set the more convenient emacs bindings for beginning
 #and end of line
 $if mode=vi
-"\C-a": beginning-of-line
-"\C-e": end-of-line
+C-a: beginning-of-line
+C-e: end-of-line
 $endif
 
 set completion-ignore-case On
-
-"\C-b": backward-word
-"\C-f": forward-word
-
+set expand-tilde on
 set match-hidden-files off 
 
-"\M-w": backward-kill-word
+C-b: backward-word
+C-f: forward-word
+C-x: backward-kill-word
 
 #TAB: menu-complete
 
@@ -30,4 +29,7 @@ set match-hidden-files off
 #"\e\e[C": forward-word
 #"\e\e[D": backward-word
 
+# page up/down to history search
+"\e[5~": history-search-backward
+"\e[6~": history-search-forward]]
 
