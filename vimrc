@@ -2,7 +2,7 @@ filetype off
 set nocompatible
 let mapleader=","
 
-call pathogen#runtime_append_all_bundles()
+call pathogen#infect() 
 
 " general settings
 set history=1000
@@ -60,6 +60,7 @@ highlight EvilSpace ctermbg=darkred guibg=darkred
 highlight StatusLine ctermfg=black ctermbg=green cterm=NONE
 highlight StatusLineNC ctermfg=black ctermbg=lightblue cterm=NONE
 highlight Pmenu ctermbg=238 gui=bold
+highlight SpellBad term=reverse ctermfg=white ctermbg=darkred
 
 highlight WhitespaceEOL ctermbg=lightblue
 
