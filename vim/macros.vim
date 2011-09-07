@@ -67,3 +67,8 @@ nnoremap <leader>w :%s/\s\+$//<CR>:let @/=''<CR>"
 " sort CSS properties
 nnoremap <leader>css ?{<CR>jV/^\s*\}?$<CR>k:sort<CR>:noh<CR>
 
+" format XML
+nnoremap <leader>xml :%s/>\s*</>\r</g<CR>:set ft=xml<CR>ggVG=
+
+" format JSON
+nnoremap <leader>json :%s/{/{\r/g<CR>:%s/}/\r}/g<CR>:%s/,/,\r/g<CR>:set ft=javascript<CR>ggVG=
