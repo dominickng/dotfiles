@@ -3,7 +3,8 @@ ALL = $(HOME)/.bash $(HOME)/.bashrc \
       $(HOME)/.pythonrc.py \
       $(HOME)/.vim $(HOME)/.vimrc \
       $(HOME)/.inputrc \
-      $(HOME)/.gdb $(HOME)/.gdbinit
+      $(HOME)/.gdb $(HOME)/.gdbinit \
+      $(HOME)/.gitconfig
 
 .PHONY	: all unlink
 
@@ -13,6 +14,6 @@ unlink	:
 	echo $(ALL) | xargs -n 1 unlink
 
 $(HOME)/.%	: ./%
-	-unlink $(HOME)/.$* > /dev/null
+	-unlink $(HOME)/.$* > /dev/null 2> /dev/null
 	ln -s $(CURDIR)/$* $@
 
