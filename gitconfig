@@ -1,0 +1,16 @@
+[alias]
+	co = checkout
+	st = status
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+	ui = true
+
+[user]
+	name = Dominick Ng
+	email = dominick8n@gmail.com
+
+[core]
+        #autocrlf = input
+	pager = less
