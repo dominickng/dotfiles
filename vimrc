@@ -2,6 +2,7 @@ filetype off
 set encoding=utf-8
 set fileencoding=utf-8
 set nocompatible
+colorscheme default
 let mapleader=","
 
 call pathogen#infect() 
@@ -69,6 +70,12 @@ highlight WhitespaceEOL ctermbg=lightblue
 " highlight tabs
 syntax match Tab /\t/
 highlight Tab gui=underline guifg=blue ctermbg=blue 
+
+" indent-guide stuff
+let g:indent_guides_enable_on_vim_startup = 0
+let g:indent_guides_auto_colors = 0
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red ctermbg=lightgrey
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=white
 
 " Load other macros
 source $HOME/.vim/macros.vim
