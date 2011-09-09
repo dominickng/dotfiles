@@ -16,3 +16,6 @@
 [submodule "vim/bundle/delimitMate"]
 	path = vim/bundle/delimitMate
 	url = git://github.com/Raimondi/delimitMate.git
+[submodule "vim/bundle/vim-matchit"]
+	path = vim/bundle/vim-matchit
+	url = git://github.com/tsaleh/vim-matchit.git
