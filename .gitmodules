@@ -9,7 +9,7 @@
 	url = git://github.com/scrooloose/nerdtree.git
 [submodule "vim/bundle/vim-abolish"]
 	path = vim/bundle/vim-abolish
-	url = http://github.com/tpope/vim-abolish
+	url = git://github.com/tpope/vim-abolish
 [submodule "vim/bundle/nerdcommenter"]
 	path = vim/bundle/nerdcommenter
 	url = git://github.com/scrooloose/nerdcommenter.git
