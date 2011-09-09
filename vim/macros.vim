@@ -62,7 +62,7 @@ map <leader>p :setlocal paste!<CR>
 nnoremap <leader>v V`]
 
 " clear out all trailing whitespace
-nnoremap <leader>w :%s/\s\+$//<CR>:let @/=''<CR>"
+nnoremap <leader>c :%s/\s\+$//<CR>:let @/=''<CR>"
 
 " sort CSS properties
 nnoremap <leader>css ?{<CR>jV/^\s*\}?$<CR>k:sort<CR>:noh<CR>
