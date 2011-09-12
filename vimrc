@@ -5,6 +5,8 @@ set nocompatible
 colorscheme default
 let mapleader=","
 
+" pathogen setup
+runtime bundle/vim-pathogen/autoload/pathogen.vim
 call pathogen#infect() 
 
 " general settings
