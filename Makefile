@@ -11,13 +11,13 @@ ALL = $(HOME)/.bash $(HOME)/.bashrc \
 all	: $(ALL) submodules
 
 unlink	:
-	echo $(ALL) | xargs -n 1 unlink
+	echo $(ALL) | xargs -n 1 -I@ find $(HOME) -path @ -maxdepth 1 -exec unlink {} \;
 
 submodules	:
 	git submodule init vim/bundle/*
 	git submodule update vim/bundle/*
 
 $(HOME)/.%	: ./%
-	-unlink $(HOME)/.$* > /dev/null 2> /dev/null
+	find $(HOME) -path $@ -maxdepth 1 -exec unlink {} \;
 	ln -s $(CURDIR)/$* $@
 
