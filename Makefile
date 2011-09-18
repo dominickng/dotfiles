@@ -11,16 +11,10 @@ ALL = $(HOME)/.bash $(HOME)/.bashrc \
 all	: $(ALL) submodules
 
 unlink	:
-	echo $(ALL) | xargs -n 1 -I@ find $(HOME) -path @ -maxdepth 1 -exec unlink {} \;
+	echo $(ALL) | xargs -n 1 -I@ find $(HOME) -maxdepth 1 -path @ -exec unlink {} \;
 
 destroy	:
-	echo "Are you sure you want to force unlink all dotfiles? (Yn)"
-	read a
-	if [[ $a == [Yy] ]]; then
-		echo $(ALL) | xargs -n 1 unlink
-	else
-		echo "Not destroying"
-	fi
+	-echo $(ALL) | xargs -n 1 unlink >/dev/null 2>/dev/null
 
 submodules	:
 	git submodule init vim/bundle/*
