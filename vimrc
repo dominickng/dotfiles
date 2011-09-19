@@ -38,7 +38,6 @@ set shiftround
 filetype plugin indent on
 autocmd BufNewFile,BufRead *.tex setlocal ft=tex spell! sw=2
 autocmd FileType tex setlocal textwidth=78 nosmartindent
-"autocmd FileType tex source $HOME/.vim/auctex.vim
 
 " syntax highlighting and colors
 syntax on
