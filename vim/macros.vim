@@ -30,9 +30,9 @@ nnoremap <Space> i<Space><ESC>
 " use ,x to clear search highlight
 noremap <leader>x :nohlsearch<CR>/<BS><CR>
 
-" show whitespace at EOL with <leader>e
+" show whitespace at EOL with <leader>ws
 set listchars=tab:>-,trail:·,eol:$
-nmap <silent> <leader>e :set nolist!<CR>
+nmap <silent> <leader>ws :set nolist!<CR>
 
 " don't jump to the start of a line when typing #
 inoremap # X<c-h>#
