@@ -4,7 +4,7 @@ ALL = $(HOME)/.bash $(HOME)/.bashrc \
       $(HOME)/.vim $(HOME)/.vimrc \
       $(HOME)/.inputrc \
       $(HOME)/.gdb $(HOME)/.gdbinit \
-      $(HOME)/.gitconfig
+      $(HOME)/.gitconfig $(HOME)/.screenrc
 
 .PHONY	: all unlink submodules destroy
 
