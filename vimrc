@@ -27,17 +27,18 @@ set directory=~/tmp/vim,.,/var/tmp,/tmp
 set autoindent
 set copyindent
 set expandtab
-set softtabstop=4
+set softtabstop=2
 set smarttab
 set tabstop=8
 set nojoinspaces
-set shiftwidth=4
+set shiftwidth=2
 set shiftround
 
 " filetypes
 filetype plugin indent on
 autocmd BufNewFile,BufRead *.tex setlocal ft=tex spell! sw=2
 autocmd FileType tex setlocal textwidth=78 nosmartindent
+autocmd FileType c,cpp,java setlocal sw=2 ts=2
 
 " syntax highlighting and colors
 syntax on
