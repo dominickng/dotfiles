@@ -15,6 +15,8 @@ source ~/.gdb/stl-views.gdb
 # other settings
 set confirm off
 set verbose off
+# Mac 10.7 debugging
+# set env MallocStackLoggingNoCompact 1
 
 # array printing
 define parray
