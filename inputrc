@@ -11,10 +11,14 @@ $endif
 set completion-ignore-case On
 set expand-tilde on
 set match-hidden-files off 
+set show-all-if-ambiguous on
+set show-all-if-unmodified on
 
 C-b: backward-word
 C-f: forward-word
 C-x: backward-kill-word
+C-j: menu-complete
+C-k: menu-complete-backward
 
 #TAB: menu-complete
 
@@ -31,5 +35,4 @@ C-x: backward-kill-word
 
 # page up/down to history search
 "\e[5~": history-search-backward
-"\e[6~": history-search-forward]]
-
+"\e[6~": history-search-forward
