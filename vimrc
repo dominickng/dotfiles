@@ -3,6 +3,7 @@ set encoding=utf-8
 set fileencoding=utf-8
 set nocompatible
 set nobk
+set background=light
 colorscheme default
 let mapleader=","
 
