@@ -3,8 +3,6 @@ set encoding=utf-8
 set fileencoding=utf-8
 set nocompatible
 set nobk
-set background=light
-colorscheme default
 let mapleader=","
 
 " pathogen setup
@@ -58,6 +56,9 @@ set showmatch
 set title
 set wildmode=list:longest
 set wildignore=.svn,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.png,*.xpm,*.gif
+
+colorscheme default
+set background=light
 
 highlight Comment ctermfg=lightblue
 highlight Search ctermfg=grey ctermbg=yellow
