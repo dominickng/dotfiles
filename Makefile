@@ -19,6 +19,7 @@ destroy	:
 submodules	:
 	git submodule init vim/bundle/*
 	git submodule update vim/bundle/*
+	git submodule foreach git pull origin master
 
 $(HOME)/.%	: ./%
 	find $(HOME) -path $@ -maxdepth 1 -exec unlink {} \;
