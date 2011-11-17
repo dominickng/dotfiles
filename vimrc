@@ -59,6 +59,7 @@ set wildignore=.svn,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.png,*.xpm
 
 colorscheme default
 set background=light
+set cursorline
 
 highlight Comment ctermfg=lightblue
 highlight Search ctermfg=grey ctermbg=yellow
@@ -69,6 +70,7 @@ highlight StatusLine ctermfg=black ctermbg=green cterm=NONE
 highlight StatusLineNC ctermfg=black ctermbg=lightblue cterm=NONE
 highlight Pmenu ctermbg=238 gui=bold
 highlight SpellBad term=reverse ctermfg=white ctermbg=darkred
+highlight CursorLine cterm=NONE ctermbg=darkgray ctermfg=white guibg=darkgray guifg=white
 
 highlight WhitespaceEOL ctermbg=lightblue
 
