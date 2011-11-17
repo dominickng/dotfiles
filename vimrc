@@ -70,7 +70,7 @@ highlight StatusLine ctermfg=black ctermbg=green cterm=NONE
 highlight StatusLineNC ctermfg=black ctermbg=lightblue cterm=NONE
 highlight Pmenu ctermbg=238 gui=bold
 highlight SpellBad term=reverse ctermfg=white ctermbg=darkred
-highlight CursorLine cterm=NONE ctermbg=darkgray ctermfg=white guibg=darkgray guifg=white
+highlight CursorLine cterm=NONE ctermbg=darkgray guibg=darkgray
 
 highlight WhitespaceEOL ctermbg=lightblue
 
