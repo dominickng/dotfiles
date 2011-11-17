@@ -11,7 +11,7 @@ call pathogen#infect()
 
 " general settings
 set history=1000
-set viminfo=%,'100,\"100,:100,n~/.vim/viminfo
+set viminfo='10,\"100,:20,%,n~/.viminfo'
 set backup
 
 " create ~/tmp/ if it doesn't exist and use ~/tmp to save the backups into
