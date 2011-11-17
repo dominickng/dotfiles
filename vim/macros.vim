@@ -26,6 +26,8 @@ endfunction
 inoremap <TAB> <C-R>=InsertTabWrapper("forward")<CR>
 inoremap <S-TAB> <C-R>=InsertTabWrapper("backward")<CR>
 
+noremap <buffer> <silent> <expr> <leader>a AutoPairsToggle()
+
 " search for visually highlighted text
 vmap // y/<C-R>"<CR>
 
