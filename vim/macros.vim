@@ -1,3 +1,16 @@
+" restore cursor position
+function! ResCur()
+  if line("'\"") <= line("$")
+    normal! g`"
+    return 1
+  endif
+endfunction
+
+augroup resCur
+  autocmd!
+  autocmd BufWinEnter * call ResCur()
+augroup END
+
 " make tab autocomplete or insert tab as defined by prior context
 function! InsertTabWrapper(direction)
   let col = col('.') - 1
