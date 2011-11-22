@@ -59,7 +59,7 @@ set wildignore=.svn,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.png,*.xpm
 
 colorscheme default
 set background=light
-set cursorline
+"set cursorline
 
 highlight Comment ctermfg=lightblue
 highlight Search ctermfg=grey ctermbg=yellow
