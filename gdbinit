@@ -13,6 +13,8 @@ end
 source ~/.gdb/stl-views.gdb
 
 # other settings
+set history save on
+set history filename ~/.gdb_history
 set confirm off
 set verbose off
 # Mac 10.7 debugging
