@@ -47,7 +47,7 @@ set display+=lastline
 set hlsearch
 set ignorecase
 set incsearch
-set mouse=a
+set mouse=
 set number
 set smartcase
 set ruler
