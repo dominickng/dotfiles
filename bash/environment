@@ -5,7 +5,7 @@
 # the environment. The path manipulation functions are useful for this.
 
 # Files will be created by default rwx user only
-umask 0077
+umask 0022
 
 # General environment settings
 export PAGER="less"
