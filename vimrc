@@ -13,6 +13,14 @@ call pathogen#infect()
 set history=1000
 set viminfo='10,\"100,:20,%,n~/.viminfo'
 
+" create ~/tmp/ if it doesn't exist and use ~/tmp as the .swp dir
+if has("unix")
+  if !isdirectory(expand("~/tmp/vim/."))
+    !mkdir -p ~/tmp/vim
+  endif
+endif
+set directory=~/tmp/vim,.,/var/tmp,/tmp
+
 " tabs and indentation
 set autoindent
 set copyindent
