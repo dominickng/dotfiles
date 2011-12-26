@@ -26,7 +26,16 @@ endfunction
 inoremap <TAB> <C-R>=InsertTabWrapper("forward")<CR>
 inoremap <S-TAB> <C-R>=InsertTabWrapper("backward")<CR>
 
-noremap <buffer> <silent> <expr> <leader>a AutoPairsToggle()
+"noremap <buffer> <silent> <expr> <leader>a AutoPairsToggle()
+" paste mode
+"map <leader>p :setlocal paste!<CR>
+
+function! PasteToggle()
+  setlocal paste!
+  call AutoPairsToggle()
+  return
+endfunction
+noremap <buffer> <silent> <expr> <leader>p PasteToggle()
 
 " search for visually highlighted text
 vmap // y/<C-R>"<CR>
@@ -70,9 +79,6 @@ vnoremap > >gv
 " hard re-wrap text
 nnoremap <leader>q gqip
 
-" paste mode
-map <leader>p :setlocal paste!<CR>
-
 " re-select pasted text
 nnoremap <leader>v V`]
 
@@ -99,3 +105,29 @@ vmap <silent> <leader>d "_d
 
 noremap <up> gk
 noremap <down> gj
+
+" CCG category searching
+command! -nargs=1 S let @/ = escape('<args>', '\')
+nmap <leader>S :execute(":S " . input('Regex-off: /'))<CR>
+
+" remove DOS end of lines
+nnoremap <silent> <leader>d :%s/$//g<CR>:%s// /g<CR>
+
+" edit vimrc
+nnoremap <silent> <leader>ev :e ~/.vimrc<CR>
+
+" tabs
+nnoremap <silent> <C-Right> :tabnext<CR>
+nnoremap <silent> <C-Left> :tabprevious<CR>
+"nnoremap <silent> <C-]> :tabnext<CR>
+"nnoremap <silent> <C-[> :tabprevious<CR>
+nnoremap <silent> <C-t> :tabnew<CR>
+nnoremap <silent> <C-w> :tabclose<CR>
+
+" buffer transfer
+nmap <leader>w :!echo ""> ~/.vim/vimxfer<CR><CR>:w! ~/.vim/vimxfer<CR>
+vmap <leader>w :w! ~/.vim/vimxfer<CR>
+nmap <leader>a :!echo ""> ~/.vim/vimxfer<CR><CR>:w! >>~/.vim/vimxfer<CR>
+vmap <leader>a :w! >>~/.vim/vimxfer<CR>
+nmap <leader>r :r ~/.vim/vimxfer<CR>
+vmap <leader>r :r ~/.vim/vimxfer<CR>

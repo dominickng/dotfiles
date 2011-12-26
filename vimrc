@@ -12,16 +12,6 @@ call pathogen#infect()
 " general settings
 set history=1000
 set viminfo='10,\"100,:20,%,n~/.viminfo'
-set backup
-
-" create ~/tmp/ if it doesn't exist and use ~/tmp to save the backups into
-if has("unix")
-  if !isdirectory(expand("~/tmp/vim/."))
-    !mkdir -p ~/tmp/vim
-  endif
-endif
-set backupdir=~/tmp/vim
-set directory=~/tmp/vim,.,/var/tmp,/tmp
 
 " tabs and indentation
 set autoindent
@@ -36,27 +26,29 @@ set shiftround
 
 " filetypes
 filetype plugin indent on
-autocmd BufNewFile,BufRead *.tex setlocal ft=tex spell! sw=2
-autocmd FileType tex setlocal textwidth=78 nosmartindent
 autocmd FileType c,cpp,java setlocal sw=2 ts=2
 
-" syntax highlighting and colors
-syntax on
-set backspace=indent,eol,start
-set display+=lastline
+" searching
 set hlsearch
 set ignorecase
 set incsearch
+set smartcase
+
+" visual
+set display+=lastline
 set mouse=
 set number
-set smartcase
 set ruler
 set scrolloff=3
+set showcmd
 set showmatch
 set title
 set wildmode=list:longest
 set wildignore=.svn,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.png,*.xpm,*.gif
 
+" syntax highlighting and colors
+syntax on
+set backspace=indent,eol,start
 colorscheme default
 set background=light
 "set cursorline
@@ -71,12 +63,30 @@ highlight StatusLineNC ctermfg=black ctermbg=lightblue cterm=NONE
 highlight Pmenu ctermbg=238 gui=bold
 highlight SpellBad term=reverse ctermfg=white ctermbg=darkred
 highlight CursorLine cterm=NONE ctermbg=darkgray guibg=darkgray
+highlight MatchParen ctermbg=4
 
 highlight WhitespaceEOL ctermbg=lightblue
 
 " highlight tabs
 syntax match Tab /\t/
 highlight Tab gui=underline guifg=blue ctermbg=blue 
+
+" statusline
+set laststatus=2
+set statusline=
+set statusline +=%f                 "relative path
+"set statusline +=%h                "help buffer flag
+set statusline +=%r                 "readonly
+set statusline +=%y                 "file type
+set statusline +=%m                 "modified flag
+set statusline +=\ %{&ff}\          "file format
+set statusline+=%{&encoding}\       "encoding
+set statusline +=%=%c               "separator and column number
+set statusline +=,%l/%L\            "current line / total lines
+set statusline +=%{strftime(\"%d/%m/%y\ %H:%M\",getftime(expand(\"%:p\")))} " last modified
+set statusline +=\ %P               " percentage of file
+"set statusline +=0x%04B\           "character under cursor
+"set statusline +=%1*\ %n\ %*       "buffer number
 
 " indent-guide stuff
 let g:indent_guides_enable_on_vim_startup = 0
