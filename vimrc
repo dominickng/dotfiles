@@ -54,22 +54,20 @@ set background=light
 "set cursorline
 
 highlight Comment ctermfg=lightblue
-highlight Search ctermfg=grey ctermbg=yellow
+highlight CursorLine cterm=NONE ctermbg=darkgray guibg=darkgray
+highlight EvilSpace ctermbg=darkred guibg=darkred
 highlight LeadingTab ctermbg=blue guibg=blue
 highlight LeadingSpace ctermbg=darkgreen guibg=darkgreen
-highlight EvilSpace ctermbg=darkred guibg=darkred
+highlight MatchParen ctermbg=4
+highlight Pmenu ctermbg=238 gui=bold
+highlight Search ctermfg=grey ctermbg=yellow
+highlight SpellBad term=reverse ctermfg=white ctermbg=darkred
 highlight StatusLine ctermfg=black ctermbg=green cterm=NONE
 highlight StatusLineNC ctermfg=black ctermbg=lightblue cterm=NONE
-highlight Pmenu ctermbg=238 gui=bold
-highlight SpellBad term=reverse ctermfg=white ctermbg=darkred
-highlight CursorLine cterm=NONE ctermbg=darkgray guibg=darkgray
-highlight MatchParen ctermbg=4
-
+highlight Tab gui=underline guifg=blue ctermbg=blue 
 highlight WhitespaceEOL ctermbg=lightblue
 
 " highlight tabs
-syntax match Tab /\t/
-highlight Tab gui=underline guifg=blue ctermbg=blue 
 
 " statusline
 set laststatus=2
