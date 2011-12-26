@@ -8,13 +8,11 @@
 	status = auto
 	branch = auto
 	ui = true
-
 [user]
 	name = Dominick Ng
 	email = dominick8n@gmail.com
-
 [core]
-        #autocrlf = input
+	#autocrlf = input
 	pager = less
 	excludesfile = /Users/dom/.gitignore_global
 [difftool "sourcetree"]
