@@ -1,6 +1,8 @@
 [alias]
 	co = checkout
 	st = status
+	ribbon = tag --force _ribbon origin/master
+	catchup = log --patch --reverse --topo-order _ribbon..origin/master
 [color]
 	diff = auto
 	status = auto
