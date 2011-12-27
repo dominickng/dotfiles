@@ -122,7 +122,7 @@ nnoremap <silent> <C-Left> :tabprevious<CR>
 "nnoremap <silent> <C-]> :tabnext<CR>
 "nnoremap <silent> <C-[> :tabprevious<CR>
 nnoremap <silent> <C-t> :tabnew<CR>
-nnoremap <silent> <C-w> :tabclose<CR>
+nnoremap <silent> <C-x> :tabclose<CR>
 
 " buffer transfer
 nmap <leader>w :!echo ""> ~/.vim/vimxfer<CR><CR>:w! ~/.vim/vimxfer<CR>
