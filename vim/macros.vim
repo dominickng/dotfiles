@@ -44,7 +44,7 @@ vmap // y/<C-R>"<CR>
 noremap <Tab> <C-w><C-w>
 
 " toggle spell
-nnoremap <leader>s :setlocal spell!<CR>
+nnoremap <leader>spell :setlocal spell!<CR>
 
 " make enter, space, and delete work in normal mode like insert mode
 nnoremap <CR> i<CR><ESC>
