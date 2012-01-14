@@ -104,3 +104,7 @@ alias ...='cd ../..'
 
 #useful aliases
 alias pw="tr -dc 'A-Za-z0-9!@#$%^&*' < /dev/urandom | fold -w 12 | head -n 1"
+
+#diff
+alias ssdiff='diff --side-by-side -W"`tput cols`"'
+alias sscdiff='diff --side-by-side --suppress-common-lines -W"`tput cols`"'
