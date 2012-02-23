@@ -131,3 +131,7 @@ nmap <leader>a :!echo ""> ~/.vim/vimxfer<CR><CR>:w! >>~/.vim/vimxfer<CR>
 vmap <leader>a :w! >>~/.vim/vimxfer<CR>
 nmap <leader>r :r ~/.vim/vimxfer<CR>
 vmap <leader>r :r ~/.vim/vimxfer<CR>
+
+" fuzzee.vim
+nnoremap <Leader>f :F<Space>
+nnoremap <Leader>t :F */

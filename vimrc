@@ -51,8 +51,9 @@ set scrolloff=3
 set showcmd
 set showmatch
 set title
-set wildmode=list:longest
+set wildmode=list:longest,full
 set wildignore=.svn,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.png,*.xpm,*.gif
+set switchbuf=usetab
 
 " syntax highlighting and colors
 syntax on
