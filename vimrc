@@ -21,6 +21,9 @@ if has("unix")
 endif
 set directory=~/tmp/vim,.,/var/tmp,/tmp
 
+" diable netrw history
+let g:netrw_dirhistmax=0
+
 " tabs and indentation
 set autoindent
 set copyindent
