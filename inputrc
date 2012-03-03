@@ -16,7 +16,7 @@ set show-all-if-unmodified on
 
 C-b: backward-word
 C-f: forward-word
-C-x: backward-kill-word
+C-g: backward-kill-word
 C-j: menu-complete
 C-k: menu-complete-backward
 
