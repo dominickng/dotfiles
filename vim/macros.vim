@@ -28,14 +28,14 @@ inoremap <S-TAB> <C-R>=InsertTabWrapper("backward")<CR>
 
 "noremap <buffer> <silent> <expr> <leader>a AutoPairsToggle()
 " paste mode
-"map <leader>p :setlocal paste!<CR>
+map <leader>p :setlocal paste!<CR>
 
-function! PasteToggle()
-  setlocal paste!
-  call AutoPairsToggle()
-  return
-endfunction
-noremap <buffer> <silent> <expr> <leader>p PasteToggle()
+"function! PasteToggle()
+  "setlocal paste!
+  "call AutoPairsToggle()
+  "return
+"endfunction
+"noremap <buffer> <silent> <expr> <leader>p PasteToggle()
 
 " search for visually highlighted text
 vmap // y/<C-R>"<CR>
