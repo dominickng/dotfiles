@@ -54,6 +54,7 @@ set scrolloff=3
 set showcmd
 set showmatch
 set title
+set wildmenu
 set wildmode=list:longest,full
 set wildignore=.svn,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.png,*.xpm,*.gif
 set switchbuf=usetab
