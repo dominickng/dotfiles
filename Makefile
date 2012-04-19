@@ -2,7 +2,7 @@ ALL = $(HOME)/.bash $(HOME)/.bashrc \
       $(HOME)/.inputrc \
       $(HOME)/.pythonrc.py \
       $(HOME)/.vim $(HOME)/.vimrc \
-      $(HOME)/.inputrc \
+      $(HOME)/.inputrc $(HOME)/.tmux.conf \
       $(HOME)/.gdb $(HOME)/.gdbinit \
       $(HOME)/.gitconfig $(HOME)/.screenrc
 
