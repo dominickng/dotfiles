@@ -1,3 +1,10 @@
+" surround.vim notes
+" viwS' -> surround inner word with '
+" ys$)  -> surround to end of line with parentheses
+" cs"'  -> change surround from " to '
+" ds"   -> delete surrounding "
+" yss)  -> surround entire line with parentheses
+
 " restore cursor position
 function! ResCur()
   if line("'\"") <= line("$")
