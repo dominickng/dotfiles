@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 import atexit
 import os
 import readline
@@ -17,7 +15,7 @@ def myCompleter(text, state):
     else:
         return defaultCompleter.complete(text, state)
 
-def save_history(histfile=histfile):
+def save_history(histfile=histfile, histsize=histsize):
     import readline
     readline.set_history_length(histsize)
     readline.write_history_file(histfile)

@@ -1,0 +1,49 @@
+#! bash
+
+# common
+export no_proxy=".schwa.org"
+
+alias rm='rm -i'
+alias ll='ls -hlF'
+alias la='ls -ha'
+alias  l='ls -halF'
+alias less='less -R'
+export PYTHONSTARTUP=$HOME/.pythonrc.py
+
+if [ `uname` = 'Darwin' ]; then
+	alias tmux='tmux -f ~/.tmux-osx.conf'
+	alias ls='ls -G'
+	alias grep='grep --color=auto'
+	alias volcheck='sudo fsck_hfs -f -c 2200m' # /dev/disk2
+	alias postgres-start='pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start'
+	alias postgres-stop='pg_ctl -D /usr/local/var/postgres stop -s -m fast'
+
+	#bash completion
+	BREW_PREFIX=`brew --prefix`
+	if [ -f $BREW_PREFIX/etc/bash_completion ]; then
+		. $BREW_PREFIX/etc/bash_completion
+		. $BREW_PREFIX/Library/Contributions/brew_bash_completion.sh
+		. $BREW_PREFIX/etc/bash_completion.d/git-completion.bash
+	fi
+
+	export COPYFILE_DISABLE=true #for stopping those damned ._ files
+	export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:/usr/texbin::`xcode-select -print-path`/usr/bin:/usr/local/texlive/2011basic/bin/universal-darwin
+	export TEXINPUTS=".:.//:$HOME/working/reposs/tex//:"
+	export GNUTERM=x11 # for Octave
+else
+	alias ls='ls --color=auto'
+	alias grep='grep --color=auto'
+
+	#export http_proxy=http://www-cache-test.it.usyd.edu.au:8000
+	#export https_proxy=http://www-cache-test.it.usyd.edu.au:8000
+
+	# local path modifications
+	export PATH=$PATH:~/bin
+	export TEXINPUTS=".:${HOME}/repos/tex//:"
+	export CANDC_MODELS="${HOME}/candc/models"
+	export CLASSPATH=$CLASSPATH:${HOME}/utils/weka/weka.jar:/mnt/home/dom/utils/libsvm/java/libsvm.jar
+	export PYTHONPATH="${HOME}/local/eggs/lib/python2.6/site-packages:${HOME}/repos/ncss/ncssbook:${HOME}/repos/wikipedia:${HOME}/repos/schwapy:$PYTHONPATH"
+	export SCHWA_WORKSPACE=$HOME/repos
+
+	ssource "/etc/bash_completion"
+fi
