@@ -59,10 +59,9 @@ nnoremap <Space> i<Space><ESC>
 "nnoremap <Del> a<Del><Esc>
 
 " use ,x to clear search highlight
-noremap <leader>x :nohlsearch<CR>/<BS><CR>
+noremap <leader>/ :nohlsearch<CR>/<BS><CR>
 
 " show whitespace at EOL with <leader>ws
-set listchars=tab:>-,trail:·,eol:$
 nmap <silent> <leader>ws :set nolist!<CR>
 
 " don't jump to the start of a line when typing #
@@ -84,7 +83,8 @@ vnoremap < <gv
 vnoremap > >gv
 
 " hard re-wrap text
-nnoremap <leader>q gqip
+vmap <leader>q gq
+nmap <leader>q gqap
 
 " re-select pasted text
 nnoremap <leader>v V`]
@@ -102,7 +102,7 @@ nnoremap <leader>xml :%s/>\s*</>\r</g<CR>:set ft=xml<CR>ggVG=
 nnoremap <leader>json :%s/{/{\r/g<CR>:%s/}/\r}/g<CR>:%s/,/,\r/g<CR>:set ft=javascript<CR>ggVG=
 
 " time saver
-nnoremap ; :
+"nnoremap ; :
 inoremap kj <Esc>
 
 " Use ,d (or ,dd or ,dj or 20,dd) to delete a line without adding it to the
@@ -110,8 +110,8 @@ inoremap kj <Esc>
 nmap <silent> <leader>d "_d
 vmap <silent> <leader>d "_d
 
-noremap <up> gk
-noremap <down> gj
+noremap k gk
+noremap j gj
 
 " CCG category searching
 command! -nargs=1 S let @/ = escape('<args>', '\')
@@ -124,21 +124,24 @@ nnoremap <silent> <leader>d :%s/$//g<CR>:%s// /g<CR>
 nnoremap <silent> <leader>ev :e ~/.vimrc<CR>
 
 " tabs
-nnoremap <silent> <C-Right> :tabnext<CR>
-nnoremap <silent> <C-Left> :tabprevious<CR>
+nnoremap <silent> <S-Right> :tabnext<CR>
+nnoremap <silent> <S-Left> :tabprevious<CR>
 "nnoremap <silent> <C-]> :tabnext<CR>
 "nnoremap <silent> <C-[> :tabprevious<CR>
 nnoremap <silent> <C-t> :tabnew<CR>
 nnoremap <silent> <C-x> :tabclose<CR>
 
 " buffer transfer
-nmap <leader>w :!echo ""> ~/.vim/vimxfer<CR><CR>:w! ~/.vim/vimxfer<CR>
-vmap <leader>w :w! ~/.vim/vimxfer<CR>
-nmap <leader>a :!echo ""> ~/.vim/vimxfer<CR><CR>:w! >>~/.vim/vimxfer<CR>
-vmap <leader>a :w! >>~/.vim/vimxfer<CR>
-nmap <leader>r :r ~/.vim/vimxfer<CR>
-vmap <leader>r :r ~/.vim/vimxfer<CR>
+"nmap <leader>w :!echo ""> ~/.vim/vimxfer<CR><CR>:w! ~/.vim/vimxfer<CR>
+"vmap <leader>w :w! ~/.vim/vimxfer<CR>
+"nmap <leader>a :!echo ""> ~/.vim/vimxfer<CR><CR>:w! >>~/.vim/vimxfer<CR>
+"vmap <leader>a :w! >>~/.vim/vimxfer<CR>
+"nmap <leader>r :r ~/.vim/vimxfer<CR>
+"vmap <leader>r :r ~/.vim/vimxfer<CR>
 
 " fuzzee.vim
 nnoremap <Leader>f :F<Space>
 nnoremap <Leader>t :F */
+
+" forgot to sudo
+cmap w!! w !sudo tee % >/dev/null
