@@ -14,11 +14,15 @@ set match-hidden-files off
 set show-all-if-ambiguous on
 set show-all-if-unmodified on
 
-C-b: backward-word
-C-f: forward-word
+C-b: backward-char
+C-f: forward-char
+M-b: backword-word
+M-n: forward-word
+C-j: next-history
+C-k: previous-history
 C-g: backward-kill-word
-C-j: menu-complete
-C-k: menu-complete-backward
+#C-j: menu-complete
+#C-k: menu-complete-backward
 
 #TAB: menu-complete
 
