@@ -62,7 +62,7 @@ map <right> <nop>
 " visual
 set display+=lastline
 set list
-set listchars=tab:>·,trail:·,nbsp:·,extends:$
+set listchars=tab:»·,trail:·,nbsp:·,extends:$
 set mouse=
 set number
 set ruler
