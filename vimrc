@@ -10,6 +10,7 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 call pathogen#infect() 
 
 " general settings
+set path=.,,**
 set history=1000
 set viminfo='10,\"100,:20,%,n~/.viminfo'
 
@@ -21,10 +22,17 @@ if has("unix")
 endif
 set directory=~/tmp/vim,.,/var/tmp,/tmp
 
+" no backups
+set nobackup
+set noswapfile
+
+" tab and buffer behaviour
+set switchbuf=usetab,newtab
+
 " diable netrw history
 let g:netrw_dirhistmax=0
 
-" tabs and indentation
+" indentation
 set autoindent
 set copyindent
 set expandtab
@@ -45,19 +53,28 @@ set ignorecase
 set incsearch
 set smartcase
 
+" stop using the arrow keys
+map <up> <nop>
+map <down> <nop>
+map <left> <nop>
+map <right> <nop>
+
 " visual
 set display+=lastline
+set list
+set listchars=tab:>.,trail:·,nbsp:·,extends:$
 set mouse=
 set number
 set ruler
 set scrolloff=3
 set showcmd
 set showmatch
+set showtabline=2
+set switchbuf=usetab
 set title
 set wildmenu
 set wildmode=list:longest,full
-set wildignore=.svn,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.png,*.xpm,*.gif
-set switchbuf=usetab
+set wildignore=.svn,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.png,*.xpm,*.gif,*.bak,*.pyc,*.class
 
 " syntax highlighting and colors
 syntax on
