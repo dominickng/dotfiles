@@ -124,5 +124,8 @@ let g:indent_guides_auto_colors = 0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red ctermbg=lightgrey
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=white
 
+" ctrl-p
+let g:ctrlp_map = ',f'
+
 " Load other macros
 source $HOME/.vim/macros.vim
