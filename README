@@ -8,3 +8,4 @@ Includes setup for:
  * inputrc
  * pythonrc
  * screen
+ * tmux

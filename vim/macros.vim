@@ -62,7 +62,8 @@ nnoremap <Space> i<Space><ESC>
 "nnoremap <Del> a<Del><Esc>
 
 " use ,x to clear search highlight
-noremap <leader>/ :nohlsearch<CR>/<BS><CR>
+"noremap <leader>/ :nohlsearch<CR>/<BS><CR>
+noremap <leader>/ :nohlsearch<CR>
 
 " show whitespace at EOL with <leader>ws
 nmap <silent> <leader>ws :set nolist!<CR>
@@ -128,11 +129,13 @@ nnoremap <silent> <leader>ev :e ~/.vimrc<CR>
 
 " tabs
 nnoremap <silent> <S-Right> :tabnext<CR>
-nnoremap <silent> <S-Left> :tabprevious<CR>
+nnoremap <silent> <S-Left>  :tabprevious<CR>
+nnoremap <silent> <C-l> :tabnext<CR>
+nnoremap <silent> <C-h> :tabprevious<CR>
 "nnoremap <silent> <C-]> :tabnext<CR>
 "nnoremap <silent> <C-[> :tabprevious<CR>
 nnoremap <silent> <C-t> :tabnew<CR>
-nnoremap <silent> <C-x> :tabclose<CR>
+nnoremap <silent> <C-g> :tabclose<CR>
 
 " buffer transfer
 "nmap <leader>w :!echo ""> ~/.vim/vimxfer<CR><CR>:w! ~/.vim/vimxfer<CR>
@@ -141,10 +144,6 @@ nnoremap <silent> <C-x> :tabclose<CR>
 "vmap <leader>a :w! >>~/.vim/vimxfer<CR>
 "nmap <leader>r :r ~/.vim/vimxfer<CR>
 "vmap <leader>r :r ~/.vim/vimxfer<CR>
-
-" fuzzee.vim
-nnoremap <Leader>f :F<Space>
-nnoremap <Leader>t :F */
 
 " forgot to sudo
 cmap w!! w !sudo tee % >/dev/null

@@ -126,6 +126,10 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=white
 
 " ctrl-p
 let g:ctrlp_map = ',f'
+let g:ctrlp_prompt_mappings = {
+  \ 'AcceptSelection("e")': ['<c-e>'],
+  \ 'AcceptSelection("t")': ['<cr>', '<c-m>'],
+  \ }
 
 " fix the shift-left/right etc. mappings in tmux
 if &term =~ '^screen'
