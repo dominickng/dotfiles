@@ -127,5 +127,14 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=white
 " ctrl-p
 let g:ctrlp_map = ',f'
 
+" fix the shift-left/right etc. mappings in tmux
+if &term =~ '^screen'
+  " tmux will send xterm-style keys when its xterm-keys option is on
+  execute "set <xUp>=\e[1;*A"
+  execute "set <xDown>=\e[1;*B"
+  execute "set <xRight>=\e[1;*C"
+  execute "set <xLeft>=\e[1;*D"
+endif
+
 " Load other macros
 source $HOME/.vim/macros.vim
