@@ -49,7 +49,7 @@ local DARK=1
 # Set the prompt colour, and the colors for the 'ls' command
 if [ ${PS1_COLOR:-0} -eq 1 ]; then
 	if [ `uname` = 'Darwin' ]; then
-		PS1="${LIGHTGREY}[\t]${OFF} ${PURPLE}\u@\h${OFF} ${LIGHTBLUE}\W${OFF}\$ "
+		PS1="${LIGHTCYAN}\t${OFF} ${PURPLE}\u@\h${OFF} ${LIGHTBLUE}\W${OFF}\$ "
 
 		export LSCOLORS="DxGxCxDxCxEGExaBaGecec"
 		export GREP_COLOR='0;31'
@@ -57,7 +57,7 @@ if [ ${PS1_COLOR:-0} -eq 1 ]; then
 	else
 		export GREP_COLOR='0;31'
 		eval $(dircolors 2> /dev/null)
-		PS1="${LIGHTGREY}[\t]${OFF} ${LIGHTGREEN}\u@\h${OFF} ${LIGHTPURPLE}\W${OFF}\$ "
+		PS1="${LIGHTCYAN}\t${OFF} ${LIGHTGREEN}\u@\h${OFF} ${LIGHTPURPLE}\W${OFF}\$ "
 
 		if [ ${DARK} -eq 0 ]; then
 			LS_COLORS="$(echo "${LS_COLORS}" | sed 's/01;/00;/g; s/34/33/')"
