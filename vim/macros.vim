@@ -50,6 +50,9 @@ vmap // y/<C-R>"<CR>
 " tab to switch between split windows
 noremap <Tab> <C-w><C-w>
 
+" buffet keymap
+map <leader>b :Bufferlist<CR>
+
 " toggle spell
 nnoremap <leader>spell :setlocal spell!<CR>
 
