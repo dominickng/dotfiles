@@ -61,9 +61,9 @@ nnoremap <CR> i<CR><ESC>
 nnoremap <Space> i<Space><ESC>
 "nnoremap <Del> a<Del><Esc>
 
-" use ,x to clear search highlight
+" use ,/ to clear search highlight
 "noremap <leader>/ :nohlsearch<CR>/<BS><CR>
-noremap <leader>/ :nohlsearch<CR>
+noremap <silent> <leader>/ :nohlsearch<CR>
 
 " show whitespace at EOL with <leader>ws
 nmap <silent> <leader>ws :set nolist!<CR>
@@ -146,4 +146,6 @@ nnoremap <silent> <C-g> :tabclose<CR>
 "vmap <leader>r :r ~/.vim/vimxfer<CR>
 
 " forgot to sudo
-cmap w!! w !sudo tee % >/dev/null
+cnoreabbrev <expr> w!!
+                \((getcmdtype() == ':' && getcmdline() == 'w!!')
+                \?('!sudo tee % >/dev/null'):('w!!'))
