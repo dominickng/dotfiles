@@ -33,6 +33,42 @@ endfunction
 inoremap <TAB> <C-R>=InsertTabWrapper("forward")<CR>
 inoremap <S-TAB> <C-R>=InsertTabWrapper("backward")<CR>
 
+" indentation switching
+function Spaces(...)
+  if a:0 == 1
+    let l:width = a:1
+  else
+    let l:width = 2
+  endif
+  setlocal expandtab
+  let &l:shiftwidth = l:width
+  let &l:softtabstop = l:width
+endfunction
+command! T setlocal noexpandtab shiftwidth=8 tabstop=8 softtabstop=0
+command! -nargs=? S call Spaces(<args>)</args>
+noremap <leader>t :setlocal noexpandtab shiftwidth=8 tabstop=8 softtabstop=0
+noremap <leader>s2 :execute(":S " . Spaces('2'))<CR>
+noremap <leader>s4 :execute(":S " . Spaces('4'))<CR>
+
+"turning off visuals for copying
+function! s:NoVisuals()
+if !exists("s:visuals_on")
+  let s:visuals_on = "true"
+endif
+if s:visuals_on == "true"
+  let s:visuals_on = "false"
+  set nonumber
+  set nolist
+  echo 'Visuals off'
+else
+  let s:visuals_on = "true"
+  set number
+  set list
+  echo 'Visuals on'
+endif
+endfunction
+noremap <leader>n :call <SID>NoVisuals()<CR>
+
 "noremap <buffer> <silent> <expr> <leader>a AutoPairsToggle()
 " paste mode
 map <leader>p :setlocal paste!<CR>

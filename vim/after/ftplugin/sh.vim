@@ -1,1 +1,1 @@
-setlocal sw=8 ts=8 noet
+setlocal sts=8 sw=8 ts=8 noet

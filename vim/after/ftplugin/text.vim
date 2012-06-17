@@ -1,3 +1,2 @@
-setlocal textwidth=78 nosmartindent
-setlocal spell sw=2
+setlocal textwidth=78 nosmartindent spell
 let g:AutoPairs = {'(' : ')', '[' : ']', '{': '}'}
