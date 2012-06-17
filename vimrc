@@ -7,7 +7,7 @@ let mapleader=","
 
 " pathogen setup
 runtime bundle/vim-pathogen/autoload/pathogen.vim
-call pathogen#infect() 
+call pathogen#infect()
 
 " general settings
 set path=.,,**
@@ -24,7 +24,7 @@ set directory=~/tmp/vim,.,/var/tmp,/tmp
 
 " no backups
 set nobackup
-set noswapfile
+set writebackup
 
 " tab and buffer behaviour
 set switchbuf=usetab,newtab
@@ -45,7 +45,8 @@ set shiftround
 
 " filetypes
 filetype plugin indent on
-autocmd FileType c,cpp,java setlocal sw=2 ts=2
+autocmd FileType c,cpp,java setlocal sw=2 softtabstop=2
+let g:tex_flavor='latex'
 
 " searching
 set hlsearch
@@ -126,10 +127,10 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=white
 
 " ctrl-p
 let g:ctrlp_map = ',f'
-let g:ctrlp_prompt_mappings = {
-  \ 'AcceptSelection("e")': ['<c-e>'],
-  \ 'AcceptSelection("t")': ['<cr>', '<c-m>'],
-  \ }
+"let g:ctrlp_prompt_mappings = {
+  "\ 'AcceptSelection("e")': ['<c-e>'],
+  "\ 'AcceptSelection("t")': ['<cr>', '<c-m>'],
+  "\ }
 
 " fix the shift-left/right etc. mappings in tmux
 if &term =~ '^screen'
