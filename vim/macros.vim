@@ -44,9 +44,9 @@ function Spaces(...)
   let &l:shiftwidth = l:width
   let &l:softtabstop = l:width
 endfunction
-command! T setlocal noexpandtab shiftwidth=8 tabstop=8 softtabstop=0
+command! T setlocal noexpandtab shiftwidth=8 tabstop=8 softtabstop=8
 command! -nargs=? S call Spaces(<args>)</args>
-noremap <leader>t :setlocal noexpandtab shiftwidth=8 tabstop=8 softtabstop=0
+noremap <leader>t :setlocal noexpandtab shiftwidth=8 tabstop=8 softtabstop=8<CR>
 noremap <leader>s2 :execute(":S " . Spaces('2'))<CR>
 noremap <leader>s4 :execute(":S " . Spaces('4'))<CR>
 
