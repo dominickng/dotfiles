@@ -49,6 +49,8 @@ autocmd FileType c,cpp,java setlocal sw=2 softtabstop=2
 let g:tex_flavor='latex'
 
 " searching
+" set include=^\\s*#\\s*include\\(.*boost\\)\\@!
+set complete-=i
 set hlsearch
 set ignorecase
 set incsearch
@@ -131,6 +133,7 @@ let g:ctrlp_map = ',f'
   "\ 'AcceptSelection("e")': ['<c-e>'],
   "\ 'AcceptSelection("t")': ['<cr>', '<c-m>'],
   "\ }
+let g:ctrlp_switch_buffer = 2
 
 " fix the shift-left/right etc. mappings in tmux
 if &term =~ '^screen'

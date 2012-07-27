@@ -45,10 +45,10 @@ function Spaces(...)
   let &l:softtabstop = l:width
 endfunction
 command! T setlocal noexpandtab shiftwidth=8 tabstop=8 softtabstop=8
-command! -nargs=? S call Spaces(<args>)</args>
+command! -nargs=? Sp call Spaces(<args>)</args>
 noremap <leader>t :setlocal noexpandtab shiftwidth=8 tabstop=8 softtabstop=8<CR>
-noremap <leader>s2 :execute(":S " . Spaces('2'))<CR>
-noremap <leader>s4 :execute(":S " . Spaces('4'))<CR>
+noremap <leader>s2 :call Spaces(2)<CR>
+noremap <leader>s4 :call Spaces(4)<CR>
 
 "turning off visuals for copying
 function! s:NoVisuals()
@@ -143,7 +143,7 @@ nnoremap <leader>json :%s/{/{\r/g<CR>:%s/}/\r}/g<CR>:%s/,/,\r/g<CR>:set ft=javas
 
 " time saver
 "nnoremap ; :
-inoremap kj <Esc>
+"inoremap kj <Esc>
 
 " Use ,d (or ,dd or ,dj or 20,dd) to delete a line without adding it to the
 " yanked stack (also, in visual mode)
