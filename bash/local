@@ -38,12 +38,28 @@ else
 	#export https_proxy=http://www-cache-test.it.usyd.edu.au:8000
 
 	# local path modifications
-	export PATH=$PATH:~/bin
+	export PATH=$PATH:~/bin:/n/schwafs/home/schwa/bin
 	export TEXINPUTS=".:${HOME}/repos/tex//:"
 	export CANDC_MODELS="${HOME}/candc/models"
 	export CLASSPATH=$CLASSPATH:${HOME}/utils/weka/weka.jar:/mnt/home/dom/utils/libsvm/java/libsvm.jar
 	export PYTHONPATH="${HOME}/local/eggs/lib/python2.6/site-packages:${HOME}/repos/ncss/ncssbook:${HOME}/repos/wikipedia:${HOME}/repos/schwapy:$PYTHONPATH"
 	export SCHWA_WORKSPACE=$HOME/repos
+
+	# Add the schwa repo.
+	SCHWA_BUILD=$SCHWA_WORKSPACE/schwa/build/lib.linux-x86_64-2.7
+	SCHWA_LIB=$SCHWA_WORKSPACE/schwa/lib
+	if [ -d "$SCHWA_BUILD" ]; then
+			echo "Adding $SCHWA_BUILD to PYTHONPATH" >&2
+			pathprepend $SCHWA_BUILD PYTHONPATH
+	else
+			echo "Not adding $SCHWA_BUILD to PYTHONPATH (missing directory)" >&2
+	fi
+	if [ -d "$SCHWA_LIB" ]; then
+			echo "Adding $SCHWA_LIB to LD_LIBRARY_PATH" >&2
+			pathprepend $SCHWA_LIB LD_LIBRARY_PATH
+	else
+			echo "Not adding $SCHWA_LIB to LD_LIBRARY_PATH (missing directory)" >&2
+	fi
 
 	ssource "/etc/bash_completion"
 fi
