@@ -107,19 +107,19 @@ highlight WhitespaceEOL ctermbg=lightblue
 " statusline
 set laststatus=2
 set statusline=
-set statusline +=%f                 "relative path
-"set statusline +=%h                "help buffer flag
-set statusline +=%r                 "readonly
-set statusline +=%y                 "file type
-set statusline +=%m                 "modified flag
-set statusline +=\ %{&ff}\          "file format
+set statusline+=%f                 "relative path
+"set statusline+=%h                "help buffer flag
+set statusline+=%r                 "readonly
+set statusline+=%y                 "file type
+set statusline+=%m                 "modified flag
+set statusline+=\ %{&ff}\          "file format
 set statusline+=%{&encoding}\       "encoding
-set statusline +=%=%c               "separator and column number
-set statusline +=,%l/%L\            "current line / total lines
-set statusline +=%{strftime(\"%d/%m/%y\ %H:%M\",getftime(expand(\"%:p\")))} " last modified
-set statusline +=\ %P               " percentage of file
-"set statusline +=0x%04B\           "character under cursor
-"set statusline +=%1*\ %n\ %*       "buffer number
+set statusline+=%=%c               "separator and column number
+set statusline+=,%l/%L\            "current line / total lines
+set statusline+=%{strftime(\"%d/%m/%y\ %H:%M\",getftime(expand(\"%:p\")))} " last modified
+set statusline+=\ %P               " percentage of file
+"set statusline+=0x%04B\           "character under cursor
+"set statusline+=%1*\ %n\ %*       "buffer number
 
 " indent-guide stuff
 let g:indent_guides_enable_on_vim_startup = 0
