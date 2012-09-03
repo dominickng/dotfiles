@@ -124,7 +124,7 @@ vnoremap > >gv
 
 " hard re-wrap text
 vmap <leader>q gq
-nmap <leader>q gqap
+nmap <leader>q gqip
 
 " re-select pasted text
 nnoremap <leader>v V`]
