@@ -8,6 +8,7 @@
 umask 0022
 
 # General environment settings
+export IFS="`printf '\n\t'`"
 export PAGER="less"
 export EDITOR="vim"
 export CVS_RSH="ssh"
