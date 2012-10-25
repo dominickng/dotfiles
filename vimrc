@@ -5,6 +5,12 @@ set nocompatible
 set nobk
 let mapleader=","
 
+"automatically reload vimrc when it is edited
+augroup myvimrc
+    au!
+    au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc,macros.vim so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
+augroup END
+
 " pathogen setup
 runtime bundle/vim-pathogen/autoload/pathogen.vim
 call pathogen#infect()

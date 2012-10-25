@@ -34,7 +34,7 @@ inoremap <TAB> <C-R>=InsertTabWrapper("forward")<CR>
 inoremap <S-TAB> <C-R>=InsertTabWrapper("backward")<CR>
 
 " indentation switching
-function Spaces(...)
+function! Spaces(...)
   if a:0 == 1
     let l:width = a:1
   else
@@ -158,10 +158,11 @@ command! -nargs=1 S let @/ = escape('<args>', '\')
 nmap <leader>S :execute(":S " . input('Regex-off: /'))<CR>
 
 " remove DOS end of lines
-nnoremap <silent> <leader>d :%s/$//g<CR>:%s// /g<CR>
+nnoremap <silent> <leader>rn :%s/\r/\r/ge<CR>:nohlsearch<CR>
 
 " edit vimrc
-nnoremap <silent> <leader>ev :e ~/.vimrc<CR>
+nnoremap <silent> <leader>vimrc :e ~/.vimrc<CR>
+nnoremap <silent> <leader>macros :e ~/.vim/macros.vim<CR>
 
 " tabs
 nnoremap <silent> <S-Right> :tabnext<CR>
