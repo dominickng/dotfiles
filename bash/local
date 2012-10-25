@@ -48,6 +48,8 @@ else
 	# Add the schwa repo.
 	SCHWA_BUILD=$SCHWA_WORKSPACE/schwa/build/lib.linux-x86_64-2.7
 	SCHWA_LIB=$SCHWA_WORKSPACE/schwa/lib
+	SCHWA_BIN=$SCHWA_WORKSPACE/schwa/bin
+	pathprepend /n/schwafs/home/schwa/64/lib LD_LIBRARY_PATH
 	if [ -d "$SCHWA_BUILD" ]; then
 			echo "Adding $SCHWA_BUILD to PYTHONPATH" >&2
 			pathprepend $SCHWA_BUILD PYTHONPATH
@@ -59,6 +61,12 @@ else
 			pathprepend $SCHWA_LIB LD_LIBRARY_PATH
 	else
 			echo "Not adding $SCHWA_LIB to LD_LIBRARY_PATH (missing directory)" >&2
+	fi
+	if [ -d "$SCHWA_BIN" ]; then
+			echo "Adding $SCHWA_BIN to PATH" >&2
+			pathprepend $SCHWA_BIN PATH
+	else
+			echo "Not adding $SCHWA_BIN to LD_LIBRARY_PATH (missing directory)" >&2
 	fi
 
 	ssource "/etc/bash_completion"
