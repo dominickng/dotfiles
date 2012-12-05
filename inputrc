@@ -10,7 +10,7 @@ $endif
 
 set completion-ignore-case On
 set expand-tilde on
-set match-hidden-files off 
+set match-hidden-files off
 set show-all-if-ambiguous on
 set show-all-if-unmodified on
 
