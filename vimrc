@@ -108,6 +108,8 @@ highlight LeadingSpace ctermbg=darkgreen guibg=darkgreen
 "highlight StatusLineNC ctermfg=black ctermbg=lightblue cterm=NONE
 highlight Tab gui=underline guifg=blue ctermbg=blue 
 highlight WhitespaceEOL ctermbg=lightblue
+highlight IndentGuidesOdd ctermbg=black
+highlight IndentGuidesEven ctermbg=darkgrey
 
 " highlight tabs
 
