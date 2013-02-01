@@ -92,6 +92,9 @@ map <leader>b :Bufferlist<CR>
 " toggle spell
 nnoremap <leader>spell :setlocal spell!<CR>
 
+" toggle gundo
+nnoremap <leader>g :GundoToggle<CR>
+
 " make enter, space, and delete work in normal mode like insert mode
 nnoremap <CR> i<CR><ESC>
 nnoremap <Space> i<Space><ESC>

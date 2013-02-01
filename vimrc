@@ -52,7 +52,8 @@ set shiftround
 " filetypes
 filetype plugin indent on
 autocmd FileType c,cpp,java setlocal sw=2 softtabstop=2
-let g:tex_flavor='latex'
+let g:tex_flavor = 'latex'
+let g:tex_noindent_env = 'verbatim\|comment\|lstlisting'
 
 " searching
 " set include=^\\s*#\\s*include\\(.*boost\\)\\@!
