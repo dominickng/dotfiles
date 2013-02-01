@@ -49,3 +49,6 @@
 [submodule "vim/bundle/vim-unimpaired"]
 	path = vim/bundle/vim-unimpaired
 	url = git://github.com/tpope/vim-unimpaired.git
+[submodule "vim/bundle/vim-searchcomplete"]
+	path = vim/bundle/vim-searchcomplete
+	url = git://github.com/vim-scripts/SearchComplete.git
