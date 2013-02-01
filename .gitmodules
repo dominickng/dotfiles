@@ -52,3 +52,6 @@
 [submodule "vim/bundle/vim-searchcomplete"]
 	path = vim/bundle/vim-searchcomplete
 	url = git://github.com/vim-scripts/SearchComplete.git
+[submodule "vim/bundle/vim-gundo"]
+	path = vim/bundle/vim-gundo
+	url = git://github.com/sjl/gundo.vim.git
