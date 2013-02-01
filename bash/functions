@@ -113,3 +113,12 @@ alias sscdiff='diff --side-by-side --suppress-common-lines -W"`tput cols`"'
 function compare() {
     comm -3 <(ls -1 $1) <(ls -1 $2) # Compare the contents of 2 dirs. Show only 2 columns, each for files unique to the directory.
 }
+
+#see what on localhost is listening on localhost
+function listening() {
+    sudo lsof -i 4@127.0.0.1
+}
+
+function regain() {
+    find $1 -name "*mp3" -print0 | xargs -0 aacgain -r -t -k
+}

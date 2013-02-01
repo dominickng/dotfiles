@@ -37,3 +37,15 @@
 [submodule "vim/bundle/vim-buffet"]
 	path = vim/bundle/vim-buffet
 	url = git://github.com/sandeepcr529/Buffet.vim.git
+[submodule "vim/bundle/vim-characterize"]
+	path = vim/bundle/vim-characterize
+	url = git://github.com/tpope/vim-characterize.git
+[submodule "vim/bundle/vim-speeddating"]
+	path = vim/bundle/vim-speeddating
+	url = git://github.com/tpope/vim-speeddating.git
+[submodule "vim/bundle/vim-align"]
+	path = vim/bundle/vim-align
+	url = git://github.com/vim-scripts/Align.git
+[submodule "vim/bundle/vim-unimpaired"]
+	path = vim/bundle/vim-unimpaired
+	url = git://github.com/tpope/vim-unimpaired.git
