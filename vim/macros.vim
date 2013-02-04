@@ -73,6 +73,9 @@ noremap <leader>n :call <SID>NoVisuals()<CR>
 " paste mode
 map <leader>p :setlocal paste!<CR>
 
+" ctrlp buffer finding
+noremap <leader>r :CtrlPBuffer<CR>
+
 "function! PasteToggle()
   "setlocal paste!
   "call AutoPairsToggle()
@@ -161,7 +164,7 @@ command! -nargs=1 S let @/ = escape('<args>', '\')
 nmap <leader>S :execute(":S " . input('Regex-off: /'))<CR>
 
 " remove DOS end of lines
-nnoremap <silent> <leader>rn :%s/\r/\r/ge<CR>:nohlsearch<CR>
+nnoremap <silent> <leader>dos :%s/\r/\r/ge<CR>:nohlsearch<CR>
 
 " edit vimrc
 nnoremap <silent> <leader>vimrc :e ~/.vimrc<CR>
