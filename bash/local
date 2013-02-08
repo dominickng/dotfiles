@@ -68,6 +68,7 @@ else
 	else
 			echo "Not adding $SCHWA_BIN to LD_LIBRARY_PATH (missing directory)" >&2
 	fi
+	pathprepend /n/schwafs/home/dom/local/lib LD_LIBRARY_PATH
 
 	ssource "/etc/bash_completion"
 fi
