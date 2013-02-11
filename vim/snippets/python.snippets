@@ -1,0 +1,230 @@
+snippet #!
+	#!/usr/bin/env python
+
+snippet #!3
+	#!/usr/bin/env python3
+
+snippet imp
+	import ${1:module}
+
+snippet from
+	from ${1:package} import ${2:module}
+
+# Module Docstring
+snippet docs
+	'''
+	File: ${1:`Filename('$1.py', 'foo.py')`}
+	Author: ${2:`g:snips_author`}
+	Description: ${3}
+	'''
+
+snippet wh
+	while ${1:condition}:
+		${2:# TODO: write code...}
+
+# dowh - does the same as do...while in other languages
+snippet dowh
+	while True:
+		${1:# TODO: write code...}
+		if ${2:condition}:
+			break
+
+snippet with
+	with ${1:expr} as ${2:var}:
+		${3:# TODO: write code...}
+
+# New Class
+snippet     cl
+abbr        class Class(...): ...
+	class ${1:name}(${2:object}):
+		def __init__(self, ${4}):
+			${0}
+
+snippet     cld
+abbr        class Class(...): ...
+	class ${1:name}(${2:object}):
+		"""${3:#:class documentation}"""
+		def __init__(self, ${4}):
+			${0}
+
+snippet cl1arg
+	class ${1:name}(${2:object}):
+		"""${3:docstring for $1}"""
+		def __init__(self, ${4:arg}):
+			${5:super($1, self).__init__()}
+			self.$4 = $4
+			${6}
+
+snippet clsuper
+	class ${1:name}(${2:object}):
+		"""${3:docstring for $1}"""
+		def __init__(self, ${4:arg}):
+			${5:super($1, self).__init__()}
+			${6}
+
+# New Function
+snippet     def
+abbr        def function(...): ...
+options     head
+	def ${1:name}(${2:`indent('.') ? 'self' : ''`}):
+		${0:TARGET}
+
+snippet defd
+	def ${1:fname}(${2:`indent('.') ? 'self' : ''`}):
+		"""${3:docstring for $1}"""
+		${4:# TODO: write code...}
+
+snippet deff
+	def ${1:fname}(${2:`indent('.') ? 'self' : ''`}):
+		${3:# TODO: write code...}
+
+# New Method
+snippet defm
+	def ${1:mname}(self, ${2:arg}):
+		${3:# TODO: write code...}
+
+snippet     defmd
+abbr        def method(self, ...): "..."
+options     head
+	def ${1:mname}(self, ${2:arg}):
+		"""${3:#:method documentation}"""
+		${0:TARGET}
+
+# New Property
+snippet property
+	def ${1:foo}():
+		doc = "${2:The $1 property.}"
+		def fget(self):
+			${3:return self._$1}
+		def fset(self, value):
+			${4:self._$1 = value}
+		def fdel(self):
+			${5:del self._$1}
+		return locals()
+	$1 = property(**$1())
+
+# Ifs
+snippet if
+	if ${1:condition}:
+		${2:# TODO: write code...}
+
+# no extra indent because python indent does that for us
+snippet else
+	else:
+	${1:# TODO: write code...}
+
+snippet elif
+	elif ${1:condition}:
+	${2:# TODO: write code...}
+
+# For
+snippet for
+	for ${1:item} in ${2:items}:
+		${3:# TODO: write code...}
+
+# Encodes
+snippet cutf8
+	# -*- coding: utf-8 -*-
+snippet clatin1
+	# -*- coding: latin-1 -*-
+snippet cascii
+	# -*- coding: ascii -*-
+
+# Lambda
+snippet ld
+	lambda ${1:vars}: ${2:action}
+
+snippet .
+	self.
+
+snippet try
+	try:
+		${1:# TODO: write code...}
+	except ${2:Exception} as ${3:e}:
+		${4:raise $3}
+snippet trye
+	try:
+		${1:# TODO: write code...}
+	except ${2:Exception} as ${3:e}:
+		${4:raise $3}
+	else:
+		${5:# TODO: write code...}
+snippet tryf
+	try:
+		${1:# TODO: write code...}
+	except ${2:Exception} as ${3:e}:
+		${4:raise $3}
+	finally:
+		${5:# TODO: write code...}
+snippet tryff
+	try:
+		${1:# TODO: write code...}
+	except ${2:Exception} as ${3:e}:
+		${4:raise $3}
+	else:
+		${5:# TODO: write code...}
+	finally:
+		${6:# TODO: write code...}
+
+snippet except
+	except ${1:Exception} as ${2:e}:
+		${3:raise e}
+
+# if __name__ == '__main__':
+snippet ifmain
+	if __name__ == '__main__':
+		${1:main()}
+# __magic__
+snippet _
+	__${1:init}__${2}
+
+# python debugger (pdb)
+snippet pdb
+	import pdb; pdb.set_trace()
+# ipython debugger (ipdb)
+snippet ipdb
+	import ipdb; ipdb.set_trace()
+# ipython debugger (pdbbb)
+snippet pdbbb
+	import pdbpp; pdbpp.set_trace()
+snippet pprint
+	import pprint; pprint.pprint(${1})${2}
+snippet "
+	"""${1:doc}"""
+
+# test function/method
+snippet test
+	def test_${1:description}(${2:`indent('.') ? 'self' : ''`}):
+		${3:# TODO: write code...}
+# test case
+snippet testcase
+	class ${1:ExampleCase}(unittest.TestCase):
+		
+		def test_${2:description}(self):
+			${3:# TODO: write code...}
+
+snippet fut
+	from __future__ import ${1}
+
+#getopt
+snippet getopt
+	try:
+		# Short option syntax: "hv:"
+		# Long option syntax: "help" or "verbose="
+		opts, args = getopt.getopt(sys.argv[1:], "${1:short_options}", [${2:long_options}])
+	
+	except getopt.GetoptError, err:
+		# Print debug info
+		print str(err)
+		${3:error_action}
+
+	for option, argument in opts:
+		if option in ("-h", "--help"):
+			${4}
+		elif option in ("-v", "--verbose"):
+			verbose = argument
+
+snippet     filter
+abbr        [x for x in {list} if {condition}]
+	[$1 for ${1:x} in ${2:#:list} if ${3:#:condition}]
+
