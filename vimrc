@@ -12,8 +12,12 @@ augroup myvimrc
 augroup END
 
 " pathogen setup
+"let g:pathogen_disabled = []
+"if v:version < '703' || !has('python')
+    "call add(g:pathogen_disabled, 'gundo')
+"endif
 runtime bundle/vim-pathogen/autoload/pathogen.vim
-call pathogen#infect()
+execute pathogen#infect()
 
 " general settings
 set path=.,,**
