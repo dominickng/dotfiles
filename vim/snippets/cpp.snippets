@@ -61,7 +61,8 @@ snippet     try
 abbr        try catch
     try {
         ${1:TARGET}
-    } catch (${2:e:xception}) {
+    }
+    catch (${2:exception}) {
         ${3}
     }
 
@@ -109,7 +110,7 @@ snippet mfun
 snippet ns
 	namespace ${1:`Filename('', 'my')`} {
 		${2}
-	} /* namespace $1 */
+	}
 ##
 ## Input/Output
 # std::cout

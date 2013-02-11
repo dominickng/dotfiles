@@ -330,6 +330,9 @@ let g:neosnippet#disable_runtime_snippets = {
 \   '_' : 1,
 \ }
 
+" add snipmate style functions
+let g:neosnippet#enable_snipmate_compatibility = 1
+
 " For snippet_complete marker.
 if has('conceal')
   set conceallevel=2 concealcursor=i

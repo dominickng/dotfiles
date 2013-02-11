@@ -39,14 +39,13 @@ snippet #if
 		${2}
 	#endif
 # header include guard
-snippet once
+snippet #once
 	#ifndef ${1:`toupper(Filename('$1_H', 'UNTITLED_H'))`}
-
 	#define $1
 
 	${2}
 
-	#endif /* end of include guard: $1 */
+	#endif
 
 ## Control Statements
 # if
@@ -69,7 +68,8 @@ snippet     ifelse
 abbr        if () {} else {}
     if (${1:#:condition}) {
         ${2:TARGET}
-    } else {
+    }
+    else {
         ${3}
     }
 
@@ -123,8 +123,7 @@ snippet do_while
 ## Functions
 # function definition
 snippet func
-	${1:void} ${2:function_name}(${3})
-	{
+	${1:void} ${2:function_name}(${3}) {
 		${4:/* code */}
 	}${5}
 # function declaration
@@ -166,10 +165,8 @@ snippet fpr
 # getopt
 snippet getopt
 	int choice;
-	while (1)
-	{
-		static struct option long_options[] =
-		{
+	while (1) {
+		static struct option long_options[] = {
 			/* Use flags like so:
 			{"verbose",	no_argument,	&verbose_flag, 'V'}*/
 			/* Argument styles: no_argument, required_argument, optional_argument */
@@ -192,8 +189,7 @@ snippet getopt
 		if (choice == -1)
 			break;
 
-		switch( choice )
-		{
+		switch(choice) {
 			case 'v':
 				${2}
 				break;
@@ -213,10 +209,8 @@ snippet getopt
 	}
 
 	/* Deal with non-option arguments here */
-	if ( optind < argc )
-	{
-		while ( optind < argc )
-		{
+	if (optind < argc) {
+		while (optind < argc) {
 			${4}
 		}
 	}
