@@ -14,7 +14,7 @@ snippet from
 snippet docs
 	'''
 	File: ${1:`Filename('$1.py', 'foo.py')`}
-	Author: ${2:`g:snips_author`}
+	Author: ${2:}
 	Description: ${3}
 	'''
 
@@ -228,3 +228,25 @@ snippet     filter
 abbr        [x for x in {list} if {condition}]
 	[$1 for ${1:x} in ${2:#:list} if ${3:#:condition}]
 
+snippet optimport
+	from optparse import make_option, OptionParser
+
+snippet optlist
+	OPTIONS = [
+	    make_option(${0:short_arg}, ${1:long_arg}, dest=${2:dest}, ${3:action="store_true"}, ${4}, help=${5:help}),${6}
+	]
+
+snippet option
+	make_option(${0:short_arg}, ${1:long_arg}, dest=${2:dest}, ${3:action="store_true"}, ${4}, help=${5:help}),
+
+snippet optparse
+	usage = "Usage: {0} [opts]".format(sys.argv[0])
+	parser = OptionParser(usage, option_list=OPTIONS)
+	opts, args = parser.parse_args()
+
+snippet logimport
+	import logging
+
+snippet logsetup
+	logging.basicConfig(level=logging.INFO, format='%(asctime) - %(levelname)s: %(message)s)
+	log = logging.getLogger(__file__)

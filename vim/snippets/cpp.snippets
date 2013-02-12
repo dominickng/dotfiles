@@ -102,7 +102,7 @@ snippet clp
 	};
 
 # member function implementation
-snippet mfun
+snippet mfunc
 	${4:void} ${1:`Filename('$1', 'ClassName')`}::${2:memberFunction}(${3}) {
 		${5:/* code */}
 	}
@@ -122,43 +122,44 @@ snippet cin
 ##
 ## Iteration
 # for i 
-snippet fori
-	for (int ${2:i} = 0; $2 < ${1:count}; $2${3:++}) {
-		${4:/* code */}
-	}${5}
+delete forint
+snippet forint
+	for (int ${1:i} = 0; $1 < ${2:count}; ${3:++}$1) {
+		${4}
+	}
 
-snippet fors
-	for (size_t ${2:i} = 0; $2 < ${1:count}; $2${3:++}) {
-		${4:/* code */}
-	}${5}
+snippet forsize
+	for (size_t ${2:i} = 0; $2 < ${1:count}; ${3:++}$2) {
+		${4}
+	}
 
 snippet forv
-	for ({$1} ${3:i} = 0; $3 < ${2:count}; $3${4:++}) {
-		${5:/* code */}
-	}${6}
+	for (${1} ${2:i} = ${3}; $2 $4 ${5:count}; ${6:++}$2) {
+		${7}
+	}
 
 # foreach
-snippet fore
+snippet foreach
 	for (${1:auto} ${2:i} : ${3:container}) {
-		${4:/* code */}
-	}${5}
+		${4}
+	}
 # iterator
-snippet iter
+snippet foriter
 	for (${1:type}::${2:const_iterator} ${3:i} = ${4:container}.begin(); $3 != $4.end(); ++$3) {
 		${5}
-	}${6}
+	}
 
-snippet itert
+snippet forstl
 	for (${1:std::vector}<${2:type}>::${3:const_iterator} ${4:i} = ${5:container}.begin(); $4 != $5.end(); ++$4) {
 		${6}
-	}${7}
+	}
 
 # auto iterator
-snippet itera
+snippet fora
 	for (auto ${1:i} = $1.begin(); $1 != $1.end(); ++$1) {
 		${2:std::cout << *$1 << std::endl;}
-	}${3}
-##
+	}
+
 ## Lambdas
 # lamda (one line)
 snippet ld
@@ -168,14 +169,6 @@ snippet lld
 	[${1}](${2}){
 		${3:/* code */}
 	}${4}
-
-delete      namespace
-snippet     namespace
-abbr        namespace {}
-options     head
-    namespace ${1:#:name} {
-        ${0:TARGET}
-    } // namespace $1
 
 snippet     static_cast
 abbr        static_cast<>()
@@ -200,6 +193,6 @@ abbr        #include<iostream> int main...
 
     int main(int argc, const char *argv[]) {
         std::cout << "hello, world!" << std::endl;
-        return 0;
+        ${0:return 0;}
     }
 
