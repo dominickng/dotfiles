@@ -146,7 +146,10 @@ let g:ctrlp_map = ',f'
   "\ 'AcceptSelection("e")': ['<c-e>'],
   "\ 'AcceptSelection("t")': ['<cr>', '<c-m>'],
   "\ }
-let g:ctrlp_switch_buffer = 2
+let g:ctrlp_switch_buffer = 'Et'
+let g:ctrlp_tabpage_position = 'al'
+let g:ctrlp_cache_dir = '~/tmp/vim/ctrlp'
+let g:ctrlp_open_multiple_files = '2vjr'
 
 " fix the shift-left/right etc. mappings in tmux
 if &term =~ '^screen'
@@ -158,4 +161,5 @@ if &term =~ '^screen'
 endif
 
 " Load other macros
+source $HOME/.vim/neocomplcache.vim
 source $HOME/.vim/macros.vim
