@@ -91,6 +91,11 @@ snippet cl
 		${2}
 	};
 
+snippet cli
+	class ${1:`Filename('$1', 'name')`} : ${2:Base} {
+		${3}
+	};
+
 snippet clp
 	class ${1:`Filename('$1', 'name')`} {
 	public:
@@ -134,7 +139,7 @@ snippet forsize
 	}
 
 snippet forv
-	for (${1} ${2:i} = ${3}; $2 $4 ${5:count}; ${6:++}$2) {
+	for (${1} ${2:i} = ${3}; $2 ${4:<} ${5:count}; ${6:++}$2) {
 		${7}
 	}
 

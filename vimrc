@@ -11,6 +11,8 @@ augroup myvimrc
     au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc,macros.vim so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
 augroup END
 
+source $HOME/.vim/neocomplcache.vim
+
 " pathogen setup
 "let g:pathogen_disabled = []
 "if v:version < '703' || !has('python')
@@ -161,5 +163,4 @@ if &term =~ '^screen'
 endif
 
 " Load other macros
-source $HOME/.vim/neocomplcache.vim
 source $HOME/.vim/macros.vim
