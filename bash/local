@@ -17,6 +17,7 @@ if [ `uname` = 'Darwin' ]; then
 	alias volcheck='sudo fsck_hfs -f -c 2200m' # /dev/disk2
 	alias postgres-start='pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start'
 	alias postgres-stop='pg_ctl -D /usr/local/var/postgres stop -s -m fast'
+	alias fixopenwith='/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user'
 
 	#bash completion
 	BREW_PREFIX=`brew --prefix`
