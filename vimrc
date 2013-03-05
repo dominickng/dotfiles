@@ -5,6 +5,17 @@ set nocompatible
 set nobk
 let mapleader=","
 
+" indentation
+set autoindent
+set copyindent
+set expandtab
+set softtabstop=2
+set smarttab
+set tabstop=8
+set nojoinspaces
+set shiftwidth=2
+set shiftround
+
 "automatically reload vimrc when it is edited
 augroup myvimrc
     au!
@@ -43,17 +54,6 @@ set switchbuf=usetab,newtab
 
 " diable netrw history
 let g:netrw_dirhistmax=0
-
-" indentation
-set autoindent
-set copyindent
-set expandtab
-set softtabstop=2
-set smarttab
-set tabstop=8
-set nojoinspaces
-set shiftwidth=2
-set shiftround
 
 " filetypes
 filetype plugin indent on

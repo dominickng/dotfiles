@@ -58,3 +58,6 @@
 [submodule "vim/bundle/vim-neosnippet"]
 	path = vim/bundle/vim-neosnippet
 	url = git://github.com/Shougo/neosnippet.git
+[submodule "vim/bundle/vim-sleuth"]
+	path = vim/bundle/vim-sleuth
+	url = git://github.com/tpope/vim-sleuth.git
