@@ -144,6 +144,9 @@ nmap <leader>q gqip
 " re-select pasted text
 nnoremap <leader>v V`]
 
+" different way to re-select pasted text
+nnoremap <expr> gV    "`[".getregtype(v:register)[0]."`]"
+
 " clear out all trailing whitespace
 nnoremap <leader>c :%s/\s\+$//<CR>:let @/=''<CR>"
 
