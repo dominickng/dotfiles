@@ -86,6 +86,9 @@ noremap <leader>r :CtrlPBuffer<CR>
 " search for visually highlighted text
 vmap // y/<C-R>"<CR>
 
+" searcn and replace visually highlighted text
+vnoremap <C-r> "hy:%s/<C-r>h//g<left><left><left>"
+
 " tab to switch between split windows
 noremap <Tab> <C-w><C-w>
 
