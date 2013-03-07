@@ -1,0 +1,27 @@
+#!/bin/bash
+
+PROGRAM=`basename $0`
+
+if [ ! $# == 2 ]; then
+  (
+    echo "$PROGRAM: incorrect number of command line arguments"
+    echo "usage: $PROGRAM <name> <windows>"
+    echo "name: name of session"
+    echo "windows: number of windows to create"
+  ) > /dev/stderr;
+    exit 1;
+fi
+
+SESSION=$1
+WINDOWS=$2
+tmux has-session -t $SESSION &> /dev/null
+
+if [ $? != 0 ]; then
+    tmux new-session -s $SESSION -d
+    for i in $(seq 2 $WINDOWS); do
+      tmux new-window -t $SESSION:$i
+    done
+    tmux select-window -t $SESSION:1
+fi
+
+tmux attach -t $SESSION
