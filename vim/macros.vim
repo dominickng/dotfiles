@@ -5,6 +5,21 @@
 " ds"   -> delete surrounding "
 " yss)  -> surround entire line with parentheses
 
+" use sane regexes in searches
+nnoremap / /\v
+vnoremap / /\v
+
+" don't move on *
+nnoremap * *<c-o>
+
+" gi already moves to 'last place you exited insert mode', so map
+" gI as move to last change
+nnoremap gI `.
+
+" (visual) X to eXchange two pieces of text
+" to use: first delete something, then visual something else
+xnoremap X <esc>`.``gvP``P
+
 " restore cursor position
 function! ResCur()
   if line("'\"") <= line("$")
@@ -87,7 +102,7 @@ vmap // y/<C-R>"<CR>
 vnoremap <C-r> "hy:%s/<C-r>h//g<left><left><left>"
 
 " faster way to start global replace for the previous search
-nnoremap <C-n> :%s///g<left><left>
+"nnoremap <C-k> :%s///g<left><left>
 
 " tab to switch between split windows
 noremap <Tab> <C-w><C-w>
@@ -100,6 +115,9 @@ nnoremap Q <nop>
 
 " split line at cursor, analogue to J
 nnoremap K i<CR><ESC>
+
+" remap K (open man page)
+nnoremap M K
 
 " make space and delete work in normal mode like insert mode
 nnoremap <Space> i<Space><ESC>

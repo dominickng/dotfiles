@@ -5,7 +5,7 @@ set nocompatible
 set nobk
 let mapleader=","
 
-" indentation
+" indentation. possibly overwritten by vim-sleuth, but set to defaults here
 set autoindent
 set copyindent
 set expandtab
@@ -36,6 +36,8 @@ execute pathogen#infect()
 set path=.,,**
 set history=1000
 set viminfo='10,\"100,:20,%,n~/.viminfo'
+set splitbelow
+set splitright
 
 " create ~/tmp/ if it doesn't exist and use ~/tmp as the .swp dir
 if has("unix")
@@ -63,7 +65,7 @@ let g:tex_noindent_env = 'verbatim\|comment\|lstlisting'
 
 " searching
 " set include=^\\s*#\\s*include\\(.*boost\\)\\@!
-set complete-=i
+set complete=.,w,b,u,t
 set hlsearch
 set ignorecase
 set incsearch
@@ -88,18 +90,30 @@ set showmatch
 set showtabline=2
 set switchbuf=usetab
 set title
+set virtualedit+=block " allow cursor to roam in visual block
 set wildmenu
 set wildmode=list:longest,full
-set wildignore=.svn,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.png,*.xpm,*.gif,*.bak,*.pyc,*.class
+set wildignore+=.svn,.git,.hg " version control
+set wildignore+=*.aux,*.out,*.toc " LaTeX
+set wildignore+=*.jpg,*.jpeg,*.png,*.bmp,*.gif " LaTeX
+set wildignore+=*.o,*.obj,*.la,*.mo,*.pyc,*.so,*.class,*.a,*.sw? " object files
+set wildignore+=migrations " Django migration"
+
+" resize splits on window resize
+autocmd VimResized * :wincmd =
 
 " syntax highlighting and colors
 syntax on
-set backspace=indent,eol,start
-set cursorline
 set background=dark
+set backspace=indent,eol,start
+set colorcolumn=+1
+set cursorline
+set formatoptions=qrn1
 let g:solarized_termtrans = 1
-"colorscheme default
 colorscheme solarized
+
+" Don't try to highlight lines longer than 800 characters.
+set synmaxcol=800
 
 "highlight Comment ctermfg=lightblue
 "highlight CursorLine cterm=NONE ctermbg=darkgray guibg=darkgray
