@@ -71,10 +71,7 @@ noremap <leader>n :call <SID>NoVisuals()<CR>
 
 "noremap <buffer> <silent> <expr> <leader>a AutoPairsToggle()
 " paste mode
-map <leader>p :setlocal paste!<CR>
-
-" ctrlp buffer finding
-noremap <leader>r :CtrlPBuffer<CR>
+"map <leader>p :setlocal paste!<CR>
 
 "function! PasteToggle()
   "setlocal paste!
@@ -86,31 +83,66 @@ noremap <leader>r :CtrlPBuffer<CR>
 " search for visually highlighted text
 vmap // y/<C-R>"<CR>
 
-" searcn and replace visually highlighted text
+" search and replace visually highlighted text
 vnoremap <C-r> "hy:%s/<C-r>h//g<left><left><left>"
+
+" faster way to start global replace for the previous search
+nnoremap <C-n> :%s///g<left><left>
 
 " tab to switch between split windows
 noremap <Tab> <C-w><C-w>
 
-" make s act like C-w
+" make s act like C-w, e.g. sl moves to left
 nnoremap s <C-W>
 
+" don't enter ex mode on accident
+nnoremap Q <nop>
+
+" split line at cursor, analogue to J
+nnoremap K i<CR><ESC>
+
+" make space and delete work in normal mode like insert mode
+nnoremap <Space> i<Space><ESC>
+"nnoremap <Del> a<Del><Esc>
+
+" enter adds a new line below the current one
+nnoremap <CR> A<CR><ESC>
+
+" append a semicolon to the current line
+nnoremap <leader>; A;<Esc>
+
+" move the current line up and down
+nnoremap <leader>k      :m-2<CR>==
+nnoremap <leader>j      :m+<CR>==
+nnoremap <leader><Up>   :m-2<CR>==
+nnoremap <leader><Down> :m+<CR>==
+
+" move the word under the cursor left and right
+nnoremap <leader>h       "_yiw?\v\w+\_W+%#<CR>:s/\v(%#\w+)(\_W+)(\w+)/\3\2\1/<CR><C-o><C-l>
+nnoremap <leader>l       "_yiw:s/\v(%#\w+)(\_W+)(\w+)/\3\2\1/<CR><C-o>/\v\w+\_W+<CR><C-l>
+nnoremap <leader><Left>  "_yiw?\v\w+\_W+%#<CR>:s/\v(%#\w+)(\_W+)(\w+)/\3\2\1/<CR><C-o><C-l>
+nnoremap <leader><Right> "_yiw:s/\v(%#\w+)(\_W+)(\w+)/\3\2\1/<CR><C-o>/\v\w+\_W+<CR><C-l>
+
+" isolate the current line
+nnoremap <leader><space><space> o<C-o>k<C-o>O<C-o>j<ESC>
+
 " yank visual selection as a single line
-" vnoremap <silent> <Leader>y "+y:let @+ = join(map(split(@+, '\n'), 'substitute(v:val, "^\\s\\+", "", "")'), " ")<CR>
+vnoremap <leader>- "+y:let @+ = join(map(split(@+, '\n'), 'substitute(v:val, "^\\s\\+", "", "")'), " ")<CR>
+
+" yank and paste to system clipboard
+nnoremap <leader>y "+Y
+vnoremap <leader>y "+y
+nnoremap <leader>p "+p
+nnoremap <leader>P "+P
 
 " buffet keymap
-map <leader>b :Bufferlist<CR>
+"map <leader>b :Bufferlist<CR>
 
 " toggle spell
 nnoremap <leader>spell :setlocal spell!<CR>
 
 " toggle gundo
 nnoremap <leader>g :GundoToggle<CR>
-
-" make enter, space, and delete work in normal mode like insert mode
-nnoremap <CR> i<CR><ESC>
-nnoremap <Space> i<Space><ESC>
-"nnoremap <Del> a<Del><Esc>
 
 " use ,/ to clear search highlight
 "noremap <leader>/ :nohlsearch<CR>/<BS><CR>
@@ -120,7 +152,7 @@ noremap <silent> <leader>/ :nohlsearch<CR>
 nnoremap <silent> <leader>, :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
 
 " show whitespace at EOL with <leader>ws
-nmap <silent> <leader>ws :set nolist!<CR>
+"nmap <silent> <leader>ws :set nolist!<CR>
 
 " don't jump to the start of a line when typing #
 inoremap # X<c-h>#
@@ -157,10 +189,10 @@ nnoremap <leader>c :%s/\s\+$//<CR>:let @/=''<CR>"
 nnoremap <leader>css ?{<CR>jV/^\s*\}?$<CR>k:sort<CR>:noh<CR>
 
 " format XML
-nnoremap <leader>xml :%s/>\s*</>\r</g<CR>:set ft=xml<CR>ggVG=
+nnoremap <leader>=xml :%s/>\s*</>\r</g<CR>:set ft=xml<CR>ggVG=
 
 " format JSON
-nnoremap <leader>json :%s/{/{\r/g<CR>:%s/}/\r}/g<CR>:%s/,/,\r/g<CR>:set ft=javascript<CR>ggVG=
+nnoremap <leader>=json :%s/{/{\r/g<CR>:%s/}/\r}/g<CR>:%s/,/,\r/g<CR>:set ft=javascript<CR>ggVG=
 
 " time saver
 "nnoremap ; :

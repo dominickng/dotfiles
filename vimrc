@@ -153,6 +153,10 @@ let g:ctrlp_tabpage_position = 'al'
 let g:ctrlp_cache_dir = '~/tmp/vim/ctrlp'
 let g:ctrlp_open_multiple_files = '2vjr'
 
+" ctrlp buffer finding
+noremap <leader>b :CtrlPBuffer<CR>
+nnoremap <leader>r :CtrlPMRU<CR>
+
 " fix the shift-left/right etc. mappings in tmux
 if &term =~ '^screen'
   " tmux will send xterm-style keys when its xterm-keys option is on
