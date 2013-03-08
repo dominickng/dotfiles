@@ -22,8 +22,6 @@ augroup myvimrc
     au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc,macros.vim so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
 augroup END
 
-source $HOME/.vim/neocomplcache.vim
-
 " pathogen setup
 "let g:pathogen_disabled = []
 "if v:version < '703' || !has('python')
@@ -126,7 +124,7 @@ highlight LeadingSpace ctermbg=darkgreen guibg=darkgreen
 "highlight SpellBad term=reverse ctermfg=white ctermbg=darkred
 "highlight StatusLine ctermfg=black ctermbg=green cterm=NONE
 "highlight StatusLineNC ctermfg=black ctermbg=lightblue cterm=NONE
-highlight Tab gui=underline guifg=blue ctermbg=blue 
+highlight Tab gui=underline guifg=blue ctermbg=blue
 highlight WhitespaceEOL ctermbg=lightblue
 highlight IndentGuidesOdd ctermbg=black
 highlight IndentGuidesEven ctermbg=darkgrey
@@ -182,3 +180,4 @@ endif
 
 " Load other macros
 source $HOME/.vim/macros.vim
+source $HOME/.vim/neocomplcache.vim

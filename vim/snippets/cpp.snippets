@@ -91,21 +91,6 @@ snippet cl
 		${2}
 	};
 
-snippet cli
-	class ${1:`Filename('$1', 'name')`} : ${2:Base} {
-		${3}
-	};
-
-snippet clp
-	class ${1:`Filename('$1', 'name')`} {
-	public:
-		$1(${2});
-		~$1();
-
-	private:
-		${3:/* data */}
-	};
-
 # member function implementation
 snippet mfunc
 	${4:void} ${1:`Filename('$1', 'ClassName')`}::${2:memberFunction}(${3}) {
@@ -134,7 +119,7 @@ snippet forint
 	}
 
 snippet forsize
-	for (size_t ${2:i} = 0; $2 < ${1:count}; ${3:++}$2) {
+	for (size_t ${1:i} = 0; $1 < ${2:count}; ${3:++}$1) {
 		${4}
 	}
 
@@ -143,11 +128,6 @@ snippet forv
 		${7}
 	}
 
-# foreach
-snippet foreach
-	for (${1:auto} ${2:i} : ${3:container}) {
-		${4}
-	}
 # iterator
 snippet foriter
 	for (${1:type}::${2:const_iterator} ${3:i} = ${4:container}.begin(); $3 != $4.end(); ++$3) {
@@ -157,12 +137,6 @@ snippet foriter
 snippet forstl
 	for (${1:std::vector}<${2:type}>::${3:const_iterator} ${4:i} = ${5:container}.begin(); $4 != $5.end(); ++$4) {
 		${6}
-	}
-
-# auto iterator
-snippet fora
-	for (auto ${1:i} = $1.begin(); $1 != $1.end(); ++$1) {
-		${2:std::cout << *$1 << std::endl;}
 	}
 
 ## Lambdas
