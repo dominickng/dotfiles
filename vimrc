@@ -5,7 +5,7 @@ set nocompatible
 set nobk
 let mapleader=","
 
-" indentation. possibly overwritten by vim-sleuth, but set to defaults here
+" indentation. possibly overwritten by vim-sleuth, but set defaults here
 set autoindent
 set copyindent
 set expandtab
@@ -31,11 +31,12 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 execute pathogen#infect()
 
 " general settings
-set path=.,,**
 set history=1000
-set viminfo='10,\"100,:20,%,n~/.viminfo'
+set nrformats-=octal
+set path=.,,**
 set splitbelow
 set splitright
+set viminfo='10,\"100,:20,%,n~/.viminfo'
 
 " create ~/tmp/ if it doesn't exist and use ~/tmp as the .swp dir
 if has("unix")
