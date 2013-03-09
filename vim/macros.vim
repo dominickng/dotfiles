@@ -6,8 +6,8 @@
 " yss)  -> surround entire line with parentheses
 
 " use sane regexes in searches
-nnoremap / /\v
-vnoremap / /\v
+"nnoremap / /\v
+"vnoremap / /\v
 
 " don't move on *
 nnoremap * *<c-o>
