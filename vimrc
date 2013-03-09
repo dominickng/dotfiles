@@ -165,6 +165,10 @@ let g:ctrlp_switch_buffer = 'Et'
 let g:ctrlp_tabpage_position = 'al'
 let g:ctrlp_cache_dir = '~/tmp/vim/ctrlp'
 let g:ctrlp_open_multiple_files = '2vjr'
+let g:ctrlp_custom_ignore = {
+    \ 'dir':  '\v[\/](\.git|\.hg|\.svn|working|bin)$',
+    \ 'file': '\v\.(exe|so|dll)$',
+    \ }
 
 " ctrlp buffer finding
 noremap <leader>b :CtrlPBuffer<CR>
