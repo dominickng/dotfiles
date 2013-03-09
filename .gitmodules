@@ -64,3 +64,6 @@
 [submodule "vim/bundle/vim-visual-star-search"]
 	path = vim/bundle/vim-visual-star-search
 	url = git://github.com/nelstrom/vim-visual-star-search.git
+[submodule "vim/bundle/vim-cmdline-completion"]
+	path = vim/bundle/vim-cmdline-completion
+	url = git://github.com/vim-scripts/cmdline-completion.git
