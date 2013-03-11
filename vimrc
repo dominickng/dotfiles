@@ -174,6 +174,16 @@ let g:ctrlp_custom_ignore = {
 noremap <leader>b :CtrlPBuffer<CR>
 nnoremap <leader>r :CtrlPMRU<CR>
 
+" tabularize
+nmap <leader>a& :Tabularize /&<CR>
+vmap <leader>a& :Tabularize /&<CR>
+nmap <leader>a\| :Tabularize /\|<CR>
+vmap <leader>a\| :Tabularize /\|<CR>
+nmap <leader>a= :Tabularize /=<CR>
+vmap <leader>a= :Tabularize /=<CR>
+nmap <leader>a: :Tabularize /:\zs<CR>
+vmap <leader>a: :Tabularize /:\zs<CR>
+
 " fix the shift-left/right etc. mappings in tmux
 if &term =~ '^screen'
   " tmux will send xterm-style keys when its xterm-keys option is on

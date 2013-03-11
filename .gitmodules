@@ -64,3 +64,6 @@
 [submodule "vim/bundle/vim-cmdline-completion"]
 	path = vim/bundle/vim-cmdline-completion
 	url = git://github.com/vim-scripts/cmdline-completion.git
+[submodule "vim/bundle/vim-tabular"]
+	path = vim/bundle/vim-tabular
+	url = git://github.com/godlygeek/tabular.git
