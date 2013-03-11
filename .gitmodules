@@ -34,9 +34,6 @@
 [submodule "vim/bundle/vim-ctrlp"]
 	path = vim/bundle/vim-ctrlp
 	url = git://github.com/kien/ctrlp.vim.git
-[submodule "vim/bundle/vim-buffet"]
-	path = vim/bundle/vim-buffet
-	url = git://github.com/sandeepcr529/Buffet.vim.git
 [submodule "vim/bundle/vim-characterize"]
 	path = vim/bundle/vim-characterize
 	url = git://github.com/tpope/vim-characterize.git
