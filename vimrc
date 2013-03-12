@@ -68,6 +68,7 @@ let g:tex_noindent_env = 'verbatim\|comment\|lstlisting'
 " searching
 " set include=^\\s*#\\s*include\\(.*boost\\)\\@!
 set complete=.,w,b,u,t
+set completeopt-=preview
 set hlsearch
 set ignorecase
 set incsearch
