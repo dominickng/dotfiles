@@ -59,6 +59,9 @@ let g:netrw_dirhistmax=0
 " filetypes
 filetype plugin indent on
 autocmd FileType c,cpp,java setlocal sw=2 softtabstop=2
+autocmd FileType c,cpp,java let b:match_words=
+   \ '\%(\<else\s\+\)\@<!\<if\>:\<else\s\+if\>:\<else\%(\s\+if\)\@!\>,' .
+   \ '\<switch\>:\<case\>:\<default\>'
 let g:tex_flavor = 'latex'
 let g:tex_noindent_env = 'verbatim\|comment\|lstlisting'
 

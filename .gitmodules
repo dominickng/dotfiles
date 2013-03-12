@@ -64,3 +64,6 @@
 [submodule "vim/bundle/vim-tabular"]
 	path = vim/bundle/vim-tabular
 	url = git://github.com/godlygeek/tabular.git
+[submodule "vim/bundle/vim-python-matchit"]
+	path = vim/bundle/vim-python-matchit
+	url = git://github.com/voithos/vim-python-matchit.git
