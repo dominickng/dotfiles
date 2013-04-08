@@ -108,7 +108,7 @@ vnoremap <C-r> "hy:%s/<C-r>h//g<left><left><left>"
 noremap <Tab> <C-w><C-w>
 
 " make s act like C-w, e.g. sl moves to left
-nnoremap s <C-W>
+"nnoremap s <C-W>
 
 " don't enter ex mode on accident
 nnoremap Q <nop>
