@@ -13,6 +13,7 @@ export PYTHONSTARTUP=$HOME/.pythonrc.py
 
 if [ `uname` = 'Darwin' ]; then
 	alias tmux='tmux -f ~/.tmux-osx.conf'
+	alias vim='reattach-to-user-namespace vim'
 	alias ls='ls -G'
 	alias grep='grep --color=auto'
 	alias volcheck='sudo fsck_hfs -f -c 2200m' # /dev/disk2
