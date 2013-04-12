@@ -236,6 +236,8 @@ nnoremap <silent> <leader>vimrc :e ~/.vimrc<CR>
 nnoremap <silent> <leader>macros :e ~/.vim/macros.vim<CR>
 
 " tabs
+inoremap <silent> <S-Right> <C-o>:tabnext<CR>
+inoremap <silent> <S-Left>  <C-o>:tabprevious<CR>
 nnoremap <silent> <S-Right> :tabnext<CR>
 nnoremap <silent> <S-Left>  :tabprevious<CR>
 nnoremap <silent> <C-l> :tabnext<CR>
