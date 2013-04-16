@@ -21,7 +21,10 @@ def save_history(histfile=histfile, histsize=histsize):
     readline.write_history_file(histfile)
 
 readline.set_completer(myCompleter)
-readline.parse_and_bind("tab: complete")
+if 'libedit' in readline.__doc__:
+    readline.parse_and_bind("bind ^I rl_complete")
+else:
+    readline.parse_and_bind("tab: complete")
 
 if os.path.exists(histfile):
     readline.read_history_file(histfile)
