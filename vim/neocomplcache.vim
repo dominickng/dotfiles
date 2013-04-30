@@ -11,7 +11,7 @@ let g:neocomplcache_min_syntax_length = 3
 " buffer file name pattern that locks neocomplcache. e.g. ku.vim or fuzzyfinder
 let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
 " max completions
-let g:neocomplcache_max_list = 12
+let g:neocomplcache_max_list = 15
 " do ctrl-n like completion
 "if !exists('g:neocomplcache_same_filetype')
   "let g:neocomplcache_same_filetype_lists = {}
@@ -79,6 +79,7 @@ let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
 " Plugin key-mappings.
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
 
 " Tab jumps to the next spot if jumpable. Otherwise it advances through
 " completions like usual
