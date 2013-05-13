@@ -62,6 +62,7 @@ autocmd FileType c,cpp,java setlocal sw=2 softtabstop=2
 autocmd FileType c,cpp,java let b:match_words=
    \ '\%(\<else\s\+\)\@<!\<if\>:\<else\s\+if\>:\<else\%(\s\+if\)\@!\>,' .
    \ '\<switch\>:\<case\>:\<default\>'
+let g:tex_indent_items = 0
 let g:tex_flavor = 'latex'
 let g:tex_noindent_env = 'verbatim\|comment\|lstlisting'
 
@@ -114,6 +115,8 @@ set cursorline
 set formatoptions=qrn1
 let g:solarized_termtrans = 1
 colorscheme solarized
+highlight! link DiffText MatchParen
+
 
 " Don't try to highlight lines longer than 800 characters.
 set synmaxcol=800
