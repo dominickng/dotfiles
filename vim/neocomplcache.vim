@@ -1,17 +1,34 @@
 " Launches neocomplcache automatically on vim startup.
 let g:neocomplcache_enable_at_startup = 1
+let g:neocomplcache_disable_auto_complete = 0
+let g:neocomplcache_disable_auto_complete = 0
 " Use smartcase.
+let g:neocomplcache_enable_ignore_case = 1
 let g:neocomplcache_enable_smart_case = 1
 " Use camel case completion.
 let g:neocomplcache_enable_camel_case_completion = 1
 " Use underscore completion.
 let g:neocomplcache_enable_underbar_completion = 1
 " Sets minimum char length of syntax keyword.
+let g:neocomplcache_auto_completion_start_length = 2
+let g:neocomplcache_manual_completion_start_length = 2
+let g:neocomplcache_min_keyword_length = 3
 let g:neocomplcache_min_syntax_length = 3
 " buffer file name pattern that locks neocomplcache. e.g. ku.vim or fuzzyfinder
 let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
 " max completions
-let g:neocomplcache_max_list = 15
+let g:neocomplcache_max_list = 20
+let g:neocomplcache_max_keyword_width = 50
+let g:neocomplcache_max_filename_width = 15
+
+if !exists('g:neocomplcache_same_filetype_lists')
+  let g:neocomplcache_same_filetype_lists = {}
+endif
+let g:neocomplcache_same_filetype_lists.html  = 'css'
+let g:neocomplcache_same_filetype_lists.xhtml = 'html'
+
+let g:neocomplcache_plugin_disable = { 'tags_complete': 1 }
+
 " do ctrl-n like completion
 "if !exists('g:neocomplcache_same_filetype')
   "let g:neocomplcache_same_filetype_lists = {}
@@ -44,9 +61,28 @@ inoremap <expr><C-l>     neocomplcache#complete_common_string()
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
+imap <expr> <C-x> <SID>neocom_cancel_popup_and('<C-x>')
+imap <expr> <CR>  <SID>neocom_close_popup_and('<CR>')
+ 
+function! s:neocom_cancel_popup_and(key)
+  if pumvisible() && exists('*neocomplcache#cancel_popup')
+    return neocomplcache#cancel_popup() . a:key
+  else
+    return a:key
+  endif
+endfunction
+ 
+function! s:neocom_close_popup_and(key)
+  if pumvisible() && exists('*neocomplcache#close_popup')
+    return neocomplcache#close_popup() . a:key
+  else
+    return a:key
+  endif
+endfunction
+
 " Recommended key-mappings.
 " <CR>: close popup and save indent.
-inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
+"inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
 " <TAB>: completion.
 "inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " <C-h>, <BS>: close popup and delete backword char.
