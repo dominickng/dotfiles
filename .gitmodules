@@ -73,3 +73,12 @@
 [submodule "vim/bundle/vim-seek"]
 	path = vim/bundle/vim-seek
 	url = git://github.com/goldfeld/vim-seek.git
+[submodule "vim/bundle/vim-textobj-user"]
+	path = vim/bundle/vim-textobj-user
+	url = git://github.com/kana/vim-textobj-user.git
+[submodule "vim/bundle/vim-textobj-underscore"]
+	path = vim/bundle/vim-textobj-underscore
+	url = git://github.com/lucapette/vim-textobj-underscore.git
+[submodule "vim/bundle/vim-textobj-indent"]
+	path = vim/bundle/vim-textobj-indent
+	url = git://github.com/kana/vim-textobj-indent.git
