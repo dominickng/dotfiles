@@ -81,6 +81,11 @@ map <down> <nop>
 map <left> <nop>
 map <right> <nop>
 
+nnoremap <up> <c-w>+
+nnoremap <down> <c-w>-
+nnoremap <left> <c-w><
+nnoremap <right> <c-w>>
+
 " visual
 set display+=lastline
 set list

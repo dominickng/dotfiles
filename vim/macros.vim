@@ -84,22 +84,15 @@ endif
 endfunction
 noremap <leader>n :call <SID>NoVisuals()<CR>
 
-"noremap <buffer> <silent> <expr> <leader>a AutoPairsToggle()
 " paste mode
 "map <leader>p :setlocal paste!<CR>
-
-"function! PasteToggle()
-  "setlocal paste!
-  "call AutoPairsToggle()
-  "return
-"endfunction
-"noremap <buffer> <silent> <expr> <leader>p PasteToggle()
+nnoremap <silent> <leader>1 :set paste!<CR>
 
 " search for visually highlighted text
 vmap // y/<C-R>"<CR>
 
 " search and replace visually highlighted text
-vnoremap <C-r> "hy:%s/<C-r>h//g<left><left><left>"
+vnoremap <C-r> hy:%s/<C-r>h//g<left><left>
 
 " faster way to start global replace for the previous search
 "nnoremap <C-k> :%s///g<left><left>
@@ -153,9 +146,6 @@ vnoremap <leader>y "+y
 nnoremap <leader>p "+p
 nnoremap <leader>P "+P
 
-" buffet keymap
-"map <leader>b :Bufferlist<CR>
-
 " toggle spell
 nnoremap <leader>spell :setlocal spell!<CR>
 
@@ -183,8 +173,8 @@ imap <C-f> <C-o>w
 imap <C-b> <C-o>b
 
 " CTRL-J/K to move up and down, collapsing open windows
-map <C-J> <C-W>j<C-W>_
-map <C-K> <C-W>k<C-W>_
+map <C-j> <C-W>j<C-W>_
+map <C-k> <C-W>k<C-W>_
 
 " select visual block after in/dedent so we can in/dedent more
 vnoremap < <gv
@@ -201,7 +191,7 @@ nnoremap <leader>v V`]
 nnoremap <expr> gV    "`[".getregtype(v:register)[0]."`]"
 
 " clear out all trailing whitespace
-nnoremap <leader>c :%s/\s\+$//<CR>:let @/=''<CR>"
+nnoremap <leader>ws :%s/\s\+$//<CR>:let @/=''<CR>"
 
 " sort CSS properties
 nnoremap <leader>css ?{<CR>jV/^\s*\}?$<CR>k:sort<CR>:noh<CR>
@@ -212,6 +202,16 @@ nnoremap <leader>=xml :%s/>\s*</>\r</g<CR>:set ft=xml<CR>ggVG=
 " format JSON
 nnoremap <leader>=json :%s/{/{\r/g<CR>:%s/}/\r}/g<CR>:%s/,/,\r/g<CR>:set ft=javascript<CR>ggVG=
 
+" - or _ : Quick horizontal splits
+nnoremap - :sp<Space>
+nnoremap -- :sp<CR>
+nnoremap _ :sp<Space>
+nnoremap __ :sp<CR>
+
+" | : Quick vertical splits
+nnoremap <bar> :vsp<Space>
+nnoremap <bar><bar> :vsp<CR>
+
 " time saver
 "nnoremap ; :
 "inoremap kj <Esc>
@@ -221,6 +221,7 @@ nnoremap <leader>=json :%s/{/{\r/g<CR>:%s/}/\r}/g<CR>:%s/,/,\r/g<CR>:set ft=java
 nmap <silent> <leader>d "_d
 vmap <silent> <leader>d "_d
 
+" k and j don't skip lines in wrapped mode
 noremap k gk
 noremap j gj
 
@@ -256,9 +257,7 @@ nnoremap <silent> <C-g> :tabclose<CR>
 "vmap <leader>r :r ~/.vim/vimxfer<CR>
 
 " forgot to sudo
-cnoreabbrev <expr> w!!
-                \((getcmdtype() == ':' && getcmdline() == 'w!!')
-                \?('!sudo tee % >/dev/null'):('w!!'))
+cnoremap w!! w !sudo tee % >/dev/null
 
 " Escape special characters in a string for exact matching.
 " This is useful to copying strings from the file to the search tool
