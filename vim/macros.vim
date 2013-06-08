@@ -126,7 +126,8 @@ nnoremap <leader>; A;<Esc>
 nnoremap <leader>k      :m-2<CR>==
 nnoremap <leader>j      :m+<CR>==
 nnoremap <leader><Up>   :m-2<CR>==
-nnoremap <leader><Down> :m+<CR>==
+nnoremap <C-Up>   :m-2<CR>==
+nnoremap <C-Down> :m+<CR>==
 
 " move the word under the cursor left and right
 nnoremap <leader>h       "_yiw?\v\w+\_W+%#<CR>:s/\v(%#\w+)(\_W+)(\w+)/\3\2\1/<CR><C-o><C-l>
