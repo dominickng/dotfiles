@@ -102,9 +102,11 @@ set title
 set virtualedit+=block " allow cursor to roam in visual block
 set wildmenu
 set wildmode=list:longest,full
+set wildignore+=*.swp,*.swo
 set wildignore+=.svn,.git,.hg " version control
-set wildignore+=*.aux,*.out,*.toc " LaTeX
-set wildignore+=*.jpg,*.jpeg,*.png,*.bmp,*.gif " LaTeX
+set wildignore+=*.7z,*.lz4,*.zip,*.gz,*.rar,*.bz2 " compressed
+set wildignore+=*.aux,*.out,*.toc,*.log,*.bbl,*.blg,*.d,*.lof,*.lot " LaTeX
+set wildignore+=*.jpg,*.jpeg,*.png,*.bmp,*.gif
 set wildignore+=*.o,*.obj,*.la,*.mo,*.pyc,*.so,*.class,*.a,*.sw? " object files
 set wildignore+=migrations " Django migration"
 
