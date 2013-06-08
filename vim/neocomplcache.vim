@@ -62,8 +62,11 @@ inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 imap <expr> <C-x> <SID>neocom_cancel_popup_and('<C-x>')
-imap <expr> <CR>  <SID>neocom_close_popup_and('<CR>')
- 
+"imap <expr> <CR>  <SID>neocom_close_popup_and('<CR>')
+inoremap <expr> <CR>
+      \ neocomplcache#smart_close_popup()
+      \ . eval(smartinput#sid().'_trigger_or_fallback("\<Enter>", "\<Enter>")')
+
 function! s:neocom_cancel_popup_and(key)
   if pumvisible() && exists('*neocomplcache#cancel_popup')
     return neocomplcache#cancel_popup() . a:key
@@ -114,6 +117,10 @@ let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
 imap <C-k>     <Plug>(neosnippet_expand)
 smap <C-k>     <Plug>(neosnippet_expand)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+imap <leader><CR>     <Plug>(neosnippet_expand)
+smap <leader><CR>     <Plug>(neosnippet_expand)
+xmap <leader><CR>     <Plug>(neosnippet_expand_target)
 
 " Tab jumps to the next spot if jumpable. Otherwise it advances through
 " completions like usual
