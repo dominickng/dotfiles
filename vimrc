@@ -5,7 +5,7 @@ set nocompatible
 set nobk
 let mapleader=","
 
-" indentation. possibly overwritten by vim-sleuth, but set defaults here
+" indentation
 set autoindent
 set copyindent
 set expandtab
@@ -67,7 +67,6 @@ let g:tex_flavor = 'latex'
 let g:tex_noindent_env = 'verbatim\|comment\|lstlisting'
 
 " searching
-" set include=^\\s*#\\s*include\\(.*boost\\)\\@!
 set complete=.,w,b,u,t
 set completeopt-=preview
 set hlsearch
@@ -106,7 +105,7 @@ set wildignore+=*.swp,*.swo
 set wildignore+=.svn,.git,.hg " version control
 set wildignore+=*.7z,*.lz4,*.zip,*.gz,*.rar,*.bz2 " compressed
 set wildignore+=*.aux,*.out,*.toc,*.log,*.bbl,*.blg,*.d,*.lof,*.lot " LaTeX
-set wildignore+=*.jpg,*.jpeg,*.png,*.bmp,*.gif
+set wildignore+=*.jpg,*.jpeg,*.png,*.bmp,*.gif " binary files
 set wildignore+=*.o,*.obj,*.la,*.mo,*.pyc,*.so,*.class,*.a,*.sw? " object files
 set wildignore+=migrations " Django migration"
 
@@ -123,7 +122,6 @@ set formatoptions=qrn1
 let g:solarized_termtrans = 1
 colorscheme solarized
 highlight! link DiffText MatchParen
-
 
 " Don't try to highlight lines longer than 800 characters.
 set synmaxcol=800
@@ -143,14 +141,12 @@ highlight Tab gui=underline guifg=blue ctermbg=blue
 highlight WhitespaceEOL ctermbg=lightblue
 highlight IndentGuidesOdd ctermbg=black
 highlight IndentGuidesEven ctermbg=darkgrey
-
-" highlight tabs
+let NERDSpaceDelims=1
 
 " statusline
 set laststatus=2
 set statusline=
 set statusline+=%f                 "relative path
-"set statusline+=%h                "help buffer flag
 set statusline+=%r                 "readonly
 set statusline+=%y                 "file type
 set statusline+=%m                 "modified flag
@@ -163,7 +159,7 @@ set statusline+=\ %P               " percentage of file
 "set statusline+=0x%04B\           "character under cursor
 "set statusline+=%1*\ %n\ %*       "buffer number
 
-" indent-guide stuff
+" indent-guide
 let g:indent_guides_enable_on_vim_startup = 0
 let g:indent_guides_auto_colors = 0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red ctermbg=lightgrey
@@ -206,6 +202,9 @@ if &term =~ '^screen'
   execute "set <xRight>=\e[1;*C"
   execute "set <xLeft>=\e[1;*D"
 endif
+
+" toggle gundo
+nnoremap <leader>g :GundoToggle<CR>
 
 " Load other macros
 source $HOME/.vim/macros.vim

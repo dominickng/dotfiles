@@ -65,24 +65,7 @@ noremap <leader>t :setlocal noexpandtab shiftwidth=8 tabstop=8 softtabstop=8<CR>
 noremap <leader>s2 :call Spaces(2)<CR>
 noremap <leader>s4 :call Spaces(4)<CR>
 
-"turning off visuals for copying
-function! s:NoVisuals()
-if !exists("s:visuals_on")
-  let s:visuals_on = "true"
-endif
-if s:visuals_on == "true"
-  let s:visuals_on = "false"
-  set nonumber
-  set nolist
-  echo 'Visuals off'
-else
-  let s:visuals_on = "true"
-  set number
-  set list
-  echo 'Visuals on'
-endif
-endfunction
-noremap <leader>n :call <SID>NoVisuals()<CR>
+noremap <leader>n :set number! list!<CR>
 
 " paste mode
 "map <leader>p :setlocal paste!<CR>
@@ -150,18 +133,12 @@ nnoremap <leader>P "+P
 " toggle spell
 nnoremap <leader>spell :setlocal spell!<CR>
 
-" toggle gundo
-nnoremap <leader>g :GundoToggle<CR>
-
 " use ,/ to clear search highlight
 "noremap <leader>/ :nohlsearch<CR>/<BS><CR>
 noremap <silent> <leader>/ :nohlsearch<CR>
 
 " use ,, to open a quickfix window for the result of the previous search
 nnoremap <silent> <leader>, :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
-
-" show whitespace at EOL with <leader>ws
-"nmap <silent> <leader>ws :set nolist!<CR>
 
 " don't jump to the start of a line when typing #
 inoremap # X<c-h>#
@@ -248,14 +225,6 @@ nnoremap <silent> <C-h> :tabprevious<CR>
 "nnoremap <silent> <C-[> :tabprevious<CR>
 nnoremap <silent> <C-t> :tabnew<CR>
 nnoremap <silent> <C-g> :tabclose<CR>
-
-" buffer transfer
-"nmap <leader>w :!echo ""> ~/.vim/vimxfer<CR><CR>:w! ~/.vim/vimxfer<CR>
-"vmap <leader>w :w! ~/.vim/vimxfer<CR>
-"nmap <leader>a :!echo ""> ~/.vim/vimxfer<CR><CR>:w! >>~/.vim/vimxfer<CR>
-"vmap <leader>a :w! >>~/.vim/vimxfer<CR>
-"nmap <leader>r :r ~/.vim/vimxfer<CR>
-"vmap <leader>r :r ~/.vim/vimxfer<CR>
 
 " forgot to sudo
 cnoremap w!! w !sudo tee % >/dev/null
