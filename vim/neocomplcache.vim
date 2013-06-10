@@ -19,8 +19,7 @@ let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
 let g:neocomplcache_max_list = 20
 let g:neocomplcache_max_keyword_width = 50
 let g:neocomplcache_max_filename_width = 15
-" disable AutoComplPop like behavior.
-let g:neocomplcache_enable_auto_select = 0
+let g:neocomplcache_enable_auto_select = 1
 
 if !exists('g:neocomplcache_same_filetype_lists')
   let g:neocomplcache_same_filetype_lists = {}
@@ -93,17 +92,17 @@ inoremap <expr> <BS>
 inoremap <expr><C-y>  neocomplcache#close_popup()
 inoremap <expr><C-e>  neocomplcache#cancel_popup()
 
-imap <C-k>     <Plug>(neosnippet_expand)
-smap <C-k>     <Plug>(neosnippet_expand)
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
 
-imap <leader><CR>     <Plug>(neosnippet_expand)
-smap <leader><CR>     <Plug>(neosnippet_expand)
+imap <leader><CR>     <Plug>(neosnippet_expand_or_jump)
+smap <leader><CR>     <Plug>(neosnippet_expand_or_jump)
 xmap <leader><CR>     <Plug>(neosnippet_expand_target)
 
 " Tab jumps to the next spot if jumpable. Otherwise it advances through
 " completions like usual
-imap <expr><TAB> neosnippet#jumpable() ? "\<Plug>(neosnippet_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+imap <expr><TAB> neosnippet#jumpable() ? "\<Plug>(neosnippet_jump)" : pumvisible() ? neocomplcache#complete_common_string() : "\<TAB>"
 smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
 " Enable omni completion

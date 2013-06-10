@@ -151,8 +151,8 @@ imap <C-f> <C-o>w
 imap <C-b> <C-o>b
 
 " CTRL-J/K to move up and down, collapsing open windows
-map <C-j> <C-W>j<C-W>_
-map <C-k> <C-W>k<C-W>_
+" map <C-j> <C-W>j<C-W>_
+" map <C-k> <C-W>k<C-W>_
 
 " select visual block after in/dedent so we can in/dedent more
 vnoremap < <gv
