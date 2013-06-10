@@ -183,6 +183,7 @@ let g:ctrlp_custom_ignore = {
 " ctrlp buffer finding
 noremap <leader>b :CtrlPBuffer<CR>
 nnoremap <leader>r :CtrlPMRU<CR>
+nnoremap <leader>c :CtrlPClearCache<CR>
 
 " tabularize
 nmap <leader>a& :Tabularize /&<CR>
