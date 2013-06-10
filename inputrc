@@ -8,19 +8,22 @@ C-a: beginning-of-line
 C-e: end-of-line
 $endif
 
-set completion-ignore-case On
+set completion-ignore-case on
 set expand-tilde on
 set match-hidden-files off
-set show-all-if-ambiguous on
+#set show-all-if-ambiguous on
 set show-all-if-unmodified on
 
 C-b: backward-char
 C-f: forward-char
 M-b: backword-word
 M-n: forward-word
+M-g: backward-kill-word
 C-j: next-history
 C-k: previous-history
 C-g: backward-kill-word
+"\e[A": history-search-backward
+"\e[B": history-search-forward
 #C-j: menu-complete
 #C-k: menu-complete-backward
 
