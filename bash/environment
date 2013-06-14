@@ -14,10 +14,10 @@ export EDITOR="vim"
 export CVS_RSH="ssh"
 export RSYNC_RSH="ssh"
 export PYTHONSTARTUP="${HOME}/.pythonrc.py"
-export HISTCONTROL="ignoredups"
+export HISTCONTROL="ignoreboth"
 export HISTSIZE="10000"
 export HISTFILESIZE="1000000"
-export HISTIGNORE="history *:clear:*\.del:&:ls:[bf]g:exit:[ \t]*"
+export HISTIGNORE="history*:clear:*/\.del*:&:ls:[bf]g:exit"
 export INPUTRC=~/.inputrc
 shopt -s histappend
 shopt -s cmdhist
