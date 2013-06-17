@@ -224,8 +224,8 @@ snippet getopt
 		elif option in ("-v", "--verbose"):
 			verbose = argument
 
-snippet     filter
-abbr        [x for x in {list} if {condition}]
+snippet filter
+abbr    [x for x in {list} if {condition}]
 	[$1 for ${1:x} in ${2:#:list} if ${3:#:condition}]
 
 snippet optimport
@@ -233,11 +233,11 @@ snippet optimport
 
 snippet optlist
 	OPTIONS = [
-	    make_option(${0:short_arg}, ${1:long_arg}, dest=${2:dest}, ${3:action="store_true"}, ${4}, help=${5:help}),${6}
+		make_option("-${1:short_arg}", "--${2:long_arg}", dest="$2", ${3:#:action="store_true", }${4}help="${5:help}"),${0}
 	]
 
 snippet option
-	make_option(${0:short_arg}, ${1:long_arg}, dest=${2:dest}, ${3:action="store_true"}, ${4}, help=${5:help}),
+	make_option("-${1:short_arg}", "--${2:long_arg}", dest="$2", ${3:#:action="store_true", }${4}help="${5:help}"),${0}
 
 snippet optparse
 	usage = "Usage: {0} [opts]".format(sys.argv[0])
