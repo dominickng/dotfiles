@@ -87,6 +87,7 @@ nnoremap <right> <c-w>>
 
 " visual
 set display+=lastline
+set lazyredraw
 set list
 set listchars=tab:»·,trail:·,nbsp:·,extends:$
 set mouse=
