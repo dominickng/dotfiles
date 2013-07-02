@@ -43,10 +43,10 @@ let g:neocomplcache_dictionary_filetype_lists = {
     \ }
 
 let g:neocomplcache_source_rank = {
-        \ 'snippets_complete' : 100,
-        \ 'abbrev_complete' : 50,
-        \ 'syntax_complete' : 50,
-        \ }
+    \ 'snippets_complete' : 100,
+    \ 'abbrev_complete' : 50,
+    \ 'syntax_complete' : 50,
+    \ }
 
 " Define keyword, for minor languages
 if !exists('g:neocomplcache_keyword_patterns')
@@ -96,13 +96,13 @@ imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
 
-imap <leader><CR>     <Plug>(neosnippet_expand_or_jump)
+" imap <leader><CR>     <Plug>(neosnippet_expand_or_jump)
 smap <leader><CR>     <Plug>(neosnippet_expand_or_jump)
 xmap <leader><CR>     <Plug>(neosnippet_expand_target)
 
 " Tab jumps to the next spot if jumpable. Otherwise it advances through
 " completions like usual
-imap <expr><TAB> neosnippet#jumpable() ? "\<Plug>(neosnippet_jump)" : pumvisible() ? neocomplcache#complete_common_string() : "\<TAB>"
+inoremap <expr><TAB> neosnippet#jumpable() ? "\<Plug>(neosnippet_jump)" : pumvisible() ? neocomplcache#complete_common_string() : "\<TAB>"
 smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
 " Enable omni completion
