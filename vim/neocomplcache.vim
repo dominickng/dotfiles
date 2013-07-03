@@ -26,6 +26,7 @@ if !exists('g:neocomplcache_same_filetype_lists')
 endif
 let g:neocomplcache_same_filetype_lists.html  = 'css'
 let g:neocomplcache_same_filetype_lists.xhtml = 'html'
+let g:neocomplcache_same_filetype_lists.php = 'html'
 
 let g:neocomplcache_plugin_disable = { 'tags_complete': 1 }
 
@@ -95,8 +96,9 @@ inoremap <expr><C-e>  neocomplcache#cancel_popup()
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
+imap <expr> - pumvisible() ? "\<Plug>(neocomplcache_start_unite_quick_match)" : '-'
 
-" imap <leader><CR>     <Plug>(neosnippet_expand_or_jump)
+imap <leader><leader><CR>     <Plug>(neosnippet_start_unite_snippet)
 smap <leader><CR>     <Plug>(neosnippet_expand_or_jump)
 xmap <leader><CR>     <Plug>(neosnippet_expand_target)
 
