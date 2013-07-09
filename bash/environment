@@ -8,7 +8,7 @@
 umask 0022
 
 # General environment settings
-export IFS="`printf '\n\t'`"
+export IFS=$' \t\n'
 export PAGER="less"
 export EDITOR="vim"
 export CVS_RSH="ssh"
@@ -17,7 +17,7 @@ export PYTHONSTARTUP="${HOME}/.pythonrc.py"
 export HISTCONTROL="ignoreboth"
 export HISTSIZE="10000"
 export HISTFILESIZE="1000000"
-export HISTIGNORE="history*:clear:*/\.del*:&:ls:[bf]g:exit"
+export HISTIGNORE="history*:clear:*/*\.del*:&:ls:[bf]g:exit"
 export INPUTRC=~/.inputrc
 shopt -s histappend
 shopt -s cmdhist
