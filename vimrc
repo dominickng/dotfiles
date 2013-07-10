@@ -173,12 +173,13 @@ let g:ctrlp_map = ',f'
   "\ 'AcceptSelection("t")': ['<cr>', '<c-m>'],
   "\ }
 let g:ctrlp_switch_buffer = 'Et'
+let g:ctrlp_root_markers = ['src']
 let g:ctrlp_tabpage_position = 'al'
 let g:ctrlp_cache_dir = '~/tmp/vim/ctrlp'
 let g:ctrlp_open_multiple_files = '2vjr'
 let g:ctrlp_custom_ignore = {
     \ 'dir':  '\v[\/](\.git|\.hg|\.svn|working|bin)$',
-    \ 'file': '\v\.(exe|so|dll)$',
+    \ 'file': '\v\.(exe|so|dll|o|dylib|aux|bbl|blg|lot|lof|toc)$',
     \ }
 
 " ctrlp buffer finding
