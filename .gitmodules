@@ -85,3 +85,9 @@
 [submodule "vim/bundle/vim-unite"]
 	path = vim/bundle/vim-unite
 	url = git://github.com/Shougo/unite.vim.git
+[submodule "vim/bundle/vim-javascript-syntax"]
+	path = vim/bundle/vim-javascript-syntax
+	url = git://github.com/jelera/vim-javascript-syntax.git
+[submodule "vim/bundle/vim-javascript"]
+	path = vim/bundle/vim-javascript
+	url = git://github.com/pangloss/vim-javascript.git
