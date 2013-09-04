@@ -94,3 +94,9 @@
 [submodule "vim/bundle/vim-gtfo"]
 	path = vim/bundle/vim-gtfo
 	url = git://github.com/justinmk/vim-gtfo.git
+[submodule "vim/bundle/vim-lightline"]
+	path = vim/bundle/vim-lightline
+	url = git://github.com/itchyny/lightline.vim
+[submodule "vim/bundle/vim-argumentative"]
+	path = vim/bundle/vim-argumentative
+	url = git://github.com/PeterRincker/vim-argumentative.git
