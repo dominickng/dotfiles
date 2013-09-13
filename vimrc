@@ -23,10 +23,10 @@ augroup myvimrc
 augroup END
 
 " pathogen setup
-"let g:pathogen_disabled = []
-"if v:version < '703' || !has('python')
-    "call add(g:pathogen_disabled, 'gundo')
-"endif
+" let g:pathogen_disabled = []
+" if v:version < '703' || !has('python')
+    " call add(g:pathogen_disabled, 'gundo')
+" endif
 runtime bundle/vim-pathogen/autoload/pathogen.vim
 execute pathogen#infect()
 
@@ -159,6 +159,30 @@ set laststatus=2
 " set statusline+=\ %P               " percentage of file
 "set statusline+=0x%04B\           "character under cursor
 "set statusline+=%1*\ %n\ %*       "buffer number
+let g:airline_powerline_fonts=0
+let g:airline_left_sep=''
+let g:airline_right_sep=''
+let g:airline#extensions#tabline#enabled = 1
+
+" let g:lightline = {
+      " \ 'colorscheme': 'solarized',
+      " \ 'active':  {
+      " \   'left': [ [ 'mode', 'paste' ],
+      " \             [ 'readonly', 'filename', 'modified' ] ],
+      " \   'right': [ [ 'lineinfo' ],
+      " \              [ 'percent' ],
+      " \              [ 'fileformat', 'fileencoding', 'filetype' ] ] },
+      " \ 'inactive': {
+      " \   'left': [ [ 'filename' ] ],
+      " \   'right': [ [ 'lineinfo' ],
+      " \              [ 'percent' ] ] },
+      " \ 'tabline': {
+      " \   'left': [ [ 'tabs' ] ],
+      " \   'right': [ [ 'close' ] ] },
+      " \ 'tab': {
+      " \   'active': [ 'tabnum', 'filename', 'modified' ],
+      " \   'inactive': [ 'tabnum', 'filename', 'modified' ] },
+      " \ }
 
 " indent-guide
 let g:indent_guides_enable_on_vim_startup = 0
@@ -212,10 +236,6 @@ nnoremap <leader>g :GundoToggle<CR>
 function! ModifiedTime()
   return strftime(\"%d/%m/%y\ %H:%M\",getftime(expand(\"%:p\")))
 endfunction
-
-let g:lightline = {
-      \ 'colorscheme': 'solarized'
-      \ }
 
 " Load other macros
 source $HOME/.vim/macros.vim
