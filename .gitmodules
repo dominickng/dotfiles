@@ -103,3 +103,6 @@
 [submodule "vim/bundle/vim-airline"]
 	path = vim/bundle/vim-airline
 	url = git://github.com/bling/vim-airline.git
+[submodule "vim/bundle/vim-extended-ft"]
+	path = vim/bundle/vim-extended-ft
+	url = git://github.com/svermeulen/vim-extended-ft.git
