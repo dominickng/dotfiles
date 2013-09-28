@@ -203,6 +203,7 @@ let g:ctrlp_root_markers = ['src']
 let g:ctrlp_tabpage_position = 'al'
 let g:ctrlp_cache_dir = '~/tmp/vim/ctrlp'
 let g:ctrlp_open_multiple_files = '2vjr'
+let g:ctrlp_extensions = ['funky']
 let g:ctrlp_custom_ignore = {
     \ 'dir':  '\v[\/](\.git|\.hg|\.svn|working|bin)$',
     \ 'file': '\v\.(exe|so|dll|o|dylib|aux|bbl|blg|lot|lof|toc)$',
@@ -212,6 +213,9 @@ let g:ctrlp_custom_ignore = {
 noremap <leader>b :CtrlPBuffer<CR>
 nnoremap <leader>r :CtrlPMRU<CR>
 nnoremap <leader>c :CtrlPClearCache<CR>
+nnoremap <leader>u :CtrlPFunky<CR>
+" narrow the list down with a word under cursor
+nnoremap <leader>U :execute 'CtrlPFunky ' . expand('<cword>')<CR>
 
 " tabularize
 nmap <leader>a& :Tabularize /&<CR>

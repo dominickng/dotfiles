@@ -106,3 +106,6 @@
 [submodule "vim/bundle/vim-extended-ft"]
 	path = vim/bundle/vim-extended-ft
 	url = git://github.com/svermeulen/vim-extended-ft.git
+[submodule "vim/bundle/vim-ctrlp-funky"]
+	path = vim/bundle/vim-ctrlp-funky
+	url = git://github.com/tacahiroy/ctrlp-funky.git
