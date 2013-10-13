@@ -125,10 +125,13 @@ nnoremap <leader><space><space> o<C-o>k<C-o>O<C-o>j<ESC>
 vnoremap <leader>- "+y:let @+ = join(map(split(@+, '\n'), 'substitute(v:val, "^\\s\\+", "", "")'), " ")<CR>
 
 " yank and paste to system clipboard
-nnoremap <leader>y "+Y
-vnoremap <leader>y "+y
-nnoremap <leader>p "+p
-nnoremap <leader>P "+P
+" nnoremap <leader>y "+Y
+" vnoremap <leader>y "+y
+" nnoremap <leader>p "+p
+" nnoremap <leader>P "+P
+
+" paste but don't clobber
+xnoremap <leader>p "_dP
 
 " toggle spell
 nnoremap <leader>spell :setlocal spell!<CR>
