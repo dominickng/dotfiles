@@ -32,3 +32,5 @@
 	trustExitCode = true
 ;[push]
 	;default = upstream
+[push]
+	default = simple

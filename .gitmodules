@@ -70,9 +70,6 @@
 [submodule "vim/bundle/vim-expand-region"]
 	path = vim/bundle/vim-expand-region
 	url = git://github.com/terryma/vim-expand-region.git
-[submodule "vim/bundle/vim-seek"]
-	path = vim/bundle/vim-seek
-	url = git://github.com/goldfeld/vim-seek.git
 [submodule "vim/bundle/vim-textobj-user"]
 	path = vim/bundle/vim-textobj-user
 	url = git://github.com/kana/vim-textobj-user.git
