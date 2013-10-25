@@ -1,7 +1,7 @@
 #PREAMBLE
 #newcommand
 snippet nc
-	\newcommand{\${1:cmd}}[${2:opt}]{${3:realcmd}}${4}
+	\newcommand{\${1:cmd}}[${2:nopts}]{${3:realcmd}}${4}
 #usepackage
 snippet up
 	\usepackage[${1:[options}]{${2:package}}
@@ -18,11 +18,51 @@ snippet begin
 	\begin{${1:env}}
 		${2}
 	\end{$1}
+# Table
+snippet table
+	\begin{table}[${1:h}]
+		\begin{tabular}{${2:c}}
+		${5}
+		\end{tabular}
+		\caption{\label{table:${3:label}} ${4:caption}}
+	\end{table}
+# centered table
+snippet ctable
+	\begin{table}[${1:h}]
+		\begin{center}
+		\begin{tabular}{${2:c}}
+		${5}
+		\end{tabular}
+		\end{center}
+		\caption{\label{table:${3:label}} ${4:caption}}
+	\end{table}
+# small table
+snippet stable
+	\begin{table}[${1:h}]
+		{\small
+		\begin{tabular}{${2:c}}
+		${5}
+		\end{tabular}
+		}
+		\caption{\label{table:${3:label}} ${4:caption}}
+	\end{table}
+# small centered table
+snippet cstable
+	\begin{table}[${1:h}]
+		{\small
+		\begin{center}
+		\begin{tabular}{${2:c}}
+		${5}
+		\end{tabular}
+		\end{center}
+		}
+		\caption{\label{table:${3:label}} ${4:caption}}
+	\end{table}
 # Tabular
-snippet tab
-	\begin{${1:tabular}}{${2:c}}
-	${3}
-	\end{$1}
+snippet tablular
+	\begin{${tabular}{${1:c}}
+	${2}
+	\end{tabular}
 snippet thm
 	\begin[${1:author}]{${2:thm}}
 	${3}
@@ -126,17 +166,17 @@ snippet subp
 #References
 snippet itd
 	\item[${1:description}] ${2:item}
-snippet figure
+snippet rfigure
 	${1:Figure}~\ref{${2:fig:}}${3}
-snippet table
+snippet rtable
 	${1:Table}~\ref{${2:tab:}}${3}
-snippet listing
+snippet rlisting
 	${1:Listing}~\ref{${2:list}}${3}
-snippet section
+snippet rsection
 	${1:Section}~\ref{${2:sec:}}${3}
-snippet page
+snippet rpage
 	${1:page}~\pageref{${2}}${3}
-snippet index
+snippet rindex
 	\index{${1:index}}${2}
 #Citations
 snippet cite
@@ -154,7 +194,7 @@ snippet bf
 	\textbf{${1:text}}
 snippet under
 	\underline{${1:text}}
-snippet emp
+snippet emph
 	\emph{${1:text}}
 snippet sc
 	\textsc{${1:text}}
@@ -166,24 +206,30 @@ snippet rm
 snippet tt
 	\texttt{${1:text}}
 #misc
-snippet ft
+snippet footnote
 	\footnote{${1:text}}
-snippet fig
-	\begin{figure}
-	\begin{center}
-	    \includegraphics[scale=${1:1.0}]{${2}}
-	\end{center}
-	\caption{\label{fig:${3}} ${4}}
+snippet figure
+	\begin{figure}[${1:h}]
+		\begin{center}
+		${2}
+		\end{center}
+		\caption{\label{figure:${3:label}} ${4:caption}}
+	\end{figure}
+snippet graphics
+	\begin{figure}[${1:h}]
+		\begin{center}
+		\includegraphics[scale=${2:1.0}]{${3}}
+		\end{center}
+		\caption{\label{figure:${4:label}} ${5:caption}}
 	\end{figure}
 snippet tikz
-	\begin{figure}
-	\begin{center}
-	\begin{tikzpicture}[scale=${1:1.0}]
-		${2}
-	\end{tikzpicture}
-	\end{center}
-	\caption{${3}}
-	\label{fig:${4}}
+	\begin{figure}[${1:h}]
+		\begin{center}
+		\begin{tikzpicture}[scale=${2:1.0}]
+		${3}
+		\end{tikzpicture}
+		\end{center}
+		\caption{\label{figure:${4:label}} ${5:caption}}
 	\end{figure}
 #math
 snippet stackrel
