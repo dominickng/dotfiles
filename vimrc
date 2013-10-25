@@ -237,6 +237,8 @@ endif
 " toggle gundo
 nnoremap <leader>g :GundoToggle<CR>
 
+let g:matchparen_insert_timeout=5
+
 function! ModifiedTime()
   return strftime(\"%d/%m/%y\ %H:%M\",getftime(expand(\"%:p\")))
 endfunction
