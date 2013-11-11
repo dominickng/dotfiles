@@ -40,7 +40,7 @@ else
 	alias grep='grep --color=auto'
 
 	# local path modifications
-	export PATH=$PATH:~/bin:/n/schwafs/home/schwa/bin:/n/schwafs/home/dom/local/scala-2.10.0/bin
+	export PATH=$HOME/bin:$HOME/local/bin:$PATH:/n/schwafs/home/schwa/bin:/n/schwafs/home/dom/local/scala-2.10.0/bin
 	export TEXINPUTS=".:${HOME}/repos/tex//:"
 	export CANDC_MODELS="${HOME}/candc/models"
 	export CLASSPATH=$CLASSPATH:${HOME}/utils/weka/weka.jar:/mnt/home/dom/utils/libsvm/java/libsvm.jar
