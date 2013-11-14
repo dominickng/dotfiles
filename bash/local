@@ -9,6 +9,7 @@ alias la='ls -ha'
 alias  l='ls -halF'
 alias less='less -R'
 alias tmux-create='~/dotfiles/tmux-create'
+alias tm='tmux'
 export PYTHONSTARTUP=$HOME/.pythonrc.py
 
 if [ `uname` = 'Darwin' ]; then
