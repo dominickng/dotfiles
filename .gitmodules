@@ -109,3 +109,6 @@
 [submodule "vim/bundle/vim-sneak"]
 	path = vim/bundle/vim-sneak
 	url = git://github.com/justinmk/vim-sneak.git
+[submodule "vim/bundle/vim-vertical-move"]
+	path = vim/bundle/vim-vertical-move
+	url = git://github.com/bruno-/vim-vertical-move.git
