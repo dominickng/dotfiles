@@ -23,7 +23,7 @@ augroup myvimrc
 augroup END
 
 " pathogen setup
-" let g:pathogen_disabled = []
+let g:pathogen_disabled = []
 " if v:version < '703' || !has('python')
     " call add(g:pathogen_disabled, 'gundo')
 " endif
@@ -245,4 +245,4 @@ endfunction
 
 " Load other macros
 source $HOME/.vim/macros.vim
-source $HOME/.vim/neocomplcache.vim
+source $HOME/.vim/neocomplete.vim

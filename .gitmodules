@@ -46,9 +46,6 @@
 [submodule "vim/bundle/vim-gundo"]
 	path = vim/bundle/vim-gundo
 	url = git://github.com/sjl/gundo.vim.git
-[submodule "vim/bundle/vim-neocomplcache"]
-	path = vim/bundle/vim-neocomplcache
-	url = git://github.com/Shougo/neocomplcache.git
 [submodule "vim/bundle/vim-neosnippet"]
 	path = vim/bundle/vim-neosnippet
 	url = git://github.com/Shougo/neosnippet.git
