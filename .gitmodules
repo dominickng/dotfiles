@@ -76,9 +76,6 @@
 [submodule "vim/bundle/vim-textobj-indent"]
 	path = vim/bundle/vim-textobj-indent
 	url = git://github.com/kana/vim-textobj-indent.git
-[submodule "vim/bundle/vim-unite"]
-	path = vim/bundle/vim-unite
-	url = git://github.com/Shougo/unite.vim.git
 [submodule "vim/bundle/vim-javascript-syntax"]
 	path = vim/bundle/vim-javascript-syntax
 	url = git://github.com/jelera/vim-javascript-syntax.git
