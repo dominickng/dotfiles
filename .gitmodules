@@ -112,3 +112,6 @@
 [submodule "vim/bundle/vim-vertical-move"]
 	path = vim/bundle/vim-vertical-move
 	url = git://github.com/bruno-/vim-vertical-move.git
+[submodule "vim/bundle/vim-neocomplete"]
+	path = vim/bundle/vim-neocomplete
+	url = git://github.com/Shougo/neocomplete.vim.git
