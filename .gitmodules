@@ -100,3 +100,9 @@
 [submodule "vim/bundle/vim-neocomplete"]
 	path = vim/bundle/vim-neocomplete
 	url = git://github.com/Shougo/neocomplete.vim.git
+[submodule "vim/bundle/vim-rainbow-parentheses"]
+	path = vim/bundle/vim-rainbow-parentheses
+	url = git://github.com/kien/rainbow_parentheses.vim.git
+[submodule "vim/bundle/vim-signature"]
+	path = vim/bundle/vim-signature
+	url = git://github.com/kshenoy/vim-signature.git
