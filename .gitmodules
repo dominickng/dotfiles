@@ -64,9 +64,6 @@
 [submodule "vim/bundle/vim-python-matchit"]
 	path = vim/bundle/vim-python-matchit
 	url = git://github.com/voithos/vim-python-matchit.git
-[submodule "vim/bundle/vim-expand-region"]
-	path = vim/bundle/vim-expand-region
-	url = git://github.com/terryma/vim-expand-region.git
 [submodule "vim/bundle/vim-textobj-user"]
 	path = vim/bundle/vim-textobj-user
 	url = git://github.com/kana/vim-textobj-user.git
