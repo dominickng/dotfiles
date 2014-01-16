@@ -106,3 +106,6 @@
 [submodule "vim/bundle/vim-signature"]
 	path = vim/bundle/vim-signature
 	url = git://github.com/kshenoy/vim-signature.git
+[submodule "vim/bundle/vim-css-color"]
+	path = vim/bundle/vim-css-color
+	url = git://github.com/skammer/vim-css-color.git
