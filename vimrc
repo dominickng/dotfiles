@@ -80,10 +80,10 @@ map <down> <nop>
 map <left> <nop>
 map <right> <nop>
 
-nnoremap <up> <c-w>+
-nnoremap <down> <c-w>-
-nnoremap <left> <c-w><
-nnoremap <right> <c-w>>
+" nnoremap <up> <c-w>+
+" nnoremap <down> <c-w>-
+" nnoremap <left> <c-w><
+" nnoremap <right> <c-w>>
 
 " visual
 set display+=lastline
@@ -203,8 +203,8 @@ let g:ctrlp_cache_dir = '~/tmp/vim/ctrlp'
 let g:ctrlp_open_multiple_files = '2vjr'
 let g:ctrlp_extensions = ['funky']
 let g:ctrlp_custom_ignore = {
-    \ 'dir':  '\v[\/](\.git|\.hg|\.svn|working|bin)$',
-    \ 'file': '\v\.(exe|so|dll|o|dylib|aux|bbl|blg|lot|lof|toc)$',
+    \ 'dir':  '\v[\/](\.git|\.hg|\.svn|working|bin|build|dist)$',
+    \ 'file': '\v\.(exe|so|dll|o|dylib|aux|bbl|blg|lot|lof|toc|pyc|swp|egg)$',
     \ }
 
 " ctrlp buffer finding
