@@ -21,12 +21,6 @@ let g:neocomplete#same_filetypes.html  = 'css'
 let g:neocomplete#same_filetypes.xhtml = 'html'
 let g:neocomplete#same_filetypes.php = 'html'
 
-" do ctrl-n like completion
-"if !exists('g:neocomplcache_same_filetype')
-  "let g:neocomplcache_same_filetype_lists = {}
-"endif
-"let g:neocomplcache_same_filetype_lists._ = '_'
-
 " Define file-type dependent dictionaries.
 let g:neocomplete#sources#dictionary#dictionaries = {
     \ 'default' : '',
@@ -84,12 +78,9 @@ smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
 " imap <expr> - pumvisible() ? "\<Plug>(neocomplcache_start_unite_quick_match)" : '-'
 
-imap <leader><leader><CR>    <Plug>(neosnippet_start_unite_snippet)
 smap <leader><CR>            <Plug>(neosnippet_expand_or_jump)
 xmap <leader><CR>            <Plug>(neosnippet_expand_target)
 
-" Tab jumps to the next spot if jumpable. Otherwise it advances through
-" completions like usual
 " inoremap <expr><TAB> neosnippet#jumpable() ? "\<Plug>(neosnippet_jump)" : pumvisible() ? neocomplcache#complete_common_string() : "\<TAB>"
 " inoremap <expr><TAB> pumvisible() ? neocomplete#complete_common_string() : "\<TAB>"
 smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
