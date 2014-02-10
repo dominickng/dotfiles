@@ -53,7 +53,7 @@ set writebackup
 " tab and buffer behaviour
 set switchbuf=usetab,newtab
 
-" diable netrw history
+" disable netrw history
 let g:netrw_dirhistmax=0
 
 " filetypes
@@ -163,26 +163,6 @@ let g:airline_powerline_fonts=0
 let g:airline_left_sep=''
 let g:airline_right_sep=''
 " let g:airline#extensions#tabline#enabled = 1
-
-" let g:lightline = {
-      " \ 'colorscheme': 'solarized',
-      " \ 'active':  {
-      " \   'left': [ [ 'mode', 'paste' ],
-      " \             [ 'readonly', 'filename', 'modified' ] ],
-      " \   'right': [ [ 'lineinfo' ],
-      " \              [ 'percent' ],
-      " \              [ 'fileformat', 'fileencoding', 'filetype' ] ] },
-      " \ 'inactive': {
-      " \   'left': [ [ 'filename' ] ],
-      " \   'right': [ [ 'lineinfo' ],
-      " \              [ 'percent' ] ] },
-      " \ 'tabline': {
-      " \   'left': [ [ 'tabs' ] ],
-      " \   'right': [ [ 'close' ] ] },
-      " \ 'tab': {
-      " \   'active': [ 'tabnum', 'filename', 'modified' ],
-      " \   'inactive': [ 'tabnum', 'filename', 'modified' ] },
-      " \ }
 
 " indent-guide
 let g:indent_guides_enable_on_vim_startup = 0

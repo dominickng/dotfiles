@@ -1,19 +1,18 @@
 " Launches neocomplcache automatically on vim startup.
 let g:neocomplete#enable_at_startup = 1
-let g:neocomplete#enable_auto_select = 1
+" let g:neocomplete#enable_auto_select = 1
 " Use smartcase.
 let g:neocomplete#enable_smart_case = 1
 " Sets minimum char length of syntax keyword.
-let g:neocomplete#auto_completion_start_length = 2
-let g:neocomplete#manual_completion_start_length = 2
-let g:neocomplete#min_keyword_length = 3
+" let g:neocomplete#auto_completion_start_length = 2
+" let g:neocomplete#manual_completion_start_length = 2
+" let g:neocomplete#min_keyword_length = 3
 let g:neocomplete#sources#syntax#min_keyword_length = 3
 " buffer file name pattern that locks neocomplcache. e.g. ku.vim or fuzzyfinder
 let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 " max completions
 let g:neocomplete#max_list = 20
 let g:neocomplete#max_keyword_width = 50
-let g:neocomplete#enable_auto_select = 1
 
 if !exists('g:neocomplete#same_filetypes')
   let g:neocomplete#same_filetypes = {}
@@ -61,8 +60,8 @@ endfunction
 inoremap <expr><C-g>     neocomplete#undo_completion()
 inoremap <expr><C-l>     neocomplete#complete_common_string()
 
-" inoremap <expr><TAB>     pumvisible() ? "\<C-n>" : "\<TAB>"
-" inoremap <expr><S-TAB>   pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <expr><TAB>     pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><S-TAB>   pumvisible() ? "\<C-p>" : "\<C-h>"
 
 imap <expr> <C-x> <SID>neocom_cancel_popup_and('<C-x>')
 
@@ -92,7 +91,7 @@ xmap <leader><CR>            <Plug>(neosnippet_expand_target)
 " Tab jumps to the next spot if jumpable. Otherwise it advances through
 " completions like usual
 " inoremap <expr><TAB> neosnippet#jumpable() ? "\<Plug>(neosnippet_jump)" : pumvisible() ? neocomplcache#complete_common_string() : "\<TAB>"
-inoremap <expr><TAB> pumvisible() ? neocomplete#complete_common_string() : "\<TAB>"
+" inoremap <expr><TAB> pumvisible() ? neocomplete#complete_common_string() : "\<TAB>"
 smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
 " Enable omni completion
@@ -126,3 +125,7 @@ let g:neosnippet#enable_snipmate_compatibility = 1
 "endif
 
 let g:neosnippet#snippets_directory='~/.vim/snippets'
+
+" call neocomplete#custom#source('_', 'converters',
+    " \ ['converter_remove_overlap', 'converter_remove_last_paren',
+    " \  'converter_delimiter', 'converter_abbr'])
