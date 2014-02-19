@@ -13,6 +13,7 @@ alias tm='tmux'
 export PYTHONSTARTUP=$HOME/.pythonrc.py
 
 if [ `uname` = 'Darwin' ]; then
+	alias top='top -s1 -F -R -o cpu'
 	alias tmux='tmux -f ~/.tmux-osx.conf'
 	alias vim='reattach-to-user-namespace vim'
 	alias ls='ls -G'
