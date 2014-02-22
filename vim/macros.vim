@@ -93,7 +93,7 @@ nnoremap Q <nop>
 nnoremap K i<CR><ESC>
 
 " remap K (open man page)
-nnoremap M K
+" nnoremap M K
 
 " make space and delete work in normal mode like insert mode
 nnoremap <Space> i<Space><ESC>
