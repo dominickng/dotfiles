@@ -219,6 +219,15 @@ nnoremap <leader>g :GundoToggle<CR>
 
 let g:matchparen_insert_timeout=5
 
+" easymotion search for 2 chars
+map <SPACE> <Plug>(easymotion-s2)
+
+
+" tex_autoclose mappings
+autocmd FileType tex inoremap <buffer><silent><C-x>} <esc>:call TexCloseCurrent()<CR>}
+autocmd FileType tex nnoremap <buffer><silent><C-x>c :call TexClosePrev(0)<CR>
+autocmd FileType tex inoremap <buffer><silent><C-x>/ <esc>:call TexClosePrev(1)<CR>
+
 function! ModifiedTime()
   return strftime(\"%d/%m/%y\ %H:%M\",getftime(expand(\"%:p\")))
 endfunction
@@ -226,6 +235,3 @@ endfunction
 " Load other macros
 source $HOME/.vim/macros.vim
 source $HOME/.vim/neocomplete.vim
-
-" easymotion search for 2 chars
-map <SPACE> <Plug>(easymotion-s2)
