@@ -226,3 +226,6 @@ endfunction
 " Load other macros
 source $HOME/.vim/macros.vim
 source $HOME/.vim/neocomplete.vim
+
+" easymotion search for 2 chars
+map <SPACE> <Plug>(easymotion-s2)
