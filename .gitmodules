@@ -109,3 +109,6 @@
 [submodule "vim/bundle/vim-tex-autoclose"]
 	path = vim/bundle/vim-tex-autoclose
 	url = git://github.com/vim-scripts/tex_autoclose.vim.git
+[submodule "vim/bundle/vim-nerdcommenter"]
+	path = vim/bundle/vim-nerdcommenter
+	url = git://github.com/scrooloose/nerdcommenter.git
