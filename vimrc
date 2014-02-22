@@ -24,6 +24,9 @@ augroup END
 
 " pathogen setup
 let g:pathogen_disabled = []
+if &ft =~ 'tex'
+    call add(g:pathogen_disabled, 'vim-tex-autoclose')
+endif
 " if v:version < '703' || !has('python')
     " call add(g:pathogen_disabled, 'gundo')
 " endif
