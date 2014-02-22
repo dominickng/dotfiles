@@ -109,3 +109,6 @@
 [submodule "vim/bundle/vim-css-color"]
 	path = vim/bundle/vim-css-color
 	url = git://github.com/skammer/vim-css-color.git
+[submodule "vim/bundle/vim-tex-autoclose"]
+	path = vim/bundle/vim-tex-autoclose
+	url = git://github.com/vim-scripts/tex_autoclose.vim.git
