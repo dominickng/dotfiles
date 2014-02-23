@@ -55,6 +55,7 @@ set writebackup
 
 " tab and buffer behaviour
 set switchbuf=usetab,newtab
+set hidden
 
 " disable netrw history
 let g:netrw_dirhistmax=0
@@ -238,3 +239,4 @@ endfunction
 " Load other macros
 source $HOME/.vim/macros.vim
 source $HOME/.vim/neocomplete.vim
+runtime macros/matchit.vim
