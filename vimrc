@@ -47,7 +47,8 @@ if has("unix")
     !mkdir -p ~/tmp/vim
   endif
 endif
-set directory=~/tmp/vim,.,/var/tmp,/tmp
+set directory=~/tmp/vim,/var/tmp,/tmp,.
+set backupdir=~/tmp/vim,/var/tmp,/tmp,.
 
 " no backups
 set nobackup
@@ -98,6 +99,7 @@ set mouse=
 set number
 set ruler
 set scrolloff=3
+set shortmess=atI
 set showcmd
 set showmatch
 set showtabline=2
