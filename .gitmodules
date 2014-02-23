@@ -112,3 +112,6 @@
 [submodule "vim/bundle/vim-nerdcommenter"]
 	path = vim/bundle/vim-nerdcommenter
 	url = git://github.com/scrooloose/nerdcommenter.git
+[submodule "vim/bundle/vim-splitjoin"]
+	path = vim/bundle/vim-splitjoin
+	url = git://github.com/AndrewRadev/splitjoin.vim.git
