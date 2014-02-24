@@ -27,9 +27,6 @@ let g:pathogen_disabled = []
 if &ft =~ 'tex'
     call add(g:pathogen_disabled, 'vim-tex-autoclose')
 endif
-" if v:version < '703' || !has('python')
-    " call add(g:pathogen_disabled, 'gundo')
-" endif
 runtime bundle/vim-pathogen/autoload/pathogen.vim
 execute pathogen#infect()
 
@@ -133,38 +130,24 @@ highlight! link DiffText MatchParen
 " Don't try to highlight lines longer than 800 characters.
 set synmaxcol=800
 
-"highlight Comment ctermfg=lightblue
-"highlight CursorLine cterm=NONE ctermbg=darkgray guibg=darkgray
+" highlight Comment ctermfg=lightblue
+" highlight CursorLine cterm=NONE ctermbg=darkgray guibg=darkgray
 highlight EvilSpace ctermbg=darkred guibg=darkred
 highlight LeadingTab ctermbg=blue guibg=blue
 highlight LeadingSpace ctermbg=darkgreen guibg=darkgreen
-"highlight MatchParen ctermbg=4
-"highlight Pmenu ctermbg=238 gui=bold
-"highlight Search ctermfg=grey ctermbg=yellow
-"highlight SpellBad term=reverse ctermfg=white ctermbg=darkred
-"highlight StatusLine ctermfg=black ctermbg=green cterm=NONE
-"highlight StatusLineNC ctermfg=black ctermbg=lightblue cterm=NONE
+" highlight MatchParen ctermbg=4
+" highlight Pmenu ctermbg=238 gui=bold
+" highlight Search ctermfg=grey ctermbg=yellow
+" highlight SpellBad term=reverse ctermfg=white ctermbg=darkred
+" highlight StatusLine ctermfg=black ctermbg=green cterm=NONE
+" highlight StatusLineNC ctermfg=black ctermbg=lightblue cterm=NONE
 highlight Tab gui=underline guifg=blue ctermbg=blue
 highlight WhitespaceEOL ctermbg=lightblue
 highlight IndentGuidesOdd ctermbg=black
 highlight IndentGuidesEven ctermbg=darkgrey
-let NERDSpaceDelims=1
 
 " statusline
 set laststatus=2
-" set statusline=
-" set statusline+=%f                 "relative path
-" set statusline+=%r                 "readonly
-" set statusline+=%y                 "file type
-" set statusline+=%m                 "modified flag
-" set statusline+=\ %{&ff}\          "file format
-" set statusline+=%{&encoding}\       "encoding
-" set statusline+=%=%c               "separator and column number
-" set statusline+=,%l/%L\            "current line / total lines
-" set statusline+=%{strftime(\"%d/%m/%y\ %H:%M\",getftime(expand(\"%:p\")))} " last modified
-" set statusline+=\ %P               " percentage of file
-"set statusline+=0x%04B\           "character under cursor
-"set statusline+=%1*\ %n\ %*       "buffer number
 let g:airline_powerline_fonts=0
 let g:airline_left_sep=''
 let g:airline_right_sep=''
@@ -178,10 +161,10 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=white
 
 " ctrl-p
 let g:ctrlp_map = ',f'
-"let g:ctrlp_prompt_mappings = {
-  "\ 'AcceptSelection("e")': ['<c-e>'],
-  "\ 'AcceptSelection("t")': ['<cr>', '<c-m>'],
-  "\ }
+" let g:ctrlp_prompt_mappings = {
+"   \ 'AcceptSelection("e")': ['<c-e>'],
+"   \ 'AcceptSelection("t")': ['<cr>', '<c-m>'],
+"   \ }
 let g:ctrlp_switch_buffer = 'Et'
 let g:ctrlp_root_markers = ['src']
 let g:ctrlp_tabpage_position = 'al'
@@ -226,8 +209,7 @@ nnoremap <leader>g :GundoToggle<CR>
 let g:matchparen_insert_timeout=5
 
 " easymotion search for 2 chars
-map <SPACE> <Plug>(easymotion-s2)
-
+map <leader><Space> <Plug>(easymotion-s2)
 
 " tex_autoclose mappings
 autocmd FileType tex inoremap <buffer><silent><C-x>} <esc>:call TexCloseCurrent()<CR>}

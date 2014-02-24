@@ -33,21 +33,6 @@ augroup resCur
   autocmd BufWinEnter * call ResCur()
 augroup END
 
-" make tab autocomplete or insert tab as defined by prior context
-function! InsertTabWrapper(direction)
-  let col = col('.') - 1
-  if !col || getline('.')[col-1] !~ '\k' && getline('.')[col-1] !~ ':'
-    return "\<tab>"
-  elseif "backward" == a:direction
-    return "\<c-p>"
-  else
-    return "\<c-n>"
-  endif
-endfunction
-
-"inoremap <TAB> <C-R>=InsertTabWrapper("forward")<CR>
-"inoremap <S-TAB> <C-R>=InsertTabWrapper("backward")<CR>
-
 " indentation switching
 function! Spaces(...)
   if a:0 == 1
@@ -68,8 +53,8 @@ noremap <leader>s4 :call Spaces(4)<CR>
 noremap <leader>n :set number! list!<CR>
 
 " paste mode
-"map <leader>p :setlocal paste!<CR>
-nnoremap <silent> <leader>1 :set paste!<CR>
+" map <leader>p :setlocal paste!<CR>
+nnoremap <silent><leader>1 :set paste!<CR>
 
 " search for visually highlighted text
 vmap // y/<C-R>"<CR>
@@ -78,13 +63,13 @@ vmap // y/<C-R>"<CR>
 vnoremap <C-r> hy:%s/<C-r>h//g<left><left>
 
 " faster way to start global replace for the previous search
-"nnoremap <C-k> :%s///g<left><left>
+" nnoremap <C-k> :%s///g<left><left>
 
 " tab to switch between split windows
 noremap <Tab> <C-w><C-w>
 
 " make s act like C-w, e.g. sl moves to left
-"nnoremap s <C-W>
+" nnoremap s <C-W>
 
 " don't enter ex mode on accident
 nnoremap Q <nop>
@@ -96,8 +81,8 @@ nnoremap K i<CR><ESC>
 " nnoremap M K
 
 " make space and delete work in normal mode like insert mode
-nnoremap <Space> i<Space><ESC>
-"nnoremap <Del> a<Del><Esc>
+" nnoremap <Space> i<Space><ESC>
+" nnoremap <Del> a<Del><Esc>
 
 " enter adds a new line below the current one
 "nnoremap <CR> A<CR><ESC>
@@ -119,7 +104,7 @@ nnoremap <leader><Left>  "_yiw?\v\w+\_W+%#<CR>:s/\v(%#\w+)(\_W+)(\w+)/\3\2\1/<CR
 nnoremap <leader><Right> "_yiw:s/\v(%#\w+)(\_W+)(\w+)/\3\2\1/<CR><C-o>/\v\w+\_W+<CR><C-l>
 
 " isolate the current line
-nnoremap <leader><space><space> o<C-o>k<C-o>O<C-o>j<ESC>
+nnoremap <leader><Space><Space> o<C-o>k<C-o>O<C-o>j<ESC>
 
 " yank visual selection as a single line
 vnoremap <leader>- "+y:let @+ = join(map(split(@+, '\n'), 'substitute(v:val, "^\\s\\+", "", "")'), " ")<CR>
@@ -137,11 +122,11 @@ xnoremap <leader>p "_dP
 nnoremap <leader>spell :setlocal spell!<CR>
 
 " use ,/ to clear search highlight
-"noremap <leader>/ :nohlsearch<CR>/<BS><CR>
-noremap <silent> <leader>/ :nohlsearch<CR>
+" noremap <leader>/ :nohlsearch<CR>/<BS><CR>
+noremap <silent><leader>/ :nohlsearch<CR>
 
 " use ,, to open a quickfix window for the result of the previous search
-nnoremap <silent> <leader>, :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
+nnoremap <silent><leader>, :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
 
 " don't jump to the start of a line when typing #
 inoremap # X<c-h>#
@@ -194,13 +179,13 @@ nnoremap <bar> :vsp<Space>
 nnoremap <bar><bar> :vsp<CR>
 
 " time saver
-"nnoremap ; :
-"inoremap kj <Esc>
+" nnoremap ; :
+" inoremap kj <Esc>
 
 " Use ,d (or ,dd or ,dj or 20,dd) to delete a line without adding it to the
 " yanked stack (also, in visual mode)
-nmap <silent> <leader>d "_d
-vmap <silent> <leader>d "_d
+nmap <silent><leader>d "_d
+vmap <silent><leader>d "_d
 
 " k and j don't skip lines in wrapped mode
 noremap k gk
@@ -211,23 +196,23 @@ command! -nargs=1 S let @/ = escape('<args>', '\')
 nmap <leader>S :execute(":S " . input('Regex-off: /'))<CR>
 
 " remove DOS end of lines
-nnoremap <silent> <leader>dos :%s/\r/\r/ge<CR>:nohlsearch<CR>
+nnoremap <silent><leader>dos :%s/\r/\r/ge<CR>:nohlsearch<CR>
 
 " edit vimrc
-nnoremap <silent> <leader>vimrc :e ~/.vimrc<CR>
-nnoremap <silent> <leader>macros :e ~/.vim/macros.vim<CR>
+nnoremap <silent><leader>vimrc :e ~/.vimrc<CR>
+nnoremap <silent><leader>macros :e ~/.vim/macros.vim<CR>
 
 " tabs
-inoremap <silent> <S-Right> <C-o>:tabnext<CR>
-inoremap <silent> <S-Left>  <C-o>:tabprevious<CR>
-nnoremap <silent> <S-Right> :tabnext<CR>
-nnoremap <silent> <S-Left>  :tabprevious<CR>
-nnoremap <silent> <C-l> :tabnext<CR>
-nnoremap <silent> <C-h> :tabprevious<CR>
-"nnoremap <silent> <C-]> :tabnext<CR>
-"nnoremap <silent> <C-[> :tabprevious<CR>
-nnoremap <silent> <C-t> :tabnew<CR>
-nnoremap <silent> <C-g> :tabclose<CR>
+inoremap <silent><S-Right> <C-o>:tabnext<CR>
+inoremap <silent><S-Left>  <C-o>:tabprevious<CR>
+nnoremap <silent><S-Right> :tabnext<CR>
+nnoremap <silent><S-Left>  :tabprevious<CR>
+nnoremap <silent><C-l> :tabnext<CR>
+nnoremap <silent><C-h> :tabprevious<CR>
+" nnoremap <silent> <C-]> :tabnext<CR>
+" nnoremap <silent> <C-[> :tabprevious<CR>
+nnoremap <silent><C-t> :tabnew<CR>
+nnoremap <silent><C-g> :tabclose<CR>
 
 " forgot to sudo
 cnoremap w!! w !sudo tee % >/dev/null
@@ -246,7 +231,7 @@ endfunction
 
 " Get the current visual block for search and replaces
 " This function passed the visual block through a string escape function
-" Based on this - http://stackoverflow.com/questions/676600/vim-replace-selected-text/677918#677918
+" Based on http://stackoverflow.com/questions/676600/vim-replace-selected-text/677918#677918
 function! GetVisual() range
   " Save the current register and clipboard
   let reg_save = getreg('"')
