@@ -50,7 +50,7 @@ noremap <leader>t :setlocal noexpandtab shiftwidth=8 tabstop=8 softtabstop=8<CR>
 noremap <leader>s2 :call Spaces(2)<CR>
 noremap <leader>s4 :call Spaces(4)<CR>
 
-noremap <leader>n :set number! list!<CR>
+" noremap <leader>n :set number! list!<CR>
 
 " paste mode
 " map <leader>p :setlocal paste!<CR>
