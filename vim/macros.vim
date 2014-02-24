@@ -91,11 +91,11 @@ nnoremap K i<CR><ESC>
 nnoremap <leader>; A;<Esc>
 
 " move the current line up and down
-nnoremap <leader>k      :m-2<CR>==
-nnoremap <leader>j      :m+<CR>==
-nnoremap <leader><Up>   :m-2<CR>==
-nnoremap <C-Up>   :m-2<CR>==
-nnoremap <C-Down> :m+<CR>==
+" nnoremap <leader>k      :m-2<CR>==
+" nnoremap <leader>j      :m+<CR>==
+" nnoremap <leader><Up>   :m-2<CR>==
+" nnoremap <C-Up>   :m-2<CR>==
+" nnoremap <C-Down> :m+<CR>==
 
 " move the word under the cursor left and right
 nnoremap <leader>h       "_yiw?\v\w+\_W+%#<CR>:s/\v(%#\w+)(\_W+)(\w+)/\3\2\1/<CR><C-o><C-l>
@@ -119,7 +119,7 @@ vnoremap <leader>- "+y:let @+ = join(map(split(@+, '\n'), 'substitute(v:val, "^\
 xnoremap <leader>p "_dP
 
 " toggle spell
-nnoremap <leader>spell :setlocal spell!<CR>
+" nnoremap <leader>spell :setlocal spell!<CR>
 
 " use ,/ to clear search highlight
 " noremap <leader>/ :nohlsearch<CR>/<BS><CR>
