@@ -16,7 +16,7 @@ set nojoinspaces
 set shiftwidth=2
 set shiftround
 
-"automatically reload vimrc when it is edited
+" automatically reload vimrc when it is edited
 augroup myvimrc
     au!
     au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc,macros.vim so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
@@ -44,16 +44,16 @@ if has("unix")
     !mkdir -p ~/tmp/vim
   endif
 endif
-set directory=~/tmp/vim,/var/tmp,/tmp,.
 set backupdir=~/tmp/vim,/var/tmp,/tmp,.
+set directory=~/tmp/vim,/var/tmp,/tmp,.
 
 " no backups
 set nobackup
 set writebackup
 
 " tab and buffer behaviour
-set switchbuf=usetab,newtab
 set hidden
+set switchbuf=usetab,newtab
 
 " disable netrw history
 let g:netrw_dirhistmax=0

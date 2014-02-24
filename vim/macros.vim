@@ -10,7 +10,7 @@
 "vnoremap / /\v
 
 " don't move on *
-nnoremap * *<c-o>
+nnoremap * *<C-o>
 
 " gi already moves to 'last place you exited insert mode', so map
 " gI as move to last change
@@ -18,9 +18,9 @@ nnoremap gI `.
 
 " (visual) X to eXchange two pieces of text
 " to use: first delete something, then visual something else
-xnoremap X <esc>`.``gvP``P
+" xnoremap X <esc>`.``gvP``P
 
-" restore cursor position
+" restore last cursor position when reopening a file
 function! ResCur()
   if line("'\"") <= line("$")
     normal! g`"
@@ -81,7 +81,7 @@ nnoremap K i<CR><ESC>
 " nnoremap M K
 
 " make space and delete work in normal mode like insert mode
-" nnoremap <Space> i<Space><ESC>
+nnoremap <Space> i<Space><ESC>
 " nnoremap <Del> a<Del><Esc>
 
 " enter adds a new line below the current one
@@ -126,7 +126,7 @@ xnoremap <leader>p "_dP
 noremap <silent><leader>/ :nohlsearch<CR>
 
 " use ,, to open a quickfix window for the result of the previous search
-nnoremap <silent><leader>, :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
+nnoremap <silent><leader>x :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
 
 " don't jump to the start of a line when typing #
 inoremap # X<c-h>#
