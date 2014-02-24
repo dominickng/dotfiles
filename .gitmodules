@@ -112,3 +112,6 @@
 [submodule "vim/bundle/vim-tcomment"]
 	path = vim/bundle/vim-tcomment
 	url = git://github.com/tomtom/tcomment_vim.git
+[submodule "vim/bundle/vim-exchange"]
+	path = vim/bundle/vim-exchange
+	url = git://github.com/tommcdo/vim-exchange.git
