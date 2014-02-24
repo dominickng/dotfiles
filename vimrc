@@ -145,6 +145,7 @@ highlight Tab gui=underline guifg=blue ctermbg=blue
 highlight WhitespaceEOL ctermbg=lightblue
 highlight IndentGuidesOdd ctermbg=black
 highlight IndentGuidesEven ctermbg=darkgrey
+let NERDSpaceDelims=1
 
 " statusline
 set laststatus=2
