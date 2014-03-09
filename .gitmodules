@@ -115,3 +115,6 @@
 [submodule "vim/bundle/vim-fast-css-color"]
 	path = vim/bundle/vim-fast-css-color
 	url = git://github.com/ap/vim-css-color.git
+[submodule "vim/bundle/vim-textobj-line"]
+	path = vim/bundle/vim-textobj-line
+	url = git://github.com/kana/vim-textobj-line.git
