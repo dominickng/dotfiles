@@ -51,6 +51,12 @@ set directory=~/tmp/vim,/var/tmp,/tmp,.
 set nobackup
 set writebackup
 
+" persist undo across sessions
+if has("persistent_undo")
+    set undodir=~/.tmp/vim/undodir
+    set undofile
+endif
+
 " tab and buffer behaviour
 set hidden
 set switchbuf=usetab,newtab
