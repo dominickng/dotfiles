@@ -118,3 +118,6 @@
 [submodule "vim/bundle/vim-textobj-line"]
 	path = vim/bundle/vim-textobj-line
 	url = git://github.com/kana/vim-textobj-line.git
+[submodule "vim/bundle/vim-dispatch"]
+	path = vim/bundle/vim-dispatch
+	url = git://github.com/tpope/vim-dispatch.git
