@@ -118,3 +118,6 @@
 [submodule "vim/bundle/vim-dispatch"]
 	path = vim/bundle/vim-dispatch
 	url = git://github.com/tpope/vim-dispatch.git
+[submodule "vim/bundle/vim-angry"]
+	path = vim/bundle/vim-angry
+	url = git://github.com/b4winckler/vim-angry.git
