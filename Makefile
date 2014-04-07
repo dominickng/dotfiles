@@ -2,7 +2,8 @@ ALL = $(HOME)/.bash $(HOME)/.bashrc $(HOME)/.inputrc \
       $(HOME)/.pythonrc.py $(HOME)/.vim $(HOME)/.vimrc \
       $(HOME)/.inputrc $(HOME)/.tmux.conf \
       $(HOME)/.gdb $(HOME)/.gdbinit $(HOME)/.gitconfig \
-      $(HOME)/.screenrc $(HOME)/.tmux.conf $(HOME)/.tmux-osx.conf
+      $(HOME)/.screenrc $(HOME)/.tmux.conf $(HOME)/.tmux-osx.conf \
+      $(HOME)/.slate
 
 .PHONY	: all unlink submodules destroy
 

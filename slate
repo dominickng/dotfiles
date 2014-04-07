@@ -1,0 +1,62 @@
+config defaultToCurrentScreen true
+config nudgePercentOf screenSize
+config resizePercentOf screenSize
+config undoMaxStackSize 15
+
+# Center, fullscreen, undo binding
+bind c:cmd;alt move screenOriginX+((screenSizeX-windowSizeX)/2);screenOriginY+((screenSizeY-windowSizeY)/2) windowSizeX;windowSizeY
+bind f:cmd;alt move screenOriginX;screenOriginY screenSizeX;screenSizeY
+bind z:cmd;alt undo
+bind 1:ctrl    relaunch
+
+# throw to far edge bindings
+bind l:cmd;alt chain throw right | move screenOriginX+(screenSizeX-windowSizeX-10);screenOriginY+((screenSizeY-windowSizeY)/2) windowSizeX;windowSizeY
+bind h:cmd;alt chain throw left | move screenOriginX+10;screenOriginY+((screenSizeY-windowSizeY)/2) windowSizeX;windowSizeY
+
+# Resize Bindings
+bind right:cmd;alt       resize +2% +0
+bind left:cmd;alt        resize -2% +0
+bind up:cmd;alt          resize +0   -2%
+bind down:cmd;alt        resize +0   +2%
+# bind right:ctrl;alt  resize -2% +0 bottom-right
+# bind left:ctrl;alt   resize +2% +0 bottom-right
+# bind up:ctrl;alt     resize +0   +2% bottom-right
+# bind down:ctrl;alt   resize +0   -2% bottom-right
+bind left:ctrl;alt   resize -2% -2%
+bind right:ctrl;alt  resize +2% +2%
+
+# Push Bindings
+# bind right:ctrl;cmd  push right bar-resize:screenSizeX/3
+# bind left:ctrl;cmd   push left  bar-resize:screenSizeX/3
+# bind up:ctrl;cmd     push up    bar-resize:screenSizeY/2
+# bind down:ctrl;cmd   push down  bar-resize:screenSizeY/2
+
+# Nudge Bindings
+bind right:shift;alt nudge +2% +0
+bind left:shift;alt  nudge -2% +0
+bind up:shift;alt    nudge +0   -2%
+bind down:shift;alt  nudge +0   +2%
+
+# Throw Bindings
+bind 1:ctrl;alt         throw 0 resize
+bind 2:ctrl;alt         throw 1 resize
+# bind right:ctrl;alt;cmd throw right resize
+# bind left:ctrl;alt;cmd  throw left  resize
+# bind up:ctrl;alt;cmd    throw up    resize
+# bind down:ctrl;alt;cmd  throw down  resize
+
+bind right:alt throw right
+bind left:alt  throw left
+#bind up:alt    throw up
+#bind down:alt  throw down
+
+# Focus Bindings
+# bind right:cmd    focus right
+# bind left:cmd     focus left
+# bind up:cmd       focus up
+# bind down:cmd     focus down
+# bind up:cmd;alt   focus behind
+# bind down:cmd;alt focus behind
+
+# Window Hints
+bind esc:cmd hint
