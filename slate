@@ -60,3 +60,9 @@ bind left:alt  throw left
 
 # Window Hints
 bind esc:cmd hint
+
+# half screen
+alias lefthalf move screenOriginX;screenOriginY screenSizeX/2;screenSizeY
+alias righthalf move screenOriginX+screenSizeX/2;screenOriginY screenSizeX/2;screenSizeY
+bind h:ctrl;cmd;alt ${lefthalf}
+bind l:ctrl;cmd;alt ${righthalf}
