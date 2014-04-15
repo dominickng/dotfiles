@@ -66,6 +66,7 @@ let g:netrw_dirhistmax=0
 
 " filetypes
 filetype plugin indent on
+" autocmd FileType php set filetype=php.html.javascript.css
 autocmd FileType c,cpp,java setlocal sw=2 softtabstop=2
 autocmd FileType c,cpp,java let b:match_words=
    \ '\%(\<else\s\+\)\@<!\<if\>:\<else\s\+if\>:\<else\%(\s\+if\)\@!\>,' .
