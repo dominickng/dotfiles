@@ -121,3 +121,9 @@
 [submodule "vim/bundle/vim-targets"]
 	path = vim/bundle/vim-targets
 	url = git://github.com/wellle/targets.vim.git
+[submodule "vim/bundle/vim-argumentative"]
+	path = vim/bundle/vim-argumentative
+	url = git://github.com/PeterRincker/vim-argumentative.git
+[submodule "vim/bundle/vim-wildfire"]
+	path = vim/bundle/vim-wildfire
+	url = git://github.com/gcmt/wildfire.vim.git

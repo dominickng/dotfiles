@@ -291,6 +291,21 @@ function! ModifiedTime()
   return strftime(\"%d/%m/%y\ %H:%M\",getftime(expand(\"%:p\")))
 endfunction
 
+" targets - disable angle bracket map (conflict with arg text object)
+let g:targets_pairs = '()b {}B []r'
+
+" argumentative - rename argument text object
+xmap ia <Plug>Argumentative_InnerTextObject
+xmap aa <Plug>Argumentative_OuterTextObject
+omap ia <Plug>Argumentative_OpPendingInnerTextObject
+omap aa <Plug>Argumentative_OpPendingOuterTextObject
+
+" wildfire
+let g:wildfire_objects = {
+    \ "*" : ["i'", 'i"', "i)", "i]", "il", "i}", "ip"],
+    \ "html,xml" : ['i"', "at"],
+\ }
+
 " Load other macros
 source $HOME/.vim/macros.vim
 source $HOME/.vim/neocomplete.vim

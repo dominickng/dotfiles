@@ -256,6 +256,8 @@ endfunction
 " Start the find and replace command across the entire file
 vmap <leader>z <Esc>:%s/<c-r>=GetVisual()<cr>/
 
-" function text objetcs
-vnoremap af a(oB
-omap af :normal vaf<CR>
+" function call text objects - uses targets.vim
+vnoremap ic :<C-U>call targets#xmap('()', 'grow seekselectp')<CR>ob
+omap ic :normal vic<CR>
+vnoremap ac ::<C-U>call targets#xmap('()', 'grow seekselectp')<CR>oB
+omap ac :normal vac<CR>
