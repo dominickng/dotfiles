@@ -57,10 +57,6 @@ endif
 
 call neobundle#begin(expand('~/.vim/bundle/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
-call neobundle#end()
-filetype plugin indent on
-NeoBundleCheck
-
 NeoBundle 'AndrewRadev/splitjoin.vim'
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'ap/vim-css-color'
@@ -100,6 +96,10 @@ NeoBundle 'tpope/vim-unimpaired'
 NeoBundle 'vim-scripts/tex_autoclose.vim', { 'disabled': &ft =~ 'tex' }
 NeoBundle 'voithos/vim-python-matchit'
 NeoBundle 'wellle/targets.vim'
+
+call neobundle#end()
+filetype plugin indent on
+NeoBundleCheck
 
 " autocmd FileType php set filetype=php.html.javascript.css
 autocmd FileType c,cpp,java setlocal sw=2 softtabstop=2
