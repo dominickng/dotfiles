@@ -62,8 +62,9 @@ filetype plugin indent on
 NeoBundleCheck
 
 NeoBundle 'AndrewRadev/splitjoin.vim'
-NeoBundle 'ap/vim-css-color'
 NeoBundle 'altercation/vim-colors-solarized'
+NeoBundle 'ap/vim-css-color'
+NeoBundle 'bb:atimholt/ArrowKeyRepurpose', {'type': 'hg'}
 NeoBundle 'bling/vim-airline'
 NeoBundle 'ConradIrwin/vim-bracketed-paste'
 NeoBundle 'gcmt/wildfire.vim'
@@ -271,6 +272,10 @@ xmap ia <Plug>Argumentative_InnerTextObject
 xmap aa <Plug>Argumentative_OuterTextObject
 omap ia <Plug>Argumentative_OpPendingInnerTextObject
 omap aa <Plug>Argumentative_OpPendingOuterTextObject
+
+" ArrowKeyRepurpose - disable shift left right map
+let g:ArrowKeyRepurp_settings = {}
+let g:ArrowKeyRepurp_settings.do_map_shift_leftright=0
 
 " wildfire
 let g:wildfire_objects = {
