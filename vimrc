@@ -162,68 +162,6 @@ let g:airline_left_sep=''
 let g:airline_right_sep=''
 " let g:airline#extensions#tabline#enabled = 1
 
-set tabline=%!MyTabLine()
-function! MyTabLine()
-  let s = '' " complete tabline goes here
-  " loop through each tab page
-  for t in range(tabpagenr('$'))
-    " select the highlighting for the buffer names
-    if t + 1 == tabpagenr()
-      let s .= '%#TabLineSel#'
-    else
-      let s .= '%#TabLine#'
-    endif
-    " empty space
-    let s .= ' '
-    " set the tab page number (for mouse clicks)
-    let s .= '%' . (t + 1) . 'T'
-    " set page number string
-    let s .= t + 1 . ' '
-    " get buffer names and statuses
-    let n = ''  "temp string for buffer names while we loop and check buftype
-    let buflist = tabpagebuflist(t+1)
-    let winnr = tabpagewinnr(t+1)
-    let b = buflist[winnr-1]
-    " buffer types: quickfix gets a [Q], help gets [H]{base fname}
-    " others get 1dir/2dir/3dir/fname shortened to 1/2/3/fname
-    if getbufvar( b, "&buftype" ) == 'help'
-      let n .= '[H]' . fnamemodify( bufname(b), ':t:s/.txt$//' )
-    elseif getbufvar( b, "&buftype" ) == 'quickfix'
-      let n .= '[Q]'
-    else
-      let n .= pathshorten(bufname(b))
-      "let n .= bufname(b)
-    endif
-    if len(tabpagebuflist(t + 1)) > 1
-      let n .= '[' . len(tabpagebuflist(t + 1)) . ']'
-    endif
-    " check and ++ tab's &modified count
-    if getbufvar( b, "&modified" )
-      let n .= '+'
-    else
-      let n .= ' '
-    endif
-
-    if n == ' '
-      let s .= '[No Name]'
-    else
-      let s .= n
-    endif
-  endfor
-  " add modified label [n+] where n pages in tab are modified
-  " add buffer names
-  " switch to no underlining and add final space to buffer list
-  "let s .= '%#TabLineSel#' . ' '
-  let s .= ' '
-  " after the last tab fill with TabLineFill and reset tab page nr
-  let s .= '%#TabLineFill#%T'
-  " right-align the label to close the current tab page
-  if tabpagenr('$') > 1
-    let s .= '%=%#TabLine#%999XX'
-  endif
-  return s
-endfunction
-
 " indent-guide
 let g:indent_guides_enable_on_vim_startup = 0
 let g:indent_guides_auto_colors = 0
