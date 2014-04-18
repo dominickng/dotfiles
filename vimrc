@@ -16,20 +16,6 @@ set nojoinspaces
 set shiftwidth=2
 set shiftround
 
-" automatically reload vimrc when it is edited
-augroup myvimrc
-    au!
-    au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc,macros.vim so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
-augroup END
-
-" pathogen setup
-let g:pathogen_disabled = []
-if &ft =~ 'tex'
-    call add(g:pathogen_disabled, 'vim-tex-autoclose')
-endif
-runtime bundle/vim-pathogen/autoload/pathogen.vim
-execute pathogen#infect()
-
 " general settings
 set history=1000
 set nrformats-=octal
