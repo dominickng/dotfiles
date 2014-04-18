@@ -50,8 +50,56 @@ set switchbuf=usetab,newtab
 " disable netrw history
 let g:netrw_dirhistmax=0
 
-" filetypes
+" NeoBundle
+if has('vim_starting')
+  set runtimepath+=~/.vim/bundle/neobundle.vim/
+endif
+
+call neobundle#begin(expand('~/.vim/bundle/'))
+NeoBundleFetch 'Shougo/neobundle.vim'
+call neobundle#end()
 filetype plugin indent on
+NeoBundleCheck
+
+NeoBundle 'AndrewRadev/splitjoin.vim'
+NeoBundle 'ap/vim-css-color'
+NeoBundle 'altercation/vim-colors-solarized'
+NeoBundle 'bling/vim-airline'
+NeoBundle 'ConradIrwin/vim-bracketed-paste'
+NeoBundle 'gcmt/wildfire.vim'
+NeoBundle 'godlygeek/tabular'
+NeoBundle 'jelera/vim-javascript-syntax'
+NeoBundle 'justinmk/vim-gtfo'
+NeoBundle 'justinmk/vim-sneak'
+NeoBundle 'kana/vim-smartinput'
+NeoBundle 'kana/vim-textobj-indent'
+NeoBundle 'kana/vim-textobj-line'
+NeoBundle 'kana/vim-textobj-user'
+NeoBundle 'kien/ctrlp.vim'
+NeoBundle 'kien/rainbow_parentheses.vim'
+NeoBundle 'kshenoy/vim-signature'
+NeoBundle 'Lokaltog/vim-easymotion'
+NeoBundle 'lucapette/vim-textobj-underscore'
+NeoBundle 'nathanaelkane/vim-indent-guides'
+NeoBundle 'nelstrom/vim-visual-star-search'
+NeoBundle 'pangloss/vim-javascript'
+NeoBundle 'PeterRincker/vim-argumentative'
+NeoBundle 'scrooloose/nerdcommenter'
+NeoBundle 'Shougo/neocomplete'
+NeoBundle 'Shougo/neosnippet'
+NeoBundle 'tommcdo/vim-exchange'
+NeoBundle 'tpope/vim-abolish'
+NeoBundle 'tpope/vim-characterize'
+NeoBundle 'tpope/vim-ragtag'
+NeoBundle 'tpope/vim-repeat'
+NeoBundle 'tpope/vim-sleuth'
+NeoBundle 'tpope/vim-speeddating'
+NeoBundle 'tpope/vim-surround'
+NeoBundle 'tpope/vim-unimpaired'
+NeoBundle 'vim-scripts/tex_autoclose.vim', { 'disabled': &ft =~ 'tex' }
+NeoBundle 'voithos/vim-python-matchit'
+NeoBundle 'wellle/targets.vim'
+
 " autocmd FileType php set filetype=php.html.javascript.css
 autocmd FileType c,cpp,java setlocal sw=2 softtabstop=2
 autocmd FileType c,cpp,java let b:match_words=
