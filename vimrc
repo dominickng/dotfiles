@@ -96,6 +96,7 @@ NeoBundle 'tpope/vim-unimpaired'
 NeoBundle 'vim-scripts/tex_autoclose.vim', { 'disabled': &ft =~ 'tex' }
 NeoBundle 'voithos/vim-python-matchit'
 NeoBundle 'wellle/targets.vim'
+NeoBundle 'Yggdroot/indentLine'
 
 call neobundle#end()
 filetype plugin indent on
@@ -186,9 +187,11 @@ highlight LeadingSpace ctermbg=darkgreen guibg=darkgreen
 " highlight StatusLineNC ctermfg=black ctermbg=lightblue cterm=NONE
 highlight Tab gui=underline guifg=blue ctermbg=blue
 highlight WhitespaceEOL ctermbg=lightblue
-highlight IndentGuidesOdd ctermbg=black
-highlight IndentGuidesEven ctermbg=darkgrey
 let NERDSpaceDelims=1
+
+" indentLine
+let g:indentLine_enabled = 0
+nnoremap <leader>ig :IndentLinesToggle<CR>
 
 " statusline
 set laststatus=2
@@ -196,12 +199,6 @@ let g:airline_powerline_fonts=0
 let g:airline_left_sep=''
 let g:airline_right_sep=''
 " let g:airline#extensions#tabline#enabled = 1
-
-" indent-guide
-let g:indent_guides_enable_on_vim_startup = 0
-let g:indent_guides_auto_colors = 0
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red ctermbg=lightgrey
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=white
 
 " ctrl-p
 let g:ctrlp_map = ',f'
