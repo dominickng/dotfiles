@@ -9,6 +9,10 @@
 "nnoremap / /\v
 "vnoremap / /\v
 
+" recover from accidental C-w or C-u in insert mode
+inoremap <C-u> <c-g>u<C-u>
+inoremap <C-w> <c-g>u<C-w>
+
 " don't move on *
 nnoremap * *<C-o>
 
