@@ -198,7 +198,7 @@ let NERDSpaceDelims=1
 
 " indentLine
 let g:indentLine_enabled = 0
-nnoremap <leader>ig :IndentLinesToggle<CR>
+nnoremap <leader>ii :IndentLinesToggle<CR>
 
 " statusline
 set laststatus=2
