@@ -60,7 +60,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'AndrewRadev/splitjoin.vim'
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'ap/vim-css-color'
-NeoBundle 'bb:atimholt/ArrowKeyRepurpose', {'type': 'hg'}
+NeoBundle 'bb:atimholt/ArrowKeyRepurpose', {'type': 'hg', 'external_commands' : 'hg'}
 NeoBundle 'bling/vim-airline'
 NeoBundle 'ConradIrwin/vim-bracketed-paste'
 NeoBundle 'gcmt/wildfire.vim'
@@ -77,12 +77,19 @@ NeoBundle 'kien/rainbow_parentheses.vim'
 NeoBundle 'kshenoy/vim-signature'
 NeoBundle 'Lokaltog/vim-easymotion'
 NeoBundle 'lucapette/vim-textobj-underscore'
-NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'nelstrom/vim-visual-star-search'
 NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'PeterRincker/vim-argumentative'
 NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'Shougo/neocomplete'
+NeoBundle 'Shougo/vimproc', {
+      \ 'build' : {
+      \     'windows' : 'make -f make_mingw32.mak',
+      \     'cygwin' : 'make -f make_cygwin.mak',
+      \     'mac' : 'make -f make_mac.mak',
+      \     'unix' : 'make -f make_unix.mak',
+      \    },
+      \ }
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'tommcdo/vim-exchange'
 NeoBundle 'tpope/vim-abolish'
