@@ -59,10 +59,14 @@ bind left:alt  throw left
 # bind down:cmd;alt focus behind
 
 # Window Hints
-bind esc:cmd hint
+bind tab:cmd;alt hint
 
 # half screen
 alias lefthalf move screenOriginX;screenOriginY screenSizeX/2;screenSizeY
 alias righthalf move screenOriginX+screenSizeX/2;screenOriginY screenSizeX/2;screenSizeY
+alias standard move screenOriginX+5;screenOriginY+20 screenSizeX-10;screenSizeY-40
+alias mini move screenOriginX+100;screenOriginY+50 screenSizeX-200;screenSizeY-100
 bind h:ctrl;cmd;alt ${lefthalf}
 bind l:ctrl;cmd;alt ${righthalf}
+bind s:ctrl;cmd;alt ${standard}
+bind m:ctrl;cmd;alt ${mini}
