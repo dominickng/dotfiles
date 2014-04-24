@@ -85,7 +85,7 @@ nnoremap K i<CR><ESC>
 " nnoremap M K
 
 " make space and delete work in normal mode like insert mode
-nnoremap <Space> i<Space><ESC>
+" nnoremap <Space> i<Space><ESC>
 " nnoremap <Del> a<Del><Esc>
 
 " enter adds a new line below the current one

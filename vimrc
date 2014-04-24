@@ -72,7 +72,6 @@ NeoBundle 'kana/vim-smartinput'
 NeoBundle 'kana/vim-textobj-indent'
 NeoBundle 'kana/vim-textobj-line'
 NeoBundle 'kana/vim-textobj-user'
-NeoBundle 'kien/ctrlp.vim'
 NeoBundle 'kien/rainbow_parentheses.vim'
 NeoBundle 'kshenoy/vim-signature'
 NeoBundle 'Lokaltog/vim-easymotion'
@@ -82,6 +81,10 @@ NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'PeterRincker/vim-argumentative'
 NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'Shougo/neocomplete'
+NeoBundle 'Shougo/neomru.vim'
+NeoBundle 'Shougo/neosnippet'
+NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/unite-outline'
 NeoBundle 'Shougo/vimproc', {
       \ 'build' : {
       \     'windows' : 'make -f make_mingw32.mak',
@@ -90,7 +93,6 @@ NeoBundle 'Shougo/vimproc', {
       \     'unix' : 'make -f make_unix.mak',
       \    },
       \ }
-NeoBundle 'Shougo/neosnippet'
 NeoBundle 'tommcdo/vim-exchange'
 NeoBundle 'tpope/vim-abolish'
 NeoBundle 'tpope/vim-characterize'
@@ -207,30 +209,41 @@ let g:airline_left_sep=''
 let g:airline_right_sep=''
 " let g:airline#extensions#tabline#enabled = 1
 
-" ctrl-p
-let g:ctrlp_map = ',f'
-" let g:ctrlp_prompt_mappings = {
-"   \ 'AcceptSelection("e")': ['<c-e>'],
-"   \ 'AcceptSelection("t")': ['<cr>', '<c-m>'],
-"   \ }
-let g:ctrlp_switch_buffer = 'Et'
-let g:ctrlp_root_markers = ['src']
-let g:ctrlp_tabpage_position = 'al'
-let g:ctrlp_cache_dir = '~/tmp/vim/ctrlp'
-let g:ctrlp_open_multiple_files = '2vjr'
-let g:ctrlp_extensions = ['funky']
-let g:ctrlp_custom_ignore = {
-    \ 'dir':  '\v[\/](\.git|\.hg|\.svn|working|bin|build|dist)$',
-    \ 'file': '\v\.(exe|so|dll|o|dylib|aux|bbl|blg|lot|lof|toc|pyc|swp|egg)$',
-    \ }
+" unite
+let g:unite_enable_start_insert = 1
+let g:unite_force_overwrite_statusline = 0
+let g:unite_split_rule = 'botright'
+let g:unite_winheight = 10
 
-" ctrlp buffer finding
-noremap <leader>b :CtrlPBuffer<CR>
-nnoremap <leader>r :CtrlPMRU<CR>
-nnoremap <leader>c :CtrlPClearCache<CR>
-nnoremap <leader>u :CtrlPFunky<CR>
-" narrow the list down with a word under cursor
-nnoremap <leader>U :execute 'CtrlPFunky ' . expand('<cword>')<CR>
+" extend default ignore pattern for file_rec source (same as directory_rec)
+let s:file_rec_ignore = unite#get_all_sources('file_rec')['ignore_pattern'] .
+    \ '\|\.\%(jar\|jpg\|gif\|png\)$' .
+    \ '\|vim/bundle/' .
+    \ '\|.git/\|.svn/' .
+    \ '\|opt\|Downloads\|eclipse_workspace\|gwt-unitCache\|grimoire-remote'
+call unite#custom#source('file_rec,file_rec/async,file_mru,file,buffer,grep', 'ignore_pattern', s:file_rec_ignore)
+
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+call unite#filters#sorter_default#use(['sorter_rank'])
+autocmd FileType unite call s:unite_settings()
+function! s:unite_settings()
+  imap <buffer> <C-j>   <Plug>(unite_select_next_line)
+  imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
+  imap <silent><buffer><expr> <C-g> unite#do_action('goto')
+  imap <silent><buffer><expr> <C-x> unite#do_action('split')
+  imap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
+  imap <silent><buffer><expr> <C-t> unite#do_action('tabopen')
+
+  nmap <buffer> <ESC> <Plug>(unite_exit)
+endfunction
+
+nnoremap [unite] <nop>
+nmap <Space> [unite]
+nnoremap [unite]f :Unite -profile-name=files -buffer-name=files -start-insert buffer file_rec/async:!<CR>
+nnoremap [unite]r :Unite -no-split -start-insert buffer tab file_mru directory_mru<CR>
+nnoremap [unite]b :Unite -no-split -start-insert -default-action=goto buffer tab<CR>
+nnoremap [unite]o :Unite -no-split -start-insert -auto-preview outline<CR>
+nnoremap [unite]g :Unite -no-split grep:.<CR>
 
 " tabularize
 nmap <leader>a& :Tabularize /&<CR>
@@ -250,9 +263,6 @@ if &term =~ '^screen'
   execute "set <xRight>=\e[1;*C"
   execute "set <xLeft>=\e[1;*D"
 endif
-
-" toggle gundo
-nnoremap <leader>g :GundoToggle<CR>
 
 let g:matchparen_insert_timeout=5
 
