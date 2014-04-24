@@ -210,8 +210,10 @@ let g:airline_right_sep=''
 " let g:airline#extensions#tabline#enabled = 1
 
 " unite
+let g:unite_data_directory='~/tmp/vim/unite'
 let g:unite_enable_start_insert = 1
 let g:unite_force_overwrite_statusline = 0
+let g:unite_source_rec_max_cache_files=5000
 let g:unite_split_rule = 'botright'
 let g:unite_winheight = 10
 
@@ -239,11 +241,11 @@ endfunction
 
 nnoremap [unite] <nop>
 nmap <Space> [unite]
-nnoremap [unite]f :Unite -profile-name=files -buffer-name=files -start-insert buffer file_rec/async:!<CR>
-nnoremap [unite]r :Unite -no-split -start-insert buffer tab file_mru directory_mru<CR>
-nnoremap [unite]b :Unite -no-split -start-insert -default-action=goto buffer tab<CR>
-nnoremap [unite]o :Unite -no-split -start-insert -auto-preview outline<CR>
-nnoremap [unite]g :Unite -no-split grep:.<CR>
+nnoremap [unite]f :Unite -profile-name=files -buffer-name=files -start-insert file_rec/async:!<CR>
+nnoremap [unite]r :Unite -start-insert buffer tab file_mru directory_mru<CR>
+nnoremap [unite]b :Unite -start-insert --buffer-name=buffers -default-action=goto buffer tab<CR>
+nnoremap [unite]o :Unite -start-insert -auto-preview outline<CR>
+nnoremap [unite]g :Unite grep:.<CR>
 
 " tabularize
 nmap <leader>a& :Tabularize /&<CR>
