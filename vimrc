@@ -236,12 +236,20 @@ function! s:unite_settings()
   imap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
   imap <silent><buffer><expr> <C-t> unite#do_action('tabopen')
 
-  nmap <buffer> <ESC> <Plug>(unite_exit)
+  nmap <silent><buffer> <C-c> <Plug>(unite_exit)
+  imap <silent><buffer> <C-c> <Plug>(unite_exit)
+  nmap <silent><buffer> <Esc> <Plug>(unite_exit)
+endfunction
+
+function! UniteWrapper(action, arguments)
+  return ":\<C-u>Unite " . a:action . " " . a:arguments . "\<CR>"
 endfunction
 
 nnoremap [unite] <nop>
 nmap <Space> [unite]
-nnoremap [unite]f :Unite -profile-name=files -buffer-name=files -start-insert file_rec/async:!<CR>
+nnoremap <expr> [unite]f UniteWrapper('file' . (expand('%') == '' ? '' : ':%:h') . ' file_rec/async:!' . (expand('%') == '' ? '' : ':%:h') . ' file/new', '-start-insert')
+nnoremap [unite]c :Unite -profile-name=files -buffer-name=files -start-insert file_rec/async:!<CR>
+nnoremap [unite]p :UniteWithBufferDir -buffer-name=file_rec file_rec<CR>
 nnoremap [unite]r :Unite -start-insert buffer tab file_mru directory_mru<CR>
 nnoremap [unite]b :Unite -start-insert --buffer-name=buffers -default-action=goto buffer tab<CR>
 nnoremap [unite]o :Unite -start-insert -auto-preview outline<CR>
