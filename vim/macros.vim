@@ -162,6 +162,7 @@ nnoremap <expr> gV    "`[".getregtype(v:register)[0]."`]"
 
 " clear out all trailing whitespace
 nnoremap <leader>ws :%s/\s\+$//<CR>:let @/=''<CR>"
+vnoremap <silent> <leader>ws :s/\s\+$//<CR>gv
 
 " sort CSS properties
 nnoremap <leader>css ?{<CR>jV/^\s*\}?$<CR>k:sort<CR>:noh<CR>
