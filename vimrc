@@ -209,6 +209,13 @@ let g:unite_source_rec_max_cache_files=5000
 let g:unite_split_rule = 'botright'
 let g:unite_winheight = 10
 
+" use ag for search
+if executable('ag')
+  let g:unite_source_grep_command = 'ag'
+  let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
+  let g:unite_source_grep_recursive_opt = ''
+endif
+
 " extend default ignore pattern for file_rec source (same as directory_rec)
 let s:file_rec_ignore = unite#get_all_sources('file_rec')['ignore_pattern'] .
     \ '\|\.\%(jar\|jpg\|gif\|png\)$' .
