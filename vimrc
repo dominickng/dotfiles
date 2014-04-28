@@ -281,12 +281,8 @@ autocmd FileType tex inoremap <buffer><silent><C-x>} <esc>:call TexCloseCurrent(
 autocmd FileType tex nnoremap <buffer><silent><C-x>c :call TexClosePrev(0)<CR>
 autocmd FileType tex inoremap <buffer><silent><C-x>/ <esc>:call TexClosePrev(1)<CR>
 
-function! ModifiedTime()
-  return strftime(\"%d/%m/%y\ %H:%M\",getftime(expand(\"%:p\")))
-endfunction
-
-" targets - disable angle bracket map (conflict with arg text object)
-let g:targets_pairs = '()b {}B []r'
+" targets - disable angle bracket map to a (conflict with arg text object)
+let g:targets_pairs = '()b {}B []r <>'
 
 " argumentative - rename argument text object
 xmap ia <Plug>Argumentative_InnerTextObject
