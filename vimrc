@@ -183,17 +183,9 @@ highlight! link DiffText MatchParen
 " Don't try to highlight lines longer than 800 characters.
 set synmaxcol=800
 
-" highlight Comment ctermfg=lightblue
-" highlight CursorLine cterm=NONE ctermbg=darkgray guibg=darkgray
 highlight EvilSpace ctermbg=darkred guibg=darkred
 highlight LeadingTab ctermbg=blue guibg=blue
 highlight LeadingSpace ctermbg=darkgreen guibg=darkgreen
-" highlight MatchParen ctermbg=4
-" highlight Pmenu ctermbg=238 gui=bold
-" highlight Search ctermfg=grey ctermbg=yellow
-" highlight SpellBad term=reverse ctermfg=white ctermbg=darkred
-" highlight StatusLine ctermfg=black ctermbg=green cterm=NONE
-" highlight StatusLineNC ctermfg=black ctermbg=lightblue cterm=NONE
 highlight Tab gui=underline guifg=blue ctermbg=blue
 highlight WhitespaceEOL ctermbg=lightblue
 let NERDSpaceDelims=1
