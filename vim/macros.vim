@@ -72,9 +72,6 @@ vnoremap <C-r> hy:%s/<C-r>h//g<left><left>
 " tab to switch between split windows
 noremap <Tab> <C-w><C-w>
 
-" make s act like C-w, e.g. sl moves to left
-" nnoremap s <C-W>
-
 " don't enter ex mode on accident
 nnoremap Q <nop>
 
@@ -126,14 +123,13 @@ xnoremap <leader>p "_dP
 " nnoremap <leader>spell :setlocal spell!<CR>
 
 " use ,/ to clear search highlight
-" noremap <leader>/ :nohlsearch<CR>/<BS><CR>
 noremap <silent><leader>/ :nohlsearch<CR>
 
-" use ,, to open a quickfix window for the result of the previous search
+" use ,x to open a quickfix window for the result of the previous search
 nnoremap <silent><leader>x :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
 
 " don't jump to the start of a line when typing #
-inoremap # X<c-h>#
+inoremap # X<C-h>#
 
 " map Y to be consistent with D, C, etc
 noremap Y y$
@@ -141,10 +137,6 @@ noremap Y y$
 " map CTRL-f and CTRL-b to move forward and back a word in insert mode
 imap <C-f> <C-o>w
 imap <C-b> <C-o>b
-
-" CTRL-J/K to move up and down, collapsing open windows
-" map <C-j> <C-W>j<C-W>_
-" map <C-k> <C-W>k<C-W>_
 
 " select visual block after in/dedent so we can in/dedent more
 vnoremap < <gv
@@ -161,8 +153,8 @@ nnoremap <leader>v V`]
 nnoremap <expr> gV    "`[".getregtype(v:register)[0]."`]"
 
 " clear out all trailing whitespace
-nnoremap <leader>ws :%s/\s\+$//<CR>:let @/=''<CR>"
-vnoremap <silent> <leader>ws :s/\s\+$//<CR>gv
+nnoremap <leader>w :%s/\s\+$//<CR>:let @/=''<CR>"
+vnoremap <silent> <leader>w :s/\s\+$//<CR>gv
 
 " sort CSS properties
 nnoremap <leader>css ?{<CR>jV/^\s*\}?$<CR>k:sort<CR>:noh<CR>
@@ -183,10 +175,6 @@ nnoremap __ :sp<CR>
 nnoremap <bar> :vsp<Space>
 nnoremap <bar><bar> :vsp<CR>
 
-" time saver
-" nnoremap ; :
-" inoremap kj <Esc>
-
 " Use ,d (or ,dd or ,dj or 20,dd) to delete a line without adding it to the
 " yanked stack (also, in visual mode)
 nmap <silent><leader>d "_d
@@ -205,7 +193,6 @@ nnoremap <silent><leader>dos :%s/\r/\r/ge<CR>:nohlsearch<CR>
 
 " edit vimrc
 nnoremap <silent><leader>vimrc :e ~/.vimrc<CR>
-nnoremap <silent><leader>macros :e ~/.vim/macros.vim<CR>
 
 " tabs
 inoremap <silent><S-Right> <C-o>:tabnext<CR>
@@ -224,7 +211,7 @@ cnoremap w!! w !sudo tee % >/dev/null
 
 " Escape special characters in a string for exact matching.
 " This is useful to copying strings from the file to the search tool
-" Based on this - http://peterodding.com/code/vim/profile/autoload/xolox/escape.vim
+" Based on http://peterodding.com/code/vim/profile/autoload/xolox/escape.vim
 function! EscapeString (string)
   let string=a:string
   " Escape regex characters
