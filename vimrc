@@ -216,6 +216,7 @@ let s:file_rec_ignore = unite#get_all_sources('file_rec')['ignore_pattern'] .
     \ '\|.git/\|.svn/' .
     \ '\|opt\|Downloads\|eclipse_workspace\|gwt-unitCache\|grimoire-remote'
 call unite#custom#source('file_rec,file_rec/async,file_mru,file,buffer,grep', 'ignore_pattern', s:file_rec_ignore)
+call unite#custom#source('file_mru', 'max_candidates', 10)
 
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
 call unite#filters#sorter_default#use(['sorter_rank'])
@@ -227,6 +228,10 @@ function! s:unite_settings()
   imap <silent><buffer><expr> <C-x> unite#do_action('split')
   imap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
   imap <silent><buffer><expr> <C-t> unite#do_action('tabopen')
+  imap <silent><buffer> <CR> <Plug>(unite_do_default_action)
+  imap <silent><buffer> <Tab> <Plug>(unite_do_default_action)
+  nmap <silent><buffer> <Tab> <Plug>(unite_do_default_action)
+  imap <silent><buffer> <C-Tab> <Plug>(unite_choose_action)
 
   nmap <silent><buffer> <C-c> <Plug>(unite_exit)
   imap <silent><buffer> <C-c> <Plug>(unite_exit)
@@ -243,7 +248,7 @@ nnoremap <expr> [unite]f UniteWrapper('file' . (expand('%') == '' ? '' : ':%:h')
 nnoremap [unite]c :Unite -profile-name=files -buffer-name=files -start-insert file_rec/async:!<CR>
 nnoremap [unite]p :UniteWithBufferDir -buffer-name=file_rec file_rec<CR>
 nnoremap [unite]r :Unite -start-insert buffer tab file_mru directory_mru<CR>
-nnoremap [unite]b :Unite -start-insert --buffer-name=buffers -default-action=goto buffer tab<CR>
+nnoremap [unite]b :Unite -start-insert -default-action=goto buffer tab<CR>
 nnoremap [unite]o :Unite -start-insert -auto-preview outline<CR>
 nnoremap [unite]g :Unite grep:.<CR>
 
