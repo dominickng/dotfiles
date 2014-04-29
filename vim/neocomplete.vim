@@ -1,6 +1,6 @@
 " Launches neocomplcache automatically on vim startup.
 let g:neocomplete#enable_at_startup = 1
-" let g:neocomplete#enable_auto_select = 1
+let g:neocomplete#enable_auto_select = 1
 " Use smartcase.
 let g:neocomplete#enable_smart_case = 1
 " Sets minimum char length of syntax keyword.
@@ -60,15 +60,21 @@ inoremap <expr><S-TAB>   pumvisible() ? "\<C-p>" : "\<C-h>"
 imap <expr> <C-x> <SID>neocom_cancel_popup_and('<C-x>')
 
 " make <CR> play nice with vim-smartinput
-inoremap <expr> <CR>
-      \ neocomplete#smart_close_popup()
-      \ . eval(smartinput#sid().'_trigger_or_fallback("\<Enter>", "\<Enter>")')
+" inoremap <expr> <CR>
+      " \ neocomplete#smart_close_popup()
+      " \ . eval(smartinput#sid().'_trigger_or_fallback("\<Enter>", "\<Enter>")')
+" inoremap <expr> <BS>
+      " \ neocomplete#smart_close_popup()
+      " \ . eval(smartinput#sid().'_trigger_or_fallback("\<BS>", "\<BS>")')
+inoremap <expr> <CR> delimitMate#WithinEmptyPair() ?
+          \ "\<C-R>=delimitMate#ExpandReturn()\<CR>" :
+          \ neocomplete#close_popup() . '<CR>'
+inoremap <expr> <BS> delimitMate#WithinEmptyPair() ?
+          \ "\<C-R>=delimitMate#BS()\<CR>" :
+          \ neocomplete#smart_close_popup() . '<BS>'
 
 " <C-h>, <BS>: close popup and delete backword char. Play nice with smartinput
 inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr> <BS>
-      \ neocomplete#smart_close_popup()
-      \ . eval(smartinput#sid().'_trigger_or_fallback("\<BS>", "\<BS>")')
 inoremap <expr><C-y>  neocomplete#close_popup()
 inoremap <expr><C-e>  neocomplete#cancel_popup()
 

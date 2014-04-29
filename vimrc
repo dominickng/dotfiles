@@ -68,7 +68,6 @@ NeoBundle 'godlygeek/tabular'
 NeoBundle 'jelera/vim-javascript-syntax'
 NeoBundle 'justinmk/vim-gtfo'
 NeoBundle 'justinmk/vim-sneak'
-NeoBundle 'kana/vim-smartinput'
 NeoBundle 'kana/vim-textobj-indent'
 NeoBundle 'kana/vim-textobj-line'
 NeoBundle 'kana/vim-textobj-user'
@@ -79,6 +78,7 @@ NeoBundle 'lucapette/vim-textobj-underscore'
 NeoBundle 'nelstrom/vim-visual-star-search'
 NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'PeterRincker/vim-argumentative'
+NeoBundle 'Raimondi/delimitMate'
 NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'Shougo/neocomplete'
 NeoBundle 'Shougo/neomru.vim'
@@ -119,6 +119,12 @@ autocmd FileType c,cpp,java let b:match_words=
 let g:tex_indent_items = 0
 let g:tex_flavor = 'latex'
 let g:tex_noindent_env = 'verbatim\|comment\|lstlisting'
+
+" delimitmate
+let g:delimitMate_expand_cr = 2
+let g:delimitMate_jump_expansion = 1
+let g:delimitMate_smart_quotes = 1
+au FileType python let b:delimitMate_nesting_quotes = ['"', "'"]
 
 " searching
 set complete=.,w,b,u,t
@@ -300,12 +306,6 @@ omap aa <Plug>Argumentative_OpPendingOuterTextObject
 " ArrowKeyRepurpose - disable shift left right map
 let g:ArrowKeyRepurp_settings = {}
 let g:ArrowKeyRepurp_settings.do_map_shift_leftright=0
-
-" wildfire
-let g:wildfire_objects = {
-    \ "*" : ["i'", 'i"', "i)", "i]", "il", "i}", "ip"],
-    \ "html,xml" : ['i"', "at"],
-\ }
 
 " Load other macros
 source $HOME/.vim/macros.vim
