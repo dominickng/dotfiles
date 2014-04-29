@@ -63,7 +63,6 @@ NeoBundle 'ap/vim-css-color'
 NeoBundle 'bb:atimholt/ArrowKeyRepurpose', {'type': 'hg', 'external_commands' : 'hg'}
 NeoBundle 'bling/vim-airline'
 NeoBundle 'ConradIrwin/vim-bracketed-paste'
-NeoBundle 'gcmt/wildfire.vim'
 NeoBundle 'godlygeek/tabular'
 NeoBundle 'jelera/vim-javascript-syntax'
 NeoBundle 'justinmk/vim-gtfo'
