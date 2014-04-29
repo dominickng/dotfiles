@@ -86,7 +86,7 @@ nnoremap K i<CR><ESC>
 " nnoremap <Del> a<Del><Esc>
 
 " enter adds a new line below the current one
-"nnoremap <CR> A<CR><ESC>
+" nnoremap <CR> A<CR><ESC>
 
 " append a semicolon to the current line
 nnoremap <leader>; A;<Esc>

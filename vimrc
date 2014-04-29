@@ -133,6 +133,10 @@ set ignorecase
 set incsearch
 set smartcase
 
+" don't use exact searches for */#
+noremap * g*
+noremap # g#
+
 " stop using the arrow keys
 map <up> <nop>
 map <down> <nop>
