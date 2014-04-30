@@ -1,6 +1,6 @@
 " Launches neocomplcache automatically on vim startup.
 let g:neocomplete#enable_at_startup = 1
-let g:neocomplete#enable_auto_select = 1
+let g:neocomplete#enable_auto_select = 0
 " Use smartcase.
 let g:neocomplete#enable_smart_case = 1
 " Sets minimum char length of syntax keyword.
