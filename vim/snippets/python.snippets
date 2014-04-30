@@ -253,5 +253,6 @@ snippet logsetup
 
 snippet lenargv
 	if len(sys.argv) != ${1:1}:
+		print("Usage: {0} <args>".format(sys.argv[0]), file=sys.stderr)
 		${2}
 		sys.exit(1)
