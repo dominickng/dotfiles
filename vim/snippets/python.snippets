@@ -250,3 +250,8 @@ snippet logimport
 snippet logsetup
 	logging.basicConfig(level=logging.INFO, format='%(levelname)s - %(asctime)s: %(message)s')
 	log = logging.getLogger(__file__)
+
+snippet lenargv
+	if len(sys.argv) !] ${1:1}
+		${2}
+		sys.exit(1)
