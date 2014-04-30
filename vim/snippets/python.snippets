@@ -252,6 +252,6 @@ snippet logsetup
 	log = logging.getLogger(__file__)
 
 snippet lenargv
-	if len(sys.argv) !] ${1:1}
+	if len(sys.argv) != ${1:1}:
 		${2}
 		sys.exit(1)
