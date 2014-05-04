@@ -294,6 +294,9 @@ let g:matchparen_insert_timeout=5
 " easymotion search for 2 chars
 map <leader><Space> <Plug>(easymotion-s2)
 
+" tagbar
+nmap <leader>t :TagbarToggle<CR>
+
 " tex_autoclose mappings
 autocmd FileType tex inoremap <buffer><silent><C-x>} <esc>:call TexCloseCurrent()<CR>}
 autocmd FileType tex nnoremap <buffer><silent><C-x>c :call TexClosePrev(0)<CR>
