@@ -74,6 +74,7 @@ NeoBundle 'kien/rainbow_parentheses.vim'
 NeoBundle 'kshenoy/vim-signature'
 NeoBundle 'Lokaltog/vim-easymotion'
 NeoBundle 'lucapette/vim-textobj-underscore'
+NeoBundle 'majutsushi/tagbar'
 NeoBundle 'nelstrom/vim-visual-star-search'
 NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'PeterRincker/vim-argumentative'
@@ -244,6 +245,7 @@ function! s:unite_settings()
   imap <silent><buffer><expr> <C-x> unite#do_action('split')
   imap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
   imap <silent><buffer><expr> <C-t> unite#do_action('tabopen')
+  imap <silent><buffer><expr> <C-d> unite#do_action('delete')
   imap <silent><buffer> <CR> <Plug>(unite_do_default_action)
   imap <silent><buffer> <Tab> <Plug>(unite_do_default_action)
   nmap <silent><buffer> <Tab> <Plug>(unite_do_default_action)
