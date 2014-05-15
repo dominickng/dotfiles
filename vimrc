@@ -112,10 +112,12 @@ filetype plugin indent on
 NeoBundleCheck
 
 " autocmd FileType php set filetype=php.html.javascript.css
+autocmd BufNewFile,BufReadPost *.md set filetype=markdown.html sw=4 softtabstop=4 textwidth=78
 autocmd FileType c,cpp,java setlocal sw=2 softtabstop=2
 autocmd FileType c,cpp,java let b:match_words=
    \ '\%(\<else\s\+\)\@<!\<if\>:\<else\s\+if\>:\<else\%(\s\+if\)\@!\>,' .
    \ '\<switch\>:\<case\>:\<default\>'
+let g:tex_conceal = ''
 let g:tex_indent_items = 0
 let g:tex_flavor = 'latex'
 let g:tex_noindent_env = 'verbatim\|comment\|lstlisting'
@@ -165,7 +167,9 @@ set showtabline=2
 set switchbuf=usetab
 set tabpagemax=15
 set title
+set t_vb= " disable beep
 set virtualedit+=block " allow cursor to roam in visual block
+set visualbell " disable beep
 set wildmenu
 set wildmode=list:longest,full
 set wildignore+=*.swp,*.swo

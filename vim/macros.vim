@@ -13,6 +13,9 @@
 inoremap <C-u> <c-g>u<C-u>
 inoremap <C-w> <c-g>u<C-w>
 
+" like ciw but runs a search
+nmap c* :<C-U>let @/='\<'.expand("<cword>").'\>'<cr>:set hls<cr>ciw
+
 " don't move on *
 nnoremap * *<C-o>
 
@@ -73,7 +76,35 @@ vnoremap <C-r> hy:%s/<C-r>h//g<left><left>
 noremap <Tab> <C-w><C-w>
 
 " don't enter ex mode on accident
-nnoremap Q <nop>
+" nnoremap Q <nop>
+
+" http://tex.stackexchange.com/questions/1548/intelligent-paragraph-reflowing-in-vim
+" Reformat lines (getting the spacing correct) {{{
+function! TeX_fmt()
+  if (getline(".") != "")
+    let save_cursor = getpos(".")
+    let op_wrapscan = &wrapscan
+    set nowrapscan
+    let par_begin = '^\(%D\)\=\s*\($\|\\label\|\\begin\|\\end\|\\[\|\\]\|\\\(sub\)*section\>\|\\item\>\|\\NC\>\|\\blank\>\|\\noindent\>\)'
+    let par_end   = '^\(%D\)\=\s*\($\|\\begin\|\\end\|\\\(sub\)*section\>\|\\item\>\|\\NC\>\|\\blank\>\)'
+    try
+      exe '?'.par_begin.'?+'
+    catch /E384/
+      1
+    endtry
+    norm V
+    try
+      exe '/'.par_end.'/-'
+    catch /E385/
+      $
+    endtry
+    norm gq
+    let &wrapscan = op_wrapscan
+    call setpos('.', save_cursor) 
+  endif
+endfunction
+nmap Q :call TeX_fmt()<CR>
+" }}}
 
 " split line at cursor, analogue to J
 nnoremap K i<CR><ESC>
