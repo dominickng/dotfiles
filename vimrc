@@ -63,8 +63,8 @@ NeoBundle 'ap/vim-css-color'
 NeoBundle 'bb:atimholt/ArrowKeyRepurpose', {'type': 'hg', 'external_commands' : 'hg'}
 NeoBundle 'bling/vim-airline'
 NeoBundle 'ConradIrwin/vim-bracketed-paste'
-NeoBundle 'godlygeek/tabular'
 NeoBundle 'jelera/vim-javascript-syntax'
+NeoBundle 'junegunn/vim-easy-align'
 NeoBundle 'justinmk/vim-gtfo'
 NeoBundle 'justinmk/vim-sneak'
 NeoBundle 'kana/vim-textobj-indent'
@@ -274,15 +274,9 @@ nnoremap [unite]b :Unite -start-insert -default-action=goto buffer tab<CR>
 nnoremap [unite]o :Unite -start-insert -auto-preview outline<CR>
 nnoremap [unite]g :Unite grep:.<CR>
 
-" tabularize
-nmap <leader>a& :Tabularize /&<CR>
-vmap <leader>a& :Tabularize /&<CR>
-nmap <leader>a\| :Tabularize /\|<CR>
-vmap <leader>a\| :Tabularize /\|<CR>
-nmap <leader>a= :Tabularize /=<CR>
-vmap <leader>a= :Tabularize /=<CR>
-nmap <leader>a: :Tabularize /:\zs<CR>
-vmap <leader>a: :Tabularize /:\zs<CR>
+" easy-align
+vmap <Enter> <Plug>(EasyAlign)
+nmap <leader>a <Plug>(EasyAlign)
 
 " fix the shift-left/right etc. mappings in tmux
 if &term =~ '^screen'
