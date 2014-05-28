@@ -79,7 +79,6 @@ NeoBundle 'nelstrom/vim-visual-star-search'
 NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'PeterRincker/vim-argumentative'
 NeoBundle 'Raimondi/delimitMate'
-NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'Shougo/neocomplete'
 NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/neosnippet'
@@ -96,6 +95,7 @@ NeoBundle 'Shougo/vimproc', {
 NeoBundle 'tommcdo/vim-exchange'
 NeoBundle 'tpope/vim-abolish'
 NeoBundle 'tpope/vim-characterize'
+NeoBundle 'tpope/vim-commentary'
 NeoBundle 'tpope/vim-ragtag'
 NeoBundle 'tpope/vim-repeat'
 NeoBundle 'tpope/vim-sleuth'
@@ -291,6 +291,7 @@ let g:matchparen_insert_timeout=5
 
 " easymotion search for 2 chars
 map <leader><Space> <Plug>(easymotion-s2)
+map <leader>b <Plug>(easymotion-bd-f)
 
 " tagbar
 nmap <leader>t :TagbarToggle<CR>
