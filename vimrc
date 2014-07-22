@@ -56,13 +56,15 @@ endif
 
 call neobundle#begin(expand('~/.vim/bundle/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
+NeoBundleLazy '1995eaton/vim-better-javascript-completion', {'autoload':{'filetypes':['javascript']}}
 NeoBundle 'AndrewRadev/splitjoin.vim'
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'ap/vim-css-color'
-NeoBundle 'bb:atimholt/ArrowKeyRepurpose', {'type': 'hg', 'external_commands' : 'hg'}
 NeoBundle 'bling/vim-airline'
 NeoBundle 'ConradIrwin/vim-bracketed-paste'
-NeoBundle 'jelera/vim-javascript-syntax'
+NeoBundle 'jceb/vim-textobj-uri'
+NeoBundleLazy 'jelera/vim-javascript-syntax', {'autoload':{'filetypes':['javascript']}}
+NeoBundle 'Julian/vim-textobj-variable-segment'
 NeoBundle 'junegunn/vim-easy-align'
 NeoBundle 'justinmk/vim-gtfo'
 NeoBundle 'justinmk/vim-sneak'
@@ -75,7 +77,7 @@ NeoBundle 'Lokaltog/vim-easymotion'
 NeoBundle 'lucapette/vim-textobj-underscore'
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'nelstrom/vim-visual-star-search'
-NeoBundle 'pangloss/vim-javascript'
+NeoBundleLazy 'pangloss/vim-javascript', {'autoload':{'filetypes':['javascript', 'html']}}
 NeoBundle 'PeterRincker/vim-argumentative'
 NeoBundle 'Raimondi/delimitMate'
 NeoBundle 'Shougo/neocomplete'
@@ -101,8 +103,9 @@ NeoBundle 'tpope/vim-sleuth'
 NeoBundle 'tpope/vim-speeddating'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-unimpaired'
-NeoBundle 'vim-scripts/tex_autoclose.vim', { 'disabled': &ft =~ 'tex' }
+NeoBundleLazy 'vim-scripts/tex_autoclose.vim', {'autoload':{'filetypes':['tex']}}
 NeoBundle 'voithos/vim-python-matchit'
+NeoBundle 'whatyouhide/vim-textobj-xmlattr'
 NeoBundle 'wellle/targets.vim'
 NeoBundle 'Yggdroot/indentLine'
 
