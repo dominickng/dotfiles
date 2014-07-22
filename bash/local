@@ -34,7 +34,7 @@ if [ `uname` = 'Darwin' ]; then
 
 	export ARCHFLAGS="-arch x86_64"
 	export COPYFILE_DISABLE=true #for stopping those damned ._ files
-	export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:/usr/texbin::`xcode-select -print-path`/usr/bin:/usr/local/texlive/2013basic/bin/universal-darwin
+	export PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:/usr/texbin::`xcode-select -print-path`/usr/bin:/usr/local/texlive/2014basic/bin/universal-darwin
 	export TEXINPUTS=".:.//:$HOME/working/reposs/tex//:"
 	export GNUTERM=x11 # for Octave
 else
