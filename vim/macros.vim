@@ -188,7 +188,7 @@ nnoremap <leader>w :%s/\s\+$//<CR>:let @/=''<CR>"
 vnoremap <silent> <leader>w :s/\s\+$//<CR>gv
 
 " sort CSS properties
-nnoremap <leader>css ?{<CR>jV/^\s*\}?$<CR>k:sort<CR>:noh<CR>
+nnoremap <leader>css vi}:sort<CR>
 
 " format XML
 nnoremap <leader>=xml :%s/>\s*</>\r</g<CR>:set ft=xml<CR>ggVG=
@@ -199,8 +199,6 @@ nnoremap <leader>=json :%s/{/{\r/g<CR>:%s/}/\r}/g<CR>:%s/,/,\r/g<CR>:set ft=java
 " - or _ : Quick horizontal splits
 nnoremap - :sp<Space>
 nnoremap -- :sp<CR>
-nnoremap _ :sp<Space>
-nnoremap __ :sp<CR>
 
 " | : Quick vertical splits
 nnoremap <bar> :vsp<Space>
@@ -284,6 +282,23 @@ vnoremap ic :<C-U>call targets#xmap('()', 'grow seekselectp')<CR>ob
 omap ic :normal vic<CR>
 vnoremap ac ::<C-U>call targets#xmap('()', 'grow seekselectp')<CR>oB
 omap ac :normal vac<CR>
+
+" latex environment text object
+call textobj#user#plugin('latex', {
+\   'environment': {
+\     'pattern': ['\\begin{[^}]\+}.*\n\s*', '\n^\s*\\end{[^}]\+}.*$'],
+\     'select-a': 'ae',
+\     'select-i': 'ie',
+\   },
+\ })
+
+call textobj#user#plugin('php', {
+\   'code': {
+\     'pattern': ['<?php\>', '?>'],
+\     'select-a': 'aP',
+\     'select-i': 'iP',
+\   },
+\ })
 
 " format tabline
 set tabline=%!MyTabLine()

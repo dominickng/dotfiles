@@ -114,7 +114,7 @@ filetype plugin indent on
 NeoBundleCheck
 
 " autocmd FileType php set filetype=php.html.javascript.css
-autocmd BufNewFile,BufReadPost *.md set filetype=markdown.html sw=4 softtabstop=4 textwidth=78
+autocmd BufNewFile,BufReadPost *.md set filetype=markdown.html sw=4 softtabstop=4 textwidth=78 spell
 autocmd FileType c,cpp,java setlocal sw=2 softtabstop=2
 autocmd FileType c,cpp,java let b:match_words=
    \ '\%(\<else\s\+\)\@<!\<if\>:\<else\s\+if\>:\<else\%(\s\+if\)\@!\>,' .
@@ -186,7 +186,7 @@ set wildignore+=migrations " Django migration"
 autocmd VimResized * :wincmd =
 
 " syntax highlighting and colors
-syntax on
+syntax enable
 set background=dark
 set backspace=indent,eol,start
 set colorcolumn=+1
@@ -245,6 +245,13 @@ autocmd FileType unite call s:unite_settings()
 function! s:unite_settings()
   imap <buffer> <C-j>   <Plug>(unite_select_next_line)
   imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
+  " imap <buffer> <C-w>   <Plug>(unite_delete_backward_path)
+  imap <buffer> '       <Plug>(unite_quick_match_default_action)
+  nmap <buffer> '       <Plug>(unite_quick_match_default_action)
+  imap <buffer> <C-y>   <Plug>(unite_narrowing_path)
+  nmap <buffer> <C-y>   <Plug>(unite_narrowing_path)
+  nmap <buffer> <C-r>   <Plug>(unite_narrowing_input_history)
+  imap <buffer> <C-r>   <Plug>(unite_narrowing_input_history)
   imap <silent><buffer><expr> <C-g> unite#do_action('goto')
   imap <silent><buffer><expr> <C-x> unite#do_action('split')
   imap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
