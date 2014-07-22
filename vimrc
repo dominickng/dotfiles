@@ -2,7 +2,6 @@ filetype off
 set encoding=utf-8
 set fileencoding=utf-8
 set nocompatible
-set nobk
 let mapleader=","
 
 " indentation
@@ -202,7 +201,6 @@ highlight LeadingTab ctermbg=blue guibg=blue
 highlight LeadingSpace ctermbg=darkgreen guibg=darkgreen
 highlight Tab gui=underline guifg=blue ctermbg=blue
 highlight WhitespaceEOL ctermbg=lightblue
-let NERDSpaceDelims=1
 
 " indentLine
 let g:indentLine_enabled = 0
@@ -213,7 +211,6 @@ set laststatus=2
 let g:airline_powerline_fonts=0
 let g:airline_left_sep=''
 let g:airline_right_sep=''
-" let g:airline#extensions#tabline#enabled = 1
 
 " unite
 let g:unite_data_directory='~/tmp/vim/unite'
@@ -309,10 +306,6 @@ xmap ia <Plug>Argumentative_InnerTextObject
 xmap aa <Plug>Argumentative_OuterTextObject
 omap ia <Plug>Argumentative_OpPendingInnerTextObject
 omap aa <Plug>Argumentative_OpPendingOuterTextObject
-
-" ArrowKeyRepurpose - disable shift left right map
-let g:ArrowKeyRepurp_settings = {}
-let g:ArrowKeyRepurp_settings.do_map_shift_leftright=0
 
 " Load other macros
 source $HOME/.vim/macros.vim
