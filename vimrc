@@ -215,72 +215,6 @@ let g:airline_powerline_fonts=0
 let g:airline_left_sep=''
 let g:airline_right_sep=''
 
-" unite
-let g:unite_data_directory='~/tmp/vim/unite'
-let g:unite_enable_start_insert = 1
-let g:unite_force_overwrite_statusline = 0
-let g:unite_source_rec_max_cache_files=5000
-let g:unite_split_rule = 'botright'
-let g:unite_winheight = 10
-
-" use ag for search
-if executable('ag')
-  let g:unite_source_grep_command = 'ag'
-  let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
-  let g:unite_source_grep_recursive_opt = ''
-endif
-
-" extend default ignore pattern for file_rec source (same as directory_rec)
-let s:file_rec_ignore = unite#get_all_sources('file_rec')['ignore_pattern'] .
-    \ '\|\.\%(jar\|jpg\|gif\|png\)$' .
-    \ '\|vim/bundle/' .
-    \ '\|.git/\|.svn/' .
-    \ '\|opt\|Downloads\|eclipse_workspace\|gwt-unitCache\|grimoire-remote'
-call unite#custom#source('file_rec,file_rec/async,file_mru,file,buffer,grep', 'ignore_pattern', s:file_rec_ignore)
-call unite#custom#source('file_mru', 'max_candidates', 10)
-
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
-call unite#filters#sorter_default#use(['sorter_rank'])
-autocmd FileType unite call s:unite_settings()
-function! s:unite_settings()
-  imap <buffer> <C-j>   <Plug>(unite_select_next_line)
-  imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
-  " imap <buffer> <C-w>   <Plug>(unite_delete_backward_path)
-  imap <buffer> '       <Plug>(unite_quick_match_default_action)
-  nmap <buffer> '       <Plug>(unite_quick_match_default_action)
-  imap <buffer> <C-y>   <Plug>(unite_narrowing_path)
-  nmap <buffer> <C-y>   <Plug>(unite_narrowing_path)
-  nmap <buffer> <C-r>   <Plug>(unite_narrowing_input_history)
-  imap <buffer> <C-r>   <Plug>(unite_narrowing_input_history)
-  imap <silent><buffer><expr> <C-g> unite#do_action('goto')
-  imap <silent><buffer><expr> <C-x> unite#do_action('split')
-  imap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
-  imap <silent><buffer><expr> <C-t> unite#do_action('tabopen')
-  imap <silent><buffer><expr> <C-d> unite#do_action('delete')
-  imap <silent><buffer> <CR> <Plug>(unite_do_default_action)
-  imap <silent><buffer> <Tab> <Plug>(unite_do_default_action)
-  nmap <silent><buffer> <Tab> <Plug>(unite_do_default_action)
-  imap <silent><buffer> <C-Tab> <Plug>(unite_choose_action)
-
-  nmap <silent><buffer> <C-c> <Plug>(unite_exit)
-  imap <silent><buffer> <C-c> <Plug>(unite_exit)
-  nmap <silent><buffer> <Esc> <Plug>(unite_exit)
-endfunction
-
-function! UniteWrapper(action, arguments)
-  return ":\<C-u>Unite " . a:action . " " . a:arguments . "\<CR>"
-endfunction
-
-nnoremap [unite] <nop>
-nmap <Space> [unite]
-nnoremap <expr> [unite]f UniteWrapper('file' . (expand('%') == '' ? '' : ':%:h') . ' file_rec/async:!' . (expand('%') == '' ? '' : ':%:h') . ' file/new', '-start-insert')
-nnoremap [unite]c :Unite -profile-name=files -buffer-name=files -start-insert file_rec/async:!<CR>
-nnoremap [unite]p :UniteWithBufferDir -buffer-name=file_rec file_rec<CR>
-nnoremap [unite]r :Unite -start-insert buffer tab file_mru directory_mru<CR>
-nnoremap [unite]b :Unite -start-insert -default-action=goto buffer tab<CR>
-nnoremap [unite]o :Unite -start-insert -auto-preview outline<CR>
-nnoremap [unite]g :Unite grep:.<CR>
-
 " easy-align
 vmap <Enter> <Plug>(EasyAlign)
 nmap <leader>a <Plug>(EasyAlign)
@@ -297,7 +231,7 @@ endif
 let g:matchparen_insert_timeout=5
 
 " easymotion search for 2 chars
-map <leader><Space> <Plug>(easymotion-s2)
+map <leader>f <Plug>(easymotion-s2)
 map <leader>b <Plug>(easymotion-bd-f)
 
 " tagbar
@@ -319,5 +253,6 @@ omap aa <Plug>Argumentative_OpPendingOuterTextObject
 
 " Load other macros
 source $HOME/.vim/macros.vim
+source $HOME/.vim/unite.vim
 source $HOME/.vim/neocomplete.vim
 runtime macros/matchit.vim
