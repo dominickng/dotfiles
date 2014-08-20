@@ -8,11 +8,11 @@ let mapleader=","
 set autoindent
 set copyindent
 set expandtab
-set softtabstop=2
+set softtabstop=4
 set smarttab
-set tabstop=8
+set tabstop=4
 set nojoinspaces
-set shiftwidth=2
+set shiftwidth=4
 set shiftround
 
 " general settings

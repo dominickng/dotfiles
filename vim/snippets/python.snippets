@@ -4,10 +4,10 @@ snippet #!
 snippet #!3
 	#!/usr/bin/env python3
 
-snippet imp
+snippet timp
 	import ${1:module}
 
-snippet from
+snippet tfrom
 	from ${1:package} import ${2:module}
 
 # Module Docstring
@@ -18,36 +18,36 @@ snippet docs
 	Description: ${3}
 	'''
 
-snippet wh
+snippet twh
 	while ${1:condition}:
 		${2:# TODO: write code...}
 
 # dowh - does the same as do...while in other languages
-snippet dowh
+snippet tdowh
 	while True:
 		${1:# TODO: write code...}
 		if ${2:condition}:
 			break
 
-snippet with
+snippet twith
 	with ${1:expr} as ${2:var}:
 		${3:# TODO: write code...}
 
 # New Class
-snippet     cl
-abbr        class Class(...): ...
+snippet tcls
+abbr    class Class(...): ...
 	class ${1:name}(${2:object}):
 		def __init__(self, ${4}):
 			${0}
 
-snippet     cld
-abbr        class Class(...): ...
+snippet tcld
+abbr    class Class(...): ...
 	class ${1:name}(${2:object}):
 		"""${3:#:class documentation}"""
 		def __init__(self, ${4}):
 			${0}
 
-snippet cl1arg
+snippet tcl1arg
 	class ${1:name}(${2:object}):
 		"""${3:docstring for $1}"""
 		def __init__(self, ${4:arg}):
@@ -55,7 +55,7 @@ snippet cl1arg
 			self.$4 = $4
 			${6}
 
-snippet clsuper
+snippet tclsuper
 	class ${1:name}(${2:object}):
 		"""${3:docstring for $1}"""
 		def __init__(self, ${4:arg}):
@@ -63,35 +63,35 @@ snippet clsuper
 			${6}
 
 # New Function
-snippet     def
-abbr        def function(...): ...
-options     head
+snippet tdef
+abbr    def function(...): ...
+options head
 	def ${1:name}(${2:`indent('.') ? 'self' : ''`}):
 		${0:TARGET}
 
-snippet defd
+snippet tdefd
 	def ${1:fname}(${2:`indent('.') ? 'self' : ''`}):
 		"""${3:docstring for $1}"""
 		${4:# TODO: write code...}
 
-snippet deff
+snippet tdeff
 	def ${1:fname}(${2:`indent('.') ? 'self' : ''`}):
 		${3:# TODO: write code...}
 
 # New Method
-snippet defm
+snippet tdefm
 	def ${1:mname}(self, ${2:arg}):
 		${3:# TODO: write code...}
 
-snippet     defmd
-abbr        def method(self, ...): "..."
-options     head
+snippet tdefmd
+abbr    def method(self, ...): "..."
+options head
 	def ${1:mname}(self, ${2:arg}):
 		"""${3:#:method documentation}"""
 		${0:TARGET}
 
 # New Property
-snippet property
+snippet tproperty
 	def ${1:foo}():
 		doc = "${2:The $1 property.}"
 		def fget(self):
@@ -104,21 +104,21 @@ snippet property
 	$1 = property(**$1())
 
 # Ifs
-snippet if
+snippet tif
 	if ${1:condition}:
 		${2:# TODO: write code...}
 
 # no extra indent because python indent does that for us
-snippet else
+snippet telse
 	else:
 	${1:# TODO: write code...}
 
-snippet elif
+snippet telif
 	elif ${1:condition}:
 	${2:# TODO: write code...}
 
 # For
-snippet for
+snippet tfor
 	for ${1:item} in ${2:items}:
 		${3:# TODO: write code...}
 
@@ -137,26 +137,26 @@ snippet ld
 snippet .
 	self.
 
-snippet try
+snippet ttry
 	try:
 		${1:# TODO: write code...}
 	except ${2:Exception} as ${3:e}:
 		${4:raise $3}
-snippet trye
+snippet ttrye
 	try:
 		${1:# TODO: write code...}
 	except ${2:Exception} as ${3:e}:
 		${4:raise $3}
 	else:
 		${5:# TODO: write code...}
-snippet tryf
+snippet ttryf
 	try:
 		${1:# TODO: write code...}
 	except ${2:Exception} as ${3:e}:
 		${4:raise $3}
 	finally:
 		${5:# TODO: write code...}
-snippet tryff
+snippet ttryff
 	try:
 		${1:# TODO: write code...}
 	except ${2:Exception} as ${3:e}:
@@ -166,13 +166,25 @@ snippet tryff
 	finally:
 		${6:# TODO: write code...}
 
-snippet except
+snippet texcept
 	except ${1:Exception} as ${2:e}:
 		${3:raise e}
 
+snippet ifmainap
+	import argparse
+	
+	def main(args):
+		pass
+	
+	if __name__ == "__main__":
+		ap = argparse.ArgumentParser()
+		
+		args = ap.parse_args()
+		main(args)
+
 # if __name__ == '__main__':
 snippet ifmain
-	if __name__ == '__main__':
+	if __name__ == "__main__":
 		${1:main()}
 # __magic__
 snippet _
@@ -193,7 +205,7 @@ snippet "
 	"""${1:doc}"""
 
 # test function/method
-snippet test
+snippet ttest
 	def test_${1:description}(${2:`indent('.') ? 'self' : ''`}):
 		${3:# TODO: write code...}
 # test case
@@ -205,24 +217,6 @@ snippet testcase
 
 snippet fut
 	from __future__ import ${1}
-
-#getopt
-snippet getopt
-	try:
-		# Short option syntax: "hv:"
-		# Long option syntax: "help" or "verbose="
-		opts, args = getopt.getopt(sys.argv[1:], "${1:short_options}", [${2:long_options}])
-	
-	except getopt.GetoptError, err:
-		# Print debug info
-		print str(err)
-		${3:error_action}
-
-	for option, argument in opts:
-		if option in ("-h", "--help"):
-			${4}
-		elif option in ("-v", "--verbose"):
-			verbose = argument
 
 snippet filter
 abbr    [x for x in {list} if {condition}]
