@@ -170,6 +170,12 @@ snippet texcept
 	except ${1:Exception} as ${2:e}:
 		${3:raise e}
 
+snippet aptrueflag
+	ap.add_argument("--${1}", action="store_true", default=False, help="${2}")
+
+snippet apfalseflag
+	ap.add_argument("--${1}", action="store_false", default=True, help="${2}")
+
 snippet ifmainap
 	import argparse
 	
@@ -178,7 +184,7 @@ snippet ifmainap
 	
 	if __name__ == "__main__":
 		ap = argparse.ArgumentParser()
-		
+	
 		args = ap.parse_args()
 		main(args)
 
