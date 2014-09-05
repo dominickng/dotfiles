@@ -74,6 +74,7 @@ NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'kshenoy/vim-signature'
 NeoBundle 'Lokaltog/vim-easymotion'
 NeoBundle 'lucapette/vim-textobj-underscore'
+NeoBundle 'ludovicchabant/vim-gutentags'
 NeoBundle 'luochen1990/rainbow'
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'nelstrom/vim-visual-star-search'
@@ -104,6 +105,7 @@ NeoBundle 'tpope/vim-sleuth'
 NeoBundle 'tpope/vim-speeddating'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-unimpaired'
+NeoBundle 'tsukkee/unite-tag'
 NeoBundleLazy 'vim-scripts/tex_autoclose.vim', {'autoload':{'filetypes':['tex']}}
 NeoBundle 'voithos/vim-python-matchit'
 NeoBundle 'whatyouhide/vim-textobj-xmlattr'
@@ -279,6 +281,10 @@ omap aa <Plug>Argumentative_OpPendingOuterTextObject
 " expand-region
 vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
+
+" gutentags
+let g:gutentags_cache_dir = expand("~/tmp/vim/tags")
+let g:gutentags_project_root = ['.svn', '.project']
 
 " Load other macros
 source $HOME/.vim/macros.vim

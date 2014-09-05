@@ -65,6 +65,7 @@ nnoremap [unite]p :UniteWithBufferDir -buffer-name=file_rec file_rec<CR>
 nnoremap [unite]r :Unite -start-insert buffer tab file_mru directory_mru<CR>
 nnoremap [unite]b :Unite -start-insert -default-action=goto buffer tab<CR>
 nnoremap [unite]o :Unite -start-insert -auto-preview outline<CR>
+nnoremap [unite]t :Unite -start-insert tag<CR>
 nnoremap [unite]g :Unite grep:.<CR>
 
 
