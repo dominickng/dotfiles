@@ -5,9 +5,13 @@ ALL = $(HOME)/.bash $(HOME)/.bashrc $(HOME)/.inputrc \
       $(HOME)/.screenrc $(HOME)/.tmux.conf $(HOME)/.tmux-osx.conf \
       $(HOME)/.slate
 
-.PHONY	: all unlink submodules destroy
+.PHONY	: all unlink destroy tpm vimplugins
 
-all	: $(ALL) submodules
+all	: $(ALL) tpm vimplugins
+
+tpm	:
+	-mkdir -p ~/.tmux/plugins
+	git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 unlink	:
 	echo $(ALL) | xargs -n 1 -I@ find $(HOME) -maxdepth 1 -path @ -exec unlink {} \;
