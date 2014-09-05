@@ -93,6 +93,7 @@ NeoBundle 'Shougo/vimproc', {
       \     'unix' : 'make -f make_unix.mak',
       \    },
       \ }
+NeoBundle 'terryma/vim-expand-region'
 NeoBundle 'tommcdo/vim-exchange'
 NeoBundle 'tpope/vim-abolish'
 NeoBundle 'tpope/vim-characterize'
@@ -274,6 +275,10 @@ xmap ia <Plug>Argumentative_InnerTextObject
 xmap aa <Plug>Argumentative_OuterTextObject
 omap ia <Plug>Argumentative_OpPendingInnerTextObject
 omap aa <Plug>Argumentative_OpPendingOuterTextObject
+
+" expand-region
+vmap v <Plug>(expand_region_expand)
+vmap <C-v> <Plug>(expand_region_shrink)
 
 " Load other macros
 source $HOME/.vim/macros.vim

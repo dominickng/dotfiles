@@ -2,7 +2,7 @@
 let g:unite_data_directory='~/tmp/vim/unite'
 let g:unite_enable_start_insert = 1
 let g:unite_force_overwrite_statusline = 0
-let g:unite_source_rec_max_cache_files=5000
+let g:unite_source_rec_max_cache_files=20000
 let g:unite_split_rule = 'botright'
 let g:unite_winheight = 10
 
@@ -15,12 +15,15 @@ endif
 
 " extend default ignore pattern for file_rec source (same as directory_rec)
 let s:file_rec_ignore = unite#get_all_sources('file_rec')['ignore_pattern'] .
-    \ '\|\.\%(jar\|jpg\|gif\|png\)$' .
+    \ '\|\.\%(jar\|jpg\|JPG\|JPEG\|gif\|GIF\|png\|PNG\|tiff\|TIFF\|pdf\|PDF\|swf\)$' .
+    \ '\|\.\%(doc\|docx\|ppt\|pptx\|xls\|xlsx\|psd\|ai\|o\|pyc\)$' .
+    \ '\|\.\%(gz\|so\|rar\|zip\|7z\)$' .
     \ '\|vim/bundle/' .
     \ '\|.git/\|.svn/' .
-    \ '\|opt\|Downloads\|eclipse_workspace\|gwt-unitCache\|grimoire-remote'
+    \ '\|opt\|Downloads\|eclipse_workspace\|gwt-unitCache\|grimoire-remote' .
+    \ '\|backup\|backups\|tmp'
 call unite#custom#source('file_rec,file_rec/async,file_mru,file,buffer,grep', 'ignore_pattern', s:file_rec_ignore)
-call unite#custom#source('file_mru', 'max_candidates', 10)
+call unite#custom#source('file_mru', 'max_candidates', 20)
 
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
 call unite#filters#sorter_default#use(['sorter_rank'])
@@ -56,7 +59,7 @@ endfunction
 
 nnoremap [unite] <nop>
 nmap <Space> [unite]
-nnoremap <expr> [unite]f UniteWrapper('file' . (expand('%') == '' ? '' : ':%:h') . ' file_rec/async:!' . (expand('%') == '' ? '' : ':%:h') . ' file/new', '-start-insert')
+nnoremap <expr> [unite]f UniteWrapper('file' . (expand('%') == '' ? '' : ':%:h') . ' file_rec/async:!' . (expand('%') == '' ? '' : ':%:h') . ' file/new', '-start-insert -buffer-name=files')
 nnoremap [unite]c :Unite -profile-name=files -buffer-name=files -start-insert file_rec/async:!<CR>
 nnoremap [unite]p :UniteWithBufferDir -buffer-name=file_rec file_rec<CR>
 nnoremap [unite]r :Unite -start-insert buffer tab file_mru directory_mru<CR>
