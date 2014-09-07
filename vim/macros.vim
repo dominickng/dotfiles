@@ -228,10 +228,6 @@ inoremap <silent><S-Right> <C-o>:tabnext<CR>
 inoremap <silent><S-Left>  <C-o>:tabprevious<CR>
 nnoremap <silent><S-Right> :tabnext<CR>
 nnoremap <silent><S-Left>  :tabprevious<CR>
-nnoremap <silent><C-l> :tabnext<CR>
-nnoremap <silent><C-h> :tabprevious<CR>
-" nnoremap <silent> <C-]> :tabnext<CR>
-" nnoremap <silent> <C-[> :tabprevious<CR>
 nnoremap <silent><C-t> :tabnew<CR>
 nnoremap <silent><C-g> :tabclose<CR>
 

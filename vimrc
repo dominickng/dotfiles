@@ -58,6 +58,7 @@ call neobundle#begin(expand('~/.vim/bundle/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundleLazy '1995eaton/vim-better-javascript-completion', {'autoload':{'filetypes':['javascript']}}
 NeoBundle 'AndrewRadev/splitjoin.vim'
+NeoBundle 'AndrewRadev/sideways.vim'
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'ap/vim-css-color'
 NeoBundle 'bling/vim-airline'
@@ -79,7 +80,6 @@ NeoBundle 'luochen1990/rainbow'
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'nelstrom/vim-visual-star-search'
 NeoBundleLazy 'pangloss/vim-javascript', {'autoload':{'filetypes':['javascript', 'html']}}
-NeoBundle 'PeterRincker/vim-argumentative'
 NeoBundle 'Raimondi/delimitMate'
 NeoBundle 'Shougo/neocomplete'
 NeoBundle 'Shougo/neomru.vim'
@@ -270,14 +270,9 @@ autocmd FileType tex inoremap <buffer><silent><C-x>} <esc>:call TexCloseCurrent(
 autocmd FileType tex nnoremap <buffer><silent><C-x>c :call TexClosePrev(0)<CR>
 autocmd FileType tex inoremap <buffer><silent><C-x>/ <esc>:call TexClosePrev(1)<CR>
 
-" targets - disable angle bracket map to a (conflict with arg text object)
-let g:targets_pairs = '()b {}B []r <>'
-
-" argumentative - rename argument text object
-xmap ia <Plug>Argumentative_InnerTextObject
-xmap aa <Plug>Argumentative_OuterTextObject
-omap ia <Plug>Argumentative_OpPendingInnerTextObject
-omap aa <Plug>Argumentative_OpPendingOuterTextObject
+" sideways
+nnoremap <C-h> :SidewaysLeft<CR>
+nnoremap <C-l> :SidewaysRight<CR>
 
 " expand-region
 vmap v <Plug>(expand_region_expand)
