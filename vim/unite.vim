@@ -12,6 +12,7 @@ if executable('ag')
   let g:unite_source_grep_command = 'ag'
   let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
   let g:unite_source_grep_recursive_opt = ''
+  let g:unite_source_rec_async_command = 'ag -p ~/.agignore --nocolor --nogroup -g .'
 endif
 
 " extend default ignore pattern for file_rec source (same as directory_rec)
@@ -19,7 +20,7 @@ let s:file_rec_ignore = unite#get_all_sources('file_rec')['ignore_pattern'] .
     \ '\|\.\%(jar\|jpg\|JPG\|JPEG\|gif\|GIF\|png\|PNG\|tiff\|TIFF\|pdf\|PDF\|swf\)$' .
     \ '\|\.\%(doc\|docx\|ppt\|pptx\|xls\|xlsx\|psd\|ai\|o\|pyc\)$' .
     \ '\|\.\%(gz\|so\|rar\|zip\|7z\)$' .
-    \ '\|vim/bundle/' .
+    \ '\|vim/bundle/\|bin/' .
     \ '\|.git/\|.svn/' .
     \ '\|opt\|Downloads\|eclipse_workspace\|gwt-unitCache\|grimoire-remote' .
     \ '\|backup\|backups\|tmp'
@@ -68,5 +69,3 @@ nnoremap [unite]b :Unite -start-insert -default-action=goto buffer tab<CR>
 nnoremap [unite]o :Unite -start-insert -auto-preview outline<CR>
 nnoremap [unite]t :Unite -start-insert tag<CR>
 nnoremap [unite]g :Unite grep:.<CR>
-
-
