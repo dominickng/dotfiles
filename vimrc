@@ -281,6 +281,7 @@ vmap <C-v> <Plug>(expand_region_shrink)
 " gutentags
 let g:gutentags_cache_dir = expand("~/tmp/vim/tags")
 let g:gutentags_project_root = ['.svn', '.project']
+let g:gutentags_exclude = ['/usr/local']
 
 " Load other macros
 source $HOME/.vim/macros.vim
