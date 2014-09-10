@@ -10,19 +10,11 @@ let g:unite_source_tag_max_fname_length = 60
 " use ag for search
 if executable('ag')
   let g:unite_source_grep_command = 'ag'
-  let g:unite_source_grep_default_opts = '-p ~/.agignore --nogroup --nocolor --column --hidden -g "" --ignore .hg --ignore .svn --ignore .git --ignore .bzr'''
+  let g:unite_source_grep_default_opts = '-p ~/.agignore --nogroup --nocolor --column --hidden -g "" ' . '"' . join(split(&wildignore, ','), '" --ignore "') . '"'
   let g:unite_source_grep_recursive_opt = ''
 endif
 
-" extend default ignore pattern for file_rec source (same as directory_rec)
-let s:file_rec_ignore = ['.', '*~', '*.o', '*.exe', '*.bak', '.DS_Store', '*.zwc',
-    \ '*.pyc', '*.sw[po]', '*.class', '.hg/*', '.git/*', '.bzr/*', '.svn/*',
-    \ '*.jar', '*.jpg', '*.JPG', '*.jpeg', '*.JPEG', '*.gif', '*.GIF', '*.png',
-    \ '*.PNG', '*.TIFF', '*.tiff', '*.pdf', '*.PDF', '*.doc', '*.docx', '*.DOC',
-    \ '*.DOCX', '*.xls', '*.xlsx', '*.XLS', '*.XLSX', '*.ppt', '*.pptx', '*.psd',
-    \ '*.gz', '*.zip', '*.bz2', '*.so', '*.rar', '*.7z', 'backups/*', 'backup/*',
-    \ 'ext/*', 'bin/*', '*.svn-base', '*.tmp', '*.a', '*.dylib']
-call unite#custom#source('file_rec,file_rec/async,file_mru,file,buffer,grep', 'ignore_globs', s:file_rec_ignore)
+call unite#custom#source('file_rec,file_rec/async,file_mru,file,buffer,grep', 'ignore_globs', split(&wildignore, ','))
 call unite#custom#source('file_mru', 'max_candidates', 20)
 
 call unite#filters#matcher_default#use(['matcher_fuzzy'])

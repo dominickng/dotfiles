@@ -178,12 +178,14 @@ set visualbell " disable beep
 set wildmenu
 set wildmode=list:longest,full
 set wildignore+=*.swp,*.swo
-set wildignore+=.svn,.git,.hg " version control
-set wildignore+=*.7z,*.lz4,*.zip,*.gz,*.rar,*.bz2 " compressed
+set wildignore+=.svn,.git,.hg,.bzr " version control
+set wildignore+=.ext,vim/bundle/**,backup/**,backups/** " big
+set wildignore+=*.tmp " temp
+set wildignore+=*.7z,*.lz4,*.zip,*.gz,*.rar,*.bz2,*DS_Store " compressed
 set wildignore+=*.aux,*.out,*.toc,*.log,*.bbl,*.blg,*.d,*.lof,*.lot " LaTeX
-set wildignore+=*.jpg,*.jpeg,*.png,*.bmp,*.gif " binary files
-set wildignore+=*.o,*.obj,*.la,*.mo,*.pyc,*.so,*.class,*.a,*.sw? " object files
-set wildignore+=migrations " Django migration"
+set wildignore+=*.jpg,*.jpeg,*.png,*.bmp,*.gif,*.doc,*.docx,*.xls,*.xlsx,*.pdf,*.psd " binary files
+set wildignore+=*.o,*.obj,*.la,*.mo,*.pyc,*.so,*.class,*.a,*.sw?,*.jar,*.dylib " object files
+set wildignore+=migrations,bin " Django migration"
 
 " resize splits on window resize
 autocmd VimResized * :wincmd =
