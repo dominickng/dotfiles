@@ -10,7 +10,7 @@ let g:unite_source_tag_max_fname_length = 60
 " use ag for search
 if executable('ag')
   let g:unite_source_grep_command = 'ag'
-  let g:unite_source_grep_default_opts = '-p ~/.agignore --nogroup --nocolor --column --hidden -g "" ' . '"' . join(split(&wildignore, ','), '" --ignore "') . '"'
+  let g:unite_source_grep_default_opts = '-i --line-numbers --nogroup --nocolor --hidden --ignore "' . join(split(&wildignore, ','), '" --ignore "') . '"'
   let g:unite_source_grep_recursive_opt = ''
 endif
 
