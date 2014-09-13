@@ -1,11 +1,13 @@
 " unite
 let g:unite_data_directory='~/tmp/vim/unite'
 let g:unite_enable_start_insert = 1
+let g:unite_cursor_line_highlight = 'CursorLine'
 let g:unite_force_overwrite_statusline = 0
 let g:unite_source_rec_max_cache_files=20000
 let g:unite_split_rule = 'botright'
 let g:unite_winheight = 15
 let g:unite_source_tag_max_fname_length = 60
+let g:unite_source_history_yank_enable = 1
 
 " use ag for search
 if executable('ag')
@@ -59,3 +61,4 @@ nnoremap [unite]b :Unite -start-insert -default-action=goto buffer tab<CR>
 nnoremap [unite]o :Unite -start-insert -auto-preview outline<CR>
 nnoremap [unite]t :Unite -start-insert tag<CR>
 nnoremap [unite]g :Unite grep:.<CR>
+nnoremap [unite]y :Unite -buffer-name=yanks history/yank<CR>

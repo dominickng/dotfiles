@@ -178,8 +178,8 @@ set visualbell " disable beep
 set wildmenu
 set wildmode=list:longest,full
 set wildignore+=*.swp,*.swo
-set wildignore+=.svn,.git,.hg,.bzr " version control
-set wildignore+=.ext,vim/bundle/**,backup/**,backups/** " big
+set wildignore+=.svn,.git,.hg,.bzr,*.svn-base,*.dir-prop-base " version control
+set wildignore+=ext,ext/**,vim/bundle/**,backup/**,backups/** " big
 set wildignore+=*.tmp " temp
 set wildignore+=*.7z,*.lz4,*.zip,*.gz,*.rar,*.bz2,*DS_Store " compressed
 set wildignore+=*.aux,*.out,*.toc,*.log,*.bbl,*.blg,*.d,*.lof,*.lot " LaTeX
