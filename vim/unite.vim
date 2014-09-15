@@ -12,12 +12,14 @@ let g:unite_source_history_yank_enable = 1
 " use ag for search
 if executable('ag')
   let g:unite_source_grep_command = 'ag'
-  let g:unite_source_grep_default_opts = '-i --line-numbers --nogroup --nocolor --hidden --ignore "' . join(split(&wildignore, ','), '" --ignore "') . '"'
+  let g:unite_source_grep_default_opts = '-i --line-numbers --nogroup --nocolor --hidden --ignore ''' . join(split(&wildignore, ','), "' --ignore '") . "'"
   let g:unite_source_grep_recursive_opt = ''
+  let g:unite_source_rec_async_command = 'ag --follow --nogroup --nocolor --hidden -g "" --ignore "' . join(split(&wildignore, ','), '" --ignore "') . '"'
 endif
 
 call unite#custom#source('file_rec,file_rec/async,file_mru,file,buffer,grep', 'ignore_globs', split(&wildignore, ','))
 call unite#custom#source('file_mru', 'max_candidates', 20)
+call unite#custom#source('file_rec,file_rec/async', 'max_candidates', 0)
 
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
 call unite#filters#sorter_default#use(['sorter_rank'])
@@ -60,5 +62,5 @@ nnoremap [unite]r :Unite -start-insert buffer tab file_mru directory_mru<CR>
 nnoremap [unite]b :Unite -start-insert -default-action=goto buffer tab<CR>
 nnoremap [unite]o :Unite -start-insert -auto-preview outline<CR>
 nnoremap [unite]t :Unite -start-insert tag<CR>
-nnoremap [unite]g :Unite grep:.<CR>
+nnoremap [unite]g :Unite -start-insert grep:.<CR>
 nnoremap [unite]y :Unite -buffer-name=yanks history/yank<CR>
