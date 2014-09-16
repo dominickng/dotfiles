@@ -74,7 +74,6 @@ NeoBundle 'kana/vim-textobj-line'
 NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'kshenoy/vim-signature'
 NeoBundle 'Lokaltog/vim-easymotion'
-NeoBundle 'lucapette/vim-textobj-underscore'
 NeoBundle 'ludovicchabant/vim-gutentags'
 NeoBundle 'luochen1990/rainbow'
 NeoBundle 'majutsushi/tagbar'
@@ -287,6 +286,10 @@ vmap <C-v> <Plug>(expand_region_shrink)
 let g:gutentags_cache_dir = expand("~/tmp/vim/tags")
 let g:gutentags_project_root = ['.svn', '.project']
 let g:gutentags_exclude = ['/usr/local']
+
+" targets
+let g:targets_separators = ', . ; : + - = _ * # / | & $'
+let g:targets_argSeparator = '[,;]'
 
 " Load other macros
 source $HOME/.vim/macros.vim
