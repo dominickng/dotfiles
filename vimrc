@@ -210,6 +210,9 @@ highlight LeadingSpace ctermbg=darkgreen guibg=darkgreen
 highlight Tab gui=underline guifg=blue ctermbg=blue
 highlight WhitespaceEOL ctermbg=lightblue
 
+" vim-signature background colour
+highlight SignColumn ctermbg=8
+
 " indentLine
 let g:indentLine_enabled = 0
 nnoremap <leader>ii :IndentLinesToggle<CR>
