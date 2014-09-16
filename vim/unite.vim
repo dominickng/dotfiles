@@ -25,15 +25,16 @@ call unite#filters#matcher_default#use(['matcher_fuzzy'])
 call unite#filters#sorter_default#use(['sorter_rank'])
 autocmd FileType unite call s:unite_settings()
 function! s:unite_settings()
-  imap <buffer> <C-j>   <Plug>(unite_select_next_line)
-  imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
-  " imap <buffer> <C-w>   <Plug>(unite_delete_backward_path)
+  imap <buffer> <C-j>   <Plug>(unite_skip_cursor_down)
+  imap <buffer> <C-k>   <Plug>(unite_skip_cursor_up)
+  imap <buffer> <C-w>   <Plug>(unite_delete_backward_path)
   imap <buffer> '       <Plug>(unite_quick_match_default_action)
   nmap <buffer> '       <Plug>(unite_quick_match_default_action)
   imap <buffer> <C-y>   <Plug>(unite_narrowing_path)
   nmap <buffer> <C-y>   <Plug>(unite_narrowing_path)
   nmap <buffer> <C-r>   <Plug>(unite_narrowing_input_history)
   imap <buffer> <C-r>   <Plug>(unite_narrowing_input_history)
+  imap <buffer> <C-e>   <Plug>(unite_narrowing_input_history)
   imap <silent><buffer><expr> <C-g> unite#do_action('goto')
   imap <silent><buffer><expr> <C-x> unite#do_action('split')
   imap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
@@ -55,12 +56,16 @@ endfunction
 
 nnoremap [unite] <nop>
 nmap <Space> [unite]
-nnoremap <expr> [unite]f UniteWrapper('file' . (expand('%') == '' ? '' : ':%:h') . ' file_rec/async:!' . (expand('%') == '' ? '' : ':%:h') . ' file/new', '-start-insert -buffer-name=files')
-nnoremap [unite]c :Unite -profile-name=files -buffer-name=files -start-insert file_rec/async:!<CR>
-nnoremap [unite]p :UniteWithBufferDir -buffer-name=file_rec file_rec<CR>
-nnoremap [unite]r :Unite -start-insert buffer tab file_mru directory_mru<CR>
-nnoremap [unite]b :Unite -start-insert -default-action=goto buffer tab<CR>
-nnoremap [unite]o :Unite -start-insert -auto-preview outline<CR>
-nnoremap [unite]t :Unite -start-insert tag<CR>
-nnoremap [unite]g :Unite -start-insert grep:.<CR>
-nnoremap [unite]y :Unite -buffer-name=yanks history/yank<CR>
+nnoremap <expr> [unite]f UniteWrapper('file' . (expand('%') == '' ? '' : ':%:h') . ' file_rec/async:!' . (expand('%') == '' ? '' : ':%:h') . ' file/new', '-buffer-name=files')
+nnoremap <silent>[unite]c :UniteWithCursorWord -profile-name=files -buffer-name=files file_rec/async:!<CR>
+nnoremap <silent>[unite]p :UniteWithBufferDir -buffer-name=file_rec file_rec/async<CR>
+nnoremap <silent>[unite]r :Unite buffer tab file_mru directory_mru<CR>
+nnoremap <silent>[unite]b :Unite -default-action=goto buffer tab<CR>
+nnoremap <silent>[unite]o :Unite -auto-preview outline<CR>
+nnoremap <silent>[unite]t :Unite tag<CR>
+nnoremap <silent>[unite]a :UniteWithCursorWord -buffer-name=tag tag<CR>
+nnoremap <silent>[unite]g :Unite grep:.<CR>
+nnoremap <silent>[unite]y :Unite -buffer-name=yanks history/yank<CR>
+nnoremap <silent>[unite]l :Unite session<CR>
+nnoremap <silent>[unite]e :UniteResume<CR>
+nnoremap [unite]s :UniteSessionSave<CR>
