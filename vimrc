@@ -16,6 +16,7 @@ set shiftwidth=4
 set shiftround
 
 " general settings
+set cryptmethod=blowfish2
 set history=1000
 set nrformats-=octal
 set path=.,,**
