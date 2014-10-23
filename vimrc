@@ -61,8 +61,8 @@ NeoBundleLazy '1995eaton/vim-better-javascript-completion', {'autoload':{'filety
 NeoBundle 'AndrewRadev/splitjoin.vim'
 NeoBundle 'AndrewRadev/sideways.vim'
 NeoBundle 'altercation/vim-colors-solarized'
-NeoBundle 'ap/vim-css-color'
 NeoBundle 'bling/vim-airline'
+NeoBundle 'chrisbra/Colorizer'
 NeoBundle 'ConradIrwin/vim-bracketed-paste'
 NeoBundle 'haya14busa/incsearch.vim'
 NeoBundle 'jceb/vim-textobj-uri'
@@ -130,6 +130,7 @@ let g:tex_conceal = ''
 let g:tex_indent_items = 0
 let g:tex_flavor = 'latex'
 let g:tex_noindent_env = 'verbatim\|comment\|lstlisting'
+let g:colorizer_auto_filetype='css,html'
 
 " delimitmate
 let g:delimitMate_expand_cr = 2
