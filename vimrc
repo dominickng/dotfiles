@@ -64,6 +64,7 @@ NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'ap/vim-css-color'
 NeoBundle 'bling/vim-airline'
 NeoBundle 'ConradIrwin/vim-bracketed-paste'
+NeoBundle 'haya14busa/incsearch.vim'
 NeoBundle 'jceb/vim-textobj-uri'
 NeoBundleLazy 'jelera/vim-javascript-syntax', {'autoload':{'filetypes':['javascript']}}
 NeoBundle 'Julian/vim-textobj-variable-segment'
@@ -294,6 +295,20 @@ let g:gutentags_exclude = ['/usr/local']
 " targets
 let g:targets_separators = ', . ; : + - = _ * # / | & $'
 let g:targets_argSeparator = '[,;]'
+
+" incsearch
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
+
+let g:incsearch#emacs_like_keymap = 1
+let g:incsearch#auto_nohlsearch = 1
+map n  <Plug>(incsearch-nohl-n)
+map N  <Plug>(incsearch-nohl-N)
+map *  <Plug>(incsearch-nohl-*)
+map #  <Plug>(incsearch-nohl-#)
+map g* <Plug>(incsearch-nohl-g*)
+map g# <Plug>(incsearch-nohl-g#)
 
 " Load other macros
 source $HOME/.vim/macros.vim
