@@ -3,7 +3,7 @@ ALL = $(HOME)/.bash $(HOME)/.bashrc $(HOME)/.inputrc \
       $(HOME)/.inputrc $(HOME)/.tmux.conf \
       $(HOME)/.gdb $(HOME)/.gdbinit $(HOME)/.gitconfig \
       $(HOME)/.screenrc $(HOME)/.tmux.conf $(HOME)/.tmux-osx.conf \
-      $(HOME)/.slate
+      $(HOME)/.slate $(HOME)/.phoenix.js
 
 .PHONY	: all unlink destroy tpm vimplugins
 
