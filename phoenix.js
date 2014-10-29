@@ -39,6 +39,17 @@ function mostlyFullScreen() {
   });
 }
 
+function moderatelySized() {
+  var win = Window.focusedWindow();
+  var sframe = win.screen().frameWithoutDockOrMenu();
+  win.setFrame({
+    x: sframe.x + 150,
+    y: sframe.y + 50,
+    width: sframe.width - 300,
+    height: sframe.height - 100,
+  });
+}
+
 function halfSize() {
   var win = Window.focusedWindow();
   var sframe = win.screen().frameIncludingDockAndMenu();
@@ -252,6 +263,7 @@ function rotateMonitors(offset) {
   screens = _(screens).sortBy(function(s) { return s.frameWithoutDockOrMenu().x; });
   var currentIndex = _(screens).indexOf(currentScreen);
   moveToScreenKeepingSize(win, circularLookup(screens, currentIndex + offset));
+  win.focusWindow();
 }
 
 function leftOneMonitor() {
@@ -265,6 +277,7 @@ function rightOneMonitor() {
 // resizing modifiers
 api.bind('c', cmd_alt, function() { center() });
 api.bind('f', cmd_alt_ctrl, function() { fullScreen() });
+api.bind('m', cmd_alt, function() { moderatelySized() });
 api.bind('m', cmd_alt, function() { halfSize() });
 api.bind('s', cmd_alt, function() { mostlyFullScreen() });
 api.bind('UP', cmd_alt, function() { resize(0, -5) });
