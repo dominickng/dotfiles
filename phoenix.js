@@ -5,7 +5,7 @@ var border = 2;
 
 function fullScreen() {
   var win = Window.focusedWindow();
-  var sframe = win.screen().frameIncludingDockAndMenu();
+  var sframe = win.screen().frameWithoutDockOrMenu();
   win.setFrame({
     x: sframe.x,
     y: sframe.y,
@@ -16,7 +16,7 @@ function fullScreen() {
 
 function center() {
   var win = Window.focusedWindow();
-  var sframe = win.screen().frameIncludingDockAndMenu();
+  var sframe = win.screen().frameWithoutDockOrMenu();
   var wframe = win.frame();
   var originX = sframe.x + ((sframe.width - wframe.width) / 2);
   var originY = sframe.y + ((sframe.height - wframe.height) / 2);
@@ -52,7 +52,7 @@ function moderatelySized() {
 
 function halfSize() {
   var win = Window.focusedWindow();
-  var sframe = win.screen().frameIncludingDockAndMenu();
+  var sframe = win.screen().frameWithoutDockOrMenu();
   var wframe = win.frame();
   var originY = sframe.y + (sframe.height - (wframe.height / 2)) / 2;
   win.setFrame({
@@ -65,7 +65,7 @@ function halfSize() {
 
 function leftHalf() {
   var win = Window.focusedWindow();
-  var sframe = win.screen().frameIncludingDockAndMenu();
+  var sframe = win.screen().frameWithoutDockOrMenu();
   var width =
   win.setFrame({
     x: sframe.x,
@@ -77,7 +77,7 @@ function leftHalf() {
 
 function rightHalf() {
   var win = Window.focusedWindow();
-  var sframe = win.screen().frameIncludingDockAndMenu();
+  var sframe = win.screen().frameWithoutDockOrMenu();
   win.setFrame({
     x: sframe.width / 2 + border,
     y: sframe.y,
@@ -100,7 +100,7 @@ function topHalf() {
 
 function bottomHalf() {
   var win = Window.focusedWindow();
-  var sframe = win.screen().frameIncludingDockAndMenu();
+  var sframe = win.screen().frameWithoutDockOrMenu();
   win.setFrame({
     x: sframe.x,
     y: sframe.height / 2,
