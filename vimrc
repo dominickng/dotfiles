@@ -27,7 +27,7 @@ set viminfo='10,\"100,:20,%,n~/.viminfo'
 " create ~/tmp/ if it doesn't exist and use ~/tmp as the .swp dir
 if has("unix")
   if !isdirectory(expand("~/tmp/vim/."))
-    !mkdir -p ~/tmp/vim
+    !mkdir -p $HOME/tmp/vim
   endif
 endif
 set backupdir=~/tmp/vim,/var/tmp,/tmp,.
@@ -183,14 +183,14 @@ set visualbell " disable beep
 set wildmenu
 set wildmode=list:longest,full
 set wildignore+=*.swp,*.swo
-set wildignore+=.svn,.git,.hg,.bzr,*.svn-base,*.dir-prop-base " version control
-set wildignore+=ext,ext/**,vim/bundle/**,backup/**,backups/** " big
-set wildignore+=*.tmp " temp
-set wildignore+=*.7z,*.lz4,*.zip,*.gz,*.rar,*.bz2,*DS_Store " compressed
-set wildignore+=*.aux,*.out,*.toc,*.log,*.bbl,*.blg,*.d,*.lof,*.lot " LaTeX
-set wildignore+=*.jpg,*.jpeg,*.png,*.bmp,*.gif,*.doc,*.docx,*.xls,*.xlsx,*.pdf,*.psd " binary files
-set wildignore+=*.o,*.obj,*.la,*.mo,*.pyc,*.so,*.class,*.a,*.sw?,*.jar,*.dylib " object files
-set wildignore+=migrations,bin " Django migration"
+set wildignore+=.svn,.git,.hg,.bzr,*.svn-base,*.dir-prop-base
+set wildignore+=ext,vim/bundle/**,backup/**,backups/**
+set wildignore+=*.tmp
+set wildignore+=*.7z,*.lz4,*.zip,*.gz,*.rar,*.bz2,*DS_Store
+set wildignore+=*.aux,*.out,*.toc,*.log,*.bbl,*.blg,*.d,*.lof,*.lot
+set wildignore+=*.jpg,*.jpeg,*.png,*.bmp,*.gif,*.doc,*.docx,*.xls,*.xlsx,*.pdf,*.psd,*.eps
+set wildignore+=*.o,*.obj,*.la,*.mo,*.pyc,*.so,*.class,*.a,*.jar,*.dylib
+set wildignore+=migrations,bin
 
 " resize splits on window resize
 autocmd VimResized * :wincmd =
