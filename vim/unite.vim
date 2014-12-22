@@ -9,6 +9,14 @@ let g:unite_winheight = 15
 let g:unite_source_tag_max_fname_length = 60
 let g:unite_source_history_yank_enable = 1
 
+let g:unite_source_session_options = "blank,curdir,tabpages,winpos,winsize"
+
+augroup plugin-unite-source-session
+  autocmd!
+  autocmd BufEnter,BufLeave *
+        \ if v:this_session != '' | call unite#sources#session#_save('') | endif
+augroup END
+
 " use ag for search
 if executable('ag')
   let g:unite_source_grep_command = 'ag'
@@ -36,10 +44,11 @@ function! s:unite_settings()
   imap <buffer> <C-r>   <Plug>(unite_narrowing_input_history)
   imap <buffer> <C-e>   <Plug>(unite_narrowing_input_history)
   imap <silent><buffer><expr> <C-g> unite#do_action('goto')
-  imap <silent><buffer><expr> <C-x> unite#do_action('split')
+  imap <silent><buffer><expr> <C-s> unite#do_action('split')
   imap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
   imap <silent><buffer><expr> <C-t> unite#do_action('tabopen')
   imap <silent><buffer><expr> <C-d> unite#do_action('delete')
+  imap <silent><buffer><expr> <C-x> unite#do_action('delete')
   imap <silent><buffer> <CR> <Plug>(unite_do_default_action)
   imap <silent><buffer> <Tab> <Plug>(unite_do_default_action)
   nmap <silent><buffer> <Tab> <Plug>(unite_do_default_action)
@@ -57,7 +66,8 @@ endfunction
 nnoremap [unite] <nop>
 nmap <Space> [unite]
 nnoremap <expr> [unite]f UniteWrapper('file' . (expand('%') == '' ? '' : ':%:h') . ' file_rec/async:!' . (expand('%') == '' ? '' : ':%:h') . ' file/new', '-buffer-name=files')
-nnoremap <silent>[unite]c :UniteWithCursorWord -profile-name=files -buffer-name=files file_rec/async:!<CR>
+" nnoremap <silent>[unite]c :UniteWithCursorWord -profile-name=files -buffer-name=files file_rec/async:!<CR>
+nnoremap <silent>[unite]c :UniteWithCurrentDir -buffer-name=file_rec file_rec/async<CR>
 nnoremap <silent>[unite]p :UniteWithBufferDir -buffer-name=file_rec file_rec/async<CR>
 nnoremap <silent>[unite]r :Unite buffer tab file_mru directory_mru<CR>
 nnoremap <silent>[unite]b :Unite -default-action=goto buffer tab<CR>
@@ -68,4 +78,5 @@ nnoremap <silent>[unite]g :Unite grep:.<CR>
 nnoremap <silent>[unite]y :Unite -buffer-name=yanks history/yank<CR>
 nnoremap <silent>[unite]l :Unite session<CR>
 nnoremap <silent>[unite]e :UniteResume<CR>
+nnoremap <silent>[unite]i :UniteResume<CR><End><C-U>
 nnoremap [unite]s :UniteSessionSave<CR>

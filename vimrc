@@ -68,6 +68,7 @@ NeoBundle 'haya14busa/incsearch.vim'
 NeoBundle 'jceb/vim-textobj-uri'
 NeoBundleLazy 'jelera/vim-javascript-syntax', {'autoload':{'filetypes':['javascript']}}
 NeoBundle 'Julian/vim-textobj-variable-segment'
+NeoBundle 'junegunn/vim-after-object'
 NeoBundle 'junegunn/vim-easy-align'
 NeoBundle 'justinmk/vim-gtfo'
 NeoBundle 'justinmk/vim-matchparenalways'
@@ -83,7 +84,7 @@ NeoBundle 'majutsushi/tagbar'
 NeoBundle 'nelstrom/vim-visual-star-search'
 NeoBundleLazy 'pangloss/vim-javascript', {'autoload':{'filetypes':['javascript', 'html']}}
 NeoBundle 'Raimondi/delimitMate'
-NeoBundle 'Shougo/neocomplete'
+NeoBundle 'Shougo/neocomplete', { 'rev': '30069ef1' }
 NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/unite.vim'
@@ -151,10 +152,10 @@ noremap * g*
 noremap # g#
 
 " stop using the arrow keys
-map <up> <nop>
-map <down> <nop>
-map <left> <nop>
-map <right> <nop>
+" map <up> <nop>
+" map <down> <nop>
+" map <left> <nop>
+" map <right> <nop>
 
 " nnoremap <up> <c-w>+
 " nnoremap <down> <c-w>-
@@ -297,6 +298,9 @@ let g:gutentags_generate_on_write = 0
 " targets
 let g:targets_separators = ', . ; : + - = _ * # / | & $'
 let g:targets_argSeparator = '[,;]'
+
+" after-text-object
+autocmd VimEnter * call after_object#enable(['r', 'rr'], '=', ':', '%', '#', ' ', '-')
 
 " incsearch
 map /  <Plug>(incsearch-forward)

@@ -76,7 +76,7 @@ vnoremap <C-r> hy:%s/<C-r>h//g<left><left>
 " nnoremap <C-k> :%s///g<left><left>
 
 " tab to switch between split windows
-noremap <Tab> <C-w><C-w>
+" noremap <Tab> <C-w><C-w>
 
 " don't enter ex mode on accident
 " nnoremap Q <nop>
@@ -226,7 +226,11 @@ nnoremap <silent><leader>dos :%s/\r/\r/ge<CR>:nohlsearch<CR>
 " edit vimrc
 nnoremap <silent><leader>vimrc :e ~/.vimrc<CR>
 
-" tabs
+" tabs and splits
+inoremap <silent><S-Up>    <C-w>W
+inoremap <silent><S-Down>  <C-w><C-w>
+nnoremap <silent><S-Up>    <C-w>W
+nnoremap <silent><S-Down>  <C-w><C-w>
 inoremap <silent><S-Right> <C-o>:tabnext<CR>
 inoremap <silent><S-Left>  <C-o>:tabprevious<CR>
 nnoremap <silent><S-Right> :tabnext<CR>
@@ -365,3 +369,40 @@ function! MyTabLine()
   return s
 endfunction
 
+" replace macro with <leader>, then repeat with .
+" http://www.reddit.com/r/vim/comments/2p6jqr/quick_replace_useful_refactoring_and_editing_tool/
+function! s:gn_next()
+  augroup gn_next_repeat
+    autocmd!
+    autocmd CursorMoved <buffer> 
+          \ execute "autocmd! gn_next_repeat" |
+          \ silent! call repeat#set(v:operator . "\<Plug>(gn-next)" . (v:operator == 'c' ? "\<c-a>\<esc>" : '')) |
+          \ normal! n
+  augroup END
+  return "\<esc>:let &hlsearch=&hlsearch\<cr>" . v:operator . "gn"
+endfunction
+
+function! s:match_visual()
+  let reg = @@
+  normal! gvy
+  let @/ = '\V' . escape(@@, '\')
+  let @@ = reg
+endfunction
+
+onoremap <expr> <Plug>(gn-next) <SID>gn_next()
+
+nmap <Plug>(quick-replace) :let @/ = '\V\<' . escape(expand('<cword>'), '\') . '\>'<cr>c<Plug>(gn-next)
+xmap <Plug>(quick-replace) :<c-u>call <SID>match_visual()<cr>c<Plug>(gn-next)
+
+nmap <leader>r <Plug>(quick-replace)
+xmap <leader>r <Plug>(quick-replace)
+
+" remove all No Name buffers
+function! CleanEmptyBuffers()
+  let buffers = filter(range(0, bufnr('$')), 'buflisted(v:val) && empty(bufname(v:val)) && bufwinnr(v:val)<0')
+  if !empty(buffers)
+    exe 'bw '.join(buffers, ' ')
+  endif
+endfunction
+
+nmap <C-d> :call CleanEmptyBuffers()<CR>
