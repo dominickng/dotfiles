@@ -302,3 +302,11 @@ api.bind('l', cmd_alt, function() {
     rightEdge();
 });
 
+
+// launcher
+api.bind('t', cmd_alt_ctrl, function() { api.launch('iterm'); });
+api.bind('g', cmd_alt_ctrl, function() { api.launch('google chrome'); });
+api.bind('i', cmd_alt_ctrl, function() { api.launch('itunes'); });
+api.bind('a', cmd_alt_ctrl, function() { api.launch('adium'); });
+api.bind('r', cmd_alt_ctrl, function() { api.launch('readkit'); });
+api.bind('p', cmd_alt_ctrl, function() { api.launch('system preferences'); });
