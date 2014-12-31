@@ -2,10 +2,16 @@ config defaultToCurrentScreen true
 config nudgePercentOf screenSize
 config resizePercentOf screenSize
 config undoMaxStackSize 15
+config defaultToCurrentScreen true
+
+# Shows app icons and background apps, spreads icons in the same place.
+config windowHintsShowIcons true
+config windowHintsIgnoreHiddenWindows false
+config windowHintsSpread true
 
 # Center, fullscreen, undo binding
 bind c:cmd;alt move screenOriginX+((screenSizeX-windowSizeX)/2);screenOriginY+((screenSizeY-windowSizeY)/2) windowSizeX;windowSizeY
-bind f:cmd;alt move screenOriginX;screenOriginY screenSizeX;screenSizeY
+bind f:ctrl;cmd;alt move screenOriginX;screenOriginY screenSizeX;screenSizeY
 bind z:cmd;alt undo
 bind 1:ctrl    relaunch
 
