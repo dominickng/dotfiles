@@ -1,4 +1,6 @@
-/* fixed size stack for undo/redo methods */
+/* fixed size stack for undo/redo methods
+ * code inspired by http://www.bennadel.com/blog/2308-creating-a-fixed-length-queue-in-javascript-using-arrays.htm
+ *  */
 function FixedSizeStack(size, init) {
   init = (init || []);
   var stack = Array.apply(null, init);
