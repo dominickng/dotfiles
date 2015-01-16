@@ -160,7 +160,7 @@ nnoremap <leader>P "+P
 noremap <silent><leader>/ :nohlsearch<CR>
 
 " use ,x to open a quickfix window for the result of the previous search
-nnoremap <silent><leader>x :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
+" nnoremap <silent><leader>x :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
 
 " don't jump to the start of a line when typing #
 inoremap # X<C-h>#
@@ -227,6 +227,7 @@ nnoremap <silent><leader>dos :%s/\r/\r/ge<CR>:nohlsearch<CR>
 nnoremap <silent><leader>vimrc :e ~/.vimrc<CR>
 
 " tabs and splits
+noremap gw <C-w>
 inoremap <silent><S-Up>    <C-w>W
 inoremap <silent><S-Down>  <C-w><C-w>
 nnoremap <silent><S-Up>    <C-w>W
@@ -405,4 +406,4 @@ function! CleanEmptyBuffers()
   endif
 endfunction
 
-nmap <C-d> :call CleanEmptyBuffers()<CR>
+nmap <leader>x :call CleanEmptyBuffers()<CR>
