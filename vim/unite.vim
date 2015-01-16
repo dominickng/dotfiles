@@ -3,7 +3,8 @@ let g:unite_data_directory='~/tmp/vim/unite'
 let g:unite_enable_start_insert = 1
 let g:unite_cursor_line_highlight = 'CursorLine'
 let g:unite_force_overwrite_statusline = 0
-let g:unite_source_rec_max_cache_files=20000
+let g:unite_source_rec_max_cache_files = 0
+let g:unite_source_file_rec_max_cache_files = 0
 let g:unite_split_rule = 'botright'
 let g:unite_winheight = 15
 let g:unite_source_tag_max_fname_length = 60
@@ -20,8 +21,9 @@ augroup END
 " use ag for search
 if executable('ag')
   let g:unite_source_grep_command = 'ag'
-  let g:unite_source_grep_default_opts = '-i --line-numbers --nogroup --nocolor --hidden --ignore ''' . join(split(&wildignore, ','), "' --ignore '") . "'"
+  let g:unite_source_grep_default_opts = '-i --line-numbers --nogroup --nocolor --hidden --ignore "' . join(split(&wildignore, ','), '" --ignore "') . '"'
   let g:unite_source_grep_recursive_opt = ''
+  let g:unite_source_grep_max_candidates = 0
   let g:unite_source_rec_async_command = 'ag --follow --nogroup --nocolor --hidden -g "" --ignore "' . join(split(&wildignore, ','), '" --ignore "') . '"'
 endif
 
@@ -65,7 +67,7 @@ endfunction
 
 nnoremap [unite] <nop>
 nmap <Space> [unite]
-nnoremap <expr> [unite]f UniteWrapper('file' . (expand('%') == '' ? '' : ':%:h') . ' file_rec/async:!' . (expand('%') == '' ? '' : ':%:h') . ' file/new', '-buffer-name=files')
+nnoremap <expr> [unite]f UniteWrapper('file' . (expand('%') == '' ? '' : ':%:h') . ' file_rec/async:!' . (expand('%') == '' ? '' : ':%:h') . ' file/new', '-buffer-name=files'. '-sync')
 " nnoremap <silent>[unite]c :UniteWithCursorWord -profile-name=files -buffer-name=files file_rec/async:!<CR>
 nnoremap <silent>[unite]c :UniteWithCurrentDir -buffer-name=file_rec file_rec/async<CR>
 nnoremap <silent>[unite]p :UniteWithBufferDir -buffer-name=file_rec file_rec/async<CR>
