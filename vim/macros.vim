@@ -214,7 +214,9 @@ vmap <silent><leader>d "_d
 
 " k and j don't skip lines in wrapped mode
 nnoremap <expr> k v:count == 0 ? 'gk' : 'k'
+vnoremap <expr> k v:count == 0 ? 'gk' : 'k'
 nnoremap <expr> j v:count == 0 ? 'gj' : 'j'
+vnoremap <expr> j v:count == 0 ? 'gj' : 'j'
 
 " CCG category searching
 command! -nargs=1 S let @/ = escape('<args>', '\')
