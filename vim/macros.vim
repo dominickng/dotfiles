@@ -9,6 +9,9 @@
 "nnoremap / /\v
 "vnoremap / /\v
 
+" %% maps to the directory of the current file in command-line mode
+cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<CR>
+
 " C-space inserts word under cursor in search
 cmap <Nul> <C-R><C-W>
 
@@ -110,7 +113,8 @@ nmap Q :call TeX_fmt()<CR>
 " }}}
 
 " split line at cursor, analogue to J
-nnoremap K i<CR><ESC>
+" nnoremap K i<CR><ESC>
+nnoremap K i<CR><Esc>^mwgk:silent! s/\v +$//<CR>:noh<CR>
 
 " remap K (open man page)
 " nnoremap M K
