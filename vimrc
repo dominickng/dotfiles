@@ -15,6 +15,11 @@ set nojoinspaces
 set shiftwidth=4
 set shiftround
 
+if exists('+breakindent')
+  set breakindent
+  set showbreak=↪\ \ " trailing space here
+endif
+
 " general settings
 set cryptmethod=blowfish2
 set history=1000
@@ -84,6 +89,7 @@ NeoBundle 'majutsushi/tagbar'
 NeoBundle 'nelstrom/vim-visual-star-search'
 NeoBundleLazy 'pangloss/vim-javascript', {'autoload':{'filetypes':['javascript', 'html']}}
 NeoBundle 'Raimondi/delimitMate'
+NeoBundle 'rbonvall/vim-textobj-latex'
 NeoBundle 'Shougo/neocomplete'
 NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/neosnippet'
@@ -122,9 +128,16 @@ filetype plugin indent on
 NeoBundleCheck
 
 " autocmd FileType php set filetype=php.html.javascript.css
-autocmd BufNewFile,BufReadPost *.md set filetype=markdown.html sw=4 softtabstop=4 textwidth=78 spell
-autocmd FileType c,cpp,java setlocal sw=2 softtabstop=2
-autocmd FileType c,cpp,java let b:match_words=
+augroup vimrc
+  autocmd!
+augroup END
+
+" resize splits on window resize
+autocmd vimrc VimResized * :wincmd =
+
+autocmd vimrc BufNewFile,BufReadPost *.md set filetype=markdown.html sw=4 softtabstop=4 textwidth=78 spell
+autocmd vimrc FileType c,cpp,java setlocal sw=2 softtabstop=2
+autocmd vimrc FileType c,cpp,java let b:match_words=
    \ '\%(\<else\s\+\)\@<!\<if\>:\<else\s\+if\>:\<else\%(\s\+if\)\@!\>,' .
    \ '\<switch\>:\<case\>:\<default\>'
 let g:tex_conceal = ''
@@ -192,9 +205,6 @@ set wildignore+=*.aux,*.out,*.toc,*.log,*.bbl,*.blg,*.d,*.lof,*.lot
 set wildignore+=*.jpg,*.jpeg,*.png,*.bmp,*.gif,*.doc,*.docx,*.xls,*.xlsx,*.pdf,*.psd,*.eps
 set wildignore+=*.o,*.obj,*.la,*.mo,*.pyc,*.so,*.class,*.a,*.jar,*.dylib
 set wildignore+=migrations,bin
-
-" resize splits on window resize
-autocmd VimResized * :wincmd =
 
 " syntax highlighting and colors
 syntax enable
@@ -277,9 +287,9 @@ map <leader>b <Plug>(easymotion-bd-f)
 nmap <leader>t :TagbarToggle<CR>
 
 " tex_autoclose mappings
-autocmd FileType tex inoremap <buffer><silent><C-x>} <esc>:call TexCloseCurrent()<CR>}
-autocmd FileType tex nnoremap <buffer><silent><C-x>c :call TexClosePrev(0)<CR>
-autocmd FileType tex inoremap <buffer><silent><C-x>/ <esc>:call TexClosePrev(1)<CR>
+autocmd vimrc FileType tex inoremap <buffer><silent><C-x>} <esc>:call TexCloseCurrent()<CR>}
+autocmd vimrc FileType tex nnoremap <buffer><silent><C-x>c :call TexClosePrev(0)<CR>
+autocmd vimrc FileType tex inoremap <buffer><silent><C-x>/ <esc>:call TexClosePrev(1)<CR>
 
 " sideways
 nnoremap <C-h> :SidewaysLeft<CR>
@@ -300,7 +310,7 @@ let g:targets_separators = ', . ; : + - = _ * # / | & $'
 let g:targets_argSeparator = '[,;]'
 
 " after-text-object
-autocmd VimEnter * call after_object#enable(['r', 'rr'], '=', ':', '%', '#', ' ', '-')
+autocmd vimrc VimEnter * call after_object#enable(['r', 'rr'], '=', ':', '%', '#', ' ', '-')
 
 " incsearch
 map /  <Plug>(incsearch-forward)
