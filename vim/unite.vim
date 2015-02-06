@@ -81,4 +81,5 @@ nnoremap <silent>[unite]y :Unite -buffer-name=yanks history/yank<CR>
 nnoremap <silent>[unite]l :Unite session<CR>
 nnoremap <silent>[unite]e :UniteResume<CR>
 nnoremap <silent>[unite]i :UniteResume<CR><End><C-U>
+nnoremap <silent>[unite]q :Unite -quick-match
 nnoremap [unite]s :UniteSessionSave<CR>
