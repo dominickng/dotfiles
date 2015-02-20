@@ -19,3 +19,6 @@ ssource ${HOME}/.bash/local
 shopt -s checkwinsize
 # Don't attempt to tab-complete an empty line
 shopt -s no_empty_cmd_completion
+
+# list any existing tmux sessions
+tmux list-sessions 2> /dev/null
