@@ -19,6 +19,9 @@ cmap <Nul> <C-R><C-W>
 inoremap <C-u> <c-g>u<C-u>
 inoremap <C-w> <c-g>u<C-w>
 
+" exit insert mode with jk
+inoremap jk <Esc>
+
 " like ciw but runs a search
 nmap c* :<C-U>let @/='\<'.expand("<cword>").'\>'<cr>:set hls<cr>ciw
 

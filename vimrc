@@ -67,15 +67,16 @@ NeoBundle 'AndrewRadev/splitjoin.vim'
 NeoBundle 'AndrewRadev/sideways.vim'
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'bling/vim-airline'
-NeoBundle 'chrisbra/Colorizer'
+NeoBundleLazy 'chrisbra/Colorizer', {'autoload':{'filetypes':['javascript', 'html']}}
 NeoBundle 'ConradIrwin/vim-bracketed-paste'
-NeoBundle 'haya14busa/incsearch.vim'
+" NeoBundle 'haya14busa/incsearch.vim'
 NeoBundle 'jceb/vim-textobj-uri'
+NeoBundle 'jeetsukumaran/vim-indentwise'
 NeoBundleLazy 'jelera/vim-javascript-syntax', {'autoload':{'filetypes':['javascript']}}
 NeoBundle 'Julian/vim-textobj-variable-segment'
 NeoBundle 'junegunn/vim-after-object'
 NeoBundle 'junegunn/vim-easy-align'
-NeoBundle 'justinmk/vim-gtfo'
+" NeoBundle 'justinmk/vim-gtfo'
 NeoBundle 'justinmk/vim-matchparenalways'
 NeoBundle 'justinmk/vim-sneak'
 NeoBundle 'kana/vim-textobj-indent'
@@ -104,8 +105,8 @@ NeoBundle 'Shougo/vimproc', {
       \     'unix' : 'make -f make_unix.mak',
       \    },
       \ }
-NeoBundle 'terryma/vim-expand-region'
-NeoBundle 'tommcdo/vim-exchange'
+" NeoBundle 'terryma/vim-expand-region'
+" NeoBundle 'tommcdo/vim-exchange'
 NeoBundle 'tpope/vim-abolish'
 NeoBundle 'tpope/vim-characterize'
 NeoBundle 'tpope/vim-commentary'
@@ -313,17 +314,17 @@ let g:targets_argSeparator = '[,;]'
 autocmd vimrc VimEnter * call after_object#enable(['r', 'rr'], '=', ':', '%', '#', ' ', '-')
 
 " incsearch
-map /  <Plug>(incsearch-forward)
-map ?  <Plug>(incsearch-backward)
-map g/ <Plug>(incsearch-stay)
+" map /  <Plug>(incsearch-forward)
+" map ?  <Plug>(incsearch-backward)
+" map g/ <Plug>(incsearch-stay)
 
-let g:incsearch#emacs_like_keymap = 1
-map n  <Plug>(incsearch-nohl-n)
-map N  <Plug>(incsearch-nohl-N)
-map *  <Plug>(incsearch-nohl-*)
-map #  <Plug>(incsearch-nohl-#)
-map g* <Plug>(incsearch-nohl-g*)
-map g# <Plug>(incsearch-nohl-g#)
+"let g:incsearch#emacs_like_keymap = 1
+"map n  <Plug>(incsearch-nohl-n)
+"map N  <Plug>(incsearch-nohl-N)
+"map *  <Plug>(incsearch-nohl-*)
+"map #  <Plug>(incsearch-nohl-#)
+"map g* <Plug>(incsearch-nohl-g*)
+"map g# <Plug>(incsearch-nohl-g#)
 
 " Load other macros
 source $HOME/.vim/macros.vim
