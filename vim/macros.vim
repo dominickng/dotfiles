@@ -207,12 +207,12 @@ nnoremap <leader>=xml :%s/>\s*</>\r</g<CR>:set ft=xml<CR>ggVG=
 nnoremap <leader>=json :%s/{/{\r/g<CR>:%s/}/\r}/g<CR>:%s/,/,\r/g<CR>:set ft=javascript<CR>ggVG=
 
 " - or _ : Quick horizontal splits
-nnoremap - :sp<Space>
-nnoremap -- :sp<CR>
+" nnoremap - :sp<Space>
+" nnoremap -- :sp<CR>
 
 " | : Quick vertical splits
-nnoremap <bar> :vsp<Space>
-nnoremap <bar><bar> :vsp<CR>
+" nnoremap <bar> :vsp<Space>
+" nnoremap <bar><bar> :vsp<CR>
 
 " Use ,d (or ,dd or ,dj or 20,dd) to delete a line without adding it to the
 " yanked stack (also, in visual mode)
