@@ -1,4 +1,5 @@
 " Launches neocomplcache automatically on vim startup.
+let g:neocomplete#data_directory = '~/tmp/vim/neocomplete'
 let g:neocomplete#enable_at_startup = 1
 let g:neocomplete#enable_auto_select = 0
 " Use smartcase.
@@ -20,6 +21,8 @@ endif
 let g:neocomplete#same_filetypes.html  = 'css'
 let g:neocomplete#same_filetypes.xhtml = 'html'
 let g:neocomplete#same_filetypes.php = 'html'
+let g:neocomplete#same_filetypes.c = 'cpp'
+let g:neocomplete#same_filetypes.cpp = 'c'
 
 " Define file-type dependent dictionaries.
 let g:neocomplete#sources#dictionary#dictionaries = {

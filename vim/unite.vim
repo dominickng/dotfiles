@@ -1,5 +1,5 @@
 " unite
-let g:unite_data_directory='~/tmp/vim/unite'
+let g:unite_data_directory = '~/tmp/vim/unite'
 let g:unite_enable_start_insert = 1
 let g:unite_cursor_line_highlight = 'CursorLine'
 let g:unite_force_overwrite_statusline = 0
@@ -18,6 +18,31 @@ augroup plugin-unite-source-session
         \ if v:this_session != '' | call unite#sources#session#_save('') | endif
 augroup END
 
+function! s:ExtractGitProject()
+  let b:git_dir = finddir('.git', ';')
+  return b:git_dir
+endfunction
+
+function! UniteGetSource()
+  " when inside git dir, do file_rec/git, otherwise file_rec/async
+  if exists('b:git_dir') && (b:git_dir ==# '' || b:git_dir =~# '/$')
+    unlet b:git_dir
+  endif
+
+  if !exists('b:git_dir')
+    let dir = s:ExtractGitProject()
+    if dir !=# ''
+      let b:git_dir = dir
+    endif
+  endif
+
+  if strlen(b:git_dir)
+      return "file_rec/git"
+    else
+      return "file_rec/async:!"
+  endif
+endfunction
+
 " use ag for search
 if executable('ag')
   let g:unite_source_grep_command = 'ag'
@@ -27,16 +52,16 @@ if executable('ag')
   let g:unite_source_rec_async_command = 'ag --follow --nogroup --nocolor --hidden -g "" --ignore "' . join(split(&wildignore, ','), '" --ignore "') . '"'
 endif
 
-call unite#custom#source('file_rec,file_rec/async,file_mru,file,buffer,grep', 'ignore_globs', split(&wildignore, ','))
-call unite#custom#source('file_mru', 'max_candidates', 20)
+" call unite#custom#source('file_rec,file_rec/async,file_mru,file,buffer,grep', 'ignore_globs', split(&wildignore, ','))
+call unite#custom#source('file_mru', 'max_candidates', 10)
 call unite#custom#source('file_rec,file_rec/async', 'max_candidates', 0)
 
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
 call unite#filters#sorter_default#use(['sorter_rank'])
 autocmd FileType unite call s:unite_settings()
 function! s:unite_settings()
-  imap <buffer> <C-j>   <Plug>(unite_skip_cursor_down)
-  imap <buffer> <C-k>   <Plug>(unite_skip_cursor_up)
+  " imap <buffer> <C-j>   <Plug>(unite_skip_cursor_down)
+  " imap <buffer> <C-k>   <Plug>(unite_skip_cursor_up)
   imap <buffer> <C-w>   <Plug>(unite_delete_backward_path)
   imap <buffer> '       <Plug>(unite_quick_match_default_action)
   nmap <buffer> '       <Plug>(unite_quick_match_default_action)
@@ -51,9 +76,11 @@ function! s:unite_settings()
   imap <silent><buffer><expr> <C-t> unite#do_action('tabopen')
   imap <silent><buffer><expr> <C-d> unite#do_action('delete')
   imap <silent><buffer><expr> <C-x> unite#do_action('delete')
+  nmap <silent><buffer><expr> <C-x> unite#do_action('delete')
   imap <silent><buffer> <CR> <Plug>(unite_do_default_action)
-  imap <silent><buffer> <Tab> <Plug>(unite_do_default_action)
-  nmap <silent><buffer> <Tab> <Plug>(unite_do_default_action)
+  " imap <buffer> <Tab>   <Plug>(unite_select_next_line)
+  " imap <silent><buffer> <Tab> <Plug>(unite_do_default_action)
+  " nmap <silent><buffer> <Tab> <Plug>(unite_do_default_action)
   imap <silent><buffer> <C-Tab> <Plug>(unite_choose_action)
 
   nmap <silent><buffer> <C-c> <Plug>(unite_exit)
@@ -66,11 +93,11 @@ function! UniteWrapper(action, arguments)
 endfunction
 
 nnoremap [unite] <nop>
-nmap <Space> [unite]
-nnoremap <expr> [unite]f UniteWrapper('file' . (expand('%') == '' ? '' : ':%:h') . ' file_rec/async:!' . (expand('%') == '' ? '' : ':%:h') . ' file/new', '-buffer-name=files'. '-sync')
+nmap <BSlash> [unite]
+nnoremap <expr> [unite]f UniteWrapper('file' . (expand('%') == '' ? '' : ':%:h') . ' ' . UniteGetSource() . (expand('%') == '' ? '' : ':%:h') . ' file/new', '-buffer-name=files'. '-sync')
 " nnoremap <silent>[unite]c :UniteWithCursorWord -profile-name=files -buffer-name=files file_rec/async:!<CR>
-nnoremap <silent>[unite]c :UniteWithCurrentDir -buffer-name=file_rec file_rec/async<CR>
-nnoremap <silent>[unite]p :UniteWithBufferDir -buffer-name=file_rec file_rec/async<CR>
+nnoremap <silent>[unite]c :execute "UniteWithCurrentDir -buffer-name=file_rec " . UniteGetSource()<CR>
+nnoremap <silent>[unite]p :execute "UniteWithBufferDir -buffer-name=file_rec " . UniteGetSource()<CR>
 nnoremap <silent>[unite]r :Unite buffer tab file_mru directory_mru<CR>
 nnoremap <silent>[unite]b :Unite -default-action=goto buffer tab<CR>
 nnoremap <silent>[unite]o :Unite -auto-preview outline<CR>

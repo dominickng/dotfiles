@@ -2,7 +2,7 @@ filetype off
 set encoding=utf-8
 set fileencoding=utf-8
 set nocompatible
-let mapleader=","
+let mapleader=" "
 
 " indentation
 set autoindent
@@ -59,6 +59,7 @@ let g:netrw_dirhistmax=0
 if has('vim_starting')
   set runtimepath+=~/.vim/bundle/neobundle.vim/
 endif
+let g:neobundle#install_process_timeout = 1500
 
 call neobundle#begin(expand('~/.vim/bundle/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
@@ -88,10 +89,19 @@ NeoBundle 'ludovicchabant/vim-gutentags'
 NeoBundle 'luochen1990/rainbow'
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'nelstrom/vim-visual-star-search'
+NeoBundle 'octol/vim-cpp-enhanced-highlight', {'autoload':{'filetypes':['cpp']}}
 NeoBundleLazy 'pangloss/vim-javascript', {'autoload':{'filetypes':['javascript', 'html']}}
 NeoBundle 'Raimondi/delimitMate'
 NeoBundle 'rbonvall/vim-textobj-latex'
 NeoBundle 'Shougo/neocomplete'
+" NeoBundle 'Valloric/YouCompleteMe', {
+"      \ 'build' : {
+"      \     'mac' : './install.sh --clang-completer --system-libclang',
+"      \     'unix' : './install.sh --clang-completer --system-libclang',
+"      \     'windows' : './install.sh --clang-completer --system-libclang',
+"      \     'cygwin' : './install.sh --clang-completer --system-libclang'
+"      \    }
+"      \ }
 NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/unite.vim'
@@ -120,7 +130,7 @@ NeoBundle 'tsukkee/unite-tag'
 NeoBundle 'Valloric/MatchTagAlways'
 NeoBundleLazy 'vim-scripts/tex_autoclose.vim', {'autoload':{'filetypes':['tex']}}
 NeoBundle 'voithos/vim-python-matchit'
-NeoBundle 'whatyouhide/vim-textobj-xmlattr'
+NeoBundleLazy 'whatyouhide/vim-textobj-xmlattr', {'autoload':{'filetypes':['html','javascript','xml']}}
 NeoBundle 'wellle/targets.vim'
 NeoBundle 'Yggdroot/indentLine'
 
@@ -205,7 +215,8 @@ set wildignore+=*.7z,*.lz4,*.zip,*.gz,*.rar,*.bz2,*DS_Store
 set wildignore+=*.aux,*.out,*.toc,*.log,*.bbl,*.blg,*.d,*.lof,*.lot
 set wildignore+=*.jpg,*.jpeg,*.png,*.bmp,*.gif,*.doc,*.docx,*.xls,*.xlsx,*.pdf,*.psd,*.eps
 set wildignore+=*.o,*.obj,*.la,*.mo,*.pyc,*.so,*.class,*.a,*.jar,*.dylib
-set wildignore+=migrations,bin
+set wildignore+=migrations,bin,Documents,Pictures,Library,Movies,Applications,Desktop,Downloads,Public,Music,Dropbox
+set wildignore+=.cache
 
 " syntax highlighting and colors
 syntax enable
