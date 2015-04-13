@@ -145,6 +145,18 @@ function mostlyFullScreen() {
   });
 }
 
+function justAboutFullScreen() {
+  var win = Window.focusedWindow();
+  var sframe = win.screen().frameIncludingDockAndMenu();
+  setFrameAndRemember(win, {
+    x: sframe.x + 5,
+    y: sframe.y + 10,
+    width: sframe.width - 10,
+    height: sframe.height - 20
+  });
+}
+
+
 function moderatelySized() {
   var win = Window.focusedWindow();
   var sframe = win.screen().frameWithoutDockOrMenu();
@@ -413,18 +425,19 @@ api.bind('f', cmd_alt_ctrl, function() { fullScreen() });
 api.bind('m', cmd_alt, function() { moderatelySized() });
 api.bind('t', cmd_alt, function() { halfSize() });
 api.bind('s', cmd_alt, function() { mostlyFullScreen() });
-api.bind('UP', cmd_alt, function() { resize(0, -5) });
-api.bind('DOWN', cmd_alt, function() { resize(0, 5) });
-api.bind('LEFT', cmd_alt, function() { resize(-5, 0) });
-api.bind('RIGHT', cmd_alt, function() { resize(5, 0) });
+api.bind('o', cmd_alt, function() { justAboutFullScreen() });
+api.bind('UP', cmd_alt, function() { resize(0, -2) });
+api.bind('DOWN', cmd_alt, function() { resize(0, 2) });
+api.bind('LEFT', cmd_alt, function() { resize(-2, 0) });
+api.bind('RIGHT', cmd_alt, function() { resize(2, 0) });
 api.bind('h', cmd_alt_ctrl, function() { leftHalf() });
 api.bind('l', cmd_alt_ctrl, function() { rightHalf() });
 
 // movement modifiers
-api.bind('UP', cmd_alt_ctrl, function() { nudge(0,-5) });
-api.bind('DOWN', cmd_alt_ctrl, function() { nudge(0,5) });
-api.bind('LEFT', cmd_alt_ctrl, function() { nudge(-5,0) });
-api.bind('RIGHT', cmd_alt_ctrl, function() { nudge(5,0) });
+api.bind('UP', cmd_alt_ctrl, function() { nudge(0,-2) });
+api.bind('DOWN', cmd_alt_ctrl, function() { nudge(0,2) });
+api.bind('LEFT', cmd_alt_ctrl, function() { nudge(-2,0) });
+api.bind('RIGHT', cmd_alt_ctrl, function() { nudge(2,0) });
 
 api.bind('h', cmd_alt, function() {
   if (atLeft()) {
