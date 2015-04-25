@@ -1,7 +1,6 @@
 filetype off
 set encoding=utf-8
 set fileencoding=utf-8
-set nocompatible
 let mapleader=" "
 
 " indentation
@@ -66,6 +65,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundleLazy '1995eaton/vim-better-javascript-completion', {'autoload':{'filetypes':['javascript']}}
 NeoBundle 'AndrewRadev/splitjoin.vim'
 NeoBundle 'AndrewRadev/sideways.vim'
+NeoBundle 'AndrewRadev/switch.vim'
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'bling/vim-airline'
 NeoBundleLazy 'chrisbra/Colorizer', {'autoload':{'filetypes':['javascript', 'html']}}
@@ -224,7 +224,7 @@ set background=dark
 set backspace=indent,eol,start
 set colorcolumn=+1
 set cursorline
-set formatoptions=qrn1
+set formatoptions=qrnj1
 let g:solarized_termtrans = 1
 colorscheme solarized
 highlight! link DiffText MatchParen
@@ -253,8 +253,8 @@ let g:airline_right_sep=''
 let g:airline_section_warning=airline#section#create(['syntastic', ' ', 'whitespace', ' ', '%{gutentags#statusline()}'])
 
 " easy-align
-vmap <Enter> <Plug>(EasyAlign)
-nmap <leader>a <Plug>(EasyAlign)
+vnoremap <Enter> <Plug>(EasyAlign)
+nnoremap <leader>a <Plug>(EasyAlign)
 
 " fix the shift-left/right etc. mappings in tmux
 if &term =~ '^screen'
@@ -265,7 +265,7 @@ if &term =~ '^screen'
   execute "set <xLeft>=\e[1;*D"
 endif
 
-let g:matchparen_insert_timeout=5
+let g:matchparen_insert_timeout = 5
 
 " rainbow parentheses
 let g:rainbow_active = 0
@@ -292,11 +292,11 @@ let g:rainbow_conf = {
 \}
 
 " easymotion search for 2 chars
-map <leader>f <Plug>(easymotion-s2)
-map <leader>b <Plug>(easymotion-bd-f)
+nmap <leader>f <Plug>(easymotion-s2)
+nmap <leader>b <Plug>(easymotion-bd-f)
 
 " tagbar
-nmap <leader>t :TagbarToggle<CR>
+nnoremap <leader>t :TagbarToggle<CR>
 
 " tex_autoclose mappings
 autocmd vimrc FileType tex inoremap <buffer><silent><C-x>} <esc>:call TexCloseCurrent()<CR>}
@@ -308,8 +308,8 @@ nnoremap <C-h> :SidewaysLeft<CR>
 nnoremap <C-l> :SidewaysRight<CR>
 
 " expand-region
-vmap v <Plug>(expand_region_expand)
-vmap <C-v> <Plug>(expand_region_shrink)
+" vmap v <Plug>(expand_region_expand)
+" vmap <C-v> <Plug>(expand_region_shrink)
 
 " gutentags
 let g:gutentags_cache_dir = expand("~/tmp/vim/tags")

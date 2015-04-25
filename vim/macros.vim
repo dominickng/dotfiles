@@ -13,7 +13,7 @@
 cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<CR>
 
 " C-space inserts word under cursor in search
-cmap <Nul> <C-R><C-W>
+cnoremap <Nul> <C-R><C-W>
 
 " recover from accidental C-w or C-u in insert mode
 inoremap <C-u> <c-g>u<C-u>
@@ -23,7 +23,7 @@ inoremap <C-w> <c-g>u<C-w>
 inoremap jk <Esc>
 
 " like ciw but runs a search
-nmap c* :<C-U>let @/='\<'.expand("<cword>").'\>'<cr>:set hls<cr>ciw
+nnoremap c* :<C-U>let @/='\<'.expand("<cword>").'\>'<cr>:set hls<cr>ciw
 
 " don't move on *
 nnoremap * *<C-o>
@@ -73,7 +73,7 @@ noremap <leader>s4 :call Spaces(4)<CR>
 nnoremap <silent><leader>1 :set paste!<CR>
 
 " search for visually highlighted text
-vmap // y/<C-R>"<CR>
+vnoremap // y/<C-R>"<CR>
 
 " search and replace visually highlighted text
 vnoremap <C-r> hy:%s/<C-r>h//g<left><left>
@@ -146,7 +146,7 @@ nnoremap <leader><Left>  "_yiw?\v\w+\_W+%#<CR>:s/\v(%#\w+)(\_W+)(\w+)/\3\2\1/<CR
 nnoremap <leader><Right> "_yiw:s/\v(%#\w+)(\_W+)(\w+)/\3\2\1/<CR><C-o>/\v\w+\_W+<CR><C-l>
 
 " isolate the current line
-nnoremap <leader><Space><Space> o<C-o>k<C-o>O<C-o>j<ESC>
+" nnoremap <leader><Space><Space> o<C-o>k<C-o>O<C-o>j<ESC>
 
 " yank visual selection as a single line
 vnoremap <leader>- "+y:let @+ = join(map(split(@+, '\n'), 'substitute(v:val, "^\\s\\+", "", "")'), " ")<CR>
@@ -163,8 +163,8 @@ nnoremap <leader>P "+P
 " toggle spell
 " nnoremap <leader>spell :setlocal spell!<CR>
 
-" use ,/ to clear search highlight
-noremap <silent><leader>/ :nohlsearch<CR>
+" use <leader>, to clear search highlight
+noremap <silent><leader>, :nohlsearch<CR>
 
 " use ,x to open a quickfix window for the result of the previous search
 " nnoremap <silent><leader>x :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
@@ -176,16 +176,16 @@ inoremap # X<C-h>#
 noremap Y y$
 
 " map CTRL-f and CTRL-b to move forward and back a word in insert mode
-imap <C-f> <C-o>w
-imap <C-b> <C-o>b
+inoremap <C-f> <C-o>w
+inoremap <C-b> <C-o>b
 
 " select visual block after in/dedent so we can in/dedent more
 vnoremap < <gv
 vnoremap > >gv
 
 " hard re-wrap text
-vmap <leader>q gq
-nmap <leader>q gqip
+vnoremap <leader>q gq
+nnoremap <leader>q gqip
 
 " re-select pasted text
 nnoremap <leader>v V`]
@@ -216,8 +216,8 @@ nnoremap <leader>=json :%s/{/{\r/g<CR>:%s/}/\r}/g<CR>:%s/,/,\r/g<CR>:set ft=java
 
 " Use ,d (or ,dd or ,dj or 20,dd) to delete a line without adding it to the
 " yanked stack (also, in visual mode)
-nmap <silent><leader>d "_d
-vmap <silent><leader>d "_d
+nnoremap <silent><leader>d "_d
+vnoremap <silent><leader>d "_d
 
 " k and j don't skip lines in wrapped mode
 nnoremap <expr> k v:count == 0 ? 'gk' : 'k'
@@ -227,7 +227,7 @@ vnoremap <expr> j v:count == 0 ? 'gj' : 'j'
 
 " CCG category searching
 command! -nargs=1 S let @/ = escape('<args>', '\')
-nmap <leader>S :execute(":S " . input('Regex-off: /'))<CR>
+nnoremap <leader>S :execute(":S " . input('Regex-off: /'))<CR>
 
 " remove DOS end of lines
 nnoremap <silent><leader>dos :%s/\r/\r/ge<CR>:nohlsearch<CR>
@@ -291,13 +291,13 @@ function! GetVisual() range
 endfunction
 
 " Start the find and replace command across the entire file
-vmap <leader>z <Esc>:%s/<c-r>=GetVisual()<cr>/
+vnoremap <leader>z <Esc>:%s/<c-r>=GetVisual()<cr>/
 
 " function call text objects - uses targets.vim
 vnoremap ic :<C-U>call targets#xmap('()', 'grow seekselectp')<CR>ob
-omap ic :normal vic<CR>
+onoremap ic :normal vic<CR>
 vnoremap ac ::<C-U>call targets#xmap('()', 'grow seekselectp')<CR>oB
-omap ac :normal vac<CR>
+onoremap ac :normal vac<CR>
 
 " latex environment text object
 call textobj#user#plugin('latex', {
@@ -401,11 +401,11 @@ endfunction
 
 onoremap <expr> <Plug>(gn-next) <SID>gn_next()
 
-nmap <Plug>(quick-replace) :let @/ = '\V\<' . escape(expand('<cword>'), '\') . '\>'<cr>c<Plug>(gn-next)
-xmap <Plug>(quick-replace) :<c-u>call <SID>match_visual()<cr>c<Plug>(gn-next)
+nnoremap <Plug>(quick-replace) :let @/ = '\V\<' . escape(expand('<cword>'), '\') . '\>'<cr>c<Plug>(gn-next)
+xnoremap <Plug>(quick-replace) :<c-u>call <SID>match_visual()<cr>c<Plug>(gn-next)
 
-nmap <leader>r <Plug>(quick-replace)
-xmap <leader>r <Plug>(quick-replace)
+nnoremap <leader>r <Plug>(quick-replace)
+xnoremap <leader>r <Plug>(quick-replace)
 
 " remove all No Name buffers
 function! CleanEmptyBuffers()
@@ -415,4 +415,29 @@ function! CleanEmptyBuffers()
   endif
 endfunction
 
-nmap <leader>x :call CleanEmptyBuffers()<CR>
+nnoremap <leader>x :call CleanEmptyBuffers()<CR>
+
+let g:switch_custom_definitions =
+  \ [
+  \   {
+  \     '<=': '>=',
+  \     '>=': '>=',
+  \     '<': '>',
+  \     '>': '>',
+  \     '==': '!=',
+  \     '!=': '==',
+  \   }
+  \ ]
+
+let g:switch_case_definitions =
+  \ [
+  \   {
+  \     '\<\(\l\)\(\l\+\(\u\l\+\)\+\)\>': '\=toupper(submatch(1)) . submatch(2)',
+  \     '\<\(\u\l\+\)\(\u\l\+\)\+\>': "\\=tolower(substitute(submatch(0), '\\(\\l\\)\\(\\u\\)', '\\1_\\2', 'g'))",
+  \     '\<\(\l\+\)\(_\l\+\)\+\>': '\U\0',
+  \     '\<\(\u\+\)\(_\u\+\)\+\>': "\\=tolower(substitute(submatch(0), '_', '-', 'g'))",
+  \     '\<\(\l\+\)\(-\l\+\)\+\>': "\\=substitute(submatch(0), '-\\(\\l\\)', '\\u\\1', 'g')",
+  \   }
+  \ ]
+
+nnoremap + :call switch#Switch(g:switch_case_definitions)<CR>

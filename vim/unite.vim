@@ -55,6 +55,7 @@ endif
 " call unite#custom#source('file_rec,file_rec/async,file_mru,file,buffer,grep', 'ignore_globs', split(&wildignore, ','))
 call unite#custom#source('file_mru', 'max_candidates', 10)
 call unite#custom#source('file_rec,file_rec/async', 'max_candidates', 0)
+call unite#custom#source('file_rec,file_rec/async', 'converters', 'converter_relative_word')
 
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
 call unite#filters#sorter_default#use(['sorter_rank'])
