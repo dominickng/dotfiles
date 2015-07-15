@@ -9,6 +9,7 @@ let g:unite_split_rule = 'botright'
 let g:unite_winheight = 15
 let g:unite_source_tag_max_fname_length = 60
 let g:unite_source_history_yank_enable = 1
+let g:unite_redraw_hold_candidates = 100000
 
 let g:unite_source_session_options = "blank,curdir,tabpages,winpos,winsize"
 
@@ -37,7 +38,7 @@ function! UniteGetSource()
   endif
 
   if strlen(b:git_dir)
-      return "file_rec/git"
+      return "file_rec/git:--cached:--others:--exclude-standard"
     else
       return "file_rec/async:!"
   endif
@@ -56,6 +57,7 @@ endif
 call unite#custom#source('file_mru', 'max_candidates', 10)
 call unite#custom#source('file_rec,file_rec/async', 'max_candidates', 0)
 call unite#custom#source('file_rec,file_rec/async', 'converters', 'converter_relative_word')
+call unite#custom#source('file_rec/async,file_rec/git', 'ignore_globs', [])
 
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
 call unite#filters#sorter_default#use(['sorter_rank'])
@@ -72,12 +74,15 @@ function! s:unite_settings()
   imap <buffer> <C-r>   <Plug>(unite_narrowing_input_history)
   imap <buffer> <C-e>   <Plug>(unite_narrowing_input_history)
   imap <silent><buffer><expr> <C-g> unite#do_action('goto')
-  imap <silent><buffer><expr> <C-s> unite#do_action('split')
+  nmap <silent><buffer><expr> <C-g> unite#do_action('goto')
+  imap <silent><buffer><expr> <C-x> unite#do_action('split')
+  nmap <silent><buffer><expr> <C-x> unite#do_action('split')
   imap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
+  nmap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
   imap <silent><buffer><expr> <C-t> unite#do_action('tabopen')
+  nmap <silent><buffer><expr> <C-t> unite#do_action('tabopen')
   imap <silent><buffer><expr> <C-d> unite#do_action('delete')
-  imap <silent><buffer><expr> <C-x> unite#do_action('delete')
-  nmap <silent><buffer><expr> <C-x> unite#do_action('delete')
+  nmap <silent><buffer><expr> <C-d> unite#do_action('delete')
   imap <silent><buffer> <CR> <Plug>(unite_do_default_action)
   " imap <buffer> <Tab>   <Plug>(unite_select_next_line)
   " imap <silent><buffer> <Tab> <Plug>(unite_do_default_action)
@@ -86,20 +91,20 @@ function! s:unite_settings()
 
   nmap <silent><buffer> <C-c> <Plug>(unite_exit)
   imap <silent><buffer> <C-c> <Plug>(unite_exit)
-  nmap <silent><buffer> <Esc> <Plug>(unite_exit)
 endfunction
 
-function! UniteWrapper(action, arguments)
-  return ":\<C-u>Unite " . a:action . " " . a:arguments . "\<CR>"
+function! UniteWrapper(call, action, arguments)
+  return ":\<C-u>" . a:call . " " . a:action . " " . a:arguments . "\<CR>"
 endfunction
 
 nnoremap [unite] <nop>
 nmap <BSlash> [unite]
-nnoremap <expr> [unite]f UniteWrapper('file' . (expand('%') == '' ? '' : ':%:h') . ' ' . UniteGetSource() . (expand('%') == '' ? '' : ':%:h') . ' file/new', '-buffer-name=files'. '-sync')
+nnoremap <silent>[unite]f :execute "Unite -no-hide-source-names -input= -resume -sync -buffer-name=unite-f " . UniteGetSource()<CR>
+nnoremap <silent>[unite]e :execute "UniteWithInputDirectory -input= -no-hide-source-names -resume -sync -buffer-name=unite-e " . UniteGetSource()<CR>
 " nnoremap <silent>[unite]c :UniteWithCursorWord -profile-name=files -buffer-name=files file_rec/async:!<CR>
-nnoremap <silent>[unite]c :execute "UniteWithCurrentDir -buffer-name=file_rec " . UniteGetSource()<CR>
-nnoremap <silent>[unite]p :execute "UniteWithBufferDir -buffer-name=file_rec " . UniteGetSource()<CR>
-nnoremap <silent>[unite]r :Unite buffer tab file_mru directory_mru<CR>
+nnoremap <silent>[unite]c :execute "UniteWithCurrentDir -input= -resume -sync -buffer-name=unite-c" . UniteGetSource()<CR>
+nnoremap <silent>[unite]p :execute "UniteWithBufferDir -input= -buffer-name=unite-p" . UniteGetSource()<CR>
+nnoremap <silent>[unite]r :Unite buffer tab file_mru directory_mru -input= -resume -sync -buffer-name=unite-r<CR>
 nnoremap <silent>[unite]b :Unite -default-action=goto buffer tab<CR>
 nnoremap <silent>[unite]o :Unite -auto-preview outline<CR>
 nnoremap <silent>[unite]t :Unite tag<CR>
@@ -107,7 +112,7 @@ nnoremap <silent>[unite]a :UniteWithCursorWord -buffer-name=tag tag<CR>
 nnoremap <silent>[unite]g :Unite grep:.<CR>
 nnoremap <silent>[unite]y :Unite -buffer-name=yanks history/yank<CR>
 nnoremap <silent>[unite]l :Unite session<CR>
-nnoremap <silent>[unite]e :UniteResume<CR>
+nnoremap <silent>[unite]m :UniteResume<CR>
 nnoremap <silent>[unite]i :UniteResume<CR><End><C-U>
 nnoremap <silent>[unite]q :Unite -quick-match
-nnoremap [unite]s :UniteSessionSave<CR>
+nnoremap [unite]s :UniteSessionSave

@@ -94,6 +94,7 @@ NeoBundleLazy 'pangloss/vim-javascript', {'autoload':{'filetypes':['javascript',
 NeoBundle 'Raimondi/delimitMate'
 NeoBundle 'rbonvall/vim-textobj-latex'
 NeoBundle 'Shougo/neocomplete'
+NeoBundle 'rhysd/vim-clang-format'
 " NeoBundle 'Valloric/YouCompleteMe', {
 "      \ 'build' : {
 "      \     'mac' : './install.sh --clang-completer --system-libclang',
@@ -147,7 +148,8 @@ augroup END
 autocmd vimrc VimResized * :wincmd =
 
 autocmd vimrc BufNewFile,BufReadPost *.md set filetype=markdown.html sw=4 softtabstop=4 textwidth=78 spell
-autocmd vimrc FileType c,cpp,java setlocal sw=2 softtabstop=2
+autocmd vimrc FileType c,cpp setlocal sw=2 softtabstop=2 textwidth=80
+autocmd vimrc FileType java setlocal sw=2 softtabstop=2 textwidth=120
 autocmd vimrc FileType c,cpp,java let b:match_words=
    \ '\%(\<else\s\+\)\@<!\<if\>:\<else\s\+if\>:\<else\%(\s\+if\)\@!\>,' .
    \ '\<switch\>:\<case\>:\<default\>'
@@ -216,6 +218,7 @@ set wildignore+=*.aux,*.out,*.toc,*.log,*.bbl,*.blg,*.d,*.lof,*.lot
 set wildignore+=*.jpg,*.jpeg,*.png,*.bmp,*.gif,*.doc,*.docx,*.xls,*.xlsx,*.pdf,*.psd,*.eps
 set wildignore+=*.o,*.obj,*.la,*.mo,*.pyc,*.so,*.class,*.a,*.jar,*.dylib
 set wildignore+=migrations,bin,Documents,Pictures,Library,Movies,Applications,Desktop,Downloads,Public,Music,Dropbox
+set wildignore+=third_party
 set wildignore+=.cache
 
 " syntax highlighting and colors
@@ -314,7 +317,7 @@ nnoremap <C-l> :SidewaysRight<CR>
 " gutentags
 let g:gutentags_cache_dir = expand("~/tmp/vim/tags")
 let g:gutentags_project_root = ['.svn', '.project']
-let g:gutentags_exclude = ['/usr/local']
+let g:gutentags_exclude = ['/usr/local', 'third_party', 'out', 'build', 'chromeos', 'chromecast', 'webkit', 'native_client', 'native_client_sdk', 'v8', 'buildtools', 'tools', '*js', '*html']
 let g:gutentags_generate_on_write = 0
 
 " targets

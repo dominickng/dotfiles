@@ -57,7 +57,11 @@ endfunction
 inoremap <expr><C-g>     neocomplete#undo_completion()
 inoremap <expr><C-l>     neocomplete#complete_common_string()
 
-inoremap <expr><TAB>     pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><Tab>
+  \ neocomplete#complete_common_string() != '' ?
+  \   neocomplete#complete_common_string() :
+  \ pumvisible() ? "\<C-n>" : "\<TAB>"
+
 inoremap <expr><S-TAB>   pumvisible() ? "\<C-p>" : "\<C-h>"
 
 imap <expr> <C-x> <SID>neocom_cancel_popup_and('<C-x>')
@@ -105,10 +109,20 @@ autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 if !exists('g:neocomplete#sources#omni#input_patterns')
   let g:neocomplete#sources#omni#input_patterns = {}
 endif
+if !exists('g:neocomplete#force_omni_input_patterns')
+  let g:neocomplete#force_omni_input_patterns = {}
+endif
 let g:neocomplete#sources#omni#input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
-let g:neocomplete#sources#omni#input_patterns.php = '\h\w*\|[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
-let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
+let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)\%(\h\w*\)\?'
+let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\%(\h\w*\)\?'
+" let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
+
+if !exists('g:neocomplete#sources')
+  let g:neocomplete#sources = {}
+endif
+call neocomplete#custom#source('file/include', 'disabled', 1)
+" let g:neocomplete#sources.cpp = ['file', 'file/include', 'dictionary', 'member', 'buffer', 'syntax', 'neosnippet', 'omni', 'tag']
 
 " Works like g:neocomplcache_snippets_disable_runtime_snippets
 " which disables all runtime snippets
@@ -125,7 +139,16 @@ let g:neosnippet#enable_snipmate_compatibility = 1
 "endif
 
 let g:neosnippet#snippets_directory='~/.vim/snippets'
+call neocomplete#initialize()
 
 " call neocomplete#custom#source('_', 'converters',
     " \ ['converter_remove_overlap', 'converter_remove_last_paren',
     " \  'converter_delimiter', 'converter_abbr'])
+
+"inoremap <expr><TAB>  pumvisible() ? "\<C-n>" :
+"        \ <SID>check_back_space() ? "\<TAB>" :
+"        \ neocomplete#start_manual_complete()
+"  function! s:check_back_space() "{{{
+"    let col = col('.') - 1
+"    return !col || getline('.')[col - 1]  =~ '\s'
+"  endfunction"}}}
