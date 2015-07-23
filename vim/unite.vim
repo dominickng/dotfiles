@@ -72,7 +72,6 @@ function! s:unite_settings()
   nmap <buffer> <C-y>   <Plug>(unite_narrowing_path)
   nmap <buffer> <C-r>   <Plug>(unite_narrowing_input_history)
   imap <buffer> <C-r>   <Plug>(unite_narrowing_input_history)
-  imap <buffer> <C-e>   <Plug>(unite_narrowing_input_history)
   imap <silent><buffer><expr> <C-g> unite#do_action('goto')
   nmap <silent><buffer><expr> <C-g> unite#do_action('goto')
   imap <silent><buffer><expr> <C-x> unite#do_action('split')
@@ -81,6 +80,8 @@ function! s:unite_settings()
   nmap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
   imap <silent><buffer><expr> <C-t> unite#do_action('tabopen')
   nmap <silent><buffer><expr> <C-t> unite#do_action('tabopen')
+  imap <silent><buffer><expr> <C-e> unite#do_action('tabsplit')
+  nmap <silent><buffer><expr> <C-e> unite#do_action('tabsplit')
   imap <silent><buffer><expr> <C-d> unite#do_action('delete')
   nmap <silent><buffer><expr> <C-d> unite#do_action('delete')
   imap <silent><buffer> <CR> <Plug>(unite_do_default_action)
@@ -99,18 +100,18 @@ endfunction
 
 nnoremap [unite] <nop>
 nmap <BSlash> [unite]
-nnoremap <silent>[unite]f :execute "Unite -no-hide-source-names -input= -resume -sync -buffer-name=unite-f " . UniteGetSource()<CR>
-nnoremap <silent>[unite]e :execute "UniteWithInputDirectory -input= -no-hide-source-names -resume -sync -buffer-name=unite-e " . UniteGetSource()<CR>
+nnoremap <silent>[unite]f :execute "Unite -no-hide-source-names -resume -sync -buffer-name=unite-f -select=1 " . UniteGetSource()<CR>
+nnoremap <silent>[unite]e :execute "UniteWithInputDirectory -no-hide-source-names -resume -sync -buffer-name=unite-e -select=1 " . UniteGetSource()<CR>
 " nnoremap <silent>[unite]c :UniteWithCursorWord -profile-name=files -buffer-name=files file_rec/async:!<CR>
-nnoremap <silent>[unite]c :execute "UniteWithCurrentDir -input= -resume -sync -buffer-name=unite-c" . UniteGetSource()<CR>
-nnoremap <silent>[unite]p :execute "UniteWithBufferDir -input= -buffer-name=unite-p" . UniteGetSource()<CR>
-nnoremap <silent>[unite]r :Unite buffer tab file_mru directory_mru -input= -resume -sync -buffer-name=unite-r<CR>
-nnoremap <silent>[unite]b :Unite -default-action=goto buffer tab<CR>
+nnoremap <silent>[unite]c :execute "UniteWithCurrentDir -resume -sync -buffer-name=unite-c -select=1 " . UniteGetSource()<CR>
+nnoremap <silent>[unite]p :execute "UniteWithBufferDir -buffer-name=unite-p -select=1 " . UniteGetSource()<CR>
+" nnoremap <silent>[unite]r :Unite buffer tab file_mru directory_mru -resume -sync -buffer-name=unite-r -select=1<CR>
+nnoremap <silent>[unite]b :Unite -default-action=goto -select=1 buffer tab<CR>
 nnoremap <silent>[unite]o :Unite -auto-preview outline<CR>
 nnoremap <silent>[unite]t :Unite tag<CR>
-nnoremap <silent>[unite]a :UniteWithCursorWord -buffer-name=tag tag<CR>
+nnoremap <silent>[unite]a :UniteWithCursorWord -select=1 -buffer-name=tag tag<CR>
 nnoremap <silent>[unite]g :Unite grep:.<CR>
-nnoremap <silent>[unite]y :Unite -buffer-name=yanks history/yank<CR>
+nnoremap <silent>[unite]y :Unite -select=1 -buffer-name=yanks history/yank<CR>
 nnoremap <silent>[unite]l :Unite session<CR>
 nnoremap <silent>[unite]m :UniteResume<CR>
 nnoremap <silent>[unite]i :UniteResume<CR><End><C-U>
