@@ -131,6 +131,7 @@ NeoBundle 'tpope/vim-speeddating'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-unimpaired'
 NeoBundle 'tsukkee/unite-tag'
+NeoBundle 'unblevable/quick-scope'
 NeoBundle 'Valloric/MatchTagAlways'
 NeoBundleLazy 'vim-scripts/tex_autoclose.vim', {'autoload':{'filetypes':['tex']}}
 NeoBundle 'vim-scripts/ingo-library'
@@ -357,6 +358,9 @@ let g:gitgutter_eager = 0
 nnoremap <leader>f :ClangFormat<CR>
 vnoremap <leader>f :ClangFormat<CR>
 let g:clang_format#code_style = "chromium"
+
+" quick-scope
+let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
 " Load other macros
 source $HOME/.vim/macros.vim
