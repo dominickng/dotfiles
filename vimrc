@@ -63,6 +63,7 @@ let g:neobundle#install_process_timeout = 1500
 call neobundle#begin(expand('~/.vim/bundle/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundleLazy '1995eaton/vim-better-javascript-completion', {'autoload':{'filetypes':['javascript']}}
+NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'AndrewRadev/splitjoin.vim'
 NeoBundle 'AndrewRadev/sideways.vim'
 NeoBundle 'AndrewRadev/switch.vim'
@@ -121,6 +122,7 @@ NeoBundle 'Shougo/vimproc', {
 NeoBundle 'tpope/vim-abolish'
 NeoBundle 'tpope/vim-characterize'
 NeoBundle 'tpope/vim-commentary'
+NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-ragtag'
 NeoBundle 'tpope/vim-repeat'
 NeoBundle 'tpope/vim-sleuth'

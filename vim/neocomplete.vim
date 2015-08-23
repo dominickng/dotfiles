@@ -8,11 +8,11 @@ let g:neocomplete#enable_smart_case = 1
 " let g:neocomplete#auto_completion_start_length = 2
 " let g:neocomplete#manual_completion_start_length = 2
 " let g:neocomplete#min_keyword_length = 3
-let g:neocomplete#sources#syntax#min_keyword_length = 3
+let g:neocomplete#sources#syntax#min_keyword_length = 4
 " buffer file name pattern that locks neocomplcache. e.g. ku.vim or fuzzyfinder
 let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 " max completions
-let g:neocomplete#max_list = 20
+let g:neocomplete#max_list = 30
 let g:neocomplete#max_keyword_width = 50
 
 if !exists('g:neocomplete#same_filetypes')
