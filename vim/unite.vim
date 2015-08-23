@@ -6,12 +6,12 @@ let g:unite_force_overwrite_statusline = 0
 let g:unite_source_rec_max_cache_files = 0
 let g:unite_source_file_rec_max_cache_files = 0
 let g:unite_split_rule = 'botright'
-let g:unite_winheight = 15
+let g:unite_winheight = 20
 let g:unite_source_tag_max_fname_length = 60
 let g:unite_source_history_yank_enable = 1
 let g:unite_redraw_hold_candidates = 100000
 
-let g:unite_source_session_options = "blank,curdir,tabpages,winpos,winsize"
+let g:unite_source_session_options = "curdir,tabpages,winpos,winsize"
 
 augroup plugin-unite-source-session
   autocmd!
@@ -106,7 +106,7 @@ nnoremap <silent>[unite]e :execute "UniteWithInputDirectory -no-hide-source-name
 nnoremap <silent>[unite]c :execute "UniteWithCurrentDir -resume -sync -buffer-name=unite-c -select=1 " . UniteGetSource()<CR>
 nnoremap <silent>[unite]p :execute "UniteWithBufferDir -buffer-name=unite-p -select=1 " . UniteGetSource()<CR>
 " nnoremap <silent>[unite]r :Unite buffer tab file_mru directory_mru -resume -sync -buffer-name=unite-r -select=1<CR>
-nnoremap <silent>[unite]b :Unite -default-action=goto -select=1 buffer tab<CR>
+nnoremap <silent>[unite]b :Unite -default-action=goto -select=1 -buffer-name=unite-b -resume buffer tab<CR>
 nnoremap <silent>[unite]o :Unite -auto-preview outline<CR>
 nnoremap <silent>[unite]t :Unite tag<CR>
 nnoremap <silent>[unite]a :UniteWithCursorWord -select=1 -buffer-name=tag tag<CR>
