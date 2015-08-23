@@ -24,6 +24,12 @@ if [ `uname` = 'Darwin' ]; then
 	alias fixopenwith='/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user'
 	alias proxy='export http_proxy=`networksetup -getwebproxy Wi-Fi | awk '\''{ if(NR == 1) enabled=$2; else if(NR == 2) server=$2; else if(NR == 3) port=$2;} END {if(enabled == "Yes") print "http://" server ":" port}'\''`'
 
+	export ARCHFLAGS="-arch x86_64"
+	export COPYFILE_DISABLE=true #for stopping those damned ._ files
+	export PATH=$HOME/homebrew/bin:$HOME/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:/usr/texbin:`xcode-select -print-path`/usr/bin:/usr/local/texlive/2014basic/bin/universal-darwin:$HOME/Applications:$HOME/working/repos/depot_tools
+	export TEXINPUTS=".:.//:/usr/local/texlive/2014basic/texmf-dist/tex/latex//:/usr/local/texlive/2014basic/texmf-dist/tex/generic//:$HOME/working/reposs/tex//:"
+	export GNUTERM=x11 # for Octave
+
 	#bash completion
 	BREW_PREFIX=`brew --prefix`
 	if [ -f $BREW_PREFIX/etc/bash_completion ]; then
@@ -31,12 +37,6 @@ if [ `uname` = 'Darwin' ]; then
 		. $BREW_PREFIX/Library/Contributions/brew_bash_completion.sh
 		. $BREW_PREFIX/etc/bash_completion.d/git-completion.bash
 	fi
-
-	export ARCHFLAGS="-arch x86_64"
-	export COPYFILE_DISABLE=true #for stopping those damned ._ files
-	export PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:/usr/texbin:`xcode-select -print-path`/usr/bin:/usr/local/texlive/2014basic/bin/universal-darwin:$HOME/Applications
-	export TEXINPUTS=".:.//:/usr/local/texlive/2014basic/texmf-dist/tex/latex//:/usr/local/texlive/2014basic/texmf-dist/tex/generic//:$HOME/working/reposs/tex//:"
-	export GNUTERM=x11 # for Octave
 else
 	alias ls='ls --color=auto'
 	alias grep='grep --color=auto'
