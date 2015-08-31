@@ -11,6 +11,8 @@ alias less='less -R'
 alias tmux-create='~/dotfiles/tmux-create'
 alias tm='tmux'
 export PYTHONSTARTUP=$HOME/.pythonrc.py
+export GOPATH=$HOME/gocode
+alias tat='tmux attach -t'
 
 if [ `uname` = 'Darwin' ]; then
 	alias top='top -s1 -F -R -o cpu'
@@ -42,9 +44,10 @@ else
 	alias grep='grep --color=auto'
 
 	# local path modifications
-	export PATH=$HOME/bin:$HOME/local/bin:$PATH
-	export TEXINPUTS=".:${HOME}/repos/tex//:"
-	export CANDC_MODELS="${HOME}/candc/models"
+	export PATH=$HOME/bin:$HOME/local/bin:$GOPATH/bin:$PATH:$HOME/repos/depot_tools:$HOME/goma
+	# export TERM=xterm-256color
+	export CHROME_DEVEL_SANDBOX=/usr/local/sbin/chrome-devel-sandbox
 
 	ssource "/etc/bash_completion"
+	ssource $HOME/repos/ninja/misc/bash-completion
 fi

@@ -2,8 +2,7 @@
 " viwS' -> surround inner word with '
 " ys$)  -> surround to end of line with parentheses
 " cs"'  -> change surround from " to '
-" ds"   -> delete surrounding "
-" yss)  -> surround entire line with parentheses
+" ds"   -> delete surrounding " yss)  -> surround entire line with parentheses
 
 " use sane regexes in searches
 "nnoremap / /\v
@@ -316,6 +315,17 @@ call textobj#user#plugin('php', {
 \   },
 \ })
 
+" Chops a filename down to max_length characters, replacing
+" the middle with ...
+function! ChopFilename(fname, max_length)
+  if len(a:fname) > a:max_length
+    let affix = (a:max_length / 2) - 3
+    let s =  a:fname[: affix] . '...' . a:fname[-affix :]
+    return s
+  endif
+  return a:fname
+endfunction
+
 " format tabline
 set tabline=%!MyTabLine()
 function! MyTabLine()
@@ -346,8 +356,10 @@ function! MyTabLine()
     elseif getbufvar( b, "&buftype" ) == 'quickfix'
       let n .= '[Q]'
     else
-      let n .= pathshorten(bufname(b))
-      "let n .= bufname(b)
+      " let n .= pathshorten(bufname(b))
+      " let n .= bufname(b)
+      " chop filenames down to a max of 25 characters
+      let n .= ChopFilename(fnamemodify(bufname(b), ':t'), 25)
     endif
     if len(tabpagebuflist(t + 1)) > 1
       let n .= '[' . len(tabpagebuflist(t + 1)) . ']'
@@ -441,3 +453,6 @@ let g:switch_case_definitions =
   \ ]
 
 nnoremap + :call switch#Switch(g:switch_case_definitions)<CR>
+
+" jump to tag in a new tab
+nnoremap <silent><Leader><C-]> <C-w><C-]><C-w>T

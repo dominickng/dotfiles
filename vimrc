@@ -93,9 +93,8 @@ NeoBundle 'nelstrom/vim-visual-star-search'
 NeoBundle 'octol/vim-cpp-enhanced-highlight', {'autoload':{'filetypes':['cpp']}}
 NeoBundleLazy 'pangloss/vim-javascript', {'autoload':{'filetypes':['javascript', 'html']}}
 NeoBundle 'Raimondi/delimitMate'
-NeoBundle 'rbonvall/vim-textobj-latex'
-NeoBundle 'Shougo/neocomplete'
-NeoBundle 'rhysd/vim-clang-format'
+NeoBundleLazy 'rbonvall/vim-textobj-latex', {'autoload':{'filetypes':['tex']}}
+NeoBundleLazy 'rhysd/vim-clang-format', {'autoload':{'filetypes':['c', 'cpp']}}
 " NeoBundle 'Valloric/YouCompleteMe', {
 "      \ 'build' : {
 "      \     'mac' : './install.sh --clang-completer --system-libclang',
@@ -104,7 +103,9 @@ NeoBundle 'rhysd/vim-clang-format'
 "      \     'cygwin' : './install.sh --clang-completer --system-libclang'
 "      \    }
 "      \ }
-NeoBundle 'Shougo/neomru.vim'
+NeoBundle 'Shougo/neocomplete'
+" NeoBundle 'Shougo/neoinclude.vim'
+" NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/unite-outline'
@@ -130,9 +131,12 @@ NeoBundle 'tpope/vim-speeddating'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-unimpaired'
 NeoBundle 'tsukkee/unite-tag'
+NeoBundle 'unblevable/quick-scope'
 NeoBundle 'Valloric/MatchTagAlways'
 NeoBundleLazy 'vim-scripts/tex_autoclose.vim', {'autoload':{'filetypes':['tex']}}
-NeoBundle 'voithos/vim-python-matchit'
+NeoBundle 'vim-scripts/ingo-library'
+NeoBundle 'vim-scripts/EnhancedJumps'
+NeoBundleLazy 'voithos/vim-python-matchit', {'autoload':{'filetypes':['python']}}
 NeoBundleLazy 'whatyouhide/vim-textobj-xmlattr', {'autoload':{'filetypes':['html','javascript','xml']}}
 NeoBundle 'wellle/targets.vim'
 NeoBundle 'Yggdroot/indentLine'
@@ -151,7 +155,7 @@ autocmd vimrc VimResized * :wincmd =
 
 autocmd vimrc BufNewFile,BufReadPost *.md set filetype=markdown.html sw=4 softtabstop=4 textwidth=78 spell
 autocmd vimrc FileType c,cpp setlocal sw=2 softtabstop=2 textwidth=80
-autocmd vimrc FileType java setlocal sw=2 softtabstop=2 textwidth=120
+autocmd vimrc FileType java setlocal sw=2 softtabstop=2 textwidth=100
 autocmd vimrc FileType c,cpp,java let b:match_words=
    \ '\%(\<else\s\+\)\@<!\<if\>:\<else\s\+if\>:\<else\%(\s\+if\)\@!\>,' .
    \ '\<switch\>:\<case\>:\<default\>'
@@ -225,14 +229,21 @@ set wildignore+=.cache
 
 " syntax highlighting and colors
 syntax enable
-set background=dark
 set backspace=indent,eol,start
+set background=dark
 set colorcolumn=+1
 set cursorline
 set formatoptions=qrnj1
 let g:solarized_termtrans = 1
 colorscheme solarized
 highlight! link DiffText MatchParen
+if has('gui_running')
+  " do something
+else
+  " in terminal mode
+  set term=screen-256color
+  set t_Co=256
+endif
 
 " Don't try to highlight lines longer than 800 characters.
 set synmaxcol=800
@@ -241,6 +252,7 @@ highlight EvilSpace ctermbg=darkred guibg=darkred
 highlight LeadingTab ctermbg=blue guibg=blue
 highlight LeadingSpace ctermbg=darkgreen guibg=darkgreen
 highlight Tab gui=underline guifg=blue ctermbg=blue
+highlight TabLineSel ctermfg=white ctermbg=darkblue cterm=NONE
 highlight WhitespaceEOL ctermbg=lightblue
 
 " vim-signature background colour
@@ -252,10 +264,11 @@ nnoremap <leader>ii :IndentLinesToggle<CR>
 
 " statusline
 set laststatus=2
-let g:airline_powerline_fonts=0
-let g:airline_left_sep=''
-let g:airline_right_sep=''
-let g:airline_section_warning=airline#section#create(['syntastic', ' ', 'whitespace', ' ', '%{gutentags#statusline()}'])
+let g:airline_powerline_fonts = 0
+let g:airline_left_sep = ''
+let g:airline_right_sep = ''
+let g:airline#extensions#hunks#enabled = 0
+let g:airline_section_warning = airline#section#create(['syntastic', ' ', 'whitespace', ' ', '%{gutentags#statusline()}'])
 
 " easy-align
 vnoremap <Enter> <Plug>(EasyAlign)
@@ -295,10 +308,6 @@ let g:rainbow_conf = {
 \       'stylus': 0,
 \   }
 \}
-
-" easymotion search for 2 chars
-nmap <leader>f <Plug>(easymotion-s2)
-nmap <leader>b <Plug>(easymotion-bd-f)
 
 " tagbar
 nnoremap <leader>t :TagbarToggle<CR>
@@ -341,6 +350,17 @@ autocmd vimrc VimEnter * call after_object#enable(['r', 'rr'], '=', ':', '%', '#
 "map #  <Plug>(incsearch-nohl-#)
 "map g* <Plug>(incsearch-nohl-g*)
 "map g# <Plug>(incsearch-nohl-g#)
+
+" git gutter
+let g:gitgutter_eager = 0
+
+" clang format
+nnoremap <leader>f :ClangFormat<CR>
+vnoremap <leader>f :ClangFormat<CR>
+let g:clang_format#code_style = "chromium"
+
+" quick-scope
+let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
 " Load other macros
 source $HOME/.vim/macros.vim
