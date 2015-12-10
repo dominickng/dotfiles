@@ -48,24 +48,30 @@ local DARK=1
 
 # Set the prompt colour, and the colors for the 'ls' command
 if [ ${PS1_COLOR:-0} -eq 1 ]; then
-	if [ `uname` = 'Darwin' ]; then
-		PS1="${LIGHTCYAN}\D{%d %b} \t${OFF} ${PURPLE}\u@\h${OFF} ${LIGHTBLUE}\W${OFF}\$ "
-
-		export LSCOLORS="DxGxCxDxCxEGExaBaGecec"
-		export GREP_COLOR='0;31'
-		#export COLORFGBG="7;0"
-	else
-		export GREP_COLOR='0;31'
+	export GREP_COLOR='0;31'
+	if [ -n "$SSH_CLIENT" ]; then
 		eval $(dircolors 2> /dev/null)
 		PS1="${LIGHTCYAN}\D{%d %b} \t${OFF} ${LIGHTGREEN}\u@\h${OFF} ${LIGHTPURPLE}\W${OFF}\$ "
 
+		if [ ${DARK} -ne 0 ]; then
+		# We need to bold the PS1 environment variables
+		# so they show up on a dark terminal
+			PS1="$(echo "${PS1}" | sed 's/00;/01;/g')"
+		fi
+	else
+		PS1="${LIGHTCYAN}\D{%d %b} \t${OFF} ${PURPLE}\u@\h${OFF} ${LIGHTBLUE}\W${OFF}\$ "
+		#export COLORFGBG="7;0"
+	fi
+
+	if [ `uname` = 'Darwin' ]; then
+		export LSCOLORS="DxGxCxDxCxEGExaBaGecec"
+	else
 		if [ ${DARK} -eq 0 ]; then
 			LS_COLORS="$(echo "${LS_COLORS}" | sed 's/01;/00;/g; s/34/33/')"
 		else
 		# We need to bold the LS_COLORS and PS1 environment variables
 		# so they show up on a dark terminal
 			LS_COLORS="$(echo "${LS_COLORS}" | sed 's/00;/01;/g; s/34/33/')"
-			PS1="$(echo "${PS1}" | sed 's/00;/01;/g')"
 		fi
 
 		export LS_COLORS
