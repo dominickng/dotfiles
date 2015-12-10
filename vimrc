@@ -71,6 +71,7 @@ NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'bling/vim-airline'
 NeoBundleLazy 'chrisbra/Colorizer', {'autoload':{'filetypes':['javascript', 'html']}}
 NeoBundle 'ConradIrwin/vim-bracketed-paste'
+NeoBundle 'ctrlpvim/ctrlp.vim'
 " NeoBundle 'haya14busa/incsearch.vim'
 NeoBundle 'jceb/vim-textobj-uri'
 NeoBundle 'jeetsukumaran/vim-indentwise'
@@ -91,6 +92,7 @@ NeoBundle 'luochen1990/rainbow'
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'nelstrom/vim-visual-star-search'
 NeoBundle 'octol/vim-cpp-enhanced-highlight', {'autoload':{'filetypes':['cpp']}}
+NeoBundle 'okcompute/vim-ctrlp-session'
 NeoBundleLazy 'pangloss/vim-javascript', {'autoload':{'filetypes':['javascript', 'html']}}
 NeoBundle 'Raimondi/delimitMate'
 NeoBundleLazy 'rbonvall/vim-textobj-latex', {'autoload':{'filetypes':['tex']}}
@@ -107,9 +109,9 @@ NeoBundle 'Shougo/neocomplete'
 " NeoBundle 'Shougo/neoinclude.vim'
 " NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/neosnippet'
-NeoBundle 'Shougo/unite.vim'
-NeoBundle 'Shougo/unite-outline'
-NeoBundle 'Shougo/unite-session'
+" NeoBundle 'Shougo/unite.vim'
+" NeoBundle 'Shougo/unite-outline'
+" NeoBundle 'Shougo/unite-session'
 NeoBundle 'Shougo/vimproc', {
       \ 'build' : {
       \     'windows' : 'make -f make_mingw32.mak',
@@ -130,7 +132,7 @@ NeoBundle 'tpope/vim-sleuth'
 NeoBundle 'tpope/vim-speeddating'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-unimpaired'
-NeoBundle 'tsukkee/unite-tag'
+" NeoBundle 'tsukkee/unite-tag'
 NeoBundle 'unblevable/quick-scope'
 NeoBundle 'Valloric/MatchTagAlways'
 NeoBundleLazy 'vim-scripts/tex_autoclose.vim', {'autoload':{'filetypes':['tex']}}
@@ -218,14 +220,17 @@ set wildmode=list:longest,full
 set wildignore+=*.swp,*.swo
 set wildignore+=.svn,.git,.hg,.bzr,*.svn-base,*.dir-prop-base
 set wildignore+=ext,vim/bundle/**,backup/**,backups/**
-set wildignore+=*.tmp
+set wildignore+=*.tmp,.cache
 set wildignore+=*.7z,*.lz4,*.zip,*.gz,*.rar,*.bz2,*DS_Store
 set wildignore+=*.aux,*.out,*.toc,*.log,*.bbl,*.blg,*.d,*.lof,*.lot
 set wildignore+=*.jpg,*.jpeg,*.png,*.bmp,*.gif,*.doc,*.docx,*.xls,*.xlsx,*.pdf,*.psd,*.eps
 set wildignore+=*.o,*.obj,*.la,*.mo,*.pyc,*.so,*.class,*.a,*.jar,*.dylib
 set wildignore+=migrations,bin,Documents,Pictures,Library,Movies,Applications,Desktop,Downloads,Public,Music,Dropbox
-set wildignore+=third_party
-set wildignore+=.cache
+
+" custom ignore for ctrlp
+" exclude all of third_party except WebKit
+let g:ctrlp_ag_ignore = ['native_client_sdk', 'android_emulator_sdk', 'buildtools', 'chromeos', 'sql', 'google_update', 'tools', 'out', 'LayoutTests', 'PerformanceTests', 'ManualTests']
+let g:ctrlp_ag_ignore += expand('third_party/[^W]*', 0, 1)
 
 " syntax highlighting and colors
 syntax enable
@@ -362,8 +367,28 @@ let g:clang_format#code_style = "chromium"
 " quick-scope
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
+" ctrlp
+let g:ctrlp_map = '<\-f>'
+let g:ctrlp_session_path = $HOME . '/tmp/vim/session'
+let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:15,results:30'
+let g:ctrlp_cache_dir = $HOME . '/tmp/vim/ctrlp'
+let g:ctrlp_lazy_update = 1
+let g:ctrlp_line_prefix = '  '
+nnoremap \f :CtrlP<CR>
+nnoremap \c :CtrlP chrome<CR>
+nnoremap \w :CtrlP third_party/WebKit<CR>
+nnoremap \b :CtrlPBuffer<CR>
+nnoremap \l :CtrlPSession<CR>
+nnoremap \s :Session<Space>
+
+if executable('ag')
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --files-with-matches --follow --nogroup --nocolor --hidden -g "" --ignore "' . join(split(&wildignore, ','), '" --ignore "') . '" --ignore "' . join(g:ctrlp_ag_ignore, '" --ignore "') .'"'
+endif
+
 " Load other macros
 source $HOME/.vim/macros.vim
-source $HOME/.vim/unite.vim
 source $HOME/.vim/neocomplete.vim
 runtime macros/matchit.vim

@@ -50,7 +50,7 @@ if executable('ag')
   let g:unite_source_grep_default_opts = '-i --line-numbers --nogroup --nocolor --hidden --ignore "' . join(split(&wildignore, ','), '" --ignore "') . '"'
   let g:unite_source_grep_recursive_opt = ''
   let g:unite_source_grep_max_candidates = 0
-  let g:unite_source_rec_async_command = 'ag --follow --nogroup --nocolor --hidden -g "" --ignore "' . join(split(&wildignore, ','), '" --ignore "') . '"'
+  let g:unite_source_rec_async_command = ['ag', '--follow', '--nogroup', '--nocolor', '--hidden', '-g ""', '--ignore "' . join(split(&wildignore, ','), '" --ignore "') . '"']
 endif
 
 " call unite#custom#source('file_rec,file_rec/async,file_mru,file,buffer,grep', 'ignore_globs', split(&wildignore, ','))
@@ -70,8 +70,6 @@ function! s:unite_settings()
   nmap <buffer> '       <Plug>(unite_quick_match_default_action)
   imap <buffer> <C-y>   <Plug>(unite_narrowing_path)
   nmap <buffer> <C-y>   <Plug>(unite_narrowing_path)
-  nmap <buffer> <C-r>   <Plug>(unite_narrowing_input_history)
-  imap <buffer> <C-r>   <Plug>(unite_narrowing_input_history)
   imap <silent><buffer><expr> <C-g> unite#do_action('goto')
   nmap <silent><buffer><expr> <C-g> unite#do_action('goto')
   imap <silent><buffer><expr> <C-x> unite#do_action('split')
@@ -106,7 +104,8 @@ nnoremap <silent>[unite]e :execute "UniteWithInputDirectory -no-hide-source-name
 nnoremap <silent>[unite]c :execute "UniteWithCurrentDir -resume -sync -buffer-name=unite-c -select=1 " . UniteGetSource()<CR>
 nnoremap <silent>[unite]p :execute "UniteWithBufferDir -buffer-name=unite-p -select=1 " . UniteGetSource()<CR>
 " nnoremap <silent>[unite]r :Unite buffer tab file_mru directory_mru -resume -sync -buffer-name=unite-r -select=1<CR>
-nnoremap <silent>[unite]b :Unite -default-action=goto -select=1 -buffer-name=unite-b -resume buffer tab<CR>
+nnoremap <silent>[unite]r :Unite buffer tab file_mru directory_mru -resume -sync -buffer-name=unite-r -select=1<CR>
+nnoremap <silent>[unite]b :Unite -default-action=goto -select=1 -buffer-name=unite-b buffer<CR>
 nnoremap <silent>[unite]o :Unite -auto-preview outline<CR>
 nnoremap <silent>[unite]t :Unite tag<CR>
 nnoremap <silent>[unite]a :UniteWithCursorWord -select=1 -buffer-name=tag tag<CR>
