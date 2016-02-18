@@ -7,3 +7,5 @@ if [ -n "${PS1}" ]; then
 	export INPUTRC=~/.inputrc
 	source "${HOME}/.bash/interactive"
 fi
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

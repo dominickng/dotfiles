@@ -71,14 +71,17 @@ NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'bling/vim-airline'
 NeoBundleLazy 'chrisbra/Colorizer', {'autoload':{'filetypes':['javascript', 'html']}}
 NeoBundle 'ConradIrwin/vim-bracketed-paste'
-NeoBundle 'ctrlpvim/ctrlp.vim'
+NeoBundle 'dominickng/fzf-session.vim'
 " NeoBundle 'haya14busa/incsearch.vim'
 NeoBundle 'jceb/vim-textobj-uri'
 NeoBundle 'jeetsukumaran/vim-indentwise'
 NeoBundleLazy 'jelera/vim-javascript-syntax', {'autoload':{'filetypes':['javascript']}}
 NeoBundle 'Julian/vim-textobj-variable-segment'
+NeoBundle 'junegunn/fzf', {'base': '~/.fzf', 'build': './install --all'}
+NeoBundle 'junegunn/fzf.vim'
 NeoBundle 'junegunn/vim-after-object'
 NeoBundle 'junegunn/vim-easy-align'
+NeoBundle 'junegunn/vim-peekaboo'
 " NeoBundle 'justinmk/vim-gtfo'
 NeoBundle 'justinmk/vim-matchparenalways'
 NeoBundle 'justinmk/vim-sneak'
@@ -92,7 +95,6 @@ NeoBundle 'luochen1990/rainbow'
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'nelstrom/vim-visual-star-search'
 NeoBundle 'octol/vim-cpp-enhanced-highlight', {'autoload':{'filetypes':['cpp']}}
-NeoBundle 'okcompute/vim-ctrlp-session'
 NeoBundleLazy 'pangloss/vim-javascript', {'autoload':{'filetypes':['javascript', 'html']}}
 NeoBundle 'Raimondi/delimitMate'
 NeoBundleLazy 'rbonvall/vim-textobj-latex', {'autoload':{'filetypes':['tex']}}
@@ -227,11 +229,6 @@ set wildignore+=*.jpg,*.jpeg,*.png,*.bmp,*.gif,*.doc,*.docx,*.xls,*.xlsx,*.pdf,*
 set wildignore+=*.o,*.obj,*.la,*.mo,*.pyc,*.so,*.class,*.a,*.jar,*.dylib
 set wildignore+=migrations,bin,Documents,Pictures,Library,Movies,Applications,Desktop,Downloads,Public,Music,Dropbox
 
-" custom ignore for ctrlp
-" exclude all of third_party except WebKit
-let g:ctrlp_ag_ignore = ['native_client_sdk', 'android_emulator_sdk', 'buildtools', 'chromeos', 'sql', 'google_update', 'tools', 'out', 'LayoutTests', 'PerformanceTests', 'ManualTests']
-let g:ctrlp_ag_ignore += expand('third_party/[^W]*', 0, 1)
-
 " syntax highlighting and colors
 syntax enable
 set backspace=indent,eol,start
@@ -274,6 +271,7 @@ let g:airline_left_sep = ''
 let g:airline_right_sep = ''
 let g:airline#extensions#hunks#enabled = 0
 let g:airline_section_warning = airline#section#create(['syntastic', ' ', 'whitespace', ' ', '%{gutentags#statusline()}'])
+let g:airline_extensions = ['branch']
 
 " easy-align
 vnoremap <Enter> <Plug>(EasyAlign)
@@ -367,25 +365,23 @@ let g:clang_format#code_style = "chromium"
 " quick-scope
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
-" ctrlp
-let g:ctrlp_map = '<\-f>'
-let g:ctrlp_session_path = $HOME . '/tmp/vim/session'
-let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:15,results:30'
-let g:ctrlp_cache_dir = $HOME . '/tmp/vim/ctrlp'
-let g:ctrlp_lazy_update = 1
-let g:ctrlp_line_prefix = '  '
-nnoremap \f :CtrlP<CR>
-nnoremap \c :CtrlP chrome<CR>
-nnoremap \w :CtrlP third_party/WebKit<CR>
-nnoremap \b :CtrlPBuffer<CR>
-nnoremap \l :CtrlPSession<CR>
+" ag and fzf
+nnoremap \g :Ag<CR>
+nnoremap \f :Files<CR>
+nnoremap \b :Buffers<CR>
+nnoremap \l :Sessions<CR>
 nnoremap \s :Session<Space>
+
+let g:fzf_layout = { 'down': '25%' }
+" custom ignore for ag fuzzy find
+" exclude all of third_party except WebKit
+let g:fuzzy_ag_ignore = ['native_client_sdk', 'android_emulator_sdk', 'buildtools', 'chromeos', 'sql', 'google_update', 'tools', 'out', 'LayoutTests', 'PerformanceTests', 'ManualTests']
+let g:fuzzy_ag_ignore += expand('third_party/[^W]*', 0, 1)
+let g:fzf_session_path = $HOME . '/tmp/vim/session'
 
 if executable('ag')
   set grepprg=ag\ --nogroup\ --nocolor
-
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --files-with-matches --follow --nogroup --nocolor --hidden -g "" --ignore "' . join(split(&wildignore, ','), '" --ignore "') . '" --ignore "' . join(g:ctrlp_ag_ignore, '" --ignore "') .'"'
+  let $FZF_DEFAULT_COMMAND = 'ag -l --follow --nogroup -g "" --ignore "' . join(split(&wildignore, ','), '" --ignore "') . '" --ignore "' . join(g:fuzzy_ag_ignore, '" --ignore "') .'"'
 endif
 
 " Load other macros
