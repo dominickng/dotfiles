@@ -477,3 +477,11 @@ endfun
 
 " jump to tag in a new tab
 nnoremap <silent><Leader><C-]> <C-w><C-]><C-w>T
+
+" visual @: use @ on visually selected text to apply macro to matching lines
+xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
+
+function! ExecuteMacroOverVisualRange()
+  echo "@".getcmdline()
+  execute ":'<,'>normal @".nr2char(getchar())
+endfunction

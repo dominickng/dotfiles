@@ -68,7 +68,6 @@ NeoBundle 'AndrewRadev/splitjoin.vim'
 NeoBundle 'AndrewRadev/sideways.vim'
 NeoBundle 'AndrewRadev/switch.vim'
 NeoBundle 'altercation/vim-colors-solarized'
-NeoBundle 'bling/vim-airline'
 NeoBundleLazy 'chrisbra/Colorizer', {'autoload':{'filetypes':['javascript', 'html']}}
 NeoBundle 'ConradIrwin/vim-bracketed-paste'
 NeoBundle 'dominickng/fzf-session.vim'
@@ -137,6 +136,8 @@ NeoBundle 'tpope/vim-unimpaired'
 " NeoBundle 'tsukkee/unite-tag'
 NeoBundle 'unblevable/quick-scope'
 NeoBundle 'Valloric/MatchTagAlways'
+NeoBundle 'vim-airline/vim-airline'
+NeoBundle 'vim-airline/vim-airline-themes'
 NeoBundleLazy 'vim-scripts/tex_autoclose.vim', {'autoload':{'filetypes':['tex']}}
 NeoBundle 'vim-scripts/ingo-library'
 NeoBundle 'vim-scripts/EnhancedJumps'
@@ -145,9 +146,9 @@ NeoBundleLazy 'whatyouhide/vim-textobj-xmlattr', {'autoload':{'filetypes':['html
 NeoBundle 'wellle/targets.vim'
 NeoBundle 'Yggdroot/indentLine'
 
+NeoBundleCheck
 call neobundle#end()
 filetype plugin indent on
-NeoBundleCheck
 
 " autocmd FileType php set filetype=php.html.javascript.css
 augroup vimrc
@@ -224,7 +225,7 @@ set wildignore+=.svn,.git,.hg,.bzr,*.svn-base,*.dir-prop-base
 set wildignore+=ext,vim/bundle/**,backup/**,backups/**
 set wildignore+=*.tmp,.cache
 set wildignore+=*.7z,*.lz4,*.zip,*.gz,*.rar,*.bz2,*DS_Store
-set wildignore+=*.aux,*.out,*.toc,*.log,*.bbl,*.blg,*.d,*.lof,*.lot
+set wildignore+=*.aux,*.out,*.toc,*.log,*.bbl,*.blg,*.d,*.lof,*.lot,*.fdb_latexmk,*.acn,*.acr,*.drv,*.vrb,*.fls,*.glo,*.ist*.loa,*.tdo
 set wildignore+=*.jpg,*.jpeg,*.png,*.bmp,*.gif,*.doc,*.docx,*.xls,*.xlsx,*.pdf,*.psd,*.eps
 set wildignore+=*.o,*.obj,*.la,*.mo,*.pyc,*.so,*.class,*.a,*.jar,*.dylib
 set wildignore+=migrations,bin,Documents,Pictures,Library,Movies,Applications,Desktop,Downloads,Public,Music,Dropbox
