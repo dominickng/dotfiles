@@ -369,6 +369,7 @@ let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 nnoremap \g :Ag<CR>
 nnoremap \f :Files<CR>
 nnoremap \b :Buffers<CR>
+nnoremap \w :Windows<CR>
 nnoremap \l :Sessions<CR>
 nnoremap \s :Session<Space>
 
