@@ -329,9 +329,10 @@ endfunction
 " format tabline
 set tabline=%!MyTabLine()
 function! MyTabLine()
-  let s = '' " complete tabline goes here
+  let l = []
   " loop through each tab page
   for t in range(tabpagenr('$'))
+    let s = '' " each component goes here
     " select the highlighting for the buffer names
     if t + 1 == tabpagenr()
       let s .= '%#TabLineSel#'
@@ -359,7 +360,7 @@ function! MyTabLine()
       " let n .= pathshorten(bufname(b))
       " let n .= bufname(b)
       " chop filenames down to a max of 25 characters
-      let n .= ChopFilename(fnamemodify(bufname(b), ':t'), 25)
+      let n .= ChopFilename(fnamemodify(bufname(b), ':t'), 20)
     endif
     if len(tabpagebuflist(t + 1)) > 1
       let n .= '[' . len(tabpagebuflist(t + 1)) . ']'
@@ -368,7 +369,7 @@ function! MyTabLine()
     if getbufvar( b, "&modified" )
       let n .= '+'
     else
-      let n .= ' '
+      let n .= ''
     endif
 
     if n == ' '
@@ -376,11 +377,13 @@ function! MyTabLine()
     else
       let s .= n
     endif
+    call add(l, s)
   endfor
   " add modified label [n+] where n pages in tab are modified
   " add buffer names
   " switch to no underlining and add final space to buffer list
   "let s .= '%#TabLineSel#' . ' '
+  let s = join(l)
   let s .= ' '
   " after the last tab fill with TabLineFill and reset tab page nr
   let s .= '%#TabLineFill#%T'
@@ -485,3 +488,8 @@ function! ExecuteMacroOverVisualRange()
   echo "@".getcmdline()
   execute ":'<,'>normal @".nr2char(getchar())
 endfunction
+
+" jump to last tab
+let g:lasttab = 1
+nmap <leader>bb :exe "tabn ".g:lasttab<CR>
+au TabLeave * let g:lasttab = tabpagenr()

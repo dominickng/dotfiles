@@ -65,7 +65,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundleLazy '1995eaton/vim-better-javascript-completion', {'autoload':{'filetypes':['javascript']}}
 NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'AndrewRadev/splitjoin.vim'
-NeoBundle 'AndrewRadev/sideways.vim'
+" NeoBundle 'AndrewRadev/sideways.vim'
 NeoBundle 'AndrewRadev/switch.vim'
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundleLazy 'chrisbra/Colorizer', {'autoload':{'filetypes':['javascript', 'html']}}
@@ -91,6 +91,7 @@ NeoBundle 'kshenoy/vim-signature'
 NeoBundle 'Lokaltog/vim-easymotion'
 NeoBundle 'ludovicchabant/vim-gutentags'
 NeoBundle 'luochen1990/rainbow'
+NeoBundle 'machakann/vim-swap'
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'nelstrom/vim-visual-star-search'
 NeoBundle 'octol/vim-cpp-enhanced-highlight', {'autoload':{'filetypes':['cpp']}}
@@ -272,7 +273,8 @@ let g:airline_left_sep = ''
 let g:airline_right_sep = ''
 let g:airline#extensions#hunks#enabled = 0
 let g:airline_section_warning = airline#section#create(['syntastic', ' ', 'whitespace', ' ', '%{gutentags#statusline()}'])
-let g:airline_extensions = ['branch']
+" let g:airline_extensions = ['branch']
+let g:airline#extensions#branch#enabled = 0
 
 " easy-align
 vnoremap <Enter> <Plug>(EasyAlign)
@@ -321,10 +323,6 @@ autocmd vimrc FileType tex inoremap <buffer><silent><C-x>} <esc>:call TexCloseCu
 autocmd vimrc FileType tex nnoremap <buffer><silent><C-x>c :call TexClosePrev(0)<CR>
 autocmd vimrc FileType tex inoremap <buffer><silent><C-x>/ <esc>:call TexClosePrev(1)<CR>
 
-" sideways
-nnoremap <C-h> :SidewaysLeft<CR>
-nnoremap <C-l> :SidewaysRight<CR>
-
 " expand-region
 " vmap v <Plug>(expand_region_expand)
 " vmap <C-v> <Plug>(expand_region_shrink)
@@ -333,7 +331,10 @@ nnoremap <C-l> :SidewaysRight<CR>
 let g:gutentags_cache_dir = expand("~/tmp/vim/tags")
 let g:gutentags_project_root = ['.svn', '.project']
 let g:gutentags_exclude = ['/usr/local', 'third_party', 'out', 'build', 'chromeos', 'chromecast', 'webkit', 'native_client', 'native_client_sdk', 'v8', 'buildtools', 'tools', '*js', '*html']
+let g:gutentags_generate_on_missing = 0
+let g:gutentags_generate_on_new = 0
 let g:gutentags_generate_on_write = 0
+let g:gutentags_enabled = 0
 
 " targets
 let g:targets_separators = ', . ; : + - = _ * # / | & $'

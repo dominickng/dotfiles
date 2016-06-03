@@ -14,12 +14,13 @@ export EDITOR="vim"
 export CVS_RSH="ssh"
 export RSYNC_RSH="ssh"
 export PYTHONSTARTUP="${HOME}/.pythonrc.py"
-export HISTCONTROL="ignoreboth"
-export HISTSIZE="10000"
-export HISTFILESIZE="1000000"
-export HISTIGNORE="history*:clear:*/*\.del*:&:ls:[bf]g:exit"
 export INPUTRC=~/.inputrc
+HISTSIZE="10000"
+HISTFILESIZE="1000000"
+HISTIGNORE="history*:clear:*/*\.del*:&:ls:[bf]g:exit"
+HISTCONTROL="ignoreboth:erasedups"
 shopt -s histappend
+# PROMPT_COMMAND="history -n; history -w; history -c; history -r; $PROMPT_COMMAND"
 shopt -s cmdhist
 
 # Load the bash functions

@@ -3,7 +3,8 @@ let g:neocomplete#data_directory = '~/tmp/vim/neocomplete'
 let g:neocomplete#enable_at_startup = 1
 let g:neocomplete#enable_auto_select = 0
 " Use smartcase.
-let g:neocomplete#enable_smart_case = 1
+" let g:neocomplete#enable_smart_case = 1
+let g:neocomplete#enable_camel_case = 1
 " Sets minimum char length of syntax keyword.
 " let g:neocomplete#auto_completion_start_length = 2
 " let g:neocomplete#manual_completion_start_length = 2
@@ -115,6 +116,7 @@ endif
 let g:neocomplete#sources#omni#input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
 let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
 let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)\%(\h\w*\)\?'
+let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
 " let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\%(\h\w*\)\?'
 " let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
 
