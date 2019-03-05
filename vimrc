@@ -54,101 +54,99 @@ set switchbuf=usetab,newtab
 " disable netrw history
 let g:netrw_dirhistmax=0
 
-" NeoBundle
-if has('vim_starting')
-  set runtimepath+=~/.vim/bundle/neobundle.vim/
-endif
-let g:neobundle#install_process_timeout = 1500
+" vim-plug
 
-call neobundle#begin(expand('~/.vim/bundle/'))
-NeoBundleFetch 'Shougo/neobundle.vim'
-NeoBundleLazy '1995eaton/vim-better-javascript-completion', {'autoload':{'filetypes':['javascript']}}
-NeoBundle 'airblade/vim-gitgutter'
-NeoBundle 'AndrewRadev/splitjoin.vim'
-" NeoBundle 'AndrewRadev/sideways.vim'
-NeoBundle 'AndrewRadev/switch.vim'
-NeoBundle 'altercation/vim-colors-solarized'
-NeoBundleLazy 'chrisbra/Colorizer', {'autoload':{'filetypes':['javascript', 'html']}}
-NeoBundle 'ConradIrwin/vim-bracketed-paste'
-NeoBundle 'dominickng/fzf-session.vim'
-" NeoBundle 'haya14busa/incsearch.vim'
-NeoBundle 'jceb/vim-textobj-uri'
-NeoBundle 'jeetsukumaran/vim-indentwise'
-NeoBundleLazy 'jelera/vim-javascript-syntax', {'autoload':{'filetypes':['javascript']}}
-NeoBundle 'Julian/vim-textobj-variable-segment'
-NeoBundle 'junegunn/fzf', {'base': '~/.fzf', 'build': './install --all'}
-NeoBundle 'junegunn/fzf.vim'
-NeoBundle 'junegunn/vim-after-object'
-NeoBundle 'junegunn/vim-easy-align'
-NeoBundle 'junegunn/vim-peekaboo'
-" NeoBundle 'justinmk/vim-gtfo'
-NeoBundle 'justinmk/vim-matchparenalways'
-NeoBundle 'justinmk/vim-sneak'
-NeoBundle 'kana/vim-textobj-indent'
-NeoBundle 'kana/vim-textobj-line'
-NeoBundle 'kana/vim-textobj-user'
-NeoBundle 'kshenoy/vim-signature'
-NeoBundle 'Lokaltog/vim-easymotion'
-NeoBundle 'ludovicchabant/vim-gutentags'
-NeoBundle 'luochen1990/rainbow'
-NeoBundle 'machakann/vim-swap'
-NeoBundle 'majutsushi/tagbar'
-NeoBundle 'nelstrom/vim-visual-star-search'
-NeoBundle 'octol/vim-cpp-enhanced-highlight', {'autoload':{'filetypes':['cpp']}}
-NeoBundleLazy 'pangloss/vim-javascript', {'autoload':{'filetypes':['javascript', 'html']}}
-NeoBundle 'Raimondi/delimitMate'
-NeoBundleLazy 'rbonvall/vim-textobj-latex', {'autoload':{'filetypes':['tex']}}
-NeoBundleLazy 'rhysd/vim-clang-format', {'autoload':{'filetypes':['c', 'cpp']}}
-" NeoBundle 'Valloric/YouCompleteMe', {
-"      \ 'build' : {
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin('~/.vim/plugged')
+Plug '1995eaton/vim-better-javascript-completion', {'for': 'javascript'}
+Plug 'airblade/vim-gitgutter'
+Plug 'AndrewRadev/splitjoin.vim'
+" Plug 'AndrewRadev/sideways.vim'
+Plug 'AndrewRadev/switch.vim'
+Plug 'altercation/vim-colors-solarized'
+Plug 'chaoren/vim-wordmotion'
+Plug 'chrisbra/Colorizer', {'for': ['html', 'javascript']}
+Plug 'ConradIrwin/vim-bracketed-paste'
+Plug 'dominickng/fzf-session.vim'
+Plug 'haya14busa/incsearch.vim'
+Plug 'jceb/vim-textobj-uri'
+" Plug 'jeetsukumaran/vim-indentwise'
+Plug 'jelera/vim-javascript-syntax', {'for': 'javascript'}
+Plug 'Julian/vim-textobj-variable-segment'
+Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}
+Plug 'junegunn/fzf.vim'
+Plug 'junegunn/vim-after-object'
+Plug 'junegunn/vim-easy-align'
+" Plug 'junegunn/vim-peekaboo'
+" Plug 'justinmk/vim-gtfo'
+Plug 'justinmk/vim-matchparenalways'
+Plug 'justinmk/vim-sneak'
+" Plug 'kana/vim-textobj-indent'
+Plug 'kana/vim-textobj-line'
+Plug 'kana/vim-textobj-user'
+Plug 'kshenoy/vim-signature'
+" Plug" 'Lokaltog/vim-easymotion'
+" Plug 'ludovicchabant/vim-gutentags'
+Plug 'luochen1990/rainbow'
+Plug 'machakann/vim-swap'
+" Plug 'majutsushi/tagbar'
+Plug 'nelstrom/vim-visual-star-search'
+Plug 'octol/vim-cpp-enhanced-highlight', {'for' : 'cpp'}
+Plug 'pangloss/vim-javascript', {'for': ['html', 'javascript']}
+Plug 'Raimondi/delimitMate'
+Plug 'rbonvall/vim-textobj-latex', {'for': 'tex'}
+Plug 'rhysd/vim-clang-format', {'for': ['c', 'cpp', 'java', 'javascript']}
+" Plug 'Valloric/YouCompleteMe', {
+"      \ 'do' : {
 "      \     'mac' : './install.sh --clang-completer --system-libclang',
 "      \     'unix' : './install.sh --clang-completer --system-libclang',
 "      \     'windows' : './install.sh --clang-completer --system-libclang',
 "      \     'cygwin' : './install.sh --clang-completer --system-libclang'
 "      \    }
 "      \ }
-NeoBundle 'Shougo/neocomplete'
-" NeoBundle 'Shougo/neoinclude.vim'
-" NeoBundle 'Shougo/neomru.vim'
-NeoBundle 'Shougo/neosnippet'
-" NeoBundle 'Shougo/unite.vim'
-" NeoBundle 'Shougo/unite-outline'
-" NeoBundle 'Shougo/unite-session'
-NeoBundle 'Shougo/vimproc', {
-      \ 'build' : {
-      \     'windows' : 'make -f make_mingw32.mak',
-      \     'cygwin' : 'make -f make_cygwin.mak',
-      \     'mac' : 'make -f make_mac.mak',
-      \     'unix' : 'make -f make_unix.mak',
-      \    },
-      \ }
-" NeoBundle 'terryma/vim-expand-region'
-" NeoBundle 'tommcdo/vim-exchange'
-NeoBundle 'tpope/vim-abolish'
-NeoBundle 'tpope/vim-characterize'
-NeoBundle 'tpope/vim-commentary'
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'tpope/vim-ragtag'
-NeoBundle 'tpope/vim-repeat'
-NeoBundle 'tpope/vim-sleuth'
-NeoBundle 'tpope/vim-speeddating'
-NeoBundle 'tpope/vim-surround'
-NeoBundle 'tpope/vim-unimpaired'
-" NeoBundle 'tsukkee/unite-tag'
-NeoBundle 'unblevable/quick-scope'
-NeoBundle 'Valloric/MatchTagAlways'
-NeoBundle 'vim-airline/vim-airline'
-NeoBundle 'vim-airline/vim-airline-themes'
-NeoBundleLazy 'vim-scripts/tex_autoclose.vim', {'autoload':{'filetypes':['tex']}}
-NeoBundle 'vim-scripts/ingo-library'
-NeoBundle 'vim-scripts/EnhancedJumps'
-NeoBundleLazy 'voithos/vim-python-matchit', {'autoload':{'filetypes':['python']}}
-NeoBundleLazy 'whatyouhide/vim-textobj-xmlattr', {'autoload':{'filetypes':['html','javascript','xml']}}
-NeoBundle 'wellle/targets.vim'
-NeoBundle 'Yggdroot/indentLine'
+" Plug 'Rip-Rip/clang_complete', {'for': ['c', 'cpp'], 'do': 'make install'}
+" Plug 'roxma/nvim-completion-manager'
+" Plug 'roxma/ncm-clang'
+Plug 'Shougo/neocomplete'
+" Plug 'Shougo/neoinclude.vim'
+" Plug 'Shougo/neomru.vim'
+" Plug 'Shougo/neosnippet'
+" Plug 'Shougo/unite.vim'
+" Plug 'Shougo/unite-outline'
+" Plug 'Shougo/unite-session'
+Plug 'Shougo/vimproc', { 'do' : 'make' }
+" Plug 'terryma/vim-expand-region'
+Plug 'thalesmello/vim-textobj-methodcall'
+" Plug 'tommcdo/vim-exchange'
+Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-characterize'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-ragtag'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-sleuth'
+Plug 'tpope/vim-speeddating'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+" Plug 'tsukkee/unite-tag'
+Plug 'unblevable/quick-scope'
+Plug 'Valloric/MatchTagAlways'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'vim-scripts/tex_autoclose.vim', {'for': 'tex'}
+Plug 'vim-scripts/ingo-library'
+Plug 'vim-scripts/EnhancedJumps'
+Plug 'voithos/vim-python-matchit', {'for': 'python' }
+Plug 'whatyouhide/vim-textobj-xmlattr', {'for': ['html','javascript','xml']}
+Plug 'wellle/targets.vim'
+Plug 'Yggdroot/indentLine'
 
-NeoBundleCheck
-call neobundle#end()
+call plug#end()
 filetype plugin indent on
 
 " autocmd FileType php set filetype=php.html.javascript.css
@@ -272,7 +270,8 @@ let g:airline_powerline_fonts = 0
 let g:airline_left_sep = ''
 let g:airline_right_sep = ''
 let g:airline#extensions#hunks#enabled = 0
-let g:airline_section_warning = airline#section#create(['syntastic', ' ', 'whitespace', ' ', '%{gutentags#statusline()}'])
+let g:airline_section_y = airline#section#create(['ffenc', '%{get(g:, "this_fzf_session_name", "")}'])
+" let g:airline_section_warning = airline#section#create(['syntastic', ' ', 'whitespace', ' ', '%{gutentags#statusline()}'])
 " let g:airline_extensions = ['branch']
 let g:airline#extensions#branch#enabled = 0
 
@@ -343,6 +342,9 @@ let g:targets_argSeparator = '[,;]'
 " after-text-object
 autocmd vimrc VimEnter * call after_object#enable(['r', 'rr'], '=', ':', '%', '#', ' ', '-')
 
+" switch
+let g:switch_mapping = "-"
+
 " incsearch
 " map /  <Plug>(incsearch-forward)
 " map ?  <Plug>(incsearch-backward)
@@ -362,7 +364,10 @@ let g:gitgutter_eager = 0
 " clang format
 nnoremap <leader>f :ClangFormat<CR>
 vnoremap <leader>f :ClangFormat<CR>
-let g:clang_format#code_style = "chromium"
+let g:clang_format#filetype_style_options = {
+      \   'cpp' : {"BasedOnStyle" : "Chromium"},
+      \   'java' : {"BasedOnStyle" : "Chromium"},
+      \ }
 
 " quick-scope
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
@@ -381,6 +386,7 @@ let g:fzf_layout = { 'down': '25%' }
 let g:fuzzy_ag_ignore = ['native_client_sdk', 'android_emulator_sdk', 'buildtools', 'chromeos', 'sql', 'google_update', 'tools', 'out', 'LayoutTests', 'PerformanceTests', 'ManualTests']
 let g:fuzzy_ag_ignore += expand('third_party/[^W]*', 0, 1)
 let g:fzf_session_path = $HOME . '/tmp/vim/session'
+let g:fzf_buffers_jump = 1
 
 if executable('ag')
   set grepprg=ag\ --nogroup\ --nocolor

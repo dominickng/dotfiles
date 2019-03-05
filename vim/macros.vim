@@ -293,10 +293,10 @@ endfunction
 vnoremap <leader>z <Esc>:%s/<c-r>=GetVisual()<cr>/
 
 " function call text objects - uses targets.vim
-vnoremap ic :<C-U>call targets#xmap('()', 'grow seekselectp')<CR>ob
-onoremap ic :normal vic<CR>
-vnoremap ac ::<C-U>call targets#xmap('()', 'grow seekselectp')<CR>oB
-onoremap ac :normal vac<CR>
+" vnoremap ic :<C-U>call targets#xmap('()', 'grow seekselectp')<CR>ob
+" onoremap ic :normal vic<CR>
+" vnoremap ac ::<C-U>call targets#xmap('()', 'grow seekselectp')<CR>oB
+" onoremap ac :normal vac<CR>
 
 " latex environment text object
 call textobj#user#plugin('latex', {

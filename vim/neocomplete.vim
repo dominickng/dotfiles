@@ -65,7 +65,7 @@ inoremap <expr><Tab>
 
 inoremap <expr><S-TAB>   pumvisible() ? "\<C-p>" : "\<C-h>"
 
-imap <expr> <C-x> <SID>neocom_cancel_popup_and('<C-x>')
+" imap <expr> <C-x> <SID>neocom_cancel_popup_and('<C-x>')
 
 " make <CR> play nice with vim-smartinput
 " inoremap <expr> <CR>

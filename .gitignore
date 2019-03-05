@@ -2,4 +2,5 @@ bash/cd
 vim/viminfo
 vim/vimxfer
 vim/bundle
+vim/plugged
 tags
