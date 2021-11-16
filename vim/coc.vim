@@ -23,3 +23,12 @@ endif
 " format on enter, <cr> could be remapped by other vim plugin
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" Jump to something's definition in a tab, vsplit, or split
+nmap <silent> <leader>td :call CocAction('jumpDefinition', 'tab drop')<CR>
+nmap <silent> <leader>vd :call CocAction('jumpDefinition', 'vsplit')<CR>
+nmap <silent> <leader>sd :call CocAction('jumpDefinition', 'split')<CR>
+nmap <silent> <leader>ti :call CocAction('jumpImplementation', 'tab drop')<CR>
+nmap <silent> <leader>vi :call CocAction('jumpImplementation', 'vsplit')<CR>
+nmap <silent> <leader>si :call CocAction('jumpImplementation', 'split')<CR>
+nmap <silent> gr <Plug>(coc-references)
