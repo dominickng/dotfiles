@@ -3,6 +3,22 @@ set encoding=utf-8
 set fileencoding=utf-8
 let mapleader=" "
 
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=300
+
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
+
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+if has("nvim-0.5.0") || has("patch-8.1.1564")
+  " Recently vim can merge signcolumn and number column into one
+  set signcolumn=number
+else
+  set signcolumn=yes
+endif
+
 " indentation
 set autoindent
 set copyindent
@@ -96,6 +112,7 @@ Plug 'luochen1990/rainbow'
 Plug 'machakann/vim-swap'
 " Plug 'majutsushi/tagbar'
 Plug 'nelstrom/vim-visual-star-search'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'octol/vim-cpp-enhanced-highlight', {'for' : 'cpp'}
 Plug 'pangloss/vim-javascript', {'for': ['html', 'javascript']}
 Plug 'Raimondi/delimitMate'
@@ -112,14 +129,14 @@ Plug 'rhysd/vim-clang-format', {'for': ['c', 'cpp', 'java', 'javascript']}
 " Plug 'Rip-Rip/clang_complete', {'for': ['c', 'cpp'], 'do': 'make install'}
 " Plug 'roxma/nvim-completion-manager'
 " Plug 'roxma/ncm-clang'
-Plug 'Shougo/neocomplete'
+" Plug 'Shougo/neocomplete'
 " Plug 'Shougo/neoinclude.vim'
 " Plug 'Shougo/neomru.vim'
 " Plug 'Shougo/neosnippet'
 " Plug 'Shougo/unite.vim'
 " Plug 'Shougo/unite-outline'
 " Plug 'Shougo/unite-session'
-Plug 'Shougo/vimproc', { 'do' : 'make' }
+" Plug 'Shougo/vimproc', { 'do' : 'make' }
 " Plug 'terryma/vim-expand-region'
 Plug 'thalesmello/vim-textobj-methodcall'
 " Plug 'tommcdo/vim-exchange'
@@ -395,5 +412,6 @@ endif
 
 " Load other macros
 source $HOME/.vim/macros.vim
-source $HOME/.vim/neocomplete.vim
+" source $HOME/.vim/neocomplete.vim
+source $HOME/.vim/coc.vim
 runtime macros/matchit.vim
