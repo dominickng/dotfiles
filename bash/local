@@ -1,8 +1,6 @@
 #! bash
 
 # common
-export no_proxy=".schwa.org"
-
 alias rm='rm -i'
 alias ll='ls -hlF'
 alias la='ls -ha'
@@ -12,7 +10,6 @@ alias tmux-create='~/dotfiles/tmux-create'
 alias tm='tmux'
 export PYTHONSTARTUP=$HOME/.pythonrc.py
 export GOPATH=$HOME/gocode
-export GYP_CHROMIUM_NO_ACTION=1
 alias tat='tmux attach -t'
 
 if [ `uname` = 'Darwin' ]; then
@@ -29,16 +26,16 @@ if [ `uname` = 'Darwin' ]; then
 
 	export ARCHFLAGS="-arch x86_64"
 	export COPYFILE_DISABLE=true #for stopping those damned ._ files
-	export PATH=$HOME/homebrew/bin:$HOME/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:/usr/texbin:`xcode-select -print-path`/usr/bin:/usr/local/texlive/2014basic/bin/universal-darwin:$HOME/Applications:$HOME/working/repos/depot_tools:$HOME/.fzf/fzf/bin
-	export TEXINPUTS=".:.//:/usr/local/texlive/2014basic/texmf-dist/tex/latex//:/usr/local/texlive/2014basic/texmf-dist/tex/generic//:$HOME/working/reposs/tex//:"
+	export PATH=/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:`xcode-select -print-path`/usr/bin:$HOME/Applications:$HOME/.fzf/fzf/bin:/Library/TeX/texbin:
+	export TEXINPUTS=".:.//:/usr/local/texlive/2023basic/texmf-dist/tex/latex//:/usr/local/texlive/2023basic/texmf-dist/tex/generic//:$HOME/working/reposs/tex//:"
 	export GNUTERM=x11 # for Octave
 
 	#bash completion
 	BREW_PREFIX=`brew --prefix`
 	if [ -f $BREW_PREFIX/etc/bash_completion ]; then
-		. $BREW_PREFIX/etc/bash_completion
-		. $BREW_PREFIX/Library/Contributions/brew_bash_completion.sh
-		. $BREW_PREFIX/etc/bash_completion.d/git-completion.bash
+		 . $BREW_PREFIX/etc/bash_completion
+		 . $BREW_PREFIX/completions/bash/brew
+		# . $BREW_PREFIX/etc/bash_completion.d/git-completion.bash
 	fi
 else
 	alias ls='ls --color=auto'

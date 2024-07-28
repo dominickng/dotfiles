@@ -55,31 +55,31 @@ var Position = {
     };
   },
 
-  topLeft: function(frame, window, margin) {
+  topLeft: function(frame, window, marginX, marginY) {
     return {
-      x: Position.left(frame, window).x + margin,
-      y: Position.top(frame, window).y + margin
+      x: Position.left(frame, window).x + marginX,
+      y: Position.top(frame, window).y + marginY
     };
   },
 
-  topRight: function(frame, window, margin) {
+  topRight: function(frame, window, marginX, marginY) {
     return {
-      x: Position.right(frame, window).x - margin,
-      y: Position.top(frame, window).y + margin
+      x: Position.right(frame, window).x - marginX,
+      y: Position.top(frame, window).y + marginY
     };
   },
 
-  bottomLeft: function(frame, window, margin) {
+  bottomLeft: function(frame, window, marginX, marginY) {
     return {
-      x: Position.left(frame, window).x + margin,
-      y: Position.bottom(frame, window).y - margin
+      x: Position.left(frame, window).x + marginX,
+      y: Position.bottom(frame, window).y - marginY
     };
   },
 
-  bottomRight: function(frame, window, margin) {
+  bottomRight: function(frame, window, marginX, marginY) {
     return {
-      x: Position.right(frame, window).x - margin,
-      y: Position.bottom(frame, window).y - margin
+      x: Position.right(frame, window).x - marginX,
+      y: Position.bottom(frame, window).y - marginY
     };
   }
 };
@@ -97,8 +97,8 @@ var Frame = {
 
 /* Window Functions */
 
-Window.prototype.to = function(position) {
-  this.setTopLeft(position(this.screen().flippedVisibleFrame(), this.frame(), 0));
+Window.prototype.to = function(position, marginX, marginY) {
+  this.setTopLeft(position(this.screen().flippedVisibleFrame(), this.frame(), marginX, marginY));
 }
 
 Window.prototype.grid = function(x, y, reverse) {
@@ -158,11 +158,14 @@ Window.prototype.moveLeft = function() {
   var oldScreen = this.screen().flippedVisibleFrame();
   var newScreen = this.screen().next().flippedVisibleFrame();
 
+  var widthRatio = newScreen.width / oldScreen.width;
+  var heightRatio = newScreen.height / oldScreen.height;
+
   this.setFrame({
-    x:      newScreen.x + ((oldWindow.x - oldScreen.x) / oldScreen.width) * newScreen.width + oldScreen.width / 2,
-    y:      newScreen.y + ((oldWindow.y - oldScreen.y) / oldScreen.height) * newScreen.height,
-    width:  newScreen.width * (oldWindow.width / oldScreen.width),
-    height: this.height * (oldWindow.height / oldScreen.height),
+    x:      Math.round(newScreen.x + (oldWindow.x - oldScreen.x) * widthRatio),
+    y:      Math.round(newScreen.y + (oldWindow.y - oldScreen.y) * heightRatio),
+    width:  oldWindow.width,
+    height: oldWindow.height,
   });
 }
 
@@ -173,11 +176,34 @@ Window.prototype.moveRight = function() {
   var oldScreen = this.screen().flippedVisibleFrame();
   var newScreen = this.screen().previous().flippedVisibleFrame();
 
+  var widthRatio = newScreen.width / oldScreen.width;
+  var heightRatio = newScreen.height / oldScreen.height;
+
   this.setFrame({
-    x:      newScreen.x + ((oldWindow.x - oldScreen.x) / oldScreen.width) * newScreen.width - oldScreen.width / 2,
-    y:      newScreen.y + ((oldWindow.y - oldScreen.y) / oldScreen.height) * newScreen.height,
-    width:  newScreen.width * (oldWindow.width / oldScreen.width),
-    height: this.height * (oldWindow.height / oldScreen.height),
+    x:      Math.round(newScreen.x + (oldWindow.x - oldScreen.x) * widthRatio),
+    y:      Math.round(newScreen.y + (oldWindow.y - oldScreen.y) * heightRatio),
+    width:  oldWindow.width,
+    height: oldWindow.height,
+  });
+}
+
+App.prototype.tileWindows = function() {
+  var offsetX = 0;
+  var offsetY = 0;
+  var counter = 0;
+  const positions = [Position.topLeft, Position.topRight, Position.bottomRight, Position.bottomLeft];
+  const windows = this.windows();
+
+  windows.forEach(win => {
+    win.to(positions[counter], offsetX, offsetY);
+    if (++counter >= positions.length) {
+      offsetX += 100;
+      offsetY += 40;
+      counter = 0;
+    } else {
+      offsetX += 0;
+      offsetY += 0;
+    }
   });
 }
 
@@ -196,23 +222,28 @@ Key.on('h', controlAltCommand, function() {
 });
 
 Key.on('c', controlAltCommand, function() {
-  Window.focused() && Window.focused().to(Position.central);
+  Window.focused() && Window.focused().to(Position.central, 0);
 });
 
-Key.on('q', controlShift, function() {
-  Window.focused() && Window.focused().to(Position.topLeft);
+Key.on('q', controlAltCommand, function() {
+  Window.focused() && Window.focused().to(Position.topLeft, 0);
 });
 
-Key.on('w', controlShift, function() {
-  Window.focused() && Window.focused().to(Position.topRight);
+Key.on('w', controlAltCommand, function() {
+  Window.focused() && Window.focused().to(Position.topRight, 0);
 });
 
-Key.on('a', controlShift, function() {
-  Window.focused() && Window.focused().to(Position.bottomLeft);
+Key.on('a', controlAltCommand, function() {
+  Window.focused() && Window.focused().to(Position.bottomLeft, 0);
 });
 
-Key.on('s', controlShift, function() {
-  Window.focused() && Window.focused().to(Position.bottomRight);
+Key.on('s', controlAltCommand, function() {
+  Window.focused() && Window.focused().to(Position.bottomRight, 0);
+});
+
+Key.on('t', controlAltCommand, function() {
+  const app = App.get("Google Chrome");
+  app && app.tileWindows();
 });
 
 /* Grid Bindings */

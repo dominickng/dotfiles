@@ -90,6 +90,7 @@ Plug 'chrisbra/Colorizer', {'for': ['html', 'javascript']}
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'dominickng/fzf-session.vim'
 Plug 'haya14busa/incsearch.vim'
+Plug 'HerringtonDarkholme/yats.vim'
 Plug 'jceb/vim-textobj-uri'
 " Plug 'jeetsukumaran/vim-indentwise'
 Plug 'jelera/vim-javascript-syntax', {'for': 'javascript'}
@@ -110,11 +111,13 @@ Plug 'kshenoy/vim-signature'
 " Plug 'ludovicchabant/vim-gutentags'
 Plug 'luochen1990/rainbow'
 Plug 'machakann/vim-swap'
+Plug 'maxmellon/vim-jsx-pretty'
 " Plug 'majutsushi/tagbar'
 Plug 'nelstrom/vim-visual-star-search'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'octol/vim-cpp-enhanced-highlight', {'for' : 'cpp'}
-Plug 'pangloss/vim-javascript', {'for': ['html', 'javascript']}
+" Plug 'pangloss/vim-javascript', {'for': ['html', 'javascript']}
+Plug 'othree/yajs.vim'
 Plug 'Raimondi/delimitMate'
 Plug 'rbonvall/vim-textobj-latex', {'for': 'tex'}
 Plug 'rhysd/vim-clang-format', {'for': ['c', 'cpp', 'java', 'javascript']}
