@@ -89,6 +89,7 @@ Plug 'chaoren/vim-wordmotion'
 Plug 'chrisbra/Colorizer', {'for': ['html', 'javascript']}
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'dominickng/fzf-session.vim'
+Plug 'hashivim/vim-terraform'
 Plug 'haya14busa/incsearch.vim'
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'jceb/vim-textobj-uri'
@@ -118,6 +119,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'octol/vim-cpp-enhanced-highlight', {'for' : 'cpp'}
 " Plug 'pangloss/vim-javascript', {'for': ['html', 'javascript']}
 Plug 'othree/yajs.vim'
+Plug 'posva/vim-vue'
 Plug 'Raimondi/delimitMate'
 Plug 'rbonvall/vim-textobj-latex', {'for': 'tex'}
 Plug 'rhysd/vim-clang-format', {'for': ['c', 'cpp', 'java', 'javascript']}
@@ -164,6 +166,8 @@ Plug 'vim-scripts/EnhancedJumps'
 Plug 'voithos/vim-python-matchit', {'for': 'python' }
 Plug 'whatyouhide/vim-textobj-xmlattr', {'for': ['html','javascript','xml']}
 Plug 'wellle/targets.vim'
+Plug 'yaegassy/coc-volar', { 'do': 'yarn install --frozen-lockfile' }
+Plug 'yaegassy/coc-volar-tools', { 'do': 'yarn install --frozen-lockfile' }
 Plug 'Yggdroot/indentLine'
 
 call plug#end()
@@ -178,6 +182,7 @@ augroup END
 autocmd vimrc VimResized * :wincmd =
 
 autocmd vimrc BufNewFile,BufReadPost *.md set filetype=markdown.html sw=4 softtabstop=4 textwidth=78 spell
+autocmd vimrc BufNewFile,BufReadPost *.mdx set filetype=markdown.html sw=4 softtabstop=4 textwidth=78 spell
 autocmd vimrc FileType c,cpp setlocal sw=2 softtabstop=2 textwidth=80
 autocmd vimrc FileType java setlocal sw=2 softtabstop=2 textwidth=100
 autocmd vimrc FileType c,cpp,java let b:match_words=

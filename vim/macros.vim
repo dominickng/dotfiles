@@ -116,7 +116,7 @@ nmap Q :call TeX_fmt()<CR>
 
 " split line at cursor, analogue to J
 " nnoremap K i<CR><ESC>
-nnoremap K i<CR><Esc>^mwgk:silent! s/\v +$//<CR>:noh<CR>
+" nnoremap K i<CR><Esc>^mwgk:silent! s/\v +$//<CR>:noh<CR>
 
 " remap K (open man page)
 " nnoremap M K
