@@ -20,7 +20,7 @@
 	ui = true
 [user]
 	name = Dominick Ng
-	email = dominick8n@gmail.com
+	email = dominickng@users.noreply.github.com
 [core]
 	#autocrlf = input
 	pager = less
