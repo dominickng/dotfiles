@@ -1,0 +1,147 @@
+return {
+  {
+    "craftzdog/solarized-osaka.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {},
+    config = function()
+      vim.cmd.colorscheme("solarized-osaka")
+    end,
+  },
+  -- {
+  --   "folke/tokyonight.nvim",
+  --   lazy = false,
+  --   priority = 1000,
+  --   opts = {},
+  --   config = function()
+  --     vim.cmd.colorscheme("tokyonight-moon")
+  --   end,
+  -- },
+  -- {
+  --   "lifepillar/vim-solarized8",
+  --   config = function()
+  --     vim.g.solarized_extra_hi_groups = true
+  --     vim.cmd.colorscheme "solarized8_high"
+  --   end,
+  -- },
+  -- {
+  --   'maxmx03/solarized.nvim',
+  --   lazy = false,
+  --   priority = 1000,
+  --   opts = {},
+  --   config = function(_, opts)
+  --     require("solarized").setup(opts)
+  --     vim.cmd.colorscheme "solarized"
+  --   end,
+  -- },
+  -- {
+  --   "mhartington/oceanic-next",
+  --   config = function()
+  --     vim.g.oceanic_next_terminal_bold = true
+  --     vim.g.oceanic_next_terminal_italic = true
+  --     vim.cmd.colorscheme("oceanicnext")
+  --   end,
+  -- },
+  -- {
+  --   "Mofiqul/dracula.nvim",
+  --   config = function()
+  --     require("dracula").setup({
+  --       transparent_bg = true
+  --     })
+  --     vim.cmd.colorscheme("dracula")
+  --   end
+  -- },
+  -- {
+  --   "navarasu/onedark.nvim",
+  --   config = function()
+  --     require('onedark').setup({
+  --       style = "dark",
+  --       transparent = true,
+  --       term_colors = true,           -- Change terminal color as per the selected theme style
+  --       ending_tildes = false,        -- Show the end-of-buffer tildes. By default they are hidden
+  --       cmp_itemkind_reverse = false, -- reverse item kind highlights in cmp menu
+  --
+  --       -- toggle theme style ---
+  --       toggle_style_key = nil,                                                              -- keybind to toggle theme style. Leave it nil to disable it, or set it to a string, for example "<leader>ts"
+  --       toggle_style_list = { 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer', 'light' }, -- List of styles to toggle between
+  --
+  --       -- Change code style ---
+  --       -- Options are italic, bold, underline, none
+  --       -- You can configure multiple style with comma separated, For e.g., keywords = 'italic,bold'
+  --       code_style = {
+  --         comments = 'italic',
+  --         keywords = 'none',
+  --         functions = 'none',
+  --         strings = 'none',
+  --         variables = 'none'
+  --       },
+  --
+  --       -- Lualine options --
+  --       lualine = {
+  --         transparent = false, -- lualine center bar transparency
+  --       },
+  --
+  --       -- Custom Highlights --
+  --       colors = {},     -- Override default colors
+  --       highlights = {}, -- Override highlight groups
+  --
+  --       -- Plugins Config --
+  --       diagnostics = {
+  --         darker = true,     -- darker colors for diagnostic
+  --         undercurl = true,  -- use undercurl instead of underline for diagnostics
+  --         background = true, -- use background color for virtual text
+  --       },
+  --     })
+  --     require('onedark').load()
+  --   end
+  -- }
+  -- {
+  --   "NLKNguyen/papercolor-theme",
+  --   config = function()
+  --     vim.cmd("colorscheme PaperColor")
+  --   end,
+  -- },
+  -- {
+  --   "sainnhe/edge",
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     -- Optionally configure and load the colorscheme
+  --     -- directly inside the plugin declaration.
+  --     vim.g.edge_enable_italic = true
+  --     vim.g.edge_transparent_background = 1
+  --     vim.g.edge_style = "aura"
+  --     vim.cmd.colorscheme("edge")
+  --   end,
+  -- },
+  -- {
+  --   "scottmckendry/cyberdream.nvim",
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     require("cyberdream").setup({
+  --       transparent = true,
+  --     })
+  --     vim.cmd.colorscheme("cyberdream")
+  --   end,
+  -- },
+  -- {
+  --   "tiagovla/tokyodark.nvim",
+  --   opts = {
+  --     -- custom options here
+  --   },
+  --   config = function()
+  --     require("tokyodark").setup({
+  --       transparent_background = true,
+  --       styles = {
+  --         comments = { italic = true }, -- style for comments
+  --         keywords = {},                -- style for keywords
+  --         identifiers = {},             -- style for identifiers
+  --         functions = {},               -- style for functions
+  --         variables = {},               -- style for variables
+  --       },
+  --     })
+  --     vim.cmd [[colorscheme tokyodark]]
+  --   end,
+  -- },
+}

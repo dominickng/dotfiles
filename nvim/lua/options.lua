@@ -13,11 +13,15 @@ vim.opt.undodir = HOME .. "/tmp/nvim/undodir"
 vim.opt.encoding = "utf-8"
 vim.opt.fileencoding = "utf-8"
 
+-- Turn off the mouse
+vim.opt.mouse = ""
+
 -- Always show the signcolumn merged with the number column
 vim.opt.signcolumn = "number"
 
 -- Show line numbers
 vim.opt.number = true
+vim.opt.laststatus = 2
 
 -- Color
 vim.opt.background = "dark"
@@ -69,6 +73,14 @@ vim.opt.listchars = {
   nbsp = "·",
   extends = "$"
 }
+
+-- wildmenu
+vim.opt.wildmenu = true
+vim.opt.wildmode = "list:longest,full"
+vim.opt.wildignore:append({ "*.o", "*~", "*.obj", "*.so", "*.pyc", "*pycache*", "*.swp", "*.bak", "*.class", "*.jar", })
+vim.opt.wildignore:append({ "*.zip", "*.tar.gz", "*.tar.bz2", "*.rar", "*.tar.xz", })
+vim.opt.wildignore:append({ "*.git", "*.svn", "*.hg", "*.bzr", "*.vagrant", "*.DS_Store", "tmp", })
+vim.opt.wildignore:append({ "*.jpg", "*.jpeg", "*.png", "*.gif", "*.bmp", "*.tiff", "*.ico", "*.svg", "*.webp", "*.pdf" })
 
 vim.cmd([[
 " Chops a filename down to max_length characters, replacing

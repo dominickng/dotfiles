@@ -49,3 +49,11 @@ vim.keymap.set("n", "<leader>q", "gqip")
 -- yanked stack (also, in visual mode)
 vim.keymap.set("n", "<leader>d", '"_d')
 vim.keymap.set("v", "<leader>d", '"_d')
+
+-- k and j don't skip lines in wrapped mode
+vim.cmd [[
+  nnoremap <expr> k v:count == 0 ? 'gk' : 'k'
+  vnoremap <expr> k v:count == 0 ? 'gk' : 'k'
+  nnoremap <expr> j v:count == 0 ? 'gj' : 'j'
+  vnoremap <expr> j v:count == 0 ? 'gj' : 'j'
+]]

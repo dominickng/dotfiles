@@ -2,6 +2,11 @@ return {
   {
     "andymass/vim-matchup",
     event = "BufReadPost",
+    config = function()
+      vim.cmd([[
+      :hi MatchParen ctermbg=green guibg=green cterm=italic gui=italic
+      ]])
+    end
   },
   {
     "chrisgrieser/nvim-spider",
@@ -84,17 +89,6 @@ return {
   {
     "numToStr/Comment.nvim",
     opts = {},
-  },
-  {
-    "nvimdev/lspsaga.nvim",
-    event = "LspAttach",
-    config = function()
-      require('lspsaga').setup({})
-    end,
-    dependencies = {
-      'nvim-treesitter/nvim-treesitter',
-      'nvim-tree/nvim-web-devicons',
-    },
   },
   {
     "nvim-tree/nvim-web-devicons",
@@ -327,6 +321,9 @@ return {
   {
     "RRethy/nvim-treesitter-textsubjects",
   },
+  {
+    "RRethy/nvim-treesitter-endwise",
+  },
   { -- Autoformat
     "stevearc/conform.nvim",
     event = { "BufWritePre" },
@@ -371,56 +368,78 @@ return {
     },
   },
   {
+    "tpope/vim-fugitive",
+  },
+  {
     "tpope/vim-unimpaired",
   },
   -- {
-  -- 	"Wansmer/sibling-swap.nvim",
-  -- 	config = function()
-  -- 		require("sibling-swap").setup({
-  -- 			allowed_separators = {
-  -- 				",",
-  -- 				";",
-  -- 				"and",
-  -- 				"or",
-  -- 				"&&",
-  -- 				"&",
-  -- 				"||",
-  -- 				"|",
-  -- 				"==",
-  -- 				"===",
-  -- 				"!=",
-  -- 				"!==",
-  -- 				"-",
-  -- 				"+",
-  -- 				["<"] = ">",
-  -- 				["<="] = ">=",
-  -- 				[">"] = "<",
-  -- 				[">="] = "<=",
-  -- 			},
-  -- 			use_default_keymaps = true,
-  -- 			-- Highlight recently swapped node. Can be boolean or table
-  -- 			-- If table: { ms = 500, hl_opts = { link = 'IncSearch' } }
-  -- 			-- `hl_opts` is a `val` from `nvim_set_hl()`
-  -- 			highlight_node_at_cursor = false,
-  -- 			-- keybinding for movements to right or left (and up or down, if `allow_interline_swaps` is true)
-  -- 			-- (`<C-,>` and `<C-.>` may not map to control chars at system level, so are sent by certain terminals as just `,` and `.`. In this case, just add the mappings you want.)
-  -- 			keymaps = {
-  -- 				["g>"] = "swap_with_right",
-  -- 				["g<"] = "swap_with_left",
-  -- 			},
-  -- 			ignore_injected_langs = false,
-  -- 			-- allow swaps across lines
-  -- 			allow_interline_swaps = true,
-  -- 			-- swaps interline siblings without separators (no recommended, helpful for swaps html-like attributes)
-  -- 			interline_swaps_without_separator = false,
-  -- 			-- Fallbacs for tiny settings for langs and nodes. See #fallback
-  -- 			fallback = {},
-  -- 		})
-  -- 	end,
+  --   "Wansmer/sibling-swap.nvim",
+  --   config = function()
+  --     require("sibling-swap").setup({
+  --       allowed_separators = {
+  --         ",",
+  --         ";",
+  --         "and",
+  --         "or",
+  --         "&&",
+  --         "&",
+  --         "||",
+  --         "|",
+  --         "==",
+  --         "===",
+  --         "!=",
+  --         "!==",
+  --         "-",
+  --         "+",
+  --         ["<"] = ">",
+  --         ["<="] = ">=",
+  --         [">"] = "<",
+  --         [">="] = "<=",
+  --       },
+  --       use_default_keymaps = true,
+  --       -- Highlight recently swapped node. Can be boolean or table
+  --       -- If table: { ms = 500, hl_opts = { link = 'IncSearch' } }
+  --       -- `hl_opts` is a `val` from `nvim_set_hl()`
+  --       highlight_node_at_cursor = false,
+  --       -- keybinding for movements to right or left (and up or down, if `allow_interline_swaps` is true)
+  --       -- (`<C-,>` and `<C-.>` may not map to control chars at system level, so are sent by certain terminals as just `,` and `.`. In this case, just add the mappings you want.)
+  --       keymaps = {
+  --         ["g>"] = "swap_with_right",
+  --         ["g<"] = "swap_with_left",
+  --       },
+  --       ignore_injected_langs = false,
+  --       -- allow swaps across lines
+  --       allow_interline_swaps = true,
+  --       -- swaps interline siblings without separators (no recommended, helpful for swaps html-like attributes)
+  --       interline_swaps_without_separator = false,
+  --       -- Fallbacs for tiny settings for langs and nodes. See #fallback
+  --       fallback = {},
+  --     })
+  --   end,
   -- },
   {
     "windwp/nvim-autopairs",
     event = "InsertEnter",
     opts = {},
+  },
+  {
+    "windwp/nvim-ts-autotag",
+    event = { "BufReadPre", "BufNewFile" },
+    config = function()
+      require('nvim-ts-autotag').setup({
+        opts = {
+          -- Defaults
+          enable_close = true,          -- Auto close tags
+          enable_rename = true,         -- Auto rename pairs of tags
+          enable_close_on_slash = false -- Auto close on trailing </
+        },
+        per_filetype = {
+          ["html"] = {
+            enable_close = false
+          }
+        }
+      })
+    end
   },
 }
