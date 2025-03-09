@@ -23,8 +23,13 @@
 	email = dominickng@users.noreply.github.com
 [core]
 	#autocrlf = input
-	pager = less
-	excludesfile = ~/.gitignore_global
+	pager = delta
+	excludesfile = /Users/dom/.gitignore
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	navigate = true  # use n and N to move between diff sections
+	dark = true      # or light = true, or omit for auto-detection
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
@@ -35,3 +40,35 @@
 	;default = upstream
 [push]
 	default = simple
+	autoSetupRemote = true
+	followTags = true
+[column]
+	ui = auto
+[tag]
+	sort = version:refname
+[init]
+	defaultBranch = main
+[diff]
+	algorithm = histogram
+	colorMoved = plain
+	mnemonicPrefix = true
+	renames = true
+[fetch]
+	prune = true
+	pruneTags = true
+	all = true
+[help]
+	autocorrect = prompt
+[commit]
+	verbose = true
+[rerere]
+	enabled = true
+	autoupdate = true
+[rebase]
+	updateRefs = true
+	autoSquash = true
+	autoStash = true
+[merge]
+	conflictstyle = zdiff3
+[pull]
+	rebase = true

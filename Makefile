@@ -5,9 +5,9 @@ ALL = $(HOME)/.bash $(HOME)/.bashrc $(HOME)/.inputrc \
       $(HOME)/.screenrc $(HOME)/.tmux.conf $(HOME)/.tmux-osx.conf \
       $(HOME)/.slate $(HOME)/.phoenix.js
 
-.PHONY	: all unlink destroy tpm vimplugins
+.PHONY	: all unlink destroy tpm vimplugins nvim
 
-all	: $(ALL) tpm vimplugins
+all	: $(ALL) tpm nvim
 
 tpm	:
 	-mkdir -p ~/.tmux/plugins
@@ -22,6 +22,10 @@ destroy	:
 vimplugins:
 	mkdir -p ~/.vim/bundle
 	git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
+
+nvim:
+	mkdir -p ~/.config
+	ln -s $(CURDIR)/nvim ~/.config/nvim
 
 $(HOME)/.%	: ./%
 	find $(HOME) -path $@ -maxdepth 1 -exec unlink {} \;
