@@ -79,8 +79,8 @@ return {
   {
     "mizlan/iswap.nvim",
     config = function()
-      vim.keymap.set("n", "<leader>k", "<cmd>:ISwapNodeWithLeft<CR>")
-      vim.keymap.set("n", "<leader>j", "<cmd>:ISwapNodeWithRight<CR>")
+      vim.keymap.set("n", "<leader>k", "<cmd>:ISwapNodeWithLeft<CR>", { desc = "Swap node to the left" })
+      vim.keymap.set("n", "<leader>j", "<cmd>:ISwapNodeWithRight<CR>", { desc = "Swap node to the right" })
     end,
   },
   {

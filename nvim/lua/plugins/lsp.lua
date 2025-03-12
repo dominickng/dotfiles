@@ -112,6 +112,7 @@ return {
 
           ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
+              cmp.complete_common_string()
               if #cmp.get_entries() == 1 then
                 cmp.confirm({ select = true })
               else
@@ -459,6 +460,8 @@ return {
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
+        html = {},
+        jsonls = {},
         clangd = {},
         -- gopls = {},
         pyright = {},
@@ -543,10 +546,11 @@ return {
           enable = true,
         },
         lightbulb = {
+          enable = false,
           virtual_text = false,
         }
       })
-      vim.keymap.set({ "n", "x", "o" }, "<leader>o", "<cmd>Lspsaga outline<CR>")
+      vim.keymap.set({ "n", "x", "o" }, "<leader>o", "<cmd>Lspsaga outline<CR>", { desc = "Show [O]utline" })
     end,
     dependencies = {
       'nvim-treesitter/nvim-treesitter',
