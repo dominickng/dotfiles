@@ -25,19 +25,22 @@
 	#autocrlf = input
 	pager = delta
 	excludesfile = /Users/dom/.gitignore
+	editor = nvim
 [interactive]
 	diffFilter = delta --color-only
 [delta]
-	navigate = true  # use n and N to move between diff sections
 	dark = true      # or light = true, or omit for auto-detection
+	hyperlinks = true
+	line-numbers = true
+	map-styles = bold purple => syntax magenta, bold cyan => syntax blue
+	navigate = true  # use n and N to move between diff sections
+	side-by-side = true
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
 [mergetool "sourcetree"]
 	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
-;[push]
-	;default = upstream
 [push]
 	default = simple
 	autoSetupRemote = true
@@ -50,7 +53,7 @@
 	defaultBranch = main
 [diff]
 	algorithm = histogram
-	colorMoved = plain
+	colorMoved = default
 	mnemonicPrefix = true
 	renames = true
 [fetch]
