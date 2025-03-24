@@ -1,0 +1,9 @@
+*.jxl
+*.JPG
+*.jpg
+*.jpeg
+*.png
+*.gif
+.nuxt*
+.output
+.DS_Store
