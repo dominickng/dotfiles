@@ -17,12 +17,12 @@ return {
       { "b", "<cmd>lua require('spider').motion('b')<CR>", mode = { "n", "o", "x" } },
     },
     config = function()
-      require("spider").setup {
+      require("spider").setup({
         skipInsignificantPunctuation = false,
         consistentOperatorPending = false, -- see "Consistent Operator-pending Mode" in the README
         subwordMovement = true,
         customPatterns = {},               -- check "Custom Movement Patterns" in the README for details
-      }
+      })
     end
   },
   {
@@ -37,6 +37,14 @@ return {
   -- {
   --   "filNaj/tree-setter",
   -- },
+  {
+    "Goose97/timber.nvim",
+    version = "*",
+    event = "VeryLazy",
+    config = function()
+      require("timber").setup({})
+    end
+  },
   {
     "HiPhish/rainbow-delimiters.nvim",
     config = function()
@@ -67,13 +75,17 @@ return {
     end,
   },
   {
+    'jinh0/eyeliner.nvim',
+    config = function()
+      require 'eyeliner'.setup({})
+    end
+  },
+  {
     "kylechui/nvim-surround",
     version = "*", -- Use for stability; omit to use `main` branch for the latest features
     event = "VeryLazy",
     config = function()
-      require("nvim-surround").setup({
-        -- Configuration here, or leave empty to use defaults
-      })
+      require("nvim-surround").setup({})
     end,
   },
   {
@@ -368,6 +380,9 @@ return {
     },
   },
   {
+    "sindrets/diffview.nvim",
+  },
+  {
     "tpope/vim-fugitive",
   },
   {
@@ -418,6 +433,14 @@ return {
   --     })
   --   end,
   -- },
+  {
+    'Wansmer/treesj',
+    keys = { '<space>m', '<space>j', '<space>s' },
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    config = function()
+      require('treesj').setup({})
+    end,
+  },
   {
     "windwp/nvim-autopairs",
     event = "InsertEnter",
