@@ -13,6 +13,13 @@ return {
     end,
   },
   {
+    'MeanderingProgrammer/render-markdown.nvim',
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
+    ---@module 'render-markdown'
+    ---@type render.md.UserConfig
+    opts = {},
+  },
+  {
     "norcalli/nvim-colorizer.lua",
     config = function()
       require("colorizer").setup()
@@ -139,7 +146,8 @@ return {
                 local bufnr = buflist[winnr]
                 local mod = vim.fn.getbufvar(bufnr, '&mod')
 
-                return vim.fn.pathshorten(name) .. "[" .. #buflist .. "]" .. (mod == 1 and '+' or '')
+                return vim.fn.pathshorten(vim.fn.bufname(bufnr)) ..
+                    "[" .. #buflist .. "]" .. (mod == 1 and '+' or '')
               end
             }
           }
