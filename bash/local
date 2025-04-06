@@ -44,8 +44,6 @@ else
 	# local path modifications
 	export PATH=$HOME/bin:$HOME/local/bin:$GOPATH/bin:$PATH:$HOME/repos/depot_tools:$HOME/goma:$HOME/.fzf/fzf/bin
 	# export TERM=xterm-256color
-	export CHROME_DEVEL_SANDBOX=/usr/local/sbin/chrome-devel-sandbox
 
 	ssource "/etc/bash_completion"
-	ssource $HOME/repos/ninja/misc/bash-completion
 fi

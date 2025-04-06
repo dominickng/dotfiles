@@ -188,6 +188,7 @@ return {
             group_index = 0,
           },
           { name = "copilot",                 group_index = 1 },
+          -- { name = "codecompanion",           group_index = 1 },
           { name = "nvim_lsp",                group_index = 2 },
           { name = 'render-markdown',         group_index = 2 },
           { name = "buffer",                  group_index = 3 },
@@ -583,10 +584,12 @@ return {
       lspkind.init({
         symbol_map = {
           Copilot = "",
+          -- CodeCompanion = "",
         },
       })
 
       vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
+      -- vim.api.nvim_set_hl(0, "CmpItemKindCodeCompanion", { fg = "#6CC644" })
     end
   },
   -- {

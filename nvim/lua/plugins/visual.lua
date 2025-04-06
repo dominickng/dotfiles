@@ -145,8 +145,9 @@ return {
                 local winnr = vim.fn.tabpagewinnr(context.tabnr)
                 local bufnr = buflist[winnr]
                 local mod = vim.fn.getbufvar(bufnr, '&mod')
+                local tabname = vim.fn.bufname(bufnr) or "No Name"
 
-                return vim.fn.pathshorten(vim.fn.bufname(bufnr)) ..
+                return vim.fn.pathshorten(tabname) ..
                     "[" .. #buflist .. "]" .. (mod == 1 and '+' or '')
               end
             }
@@ -162,5 +163,15 @@ return {
     config = function()
       require("hlchunk").setup({})
     end
+  },
+  {
+    'tzachar/highlight-undo.nvim',
+    opts = {
+      hlgroup = "HighlightUndo",
+      duration = 300,
+      pattern = { "*" },
+      ignored_filetypes = { "neo-tree", "fugitive", "mason", "lazy" },
+      -- ignore_cb = nil,
+    },
   },
 }
