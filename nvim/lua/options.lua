@@ -54,7 +54,7 @@ vim.opt.splitright = true
 
 -- Tabs
 vim.opt.hidden = true
-vim.opt.switchbuf = "usetab"
+vim.opt.switchbuf = "useopen,usetab"
 
 -- Searching
 vim.opt.complete = ".,w,b,u,t"

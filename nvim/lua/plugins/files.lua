@@ -13,6 +13,9 @@ return {
       vim.keymap.set("n", "<Bslash>b", function()
         fzf.buffers()
       end, { desc = "FZF [B]uffers" })
+      vim.keymap.set("n", "<Bslash>t", function()
+        fzf.tabs()
+      end, { desc = "FZF Buffers in [T]abs" })
       vim.keymap.set("n", "<Bslash>r", function()
         fzf.oldfiles()
       end, { desc = "FZF [R]ecent files" })
@@ -34,14 +37,66 @@ return {
           })
         end, { silent = true, desc = "Fuzzy complete file" })
 
-      local actions = fzf.actions
+
+      local OutType = {
+        OPEN = {},
+        NEW_TAB = {}
+      }
+
+      -- fzf action which switches to the selected file if it's already open
+      -- (using the builtin :drop command), otherwise opens the file. If
+      -- OutType is NEWTAB, also passes the :tab option to open in a new tab
+      -- rather than current buffer
+      local switch_or_drop = function(selected, opts, outtype)
+        local entry = require('fzf-lua.path').entry_to_file(selected[1], opts, opts._uri)
+        local fullpath = entry.bufname or entry.uri and entry.uri:match("^%a+://(.*)") or entry.path
+        local command = (outtype == OutType.NEW_TAB) and "drop" or "tab drop"
+        vim.cmd(([[silent %s %s]]):format(command, fullpath))
+      end
+
+      -- fzf action which switches to the selected file if it's already open
+      -- (using the builtin :sbuffer command), otherwise calls `fallback`.
+      local switch_or_fallback = function(selected, opts, fallback)
+        local entry = require('fzf-lua.path').entry_to_file(selected[1], opts, opts._uri)
+        local fullpath = entry.bufname or entry.uri and entry.uri:match("^%a+://(.*)") or entry.path
+        if vim.fn.bufwinid(fullpath) == -1 then
+          fallback(selected, opts)
+        else
+          vim.cmd(([[silent sbuffer %s]]):format(fullpath))
+        end
+      end
+
       fzf.setup({
         actions = {
           files = {
             true, -- inherit defaults
-            ["enter"]  = actions.file_switch_or_edit,
-            ["ctrl-s"] = false,
-            ["ctrl-x"] = actions.file_split,
+            ["enter"] = function(selected, opts)
+              switch_or_drop(selected, opts, OutType.OPEN);
+            end,
+            ["ctrl-t"] = function(selected, opts)
+              switch_or_drop(selected, opts, OutType.NEW_TAB);
+            end,
+            ["ctrl-v"] = function(selected, opts)
+              switch_or_fallback(selected, opts, fzf.actions.file_vsplit)
+            end,
+            ["ctrl-s"] = function(selected, opts)
+              switch_or_fallback(selected, opts, fzf.actions.file_split)
+            end,
+          },
+          buffers = {
+            true, -- inherit defaults
+            ["enter"] = function(selected, opts)
+              switch_or_drop(selected, opts, OutType.OPEN);
+            end,
+            ["ctrl-t"] = function(selected, opts)
+              switch_or_drop(selected, opts, OutType.NEW_TAB);
+            end,
+            ["ctrl-v"] = function(selected, opts)
+              switch_or_fallback(selected, opts, fzf.actions.buf_vsplit)
+            end,
+            ["ctrl-s"] = function(selected, opts)
+              switch_or_fallback(selected, opts, fzf.actions.buf_split)
+            end,
           },
         },
         files = {

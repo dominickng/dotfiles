@@ -329,10 +329,10 @@ return {
           map("<leader>ca", "<cmd>Lspsaga code_action<CR>", "[C]ode [A]ction", { "n", "x" })
 
           -- View incoming calls to the function
-          map("<leader>ic", "<cmd>Lspsaga incoming_calls<CR>", "[I]ncoming [C]alls", { "n", "x" })
+          map("<leader>ic", fzf.lsp_incoming_calls, "[I]ncoming [C]alls", { "n", "x" })
 
           -- View outgoing calls from the function
-          map("<leader>oc", "<cmd>Lspsaga outgoing_calls<CR>", "[O]utcoming [C]alls", { "n", "x" })
+          map("<leader>oc", fzf.lsp_outgoing_calls, "[O]utcoming [C]alls", { "n", "x" })
 
           -- Jump through diagnostics
           map("<leader>dn", "<cmd>Lspsaga diagnostic_jump_next<CR>", "[D]iagnostic [N]ext", { "n", "x" })
