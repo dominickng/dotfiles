@@ -87,6 +87,7 @@ return {
 
       fzf.setup({
         actions = {
+          -- applies to files, buffers, and tabs commands
           files = {
             true, -- inherit defaults
             ["enter"] = function(selected, opts)
@@ -100,21 +101,6 @@ return {
             end,
             ["ctrl-s"] = function(selected, opts)
               switch_or_fallback(selected, opts, fzf.actions.file_split)
-            end,
-          },
-          buffers = {
-            true, -- inherit defaults
-            ["enter"] = function(selected, opts)
-              switch_or_drop(selected, opts, OutType.OPEN);
-            end,
-            ["ctrl-t"] = function(selected, opts)
-              switch_or_drop(selected, opts, OutType.NEW_TAB);
-            end,
-            ["ctrl-v"] = function(selected, opts)
-              switch_or_fallback(selected, opts, fzf.actions.buf_vsplit)
-            end,
-            ["ctrl-s"] = function(selected, opts)
-              switch_or_fallback(selected, opts, fzf.actions.buf_split)
             end,
           },
         },
