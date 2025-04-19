@@ -108,8 +108,10 @@ return {
           }),
 
           ["<Tab>"] = cmp.mapping(function(fallback)
+            if cmp.complete_common_string() then
+              return
+            end
             if cmp.visible() then
-              cmp.complete_common_string()
               if #cmp.get_entries() == 1 then
                 cmp.confirm({ select = true })
               else
