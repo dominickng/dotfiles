@@ -1,5 +1,24 @@
 return {
   {
+    "gennaro-tedesco/nvim-possession",
+    dependencies = {
+      "ibhagwan/fzf-lua",
+    },
+    config = true,
+    build = function()
+      local sessions_path = vim.fn.stdpath("data") .. "/sessions"
+      if vim.fn.isdirectory(sessions_path) == 0 then
+        vim.uv.fs_mkdir(sessions_path, 511) -- 0777 permissions
+      end
+    end,
+    keys = {
+      { "<Bslash>l", function() require("nvim-possession").list() end, desc = "📌 List sessions", },
+      { "<Bslash>c", function() require("nvim-possession").new() end, desc = "📌 Create new session", },
+      { "<Bslash>s", function() require("nvim-possession").update() end, desc = "📌 Update current session", },
+      { "<Bslash>d", function() require("nvim-possession").delete() end, desc = "📌 Delete selected session" },
+    },
+  },
+  {
     "ibhagwan/fzf-lua",
     dependencies = {
       "nvim-tree/nvim-web-devicons",

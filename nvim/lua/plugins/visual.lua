@@ -109,7 +109,13 @@ return {
                 unnamed = '[No Name]',
                 newfile = '[New]',
               }
-            }
+            },
+            {
+              require("nvim-possession").status,
+              cond = function()
+                return require("nvim-possession").status() ~= nil
+              end,
+            },
           },
           lualine_x = { 'location' },
         },
