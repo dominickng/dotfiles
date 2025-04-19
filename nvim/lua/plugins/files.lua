@@ -69,7 +69,7 @@ return {
       local switch_or_drop = function(selected, opts, outtype)
         local entry = require('fzf-lua.path').entry_to_file(selected[1], opts, opts._uri)
         local fullpath = entry.bufname or entry.uri and entry.uri:match("^%a+://(.*)") or entry.path
-        local command = (outtype == OutType.NEW_TAB) and "drop" or "tab drop"
+        local command = (outtype == OutType.NEW_TAB) and "tab drop" or "drop"
         vim.cmd(([[silent %s %s]]):format(command, fullpath))
       end
 
