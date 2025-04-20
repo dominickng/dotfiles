@@ -11,6 +11,7 @@ alias tm='tmux'
 export PYTHONSTARTUP=$HOME/.pythonrc.py
 export GOPATH=$HOME/gocode
 alias tat='tmux attach -t'
+export TERM=xterm-256color
 
 if [ `uname` = 'Darwin' ]; then
 	alias top='top -s1 -F -R -o cpu'

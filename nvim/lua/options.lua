@@ -51,6 +51,7 @@ vim.opt.smarttab = true
 -- Split direction
 vim.opt.splitbelow = true
 vim.opt.splitright = true
+vim.opt.splitkeep = "screen"
 
 -- Tabs
 vim.opt.hidden = true
@@ -63,11 +64,13 @@ vim.opt.ignorecase = true
 vim.opt.incsearch = true
 vim.opt.inccommand = "nosplit"
 vim.opt.smartcase = true
+vim.opt.infercase = true
 
 -- Visual options
 vim.opt.backspace = "indent,eol,start"
 vim.opt.shortmess = "atI"
 vim.opt.showmatch = true
+vim.opt.showmode = false
 vim.opt.showtabline = 2
 vim.opt.tabpagemax = 15
 vim.opt.title = true

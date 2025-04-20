@@ -1,36 +1,42 @@
-local opts = { silent = true, noremap = true }
-
 -- Save key strokes (now we do not need to press shift to enter command mode).
 -- vim.keymap.set({ "n", "x" }, ";", ":")
 
 -- Turn the word under cursor to upper case
-vim.keymap.set("i", "<C-u>", "<Esc>viwUea")
+vim.keymap.set("i", "<C-u>", "<Esc>viwUea", { desc = "Uppercase word under cursor" })
 
 -- Turn the current word into title case
-vim.keymap.set("i", "<C-t>", "<Esc>b~lea")
+vim.keymap.set("i", "<C-t>", "<Esc>b~lea", { desc = "Titlecase word under cursor" })
 
 -- Paste non-linewise text above or below current line, see https://stackoverflow.com/a/1346777/6064933
 -- vim.keymap.set("n", "<leader>p", "m`o<ESC>p``", { desc = "Paste below current line" })
 -- vim.keymap.set("n", "<leader>P", "m`O<ESC>p``", { desc = "Paste above current line" })
 
-vim.keymap.set("i", "<S-Right>", "<C-o><cmd>tabnext<CR>", opts)
-vim.keymap.set("i", "<S-Left>", "<C-o><cmd>tabprev<CR>", opts)
-vim.keymap.set("n", "<S-Right>", "<cmd>tabnext<CR>", opts)
-vim.keymap.set("n", "<S-Left>", "<cmd>tabprev<CR>", opts)
+vim.keymap.set("i", "<S-Right>", "<C-o><cmd>tabnext<CR>",
+  { silent = true, noremap = true, desc = "Switch to next tab" })
+vim.keymap.set("i", "<S-Left>", "<C-o><cmd>tabprev<CR>",
+  { silent = true, noremap = true, desc = "Switch to previous tab" })
+vim.keymap.set("n", "<S-Right>", "<cmd>tabnext<CR>",
+  { silent = true, noremap = true, desc = "Switch to next tab" })
+vim.keymap.set("n", "<S-Left>", "<cmd>tabprev<CR>",
+  { silent = true, noremap = true, desc = "Switch to previous tab" })
 
 -- use <leader>, to clear search highlight
-vim.keymap.set("n", "<leader>,", "<cmd>nohlsearch<CR>")
+vim.keymap.set("n", "<leader>,", "<cmd>nohlsearch<CR>", { desc = "Clear search highlight" })
 
 -- don't use exact searches for */#
 vim.keymap.set("n", "*", "g*")
 vim.keymap.set("n", "#", "g#")
+
+-- Search inside visually highlighted text
+vim.keymap.set('x', 'g/', '<Esc>/\\%V', { silent = false, desc = 'Search inside visual selection' })
 
 -- select visual block after indent/unindent
 vim.keymap.set("v", "<", "<gv")
 vim.keymap.set("v", ">", ">gv")
 
 -- reselect pasted text
-vim.cmd([[  nnoremap <expr> gV    "`[".getregtype(v:register)[0]."`]"  ]])
+vim.keymap.set("n", "gV", '"`[" . strpart(getregtype(), 0, 1) . "`]"',
+  { expr = true, replace_keycodes = false, desc = "Reselect pasted text" })
 
 -- map Y to be consistent with D, C, etc
 vim.keymap.set("n", "Y", "y$")
@@ -47,8 +53,8 @@ vim.keymap.set("n", "<leader>q", "gqip", { desc = "Hard re-wrap paragraph" })
 
 -- Use ,d (or ,dd or ,dj or 20,dd) to delete a line without adding it to the
 -- yanked stack (also, in visual mode)
-vim.keymap.set("n", "<leader>d", '"_d', { desc = "Delete and throw away" })
-vim.keymap.set("v", "<leader>d", '"_d', { desc = "Delete and throw away" })
+-- vim.keymap.set("n", "<leader>d", '"_d', { desc = "Delete and throw away" })
+-- vim.keymap.set("v", "<leader>d", '"_d', { desc = "Delete and throw away" })
 
 -- k and j don't skip lines in wrapped mode
 local mux_with_g = function(key)
@@ -57,7 +63,5 @@ local mux_with_g = function(key)
     if vim.v.count == 0 then return gkey else return key end
   end
 end
-vim.keymap.set("n", "j", mux_with_g("j"), { expr = true })
-vim.keymap.set("n", "k", mux_with_g("k"), { expr = true })
-vim.keymap.set("v", "j", mux_with_g("j"), { expr = true })
-vim.keymap.set("v", "k", mux_with_g("k"), { expr = true })
+vim.keymap.set({ "n", "x" }, "j", mux_with_g("j"), { expr = true })
+vim.keymap.set({ "n", "x" }, "k", mux_with_g("k"), { expr = true })
