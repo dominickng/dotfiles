@@ -48,8 +48,7 @@ vim.g.netrw_liststyle = 3
 -- Do not load tohtml.vim
 vim.g.loaded_2html_plugin = 1
 
--- Do not load zipPlugin.vim, gzip.vim and tarPlugin.vim (all these plugins are
--- related to checking files inside compressed files)
+-- Do not load zipPlugin.vim, gzip.vim and tarPlugin.vim
 vim.g.loaded_zipPlugin = 1
 vim.g.loaded_gzip = 1
 vim.g.loaded_tarPlugin = 1

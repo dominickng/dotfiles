@@ -3,9 +3,7 @@ return {
     "andymass/vim-matchup",
     event = "BufReadPost",
     config = function()
-      vim.cmd([[
-      :hi MatchParen ctermbg=green guibg=green cterm=italic gui=italic
-      ]])
+      vim.api.nvim_set_hl(0, "MatchParen", { bg = "green", italic = true })
     end
   },
   {
@@ -90,45 +88,10 @@ return {
     end
   },
   {
-    "HiPhish/rainbow-delimiters.nvim",
-    config = function()
-      local rainbow_delimiters = require("rainbow-delimiters")
-      require("rainbow-delimiters.setup").setup({
-        strategy = {
-          [""] = rainbow_delimiters.strategy["global"],
-          vim = rainbow_delimiters.strategy["local"],
-        },
-        query = {
-          [""] = "rainbow-delimiters",
-          lua = "rainbow-blocks",
-        },
-        priority = {
-          [""] = 110,
-          lua = 210,
-        },
-        highlight = {
-          "RainbowDelimiterRed",
-          "RainbowDelimiterYellow",
-          "RainbowDelimiterBlue",
-          "RainbowDelimiterOrange",
-          "RainbowDelimiterGreen",
-          "RainbowDelimiterViolet",
-          "RainbowDelimiterCyan",
-        },
-      })
-    end,
-  },
-  {
     'jinh0/eyeliner.nvim',
     config = function()
-      require 'eyeliner'.setup({})
+      require("eyeliner").setup({})
     end
-  },
-  {
-    "neovim/nvim-lspconfig",
-  },
-  {
-    "nvim-tree/nvim-web-devicons",
   },
   {
     "nvim-treesitter/nvim-treesitter",
@@ -295,9 +258,6 @@ return {
     },
   },
   {
-    "tpope/vim-fugitive",
-  },
-  {
     "Wansmer/sibling-swap.nvim",
     config = function()
       require("sibling-swap").setup({
@@ -345,7 +305,11 @@ return {
   {
     "windwp/nvim-autopairs",
     event = "InsertEnter",
-    opts = {},
+    config = function()
+      require('nvim-autopairs').setup({
+        enable_check_bracket_line = false
+      })
+    end,
   },
   {
     "windwp/nvim-ts-autotag",

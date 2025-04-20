@@ -32,7 +32,17 @@ return {
         opts = {}
       },
       {
-        "hrsh7th/cmp-nvim-lsp"
+        "hrsh7th/cmp-nvim-lsp",
+        config = function()
+          -- Add cmp_nvim_lsp capabilities settings to lspconfig
+          -- This should be executed before configuring any language server
+          local lspconfig_defaults = require('lspconfig').util.default_config
+          lspconfig_defaults.capabilities = vim.tbl_deep_extend(
+            "force",
+            lspconfig_defaults.capabilities,
+            require("cmp_nvim_lsp").default_capabilities()
+          )
+        end,
       },
     },
     config = function()
@@ -92,8 +102,8 @@ return {
           map("<leader>oc", fzf.lsp_outgoing_calls, "[O]utcoming [C]alls", { "n", "x" })
 
           -- Jump through diagnostics
-          map("<leader>dn", "<cmd>Lspsaga diagnostic_jump_next<CR>", "[D]iagnostic [N]ext", { "n", "x" })
-          map("<leader>dp", "<cmd>Lspsaga diagnostic_jump_prev<CR>", "[D]iagnostic [P]rev", { "n", "x" })
+          map("<leader>dn", "<cmd>Lspsaga diagnostic_jump_next<CR>", "Go to [D]iagnostic [N]ext", { "n", "x" })
+          map("<leader>dp", "<cmd>Lspsaga diagnostic_jump_prev<CR>", "Go to [D]iagnostic [P]rev", { "n", "x" })
           map("<leader>dl", vim.diagnostic.open_float, "Open [D]iagnostics F[l]oat")
 
           -- WARN: This is not Goto Definition, this is Goto Declaration.

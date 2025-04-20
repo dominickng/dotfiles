@@ -48,6 +48,13 @@ return {
       local luasnip = require("luasnip")
       luasnip.config.setup({})
 
+      -- Add parentheses after inserting a function
+      local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+      cmp.event:on(
+        'confirm_done',
+        cmp_autopairs.on_confirm_done()
+      )
+
       -- local has_words_before = function()
       --   unpack = unpack or table.unpack
       --   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -72,8 +79,7 @@ return {
           end,
         },
 
-        -- For an understanding of why these mappings were
-        -- chosen, you will need to read `:help ins-completion`
+        -- Read `:help ins-completion` for more on mappings
         mapping = cmp.mapping.preset.insert({
           -- Select the [n]ext item
           ["<C-n>"] = cmp.mapping.select_next_item(),
@@ -89,17 +95,17 @@ return {
           --  This will expand snippets if the LSP sent a snippet.
           ["<C-y>"] = cmp.mapping.confirm({ select = true }),
 
-          ["<CR>"] = cmp.mapping({
-            i = function(fallback)
-              if cmp.visible() and cmp.get_active_entry() then
-                cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
-              else
-                fallback()
-              end
-            end,
-            s = cmp.mapping.confirm({ select = true }),
-            c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
-          }),
+          -- ["<CR>"] = cmp.mapping({
+          --   i = function(fallback)
+          --     if cmp.visible() and cmp.get_active_entry() then
+          --       cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
+          --     else
+          --       fallback()
+          --     end
+          --   end,
+          --   s = cmp.mapping.confirm({ select = true }),
+          --   c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
+          -- }),
 
           ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.complete_common_string() then
