@@ -295,13 +295,7 @@ return {
     },
   },
   {
-    "sindrets/diffview.nvim",
-  },
-  {
     "tpope/vim-fugitive",
-  },
-  {
-    "tpope/vim-unimpaired",
   },
   {
     "Wansmer/sibling-swap.nvim",
@@ -343,7 +337,7 @@ return {
         allow_interline_swaps = true,
         -- swaps interline siblings without separators (no recommended, helpful for swaps html-like attributes)
         interline_swaps_without_separator = false,
-        -- Fallbacs for tiny settings for langs and nodes. See #fallback
+        -- Fallbacks for tiny settings for langs and nodes. See #fallback
         fallback = {},
       })
     end,

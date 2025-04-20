@@ -35,6 +35,10 @@ return {
           -- Window commands
           { mode = "n", keys = "<C-w>" },
 
+          -- Movement comments
+          { mode = "n", keys = "[" },
+          { mode = "n", keys = "]" },
+
           -- fzf-lua
           { mode = "n", keys = "<Bslash>" },
 
