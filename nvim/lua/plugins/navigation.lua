@@ -25,7 +25,6 @@ return {
         file = { suffix = "" },
         indent = { suffix = "" },
         oldfile = { suffix = "" },
-        treesitter = { suffix = "" },
       })
     end,
     version = false
