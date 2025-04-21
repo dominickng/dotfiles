@@ -19,8 +19,12 @@ require("lazy").setup({
   spec = {
     { import = "plugins" },
   },
-  -- colorscheme that will be used when installing plugins.
-  install = { colorscheme = { "solarized-osaka" } },
-  -- automatically check for plugin updates
+
+  change_detection = {
+    enabled = false,
+  },
+
   checker = { enabled = true },
+
+  install = { colorscheme = { "solarized-osaka" } },
 })
