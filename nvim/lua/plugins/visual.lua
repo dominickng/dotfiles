@@ -47,7 +47,7 @@ return {
       end
       vim.cmd('au CursorMoved * lua _G.cursorword_blocklist()')
       require("mini.cursorword").setup()
-      vim.api.nvim_set_hl(0, "MiniCursorwordCurrent", { standout = true })
+      vim.api.nvim_set_hl(0, "MiniCursorwordCurrent", { italic = true })
     end,
     version = false
   },
@@ -57,6 +57,24 @@ return {
       require("mini.indentscope").setup({
         draw = {
           animation = require("mini.indentscope").gen_animation.none()
+        }
+      })
+    end,
+    version = false
+  },
+  {
+    "echasnovski/mini.hipatterns",
+    config = function()
+      local hipatterns = require('mini.hipatterns')
+      hipatterns.setup({
+        highlighters = {
+          fixme     = { pattern = '%f[%w]()FIXME()%f[%W]', group = 'MiniHipatternsFixme' },
+          hack      = { pattern = '%f[%w]()HACK()%f[%W]', group = 'MiniHipatternsHack' },
+          todo      = { pattern = '%f[%w]()TODO()%f[%W]', group = 'MiniHipatternsTodo' },
+          note      = { pattern = '%f[%w]()NOTE()%f[%W]', group = 'MiniHipatternsNote' },
+
+          -- Highlight hex color strings (`#rrggbb`) using that color
+          hex_color = hipatterns.gen_highlighter.hex_color(),
         }
       })
     end,
@@ -104,12 +122,6 @@ return {
     ---@module 'render-markdown'
     ---@type render.md.UserConfig
     opts = {},
-  },
-  {
-    "norcalli/nvim-colorizer.lua",
-    config = function()
-      require("colorizer").setup()
-    end,
   },
   {
     "nvim-lualine/lualine.nvim",

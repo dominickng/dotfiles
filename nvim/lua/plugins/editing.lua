@@ -3,37 +3,66 @@ return {
     "andymass/vim-matchup",
     event = "BufReadPost",
     config = function()
-      vim.api.nvim_set_hl(0, "MatchParen", { bg = "green", italic = true })
+      vim.api.nvim_set_hl(0, "MatchParen", { bg = "green" })
     end
   },
   {
-    "chrisgrieser/nvim-various-textobjs",
-    event = "VeryLazy",
-    opts = {
-      keymaps = {
-        useDefaults = true,
+    "echasnovski/mini.ai",
+    dependencies = {
+      {
+        "echasnovski/mini.extra",
+        version = false,
       },
     },
-  },
-  {
-    "echasnovski/mini.ai",
     config = function()
       local spec_treesitter = require('mini.ai').gen_spec.treesitter
+      local gen_ai_spec = require('mini.extra').gen_ai_spec
+      local get_find_pattern = function(pattern)
+        return function(line, init)
+          local from, to = line:find(pattern, init)
+          return from, to
+        end
+      end
+      local get_pattern_textobj_spec = function(pattern)
+        return function(ai_type)
+          if ai_type == 'i' then
+            return { pattern }
+          end
+          return { get_find_pattern(pattern), { '^().*()$' } }
+        end
+      end
       require("mini.ai").setup({
         custom_textobjects = {
+          -- Function definition
           F = spec_treesitter({ a = '@function.outer', i = '@function.inner' }),
+
+          -- the nearest enclosing conditional or loop
           o = spec_treesitter({
             a = { "@conditional.outer", '@loop.outer' },
             i = { "@conditional.inner", '@loop.inner' },
           }),
+
+          -- key: value property
           [":"] = spec_treesitter({
             a = "@property.outer",
             i = "@property.inner",
           }),
+
+          -- assignment
           ["="] = spec_treesitter({
             a = "@assignment.outer",
             i = "@assignment.inner",
           }),
+
+          -- line without whitespace
+          L = gen_ai_spec.line(),
+
+          -- number (possibly including a decimal)
+          -- %f is the frontier pattern: http://lua-users.org/wiki/FrontierPattern
+          N = get_pattern_textobj_spec("%f[%d-%.]-?[%d%.]+[%d,.]*%f[%D]"),
+
+          -- URL
+          U = get_pattern_textobj_spec([[%f[%l]%l+://[^%s{}"'`<>]+]]),
         },
       })
     end,
@@ -153,7 +182,6 @@ return {
     end,
   },
   {
-
     "nvim-treesitter/nvim-treesitter-textobjects",
     config = function()
       require("nvim-treesitter.configs").setup({
@@ -200,7 +228,10 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
-      { 'MeanderingProgrammer/render-markdown.nvim', ft = { 'markdown', 'codecompanion' } },
+      {
+        "MeanderingProgrammer/render-markdown.nvim",
+        ft = { "markdown", "codecompanion" }
+      },
     },
     opts = {
       strategies = {

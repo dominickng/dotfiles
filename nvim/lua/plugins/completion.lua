@@ -108,33 +108,29 @@ return {
           -- }),
 
           ["<Tab>"] = cmp.mapping(function(fallback)
-            if cmp.complete_common_string() then
-              return
-            end
             if cmp.visible() then
+              -- First, just complete if there's only one option
               if #cmp.get_entries() == 1 then
                 cmp.confirm({ select = true })
+                -- If there's more than one option, complete the common string of them.
+                -- Exist if successful.
+              elseif cmp.complete_common_string() then
+                return
+                -- Otherwise, select the next item in the completion menu
               else
                 cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
               end
             elseif luasnip.locally_jumpable(1) then
               luasnip.jump(1)
-            elseif has_words_before() then
-              cmp.complete()
-              if #cmp.get_entries() == 1 then
-                cmp.confirm({ select = true })
-              end
+              -- elseif has_words_before() then
+              --   -- Try generating a completion and select it if it's the only one
+              --   cmp.complete()
+              --   if #cmp.get_entries() == 1 then
+              --     cmp.confirm({ select = true })
+              --   end
             else
               fallback()
             end
-
-            -- if cmp.visible() and has_words_before() then
-            --   cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-            -- elseif luasnip.locally_jumpable(1) then
-            --   luasnip.jump(1)
-            -- else
-            --   fallback()
-            -- end
           end, { "i", "s" }),
 
           ["<S-Tab>"] = cmp.mapping(function(fallback)
