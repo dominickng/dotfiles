@@ -7,23 +7,6 @@ return {
     end
   },
   {
-    "chrisgrieser/nvim-spider",
-    lazy = true,
-    keys = {
-      { "w", "<cmd>lua require('spider').motion('w')<CR>", mode = { "n", "o", "x" } },
-      { "e", "<cmd>lua require('spider').motion('e')<CR>", mode = { "n", "o", "x" } },
-      { "b", "<cmd>lua require('spider').motion('b')<CR>", mode = { "n", "o", "x" } },
-    },
-    config = function()
-      require("spider").setup({
-        skipInsignificantPunctuation = false,
-        consistentOperatorPending = false, -- see "Consistent Operator-pending Mode" in the README
-        subwordMovement = true,
-        customPatterns = {},               -- check "Custom Movement Patterns" in the README for details
-      })
-    end
-  },
-  {
     "chrisgrieser/nvim-various-textobjs",
     event = "VeryLazy",
     opts = {
@@ -85,12 +68,6 @@ return {
     event = "VeryLazy",
     config = function()
       require("timber").setup({})
-    end
-  },
-  {
-    'jinh0/eyeliner.nvim',
-    config = function()
-      require("eyeliner").setup({})
     end
   },
   {
@@ -176,6 +153,48 @@ return {
     end,
   },
   {
+
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    config = function()
+      require("nvim-treesitter.configs").setup({
+        textobjects = {
+          select = {
+            enable = false
+          },
+          move = {
+            enable = true,
+            set_jumps = true,
+            goto_next_start = {
+              ["]c"] = { query = "@comment.outer", desc = "Next [c]omment start" },
+              ["]f"] = { query = "@call.outer", desc = "Next [f]unction call start" },
+              ["]m"] = { query = "@function.outer", desc = "Next [m]ethod/function definition start" },
+            },
+            goto_next_end = {
+              ["]C"] = { query = "@comment.outer", desc = "Next [C]omment end" },
+              ["]F"] = { query = "@call.outer", desc = "Next [F]unction call end" },
+              ["]M"] = { query = "@function.outer", desc = "Next [M]ethod/Function definition end" },
+            },
+            goto_previous_start = {
+              ["[c"] = { query = "@comment.outer", desc = "Previous [c]omment start" },
+              ["[f"] = { query = "@call.outer", desc = "Previous [f]unction call start" },
+              ["[m"] = { query = "@function.outer", desc = "Previous [m]ethod/function definition start" },
+            },
+            goto_previous_end = {
+              ["[C"] = { query = "@comment.outer", desc = "Previous [C]omment end" },
+              ["[F"] = { query = "@call.outer", desc = "Previous [F]unction call end" },
+              ["[M"] = { query = "@function.outer", desc = "Previous [M]ethod/Function definition end" },
+            },
+          },
+        }
+      })
+      local ts_repeat_move = require("nvim-treesitter.textobjects.repeatable_move")
+
+      -- vim way: ; goes to the direction you were moving.
+      vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move)
+      vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_opposite)
+    end
+  },
+  {
     "olimorris/codecompanion.nvim",
     config = true,
     dependencies = {
@@ -214,7 +233,7 @@ return {
   {
     "RRethy/nvim-treesitter-endwise",
   },
-  { -- Autoformat
+  {
     "stevearc/conform.nvim",
     event = { "BufWritePre" },
     cmd = { "ConformInfo" },

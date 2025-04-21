@@ -102,8 +102,8 @@ return {
           map("<leader>oc", fzf.lsp_outgoing_calls, "[O]utcoming [C]alls", { "n", "x" })
 
           -- Jump through diagnostics
-          map("<leader>dn", "<cmd>Lspsaga diagnostic_jump_next<CR>", "Go to [D]iagnostic [N]ext", { "n", "x" })
-          map("<leader>dp", "<cmd>Lspsaga diagnostic_jump_prev<CR>", "Go to [D]iagnostic [P]rev", { "n", "x" })
+          map("]d", "<cmd>Lspsaga diagnostic_jump_next<CR>", "Go to next [D]iagnostic", { "n", "x" })
+          map("[p", "<cmd>Lspsaga diagnostic_jump_prev<CR>", "Go to previous [D]iagnostic", { "n", "x" })
           map("<leader>dl", vim.diagnostic.open_float, "Open [D]iagnostics F[l]oat")
 
           -- WARN: This is not Goto Definition, this is Goto Declaration.

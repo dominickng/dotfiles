@@ -62,13 +62,13 @@ return {
     end,
     version = false
   },
-  -- {
-  --   "echasnovski/mini.starter",
-  --   config = function()
-  --     require("mini.starter").setup({})
-  --   end,
-  --   version = false
-  -- },
+  {
+    "echasnovski/mini.starter",
+    config = function()
+      require("mini.starter").setup({})
+    end,
+    version = false
+  },
   {
     "HiPhish/rainbow-delimiters.nvim",
     config = function()
