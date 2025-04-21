@@ -322,11 +322,13 @@ return {
       lspkind.init({
         symbol_map = {
           Copilot = "",
+          Minuet = "",
           -- CodeCompanion = "",
         },
       })
 
       vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
+      vim.api.nvim_set_hl(0, "CmpItemKindMinuet", { fg = "#6CC644" })
       -- vim.api.nvim_set_hl(0, "CmpItemKindCodeCompanion", { fg = "#6CC644" })
     end
   },
