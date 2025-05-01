@@ -13,6 +13,10 @@ return {
         "echasnovski/mini.extra",
         version = false,
       },
+      {
+        -- for treesitter textobjects to be defined.
+        "nvim-treesitter/nvim-treesitter-textobjects",
+      },
     },
     config = function()
       local spec_treesitter = require('mini.ai').gen_spec.treesitter
@@ -42,6 +46,12 @@ return {
             i = { "@conditional.inner", '@loop.inner' },
           }),
 
+          -- variable
+          v = spec_treesitter({
+            a = "@variable.outer",
+            i = "@variable.inner",
+          }),
+
           -- key: value property
           [":"] = spec_treesitter({
             a = "@property.outer",
@@ -63,6 +73,9 @@ return {
 
           -- URL
           U = get_pattern_textobj_spec([[%f[%l]%l+://[^%s{}"'`<>]+]]),
+
+          -- UUID
+          D = get_pattern_textobj_spec("%x%x%x%x%x%x%x%x%-%x%x%x%x%-%x%x%x%x%-%x%x%x%x%-%x%x%x%x%x%x%x%x%x%x%x%x"),
         },
       })
     end,
@@ -293,11 +306,6 @@ return {
           },
         }
       })
-      local ts_repeat_move = require("nvim-treesitter.textobjects.repeatable_move")
-
-      -- vim way: ; goes to the direction you were moving.
-      vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move)
-      vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_opposite)
     end
   },
   {
@@ -350,7 +358,9 @@ return {
       {
         "<leader>f",
         function()
-          require("conform").format({ async = true, lsp_format = "fallback" })
+          require("conform").format({
+            async = true,
+          })
         end,
         mode = "",
         desc = "[F]ormat buffer",
@@ -359,10 +369,23 @@ return {
     opts = {
       notify_on_error = false,
       format_on_save = function(bufnr)
+        -- Check if locally or globally disabled.
+        if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+          return
+        end
+
+        -- Don't format on save in certain directories.
+        local bufname = vim.api.nvim_buf_get_name(bufnr)
+        if bufname:match("/node_modules/") then
+          return
+        end
         -- Disable "format_on_save lsp_fallback" for languages that don't
         -- have a well standardized coding style. You can add additional
         -- languages here or re-enable it for the disabled ones.
-        local disable_filetypes = { c = true, cpp = true }
+        local disable_filetypes = {
+          c = true,
+          cpp = true
+        }
         local lsp_format_opt
         if disable_filetypes[vim.bo[bufnr].filetype] then
           lsp_format_opt = "never"
@@ -375,15 +398,38 @@ return {
         }
       end,
       formatters_by_ft = {
-        -- lua = { "stylua" },
+        lua = { "stylua" },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
-        javascript = { "prettierd", "prettier", stop_after_first = true },
-        typescript = { "prettierd", "prettier", stop_after_first = true },
+        javascript = { "prettier", "prettierd", stop_after_first = true },
+        typescript = { "prettier", "prettierd", stop_after_first = true },
+      },
+      default_format_opts = {
+        lsp_format = "fallback",
       },
     },
+    init = function()
+      vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
+      vim.api.nvim_create_user_command("FormatDisable", function(args)
+        if args.bang then
+          -- FormatDisable! will disable formatting just for this buffer
+          vim.b.disable_autoformat = true
+        else
+          vim.g.disable_autoformat = true
+        end
+      end, {
+        desc = "Disable autoformat-on-save",
+        bang = true,
+      })
+      vim.api.nvim_create_user_command("FormatEnable", function()
+        vim.b.disable_autoformat = false
+        vim.g.disable_autoformat = false
+      end, {
+        desc = "Re-enable autoformat-on-save",
+      })
+    end,
   },
   {
     "Wansmer/sibling-swap.nvim",

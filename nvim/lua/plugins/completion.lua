@@ -3,7 +3,6 @@ return {
     "hrsh7th/nvim-cmp",
     event = { "InsertEnter", "CmdLineEnter" },
     dependencies = {
-      -- Snippet Engine & its associated nvim-cmp source
       {
         "L3MON4D3/LuaSnip",
         build = (function()
@@ -16,19 +15,13 @@ return {
           return "make install_jsregexp"
         end)(),
         dependencies = {
-          -- `friendly-snippets` contains a variety of premade snippets.
-          --    See the README about individual language/framework/plugin snippets:
-          --    https://github.com/rafamadriz/friendly-snippets
-          -- {
-          --   'rafamadriz/friendly-snippets',
-          --   config = function()
-          --     require('luasnip.loaders.from_vscode').lazy_load()
-          --   end,
-          -- },
+          {
+            "rafamadriz/friendly-snippets",
+            config = function()
+              require("luasnip.loaders.from_vscode").lazy_load()
+            end,
+          },
         },
-      },
-      {
-        "saadparwaiz1/cmp_luasnip",
       },
       {
         "hrsh7th/cmp-buffer",
@@ -37,10 +30,19 @@ return {
         "hrsh7th/cmp-nvim-lsp",
       },
       {
+        "hrsh7th/cmp-nvim-lua",
+      },
+      {
         "hrsh7th/cmp-path",
       },
       {
         "hrsh7th/cmp-nvim-lsp-signature-help",
+      },
+      {
+        "hrsh7th/cmp-nvim-lsp-document-symbol",
+      },
+      {
+        "saadparwaiz1/cmp_luasnip",
       },
     },
     config = function()
@@ -81,6 +83,8 @@ return {
 
         -- Read `:help ins-completion` for more on mappings
         mapping = cmp.mapping.preset.insert({
+          -- Manually trigger minuet
+          -- ["<C-m>"] = require('minuet').make_cmp_map(),
           -- Select the [n]ext item
           ["<C-n>"] = cmp.mapping.select_next_item(),
           -- Select the [p]revious item
@@ -179,16 +183,70 @@ return {
             name = "lazydev",
             -- set group index to 0 to skip loading LuaLS completions as lazydev recommends it
             group_index = 0,
+            entry_filter = function()
+              if vim.bo.filetype ~= "lua" then
+                return false
+              end
+              return true
+            end,
+            priority = 100,
           },
           -- { name = "copilot",                 group_index = 2 },
           -- { name = "codecompanion",           group_index = 2 },
-          { name = "nvim_lsp",                group_index = 1 },
-          { name = "buffer",                  group_index = 2 },
-          { name = "minuet",                  group_index = 1 },
-          { name = "nvim_lsp_signature_help", group_index = 1 },
-          { name = "path",                    group_index = 1 },
-          { name = 'render-markdown',         group_index = 1 },
-          { name = "luasnip",                 group_index = 1 },
+          {
+            name = "nvim_lsp",
+            group_index = 1,
+            priority = 150
+          },
+          {
+            name = "buffer",
+            group_index = 2,
+            priority = 100,
+            entry_filter = function(entry)
+              return not entry.exact
+            end,
+            option = {
+              get_bufnrs = function()
+                return vim.api.nvim_list_bufs()
+              end,
+            },
+          },
+          {
+            name = "minuet",
+            group_index = 1,
+            priority = 150
+          },
+          {
+            name = "nvim_lsp_signature_help",
+            group_index = 1,
+            priority = 150
+          },
+          {
+            name = "path",
+            group_index = 2,
+            priority = 100
+          },
+          {
+            name = 'render-markdown',
+            group_index = 1,
+            priority = 150
+          },
+          {
+            name = "luasnip",
+            group_index = 1,
+            priority = 120
+          },
+          {
+            name = "nvim_lua",
+            entry_filter = function()
+              if vim.bo.filetype ~= "lua" then
+                return false
+              end
+              return true
+            end,
+            priority = 150,
+            group_index = 1,
+          },
         },
 
         matching = {
@@ -206,17 +264,18 @@ return {
 
         formatting = {
           format = lspkind.cmp_format({
-            mode = 'symbol_text', -- show only symbol annotations
+            mode = "symbol_text", -- show only symbol annotations
             maxwidth = {
               -- menu = function() return math.floor(0.45 * vim.o.columns) end,
               menu = 120,             -- leading text (labelDetails)
               abbr = 120,             -- actual suggestion item
             },
-            ellipsis_char = '...',    -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+            ellipsis_char = "...",    -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
             show_labelDetails = true, -- show labelDetails in menu. Disabled by default
 
             -- The function below will be called before any actual modifications from lspkind
-            -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
+            -- so that you can provide more controls on popup customization.
+            -- (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
             before = function(entry, vim_item)
               return vim_item
             end
@@ -224,15 +283,36 @@ return {
         }
       })
 
-      cmp.setup.filetype({ 'gitcommit', 'help', 'json', 'txt' }, {
+      cmp.setup.filetype({ "gitcommit", "help", "json", "txt" }, {
         sources = {
           { name = "nvim_lsp",        group_index = 1 },
           { name = "buffer",          group_index = 1 },
           { name = "path",            group_index = 1 },
-          { name = 'render-markdown', group_index = 1 },
+          { name = "render-markdown", group_index = 1 },
           { name = "luasnip",         group_index = 1 },
         }
       })
+
+      cmp.setup.cmdline({ "/", "?" }, {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = {
+          {
+            { name = 'nvim_lsp_document_symbol' }
+          },
+          { name = "buffer" }
+        }
+      })
+
+      -- commented out cause it breaks tab completion
+      -- cmp.setup.cmdline(":", {
+      --   mapping = cmp.mapping.preset.cmdline(),
+      --   sources = cmp.config.sources({
+      --     { name = "path" }
+      --   }, {
+      --     { name = "cmdline" }
+      --   }),
+      --   matching = { disallow_symbol_nonprefix_matching = false }
+      -- })
     end,
   },
   {

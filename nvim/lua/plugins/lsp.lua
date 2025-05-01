@@ -1,7 +1,5 @@
 return {
   {
-    -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
-    -- used for completion, annotations and signatures of Neovim apis
     "folke/lazydev.nvim",
     ft = "lua",
     opts = {
@@ -14,9 +12,6 @@ return {
   {
     "neovim/nvim-lspconfig",
     dependencies = {
-      -- Automatically install LSPs and related tools to stdpath for Neovim
-      -- Mason must be loaded before its dependents so we need to set it up here.
-      -- NOTE: `opts = {}` is the same as calling `require('mason').setup({})`
       {
         "williamboman/mason.nvim",
         opts = {}
@@ -27,22 +22,12 @@ return {
       {
         "WhoIsSethDaniel/mason-tool-installer.nvim"
       },
-      {
-        "j-hui/fidget.nvim",
-        opts = {}
-      },
+      -- {
+      --   "j-hui/fidget.nvim",
+      --   opts = {}
+      -- },
       {
         "hrsh7th/cmp-nvim-lsp",
-        config = function()
-          -- Add cmp_nvim_lsp capabilities settings to lspconfig
-          -- This should be executed before configuring any language server
-          local lspconfig_defaults = require('lspconfig').util.default_config
-          lspconfig_defaults.capabilities = vim.tbl_deep_extend(
-            "force",
-            lspconfig_defaults.capabilities,
-            require("cmp_nvim_lsp").default_capabilities()
-          )
-        end,
       },
     },
     config = function()
@@ -96,15 +81,15 @@ return {
           map("<leader>ca", "<cmd>Lspsaga code_action<CR>", "[C]ode [A]ction", { "n", "x" })
 
           -- View incoming calls to the function
-          map("<leader>ic", fzf.lsp_incoming_calls, "[I]ncoming [C]alls", { "n", "x" })
+          map("<leader>ci", fzf.lsp_incoming_calls, "[C]alls ([I]ncoming)", { "n", "x" })
 
           -- View outgoing calls from the function
-          map("<leader>oc", fzf.lsp_outgoing_calls, "[O]utcoming [C]alls", { "n", "x" })
+          map("<leader>co", fzf.lsp_outgoing_calls, "[C]alls ([O]utcoming)", { "n", "x" })
 
           -- Jump through diagnostics
           map("]d", "<cmd>Lspsaga diagnostic_jump_next<CR>", "Go to next [D]iagnostic", { "n", "x" })
           map("[p", "<cmd>Lspsaga diagnostic_jump_prev<CR>", "Go to previous [D]iagnostic", { "n", "x" })
-          map("<leader>dl", vim.diagnostic.open_float, "Open [D]iagnostics F[l]oat")
+          map("<leader>df", vim.diagnostic.open_float, "Open [D]iagnostics [F]loat")
 
           -- WARN: This is not Goto Definition, this is Goto Declaration.
           --  For example, in C this would take you to the header.
@@ -236,10 +221,7 @@ return {
         html = {},
         jsonls = {},
         clangd = {},
-        -- gopls = {},
         pyright = {},
-        -- rust_analyzer = {},
-        -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         ts_ls = {
           init_options = {
             plugins = {
@@ -295,8 +277,9 @@ return {
   },
   {
     "nvimdev/lspsaga.nvim",
+    event = "LspAttach",
     config = function()
-      require('lspsaga').setup({
+      require("lspsaga").setup({
         outline = {
           win_position = "left",
         },
@@ -306,6 +289,13 @@ return {
         lightbulb = {
           enable = false,
           virtual_text = false,
+        },
+        definition = {
+          keys = {
+            vsplit = "<C-v>",
+            split = "<C-s>",
+            tabe = "<C-t>",
+          }
         }
       })
       vim.keymap.set({ "n", "x", "o" }, "<leader>o", "<cmd>Lspsaga outline<CR>", { desc = "Show [O]utline" })
@@ -329,7 +319,6 @@ return {
 
       vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
       vim.api.nvim_set_hl(0, "CmpItemKindMinuet", { fg = "#6CC644" })
-      -- vim.api.nvim_set_hl(0, "CmpItemKindCodeCompanion", { fg = "#6CC644" })
     end
   },
 }
