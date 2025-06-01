@@ -72,9 +72,10 @@ return {
         vim.b.minicursorword_disable = vim.tbl_contains(blocklist, curword)
       end
       vim.cmd('au CursorMoved * lua _G.cursorword_blocklist()')
-      vim.api.nvim_set_hl(0, "MiniCursorwordCurrent", { italic = true })
-
       require("mini.cursorword").setup()
+
+      vim.api.nvim_set_hl(0, "MiniCursorword", { italic = true, bg = "#2F4640" })
+      vim.api.nvim_set_hl(0, "MiniCursorwordCurrent", { italic = true, bg = "#2F4640" })
     end,
     version = false
   },
@@ -341,9 +342,9 @@ return {
         comment = {
           hl_color = { bg = "#7A5A3D" }, -- Dark muted orange
         },
-        cursor = {
-          hl_color = { bg = "#793D54" }, -- Dark muted pink
-        },
+        -- cursor = {
+        --   hl_color = { bg = "#793D54" }, -- Dark muted pink
+        -- },
       },
       priority = 2048 * 3,
     },

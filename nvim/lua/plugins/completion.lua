@@ -1,7 +1,8 @@
 return {
   {
     "hrsh7th/nvim-cmp",
-    event = { "InsertEnter", "CmdLineEnter" },
+    -- event = { "InsertEnter", "CmdLineEnter" },
+    event = { "InsertEnter" },
     dependencies = {
       {
         "L3MON4D3/LuaSnip",
@@ -293,15 +294,15 @@ return {
         }
       })
 
-      cmp.setup.cmdline({ "/", "?" }, {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = {
-          {
-            { name = 'nvim_lsp_document_symbol' }
-          },
-          { name = "buffer" }
-        }
-      })
+      -- cmp.setup.cmdline({ "/", "?" }, {
+      --   mapping = cmp.mapping.preset.cmdline(),
+      --   sources = {
+      --     {
+      --       { name = 'nvim_lsp_document_symbol' }
+      --     },
+      --     { name = "buffer" }
+      --   }
+      -- })
 
       -- commented out cause it breaks tab completion
       -- cmp.setup.cmdline(":", {
@@ -322,10 +323,13 @@ return {
         provider = "gemini",
         provider_options = {
           gemini = {
-            model = 'gemini-2.0-flash',
+            model = "gemini-2.5-flash-preview-05-20",
             optional = {
               generationConfig = {
-                maxOutputTokens = 256,
+                maxOutputTokens = 512,
+                thinkingConfig = {
+                  thinkingBudget = 0,
+                },
               },
               safetySettings = {
                 {
