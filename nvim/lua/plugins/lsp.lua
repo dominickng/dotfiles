@@ -13,22 +13,45 @@ return {
     "neovim/nvim-lspconfig",
     dependencies = {
       {
-        "williamboman/mason.nvim",
+        "mason-org/mason.nvim",
         opts = {}
       },
       {
-        "williamboman/mason-lspconfig.nvim"
+        "mason-org/mason-lspconfig.nvim"
       },
       {
         "WhoIsSethDaniel/mason-tool-installer.nvim"
       },
-      -- {
-      --   "j-hui/fidget.nvim",
-      --   opts = {}
-      -- },
       {
-        "hrsh7th/cmp-nvim-lsp",
+        "nvimdev/lspsaga.nvim",
+        event        = "LspAttach",
+        opts         = {
+          outline = {
+            win_position = "left",
+          },
+          symbol_in_winbar = {
+            enable = true,
+          },
+          lightbulb = {
+            enable = false,
+            virtual_text = false,
+          },
+          definition = {
+            keys = {
+              vsplit = "<C-v>",
+              split = "<C-s>",
+              tabe = "<C-t>",
+            }
+          }
+        },
+        dependencies = {
+          "nvim-treesitter/nvim-treesitter",
+          "nvim-tree/nvim-web-devicons",
+        },
       },
+      -- {
+      --   "hrsh7th/cmp-nvim-lsp",
+      -- },
     },
     config = function()
       -- See `:help lsp-vs-treesitter` for a comparison of the two.
@@ -45,7 +68,6 @@ return {
           --  This is where a variable was first declared, or where a function is defined, etc.
           --  To jump back, press <C-t>.
           local fzf = require("fzf-lua")
-          -- map("gd", fzf.lsp_definitions, "[G]oto [D]efinition", opts)
           map("gd", "<cmd>Lspsaga peek_definition<CR>", "[G]oto [D]efinition")
 
           map("K", "<cmd>lua vim.lsp.buf.hover()<CR>", "Pee[K]")
@@ -75,6 +97,8 @@ return {
           -- map("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
           map("<leader>rn", "<cmd>Lspsaga rename<CR>", "[R]e[n]ame")
 
+          map("<leader>o", "<cmd>Lspsaga outline<CR>", "Show [O]utline", { "n", "x", "o" })
+
           -- Execute a code action, usually your cursor needs to be on top of an error
           -- or a suggestion from your LSP for this to activate.
           -- map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction", { "n", "x" })
@@ -95,17 +119,12 @@ return {
           --  For example, in C this would take you to the header.
           map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
 
-
-          -- vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
-          -- vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
-          -- vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
           -- vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts)
           -- vim.keymap.set('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
           -- vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
           -- vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
           -- vim.keymap.set('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
           -- vim.keymap.set({'n', 'x'}, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
-          -- vim.keymap.set('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
 
           -- This function resolves a difference between neovim nightly (version 0.11) and stable (version 0.10)
           ---@param client vim.lsp.Client
@@ -205,12 +224,9 @@ return {
       --  By default, Neovim doesn't support everything that is in the LSP specification.
       --  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
       --  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
+      -- local capabilities = vim.lsp.protocol.make_client_capabilities()
+      -- capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
 
-      -- Enable the following language servers
-      --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
-      --
       --  Add any additional override configuration in the following tables. Available keys are:
       --  - cmd (table): Override the default command used to start the server
       --  - filetypes (table): Override the default list of associated filetypes for the server
@@ -218,107 +234,85 @@ return {
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        html = {},
-        jsonls = {},
-        clangd = {},
-        pyright = {},
-        ts_ls = {
-          init_options = {
-            plugins = {
-              {
-                name = "@vue/typescript-plugin",
-                location = vim.fn.stdpath("data") ..
-                    '/mason/packages/vue-language-server/node_modules/@vue/language-server',
-                languages = { "vue" },
+        mason = {
+          html = {},
+          jsonls = {},
+          clangd = {},
+          pyright = {},
+          ts_ls = {
+            init_options = {
+              plugins = {
+                {
+                  name = "@vue/typescript-plugin",
+                  location = vim.fn.stdpath("data") ..
+                      "/mason/packages/vue-language-server/node_modules/@vue/language-server",
+                  languages = { "vue" },
+                },
+              },
+            },
+            filetypes = {
+              "typescript",
+              "javascript",
+              "javascriptreact",
+              "typescriptreact",
+              "vue"
+            },
+          },
+
+          vue_ls = {},
+
+          lua_ls = {
+            settings = {
+              Lua = {
+                completion = {
+                  callSnippet = "Replace",
+                },
               },
             },
           },
-          filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
         },
-
-        volar = {},
-
-        lua_ls = {
-          settings = {
-            Lua = {
-              completion = {
-                callSnippet = "Replace",
-              },
-            },
-          },
-        },
+        others = {}
       }
 
       -- Ensure the servers and tools above are installed
-      --
-      -- `mason` had to be setup earlier: to configure its options see the
-      -- `dependencies` table for `nvim-lspconfig` above.
-      local ensure_installed = vim.tbl_keys(servers or {})
+      local ensure_installed = vim.tbl_keys(servers.mason or {})
       vim.list_extend(ensure_installed, {
-        "stylua", -- Used to format Lua code
+        "stylua",
       })
       require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
+      -- Either merge all additional server configs from the `servers.mason` and `servers.others` tables
+      -- to the default language server configs as provided by nvim-lspconfig or
+      -- define a custom server config that's unavailable on nvim-lspconfig.
+      for server, config in pairs(vim.tbl_extend('keep', servers.mason, servers.others)) do
+        if not vim.tbl_isempty(config) then
+          vim.lsp.config(server, config)
+        end
+      end
+
       require("mason-lspconfig").setup({
         ensure_installed = {},
-        automatic_installation = false,
-        handlers = {
-          function(server_name)
-            local server = servers[server_name] or {}
-            -- This handles overriding only values explicitly passed
-            -- by the server configuration above. Useful when disabling
-            -- certain features of an LSP
-            server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-            require("lspconfig")[server_name].setup(server)
-          end,
-        },
-      })
-    end,
-  },
-  {
-    "nvimdev/lspsaga.nvim",
-    event = "LspAttach",
-    config = function()
-      require("lspsaga").setup({
-        outline = {
-          win_position = "left",
-        },
-        symbol_in_winbar = {
-          enable = true,
-        },
-        lightbulb = {
-          enable = false,
-          virtual_text = false,
-        },
-        definition = {
-          keys = {
-            vsplit = "<C-v>",
-            split = "<C-s>",
-            tabe = "<C-t>",
-          }
-        }
-      })
-      vim.keymap.set({ "n", "x", "o" }, "<leader>o", "<cmd>Lspsaga outline<CR>", { desc = "Show [O]utline" })
-    end,
-    dependencies = {
-      'nvim-treesitter/nvim-treesitter',
-      'nvim-tree/nvim-web-devicons',
-    },
-  },
-  {
-    "onsails/lspkind.nvim",
-    config = function()
-      local lspkind = require("lspkind")
-      lspkind.init({
-        symbol_map = {
-          Copilot = "",
-          Minuet = "",
-          -- CodeCompanion = "",
-        },
+        automatic_enable = true
       })
 
-      vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
-      vim.api.nvim_set_hl(0, "CmpItemKindMinuet", { fg = "#6CC644" })
-    end
+      if not vim.tbl_isempty(servers.others) then
+        vim.lsp.enable(vim.tbl_keys(servers.others))
+      end
+    end,
   },
+  -- {
+  --   "onsails/lspkind.nvim",
+  --   config = function()
+  --     local lspkind = require("lspkind")
+  --     lspkind.init({
+  --       symbol_map = {
+  --         Copilot = "",
+  --         Minuet = "",
+  --       },
+  --     })
+  --
+  --     vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
+  --     vim.api.nvim_set_hl(0, "CmpItemKindMinuet", { fg = "#6CC644" })
+  --   end
+  -- },
 }

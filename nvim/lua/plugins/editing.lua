@@ -2,7 +2,7 @@ return {
   {
     "andymass/vim-matchup",
     event = "BufReadPost",
-    config = function()
+    init = function()
       vim.api.nvim_set_hl(0, "MatchParen", { bg = "green" })
     end
   },
@@ -14,13 +14,12 @@ return {
         version = false,
       },
       {
-        -- for treesitter textobjects to be defined.
         "nvim-treesitter/nvim-treesitter-textobjects",
       },
     },
     config = function()
-      local spec_treesitter = require('mini.ai').gen_spec.treesitter
-      local gen_ai_spec = require('mini.extra').gen_ai_spec
+      local spec_treesitter = require("mini.ai").gen_spec.treesitter
+      local gen_ai_spec = require("mini.extra").gen_ai_spec
       local get_find_pattern = function(pattern)
         return function(line, init)
           local from, to = line:find(pattern, init)
@@ -29,21 +28,21 @@ return {
       end
       local get_pattern_textobj_spec = function(pattern)
         return function(ai_type)
-          if ai_type == 'i' then
+          if ai_type == "i" then
             return { pattern }
           end
-          return { get_find_pattern(pattern), { '^().*()$' } }
+          return { get_find_pattern(pattern), { "^().*()$" } }
         end
       end
       require("mini.ai").setup({
         custom_textobjects = {
           -- Function definition
-          F = spec_treesitter({ a = '@function.outer', i = '@function.inner' }),
+          F = spec_treesitter({ a = "@function.outer", i = "@function.inner" }),
 
           -- the nearest enclosing conditional or loop
           o = spec_treesitter({
-            a = { "@conditional.outer", '@loop.outer' },
-            i = { "@conditional.inner", '@loop.inner' },
+            a = { "@conditional.outer", "@loop.outer" },
+            i = { "@conditional.inner", "@loop.inner" },
           }),
 
           -- variable
@@ -83,34 +82,31 @@ return {
   },
   {
     "echasnovski/mini.operators",
-    config = function()
-      require("mini.operators").setup()
-    end,
+    opts = {},
     version = false
   },
+  -- {
+  --   "echasnovski/mini.pairs",
+  --   opts = {},
+  --   version = false
+  -- },
   {
     "echasnovski/mini.splitjoin",
-    config = function()
-      require("mini.splitjoin").setup()
-    end,
+    opts = {},
     version = false
   },
   {
     "echasnovski/mini.surround",
-    config = function()
-      require("mini.surround").setup({
-        respect_selection_type = true
-      })
-    end,
+    opts = {
+      respect_selection_type = true
+    },
     version = false
   },
   {
     "Goose97/timber.nvim",
     version = "*",
     event = "VeryLazy",
-    config = function()
-      require("timber").setup({})
-    end
+    opts = {}
   },
   {
     "nvim-treesitter/nvim-treesitter",
@@ -140,15 +136,7 @@ return {
           "yaml",
         },
 
-        -- Install parsers synchronously (only applied to `ensure_installed`)
-        sync_install = false,
-
-        -- Automatically install missing parsers when entering buffer
-        -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
         auto_install = true,
-
-        ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
-        -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
 
         indent = {
           enable = true,
@@ -157,7 +145,6 @@ return {
         highlight = {
           enable = true,
 
-          -- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
           disable = function(lang, buf)
             local max_filesize = 100 * 1024 -- 100 KB
             local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
@@ -166,10 +153,6 @@ return {
             end
           end,
 
-          -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-          -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-          -- Using this option may slow down your editor, and you may see some duplicate highlights.
-          -- Instead of true it can also be a list of languages
           additional_vim_regex_highlighting = false,
         },
 
@@ -309,42 +292,6 @@ return {
     end
   },
   {
-    "olimorris/codecompanion.nvim",
-    config = true,
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-treesitter/nvim-treesitter",
-      {
-        "MeanderingProgrammer/render-markdown.nvim",
-        ft = { "markdown", "codecompanion" }
-      },
-    },
-    opts = {
-      strategies = {
-        chat = {
-          adapter = "gemini",
-        },
-        inline = {
-          adapter = "gemini",
-        },
-        cmd = {
-          adapter = "gemini",
-        }
-      },
-      adapters = {
-        gemini = function()
-          return require("codecompanion.adapters").extend("gemini", {
-            schema = {
-              model = {
-                default = "gemini-2.5-pro-exp-03-25",
-              },
-            },
-          })
-        end,
-      },
-    }
-  },
-  {
     "RRethy/nvim-treesitter-textsubjects",
   },
   {
@@ -369,7 +316,6 @@ return {
     opts = {
       notify_on_error = false,
       format_on_save = function(bufnr)
-        -- Check if locally or globally disabled.
         if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
           return
         end
@@ -379,6 +325,7 @@ return {
         if bufname:match("/node_modules/") then
           return
         end
+
         -- Disable "format_on_save lsp_fallback" for languages that don't
         -- have a well standardized coding style. You can add additional
         -- languages here or re-enable it for the disabled ones.
@@ -402,7 +349,6 @@ return {
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
-        -- You can use 'stop_after_first' to run the first available formatter from the list
         javascript = { "prettier", "prettierd", stop_after_first = true },
         typescript = { "prettier", "prettierd", stop_after_first = true },
       },
@@ -411,7 +357,7 @@ return {
       },
     },
     init = function()
-      vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
+      vim.o.formatexpr = "v:lua.require('conform').formatexpr()"
       vim.api.nvim_create_user_command("FormatDisable", function(args)
         if args.bang then
           -- FormatDisable! will disable formatting just for this buffer
@@ -433,75 +379,68 @@ return {
   },
   {
     "Wansmer/sibling-swap.nvim",
-    config = function()
-      require("sibling-swap").setup({
-        allowed_separators = {
-          ",",
-          ";",
-          "and",
-          "or",
-          "&&",
-          "&",
-          "||",
-          "|",
-          "==",
-          "===",
-          "!=",
-          "!==",
-          "-",
-          "+",
-          ["<"] = ">",
-          ["<="] = ">=",
-          [">"] = "<",
-          [">="] = "<=",
-        },
-        use_default_keymaps = true,
-        -- Highlight recently swapped node. Can be boolean or table
-        -- If table: { ms = 500, hl_opts = { link = 'IncSearch' } }
-        -- `hl_opts` is a `val` from `nvim_set_hl()`
-        highlight_node_at_cursor = true,
-        -- keybinding for movements to right or left (and up or down, if `allow_interline_swaps` is true)
-        -- (`<C-,>` and `<C-.>` may not map to control chars at system level, so are sent by certain terminals as just `,` and `.`. In this case, just add the mappings you want.)
-        keymaps = {
-          ["g>"] = "swap_with_right",
-          ["g<"] = "swap_with_left",
-        },
-        ignore_injected_langs = false,
-        -- allow swaps across lines
-        allow_interline_swaps = true,
-        -- swaps interline siblings without separators (no recommended, helpful for swaps html-like attributes)
-        interline_swaps_without_separator = false,
-        -- Fallbacks for tiny settings for langs and nodes. See #fallback
-        fallback = {},
-      })
-    end,
+    opts = {
+      allowed_separators = {
+        ",",
+        ";",
+        "and",
+        "or",
+        "&&",
+        "&",
+        "||",
+        "|",
+        "==",
+        "===",
+        "!=",
+        "!==",
+        "-",
+        "+",
+        ["<"] = ">",
+        ["<="] = ">=",
+        [">"] = "<",
+        [">="] = "<=",
+      },
+      use_default_keymaps = true,
+      -- Highlight recently swapped node. Can be boolean or table
+      -- If table: { ms = 500, hl_opts = { link = "IncSearch" } }
+      -- `hl_opts` is a `val` from `nvim_set_hl()`
+      highlight_node_at_cursor = true,
+      -- keybinding for movements to right or left (and up or down, if `allow_interline_swaps` is true)
+      -- (`<C-,>` and `<C-.>` may not map to control chars at system level, so are sent by certain terminals as just `,` and `.`. In this case, just add the mappings you want.)
+      keymaps = {
+        ["g>"] = "swap_with_right",
+        ["g<"] = "swap_with_left",
+      },
+      ignore_injected_langs = false,
+      -- allow swaps across lines
+      allow_interline_swaps = true,
+      -- swaps interline siblings without separators (no recommended, helpful for swaps html-like attributes)
+      interline_swaps_without_separator = false,
+      -- Fallbacks for tiny settings for langs and nodes. See #fallback
+      fallback = {},
+    }
   },
   {
     "windwp/nvim-autopairs",
     event = "InsertEnter",
-    config = function()
-      require('nvim-autopairs').setup({
-        enable_check_bracket_line = false
-      })
-    end,
+    opts = {
+      enable_check_bracket_line = false
+    },
   },
   {
     "windwp/nvim-ts-autotag",
     event = { "BufReadPre", "BufNewFile" },
-    config = function()
-      require('nvim-ts-autotag').setup({
-        opts = {
-          -- Defaults
-          enable_close = true,          -- Auto close tags
-          enable_rename = true,         -- Auto rename pairs of tags
-          enable_close_on_slash = false -- Auto close on trailing </
-        },
-        per_filetype = {
-          ["html"] = {
-            enable_close = false
-          }
+    opts = {
+      opts = {
+        enable_close = true,          -- Auto close tags
+        enable_rename = true,         -- Auto rename pairs of tags
+        enable_close_on_slash = false -- Auto close on trailing </
+      },
+      per_filetype = {
+        ["html"] = {
+          enable_close = false
         }
-      })
-    end
+      }
+    }
   },
 }

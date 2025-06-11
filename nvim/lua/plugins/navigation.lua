@@ -7,26 +7,22 @@ return {
       { "e", "<cmd>lua require('spider').motion('e')<CR>", mode = { "n", "o", "x" } },
       { "b", "<cmd>lua require('spider').motion('b')<CR>", mode = { "n", "o", "x" } },
     },
-    config = function()
-      require("spider").setup({
-        skipInsignificantPunctuation = false,
-        consistentOperatorPending = false, -- see "Consistent Operator-pending Mode" in the README
-        subwordMovement = true,
-        customPatterns = {},               -- check "Custom Movement Patterns" in the README for details
-      })
-    end
+    opts = {
+      skipInsignificantPunctuation = false,
+      consistentOperatorPending = false,
+      subwordMovement = true,
+      customPatterns = {},
+    }
   },
   {
     "echasnovski/mini.bracketed",
-    config = function()
-      require("mini.bracketed").setup({
-        comment = { suffix = "" },
-        diagnostic = { suffix = "" },
-        file = { suffix = "" },
-        indent = { suffix = "" },
-        oldfile = { suffix = "" },
-      })
-    end,
+    opts = {
+      comment = { suffix = "" },
+      diagnostic = { suffix = "" },
+      file = { suffix = "" },
+      indent = { suffix = "" },
+      oldfile = { suffix = "" },
+    },
     version = false
   },
   {

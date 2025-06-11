@@ -20,6 +20,10 @@ vim.keymap.set("n", "<S-Right>", "<cmd>tabnext<CR>",
 vim.keymap.set("n", "<S-Left>", "<cmd>tabprev<CR>",
   { silent = true, noremap = true, desc = "Switch to previous tab" })
 
+-- Make C-u and C-d centre after movement
+vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Centre cursor after moving down half-page" })
+vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Centre cursor after moving up half-page" })
+
 -- use <leader>, to clear search highlight
 vim.keymap.set("n", "<leader>,", "<cmd>nohlsearch<CR>", { desc = "Clear search highlight" })
 

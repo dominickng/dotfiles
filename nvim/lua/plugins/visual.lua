@@ -7,32 +7,30 @@ return {
   },
   {
     "echasnovski/mini.basics",
-    config = function()
-      require("mini.basics").setup({
-        options = {
-          basic = false,
-          extra_ui = false,
-          win_borders = 'double',
-        },
-        mappings = {
-          basic = false,
-          option_toggle_prefix = [[|]],
-          windows = false,
-          move_with_alt = false,
-        },
-        autocommands = {
-          basic = false,
-          relnum_in_visual_mode = false
-        }
-      })
-    end,
+    opts = {
+      options = {
+        basic = false,
+        extra_ui = false,
+        win_borders = "double",
+      },
+      mappings = {
+        basic = false,
+        option_toggle_prefix = [[|]],
+        windows = false,
+        move_with_alt = false,
+      },
+      autocommands = {
+        basic = false,
+        relnum_in_visual_mode = false
+      }
+    },
     version = false
   },
   {
     "echasnovski/mini.cursorword",
     config = function()
       _G.cursorword_blocklist = function()
-        local curword = vim.fn.expand('<cword>')
+        local curword = vim.fn.expand("<cword>")
         local filetype = vim.bo.filetype
 
         local blocklist = {}
@@ -71,7 +69,7 @@ return {
 
         vim.b.minicursorword_disable = vim.tbl_contains(blocklist, curword)
       end
-      vim.cmd('au CursorMoved * lua _G.cursorword_blocklist()')
+      vim.cmd("au CursorMoved * lua _G.cursorword_blocklist()")
       require("mini.cursorword").setup()
 
       vim.api.nvim_set_hl(0, "MiniCursorword", { italic = true, bg = "#2F4640" })
@@ -93,15 +91,14 @@ return {
   {
     "echasnovski/mini.hipatterns",
     config = function()
-      local hipatterns = require('mini.hipatterns')
+      local hipatterns = require("mini.hipatterns")
       hipatterns.setup({
         highlighters = {
-          fixme     = { pattern = '%f[%w]()FIXME()%f[%W]', group = 'MiniHipatternsFixme' },
-          hack      = { pattern = '%f[%w]()HACK()%f[%W]', group = 'MiniHipatternsHack' },
-          todo      = { pattern = '%f[%w]()TODO()%f[%W]', group = 'MiniHipatternsTodo' },
-          note      = { pattern = '%f[%w]()NOTE()%f[%W]', group = 'MiniHipatternsNote' },
+          fixme     = { pattern = "%f[%w]()FIXME()%f[%W]", group = "MiniHipatternsFixme" },
+          hack      = { pattern = "%f[%w]()HACK()%f[%W]", group = "MiniHipatternsHack" },
+          todo      = { pattern = "%f[%w]()TODO()%f[%W]", group = "MiniHipatternsTodo" },
+          note      = { pattern = "%f[%w]()NOTE()%f[%W]", group = "MiniHipatternsNote" },
 
-          -- Highlight hex color strings (`#rrggbb`) using that color
           hex_color = hipatterns.gen_highlighter.hex_color(),
         }
       })
@@ -110,9 +107,7 @@ return {
   },
   {
     "echasnovski/mini.starter",
-    config = function()
-      require("mini.starter").setup({})
-    end,
+    opts = {},
     version = false
   },
   {
@@ -152,13 +147,19 @@ return {
     },
     ---@module "render-markdown"
     ---@type render.md.UserConfig
-    opts = {},
+    opts = {
+      completions = {
+        blink = {
+          enabled = true
+        }
+      },
+    },
   },
   {
     "nvim-lualine/lualine.nvim",
     config = function()
       -- local function filename()
-      --   return require('lspsaga.symbol.winbar').get_bar()
+      --   return require("lspsaga.symbol.winbar").get_bar()
       -- end
       local colors = require("solarized-osaka.colors").setup()
 
@@ -192,7 +193,12 @@ return {
               newfile_status = false,
               path = 4,
               shorting_target = 40, -- Shortens path to leave 40 spaces in the window
-              symbols = { modified = "[+]", readonly = "[-]", unnamed = "[No Name]", newfile = "[New]" }
+              symbols = {
+                modified = "[+]",
+                readonly = "[-]",
+                unnamed = "[No Name]",
+                newfile = "[New]"
+              }
             },
             {
               require("nvim-possession").status,
@@ -228,6 +234,11 @@ return {
                 lsp_client_name_enddelay = 1000
               },
               spinner_symbols = { "🌑 ", "🌒 ", "🌓 ", "🌔 ", "🌕 ", "🌖 ", "🌗 ", "🌘 " },
+            },
+            {
+              require("minuet.lualine"),
+              display_name = "provider",
+              display_on_idle = true,
             },
             -- "copilot",
             "encoding",
@@ -268,28 +279,22 @@ return {
           lualine_a = {
             {
               "tabs",
-              tab_max_length = 50,             -- Maximum width of each tab. The content will be shorten dynamically (example: apple/orange -> a/orange)
-              max_length = vim.fn.winwidth(0), -- Maximum width of tabs component.
-              -- Note:
-              -- It can also be a function that returns
-              -- the value of `max_length` dynamically.
-              mode = 2, -- 0: Shows tab_nr
+              tab_max_length = 50,
+              max_length = vim.fn.winwidth(0),
+              -- 0: Shows tab_nr
               -- 1: Shows tab_name
               -- 2: Shows tab_nr + tab_name
+              mode = 2,
 
-              path = 3, -- 0: just shows the filename
+              -- 0: just shows the filename
               -- 1: shows the relative path and shorten $HOME to ~
               -- 2: shows the full path
               -- 3: shows the full path and shorten $HOME to ~
+              path = 1,
 
-              -- Automatically updates active tab color to match color of other components (will be overidden if buffers_color is set)
-              use_mode_colors = false,
+              use_mode_colors = true,
 
-              show_modified_status = false, -- Shows a symbol next to the tab name if the file has been modified.
-              symbols = {
-                modified = "[+]",           -- Text to show when the file is modified.
-              },
-
+              show_modified_status = false,
               fmt = function(name, context)
                 -- Show + if buffer is modified in tab
                 local buflist = vim.fn.tabpagebuflist(context.tabnr)
