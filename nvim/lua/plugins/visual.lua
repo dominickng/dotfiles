@@ -280,7 +280,7 @@ return {
             {
               "tabs",
               tab_max_length = 50,
-              max_length = vim.fn.winwidth(0),
+              max_length = vim.o.columns,
               -- 0: Shows tab_nr
               -- 1: Shows tab_name
               -- 2: Shows tab_nr + tab_name
