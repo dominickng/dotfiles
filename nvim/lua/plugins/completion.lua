@@ -97,10 +97,7 @@ return {
                 },
               },
               treesitter = { "lsp" },
-            }
-          },
-          window = {
-            max_width = 150,
+            },
             max_height = 30,
           },
         },

@@ -3,7 +3,69 @@ return {
     "altermo/ultimate-autopair.nvim",
     event = { "InsertEnter" },
     branch = "v0.6",
-    opts = {},
+    opts = {
+      extensions = {
+        alpha = {
+          after = true
+        }
+      },
+    },
+  },
+  {
+    "AndrewRadev/switch.vim",
+    dependencies = {
+      {
+        "monaqa/dial.nvim",
+        dependencies = {
+          "nvim-lua/plenary.nvim",
+        }
+      },
+    },
+    config = function()
+      vim.g.switch_mapping = ""
+      local fk = [=[\<\(\l\)\(\l\+\(\u\l\+\)\+\)\>]=]
+      local fv = [=[\=toupper(submatch(1)) . submatch(2)]=]
+      local sk = [=[\<\(\u\l\+\)\(\u\l\+\)\+\>]=]
+      local sv = [=[\=tolower(substitute(submatch(0), '\(\l\)\(\u\)', '\1_\2', 'g'))]=]
+      local tk = [=[\<\(\l\+\)\(_\l\+\)\+\>]=]
+      local tv = [=[\U\0]=]
+      local fok = [=[\<\(\u\+\)\(_\u\+\)\+\>]=]
+      local fov = [=[\=tolower(substitute(submatch(0), '_', '-', 'g'))]=]
+      local fik = [=[\<\(\l\+\)\(-\l\+\)\+\>]=]
+      local fiv = [=[\=substitute(submatch(0), '-\(\l\)', '\u\1', 'g')]=]
+      vim.g['switch_custom_definitions'] = {
+        vim.fn['switch#NormalizedCaseWords'] { 'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday' },
+        vim.fn['switch#NormalizedCase'] { 'yes', 'no' },
+        vim.fn['switch#NormalizedCase'] { 'on', 'off' },
+        vim.fn['switch#NormalizedCase'] { 'left', 'right' },
+        vim.fn['switch#NormalizedCase'] { 'up', 'down' },
+        vim.fn['switch#NormalizedCase'] { 'enable', 'disable' },
+        { '==', '!=' },
+        {
+          [fk] = fv,
+          [sk] = sv,
+          [tk] = tv,
+          [fok] = fov,
+          [fik] = fiv,
+        },
+      }
+      vim.keymap.set({ "n", "x" }, "<C-a>", function()
+        vim.cmd [[
+        :if !switch#Switch() | lua require("dial.map").manipulate("increment", "normal")
+        :endif
+        ]]
+      end, {
+        desc = "Switch variant or increment number/date",
+      })
+      vim.keymap.set({ "n", "x" }, "<C-x>", function()
+        vim.cmd [[
+        :if !switch#Switch({"reverse": 1}) | lua require("dial.map").manipulate("decrement", "normal")
+        :endif
+        ]]
+      end, {
+        desc = "Switch reverse variant or decrement number/date",
+      })
+    end
   },
   {
     "andymass/vim-matchup",
@@ -254,14 +316,14 @@ return {
         local current_node = vim.treesitter.get_node({ ignore_injections = false })
         jump_to_node(current_node, false)
       end, {
-        desc = "Jump to the start of the current function or method",
+        desc = "Jump to the start of the current function or [m]ethod",
       })
 
       vim.keymap.set({ "n", "x" }, "]M", function()
         local current_node = vim.treesitter.get_node({ ignore_injections = false })
         jump_to_node(current_node, true)
       end, {
-        desc = "Jump to the end of the current function",
+        desc = "Jump to the end of the current function or [m]ethod",
       })
 
       require("nvim-treesitter.configs").setup({
@@ -382,6 +444,9 @@ return {
         desc = "Re-enable autoformat-on-save",
       })
     end,
+  },
+  {
+    "tpope/vim-abolish",
   },
   {
     "Wansmer/sibling-swap.nvim",
