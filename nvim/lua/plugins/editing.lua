@@ -18,7 +18,92 @@ return {
         "monaqa/dial.nvim",
         dependencies = {
           "nvim-lua/plenary.nvim",
-        }
+        },
+        opts = function()
+          local augend = require("dial.augend")
+
+          local logical_alias = augend.constant.new({
+            elements = { "&&", "||" },
+            word = false,
+            cyclic = true,
+          })
+
+          return {
+            dials_by_ft = {
+              css = "css",
+              vue = "vue",
+              javascript = "typescript",
+              typescript = "typescript",
+              typescriptreact = "typescript",
+              javascriptreact = "typescript",
+              json = "json",
+              lua = "lua",
+              markdown = "markdown",
+              sass = "css",
+              scss = "css",
+              python = "python",
+            },
+            groups = {
+              default = {
+                augend.integer.alias.decimal,  -- nonnegative decimal number (0, 1, 2, 3, ...)
+                -- augend.integer.alias.decimal_int, -- nonnegative and negative decimal number
+                augend.integer.alias.hex,      -- nonnegative hex number  (0x01, 0x1a1f, etc.)
+                augend.date.alias["%Y/%m/%d"], -- date (2022/02/19, etc.)
+                augend.constant.alias.bool,    -- boolean value (true <-> false)
+                logical_alias,
+              },
+              vue = {
+                augend.constant.new({ elements = { "let", "const" } }),
+                augend.hexcolor.new({ case = "lower" }),
+                augend.hexcolor.new({ case = "upper" }),
+              },
+              typescript = {
+                augend.constant.new({ elements = { "let", "const" } }),
+              },
+              css = {
+                augend.hexcolor.new({
+                  case = "lower",
+                }),
+                augend.hexcolor.new({
+                  case = "upper",
+                }),
+              },
+              markdown = {
+                augend.constant.new({
+                  elements = { "[ ]", "[x]" },
+                  word = false,
+                  cyclic = true,
+                }),
+                augend.misc.alias.markdown_header,
+              },
+              json = {
+                augend.semver.alias.semver, -- versioning (v1.1.2)
+              },
+              lua = {
+                augend.constant.new({
+                  elements = { "and", "or" },
+                  word = true,   -- if false, "sand" is incremented into "sor", "doctor" into "doctand", etc.
+                  cyclic = true, -- "or" is incremented into "and".
+                }),
+              },
+              python = {
+                augend.constant.new({
+                  elements = { "and", "or" },
+                }),
+              },
+            },
+          }
+        end,
+        config = function(_, opts)
+          -- copy defaults to each group
+          for name, group in pairs(opts.groups) do
+            if name ~= "default" then
+              vim.list_extend(group, opts.groups.default)
+            end
+          end
+          require("dial.config").augends:register_group(opts.groups)
+          vim.g.dials_by_ft = opts.dials_by_ft
+        end,
       },
     },
     config = function()
@@ -33,14 +118,16 @@ return {
       local fov = [=[\=tolower(substitute(submatch(0), '_', '-', 'g'))]=]
       local fik = [=[\<\(\l\+\)\(-\l\+\)\+\>]=]
       local fiv = [=[\=substitute(submatch(0), '-\(\l\)', '\u\1', 'g')]=]
-      vim.g['switch_custom_definitions'] = {
-        vim.fn['switch#NormalizedCaseWords'] { 'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday' },
-        vim.fn['switch#NormalizedCase'] { 'yes', 'no' },
-        vim.fn['switch#NormalizedCase'] { 'on', 'off' },
-        vim.fn['switch#NormalizedCase'] { 'left', 'right' },
-        vim.fn['switch#NormalizedCase'] { 'up', 'down' },
-        vim.fn['switch#NormalizedCase'] { 'enable', 'disable' },
-        { '==', '!=' },
+      vim.g["switch_custom_definitions"] = {
+        vim.fn["switch#NormalizedCaseWords"] { "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday" },
+        vim.fn["switch#NormalizedCaseWords"] { "first", "second", "third", "fourth", "fifth", "sixth", "seventh", "eighth", "ninth", "tenth" },
+        vim.fn["switch#NormalizedCase"] { "yes", "no" },
+        vim.fn["switch#NormalizedCase"] { "on", "off" },
+        vim.fn["switch#NormalizedCase"] { "left", "right" },
+        vim.fn["switch#NormalizedCase"] { "up", "down" },
+        vim.fn["switch#NormalizedCase"] { "enable", "disable" },
+        vim.fn["switch#NormalizedCase"] { "true", "false" },
+        { "==", "!=" },
         {
           [fk] = fv,
           [sk] = sv,
@@ -359,6 +446,9 @@ return {
       })
     end
   },
+  -- {
+  --   "nvim-treesitter/nvim-treesitter-context",
+  -- },
   {
     "RRethy/nvim-treesitter-textsubjects",
   },
