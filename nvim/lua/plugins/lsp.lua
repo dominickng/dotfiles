@@ -235,10 +235,23 @@ return {
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         mason = {
+          bashls = {},
+          clangd = {},
+          cssls = {},
+          gh_actions_ls = {},
           html = {},
           jsonls = {},
-          clangd = {},
+          lua_ls = {
+            settings = {
+              Lua = {
+                completion = {
+                  callSnippet = "Replace",
+                },
+              },
+            },
+          },
           pyright = {},
+          terraformls = {},
           ts_ls = {
             init_options = {
               plugins = {
@@ -258,18 +271,7 @@ return {
               "vue"
             },
           },
-
           vue_ls = {},
-
-          lua_ls = {
-            settings = {
-              Lua = {
-                completion = {
-                  callSnippet = "Replace",
-                },
-              },
-            },
-          },
         },
         others = {}
       }
