@@ -186,8 +186,8 @@ Please generate unit tests for this code from buffer %d:
       vim.keymap.set({ "n", "v" }, "<Bslash>a", "<cmd>CodeCompanionActions<CR>",
         { noremap = true, silent = true, desc = "CodeCompanion [A]ctions" }
       )
-      vim.keymap.set({ "n", "v" }, "<Leader>h", "<cmd>CodeCompanionChat Toggle<CR>",
-        { noremap = true, silent = true, desc = "CodeCompanion C[h]at" }
+      vim.keymap.set({ "n", "v" }, "<Leader>a", "<cmd>CodeCompanionChat Toggle<CR>",
+        { noremap = true, silent = true, desc = "CodeCompanion Ch[a]t" }
       )
 
       vim.keymap.set("v", "ga", "<cmd>CodeCompanionChat Add<CR>",

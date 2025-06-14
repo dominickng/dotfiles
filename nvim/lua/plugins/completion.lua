@@ -1,7 +1,14 @@
 return {
   {
+    "saghen/blink.compat",
+    version = "2.*",
+    lazy = true,
+    opts = {},
+  },
+  {
     "saghen/blink.cmp",
     dependencies = {
+      "buschco/nvim-cmp-ts-tag-close",
       "rafamadriz/friendly-snippets",
       "folke/lazydev.nvim",
     },
@@ -65,10 +72,14 @@ return {
           },
           trigger = {
             prefetch_on_insert = false,
-            show_on_backspace_in_keyword = true,
+            show_on_blocked_trigger_characters = {},
+            show_on_x_blocked_trigger_characters = {},
           },
           list = {
-            preselect = false,
+            selection = {
+              auto_insert = true,
+              preselect = false
+            },
           },
           menu = {
             border = "single",
@@ -128,11 +139,16 @@ return {
         sources = {
           default = {
             "lsp",
+            "close_tags",
             "minuet",
             "path",
             "snippets"
           },
           providers = {
+            close_tags = {
+              name = "nvim-cmp-ts-tag-close",
+              module = "blink.compat.source",
+            },
             cmdline = {
               min_keyword_length = function(ctx)
                 if string.find(ctx.line, " ") == nil then

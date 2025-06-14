@@ -1,5 +1,11 @@
 return {
   {
+    "altermo/ultimate-autopair.nvim",
+    event = { "InsertEnter" },
+    branch = "v0.6",
+    opts = {},
+  },
+  {
     "andymass/vim-matchup",
     event = "BufReadPost",
     init = function()
@@ -420,27 +426,27 @@ return {
       fallback = {},
     }
   },
-  {
-    "windwp/nvim-autopairs",
-    event = "InsertEnter",
-    opts = {
-      enable_check_bracket_line = false
-    },
-  },
-  {
-    "windwp/nvim-ts-autotag",
-    event = { "BufReadPre", "BufNewFile" },
-    opts = {
-      opts = {
-        enable_close = true,          -- Auto close tags
-        enable_rename = true,         -- Auto rename pairs of tags
-        enable_close_on_slash = false -- Auto close on trailing </
-      },
-      per_filetype = {
-        ["html"] = {
-          enable_close = false
-        }
-      }
-    }
-  },
+  -- {
+  --   "windwp/nvim-autopairs",
+  --   event = "InsertEnter",
+  --   opts = {
+  --     enable_check_bracket_line = false
+  --   },
+  -- },
+  -- {
+  --   "windwp/nvim-ts-autotag",
+  --   event = { "BufReadPre", "BufNewFile" },
+  --   opts = {
+  --     opts = {
+  --       enable_close = true,          -- Auto close tags
+  --       enable_rename = true,         -- Auto rename pairs of tags
+  --       enable_close_on_slash = false -- Auto close on trailing </
+  --     },
+  --     per_filetype = {
+  --       ["html"] = {
+  --         enable_close = false
+  --       }
+  --     }
+  --   }
+  -- },
 }
