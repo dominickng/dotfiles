@@ -24,7 +24,13 @@ require("lazy").setup({
     enabled = false,
   },
 
-  checker = { enabled = true },
+  checker = {
+    notify = false,
+  },
 
-  install = { colorscheme = { "solarized-osaka" } },
+  install = {
+    colorscheme = {
+      "solarized-osaka"
+    }
+  },
 })
