@@ -32,7 +32,8 @@ vim.keymap.set("n", "*", "g*")
 vim.keymap.set("n", "#", "g#")
 
 -- Search inside visually highlighted text
-vim.keymap.set('x', 'g/', '<Esc>/\\%V', { silent = false, desc = 'Search inside visual selection' })
+vim.keymap.set("x", "/", "<Esc>/\\%V", { silent = false, desc = "Search forward inside visual selection" })
+vim.keymap.set("x", "?", "<Esc>?\\%V", { silent = false, desc = "Search backward inside visual selection" })
 
 -- select visual block after indent/unindent
 vim.keymap.set("v", "<", "<gv")
