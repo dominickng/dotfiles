@@ -105,21 +105,29 @@ return {
       end, { desc = "FZF [R]ecent files" })
       vim.keymap.set("v", "<Bslash>g", function()
         fzf.grep_visual()
-      end, { desc = "[G]rep" })
+      end, { desc = "[G]rep visual selection" })
       vim.keymap.set("n", "<Bslash>gr", function()
         fzf.live_grep()
       end, { desc = "[G]rep [W]ord" })
       vim.keymap.set("n", "<Bslash>gw", function()
         fzf.grep_cword()
-      end, { desc = "[G]rep [W]ord" })
+      end, { desc = "[G]rep [w]ord under cursor" })
+      vim.keymap.set("n", "<Bslash>gW", function()
+        fzf.grep_cWORD()
+      end, { desc = "[G]rep [W]ORD under cursor" })
 
-      vim.keymap.set({ "i" }, "<C-x><C-f>",
+      -- vim.keymap.set({ "i" }, "<C-x><C-f>",
+      --   function()
+      --     fzf.complete_file({
+      --       cmd = "rg --files",
+      --       winopts = { preview = { hidden = true } }
+      --     })
+      --   end, { silent = true, desc = "Fuzzy complete file" })
+      vim.keymap.set({ "n", "v", "i" }, "<C-x><C-f>",
         function()
-          fzf.complete_file({
-            cmd = "rg --files",
-            winopts = { preview = { hidden = true } }
-          })
-        end, { silent = true, desc = "Fuzzy complete file" })
+          fzf.complete_path()
+        end,
+        { silent = true, desc = "Fuzzy complete path" })
     end,
   },
 }

@@ -1,6 +1,3 @@
--- Save key strokes (now we do not need to press shift to enter command mode).
--- vim.keymap.set({ "n", "x" }, ";", ":")
-
 -- Turn the word under cursor to upper case
 vim.keymap.set("i", "<C-u>", "<Esc>viwUea", { desc = "Uppercase word under cursor" })
 

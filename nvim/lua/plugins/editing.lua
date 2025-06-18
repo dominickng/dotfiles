@@ -539,6 +539,9 @@ return {
     "tpope/vim-abolish",
   },
   {
+    "tpope/vim-ragtag",
+  },
+  {
     "Wansmer/sibling-swap.nvim",
     opts = {
       allowed_separators = {
