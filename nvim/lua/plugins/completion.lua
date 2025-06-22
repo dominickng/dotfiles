@@ -1,14 +1,7 @@
 return {
   {
-    "saghen/blink.compat",
-    version = "2.*",
-    lazy = true,
-    opts = {},
-  },
-  {
     "saghen/blink.cmp",
     dependencies = {
-      "buschco/nvim-cmp-ts-tag-close",
       "rafamadriz/friendly-snippets",
       "folke/lazydev.nvim",
     },
@@ -81,6 +74,7 @@ return {
               preselect = false
             },
           },
+
           menu = {
             border = "single",
             direction_priority = { "n", "s" },
@@ -134,18 +128,18 @@ return {
         },
 
         sources = {
-          default = {
-            "lsp",
-            "close_tags",
-            "minuet",
-            "path",
-            "snippets"
-          },
+          default = function(ctx)
+            local success, node = pcall(vim.treesitter.get_node)
+            if success and node and vim.tbl_contains({ "comment", "line_comment", "block_comment" }, node:type()) then
+              return { "buffer" }
+            elseif vim.bo.filetype == 'lua' then
+              return { "lsp", "path" }
+            else
+              return { "lsp", "minuet", "path", "snippets" }
+            end
+          end,
+
           providers = {
-            close_tags = {
-              name = "nvim-cmp-ts-tag-close",
-              module = "blink.compat.source",
-            },
             cmdline = {
               min_keyword_length = function(ctx)
                 if string.find(ctx.line, " ") == nil then
@@ -176,14 +170,22 @@ return {
               timeout_ms = 4000,
               score_offset = 0,
             },
+            path = {
+              opts = {
+                get_cwd = function(_)
+                  return vim.fn.getcwd()
+                end,
+              },
+            },
           },
           per_filetype = {
+            codecompanion = { "codecompanion" },
             gitcommit = { "lsp", "buffer", "path", "snippets" },
-            txt = { "lsp", "buffer", "path", "snippets" },
-            json = { "lsp", "buffer", "path", "snippets" },
-            markdown = { "lsp", "buffer", "path", "snippets" },
             help = { "lsp", "buffer", "path", "snippets" },
+            json = { "lsp", "buffer", "path", "snippets" },
             lua = { inherit_defaults = true, "lazydev" },
+            markdown = { "lsp", "buffer", "path", "snippets" },
+            txt = { "lsp", "buffer", "path", "snippets" },
           }
         },
 
@@ -191,7 +193,13 @@ return {
           implementation = "prefer_rust_with_warning",
           max_typos = function(keyword)
             return 0
-          end
+          end,
+          sorts = {
+            "exact",
+            -- defaults
+            "score",
+            "sort_text",
+          },
         }
       })
     end,
@@ -515,33 +523,81 @@ return {
   -- },
   {
     "milanglacier/minuet-ai.nvim",
-    opts = {
-      request_timeout = 4,
-      provider = "gemini",
-      provider_options = {
-        gemini = {
-          model = "gemini-2.5-flash",
-          optional = {
-            generationConfig = {
-              maxOutputTokens = 256,
-              thinkingConfig = {
-                thinkingBudget = 0,
-              },
+    dependencies = {
+      {
+        "Davidyz/VectorCode",
+        version = "*",
+        dependencies = { "nvim-lua/plenary.nvim" },
+        cmd = "VectorCode",
+      }
+    },
+    config = function()
+      require('vectorcode').setup {
+        -- number of retrieved documents
+        n_query = 1,
+      }
+      local has_vc, vectorcode_config = pcall(require, 'vectorcode.config')
+      local vectorcode_cacher = nil
+      if has_vc then
+        vectorcode_cacher = vectorcode_config.get_cacher_backend()
+      end
+
+      -- roughly equate to 2000 tokens for LLM
+      local RAG_Context_Window_Size = 8000
+
+      require("minuet").setup({
+        request_timeout = 4,
+        provider = "gemini",
+        provider_options = {
+          gemini = {
+            model = "gemini-2.5-flash",
+            system = {
+              template = '{{{prompt}}}\n{{{guidelines}}}\n{{{n_completion_template}}}\n{{{repo_context}}}',
+              repo_context =
+              [[9. Additional context from other files in the repository will be enclosed in <repo_context> tags. Each file will be separated by <file_separator> tags, containing its relative path and content.]],
             },
-            safetySettings = {
-              {
-                -- HARM_CATEGORY_HATE_SPEECH,
-                -- HARM_CATEGORY_HARASSMENT
-                -- HARM_CATEGORY_SEXUALLY_EXPLICIT
-                category = "HARM_CATEGORY_DANGEROUS_CONTENT",
-                -- BLOCK_NONE
-                threshold = "BLOCK_ONLY_HIGH",
+            chat_input = {
+              template =
+              '{{{repo_context}}}\n{{{language}}}\n{{{tab}}}\n<contextBeforeCursor>\n{{{context_before_cursor}}}<cursorPosition>\n<contextAfterCursor>\n{{{context_after_cursor}}}',
+              repo_context = function(_, _, _)
+                local prompt_message = ''
+                if has_vc then
+                  local cache_result = vectorcode_cacher.query_from_cache(0)
+                  for _, file in ipairs(cache_result) do
+                    prompt_message = prompt_message .. '<file_separator>' .. file.path .. '\n' .. file.document
+                  end
+                end
+
+                prompt_message = vim.fn.strcharpart(prompt_message, 0, RAG_Context_Window_Size)
+
+                if prompt_message ~= '' then
+                  prompt_message = '<repo_context>\n' .. prompt_message .. '\n</repo_context>'
+                end
+                return prompt_message
+              end,
+            },
+            optional = {
+              generationConfig = {
+                maxOutputTokens = 256,
+                thinkingConfig = {
+                  thinkingBudget = 0,
+                },
+              },
+              safetySettings = {
+                {
+                  -- HARM_CATEGORY_HATE_SPEECH,
+                  -- HARM_CATEGORY_HARASSMENT
+                  -- HARM_CATEGORY_SEXUALLY_EXPLICIT
+                  category = "HARM_CATEGORY_DANGEROUS_CONTENT",
+                  -- BLOCK_NONE
+                  threshold = "BLOCK_ONLY_HIGH",
+                },
               },
             },
           },
-        },
-      }
-    }
+        }
+      })
+    end,
   },
   {
     "xzbdmw/colorful-menu.nvim",

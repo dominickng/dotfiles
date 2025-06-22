@@ -3,9 +3,6 @@ return {
   --   "AndreM222/copilot-lualine"
   -- },
   {
-    "arkav/lualine-lsp-progress"
-  },
-  {
     "echasnovski/mini.basics",
     opts = {
       options = {
@@ -157,6 +154,11 @@ return {
   },
   {
     "nvim-lualine/lualine.nvim",
+    dependencies = {
+      {
+        "arkav/lualine-lsp-progress"
+      },
+    },
     config = function()
       -- local function filename()
       --   return require("lspsaga.symbol.winbar").get_bar()
@@ -222,11 +224,28 @@ return {
               separators = {
                 component = " ",
                 progress = " | ",
-                percentage = { pre = "", post = "%% " },
-                title = { pre = "", post = ": " },
-                lsp_client_name = { pre = "[", post = "]" },
-                spinner = { pre = "", post = "" },
-                message = { pre = "(", post = ")", commenced = "In Progress", completed = "Completed" },
+                percentage = {
+                  pre = "",
+                  post = "%% "
+                },
+                title = {
+                  pre = "",
+                  post = ": "
+                },
+                lsp_client_name = {
+                  pre = "[",
+                  post = "]"
+                },
+                spinner = {
+                  pre = "",
+                  post = ""
+                },
+                message = {
+                  pre = "(",
+                  post = ")",
+                  commenced = "In Progress",
+                  completed = "Completed"
+                },
               },
               timer = {
                 progress_enddelay = 500,
@@ -239,6 +258,9 @@ return {
               require("minuet.lualine"),
               display_name = "provider",
               display_on_idle = true,
+            },
+            {
+              require("codecompanion_lualine"),
             },
             -- "copilot",
             "encoding",
