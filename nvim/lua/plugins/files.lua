@@ -89,6 +89,9 @@ return {
             ["ctrl-j"] = "preview-page-down",
           },
         },
+        oldfiles = {
+          include_current_session = true,
+        },
       })
 
       vim.keymap.set("n", "<Bslash>f", function()
@@ -101,8 +104,17 @@ return {
         fzf.tabs()
       end, { desc = "FZF Buffers in [T]abs" })
       vim.keymap.set("n", "<Bslash>r", function()
+        fzf.resume()
+      end, { desc = "FZF [R]esume previous search" })
+      vim.keymap.set("n", "<Bslash>h", function()
+        fzf.help_tags()
+      end, { desc = "FZF [H]elp documentation" })
+      vim.keymap.set("n", "<Bslash>k", function()
+        fzf.keymaps()
+      end, { desc = "FZF [K]eymaps" })
+      vim.keymap.set("n", "<Bslash>e", function()
         fzf.oldfiles()
-      end, { desc = "FZF [R]ecent files" })
+      end, { desc = "FZF R[e]cent files" })
       vim.keymap.set("v", "<Bslash>g", function()
         fzf.grep_visual()
       end, { desc = "[G]rep visual selection" })
@@ -128,6 +140,17 @@ return {
           fzf.complete_path()
         end,
         { silent = true, desc = "Fuzzy complete path" })
+
+      -- Ctrl-R <reg> pastes contents of a register into fzf-lua window
+      local autogrp = vim.api.nvim_create_augroup("FZF", { clear = true })
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "fzf",
+        group = autogrp,
+        callback = function()
+          vim.api.nvim_set_keymap("t", "<C-r>", "getreg(nr2char(getchar()))",
+            { noremap = true, expr = true, silent = true })
+        end,
+      })
     end,
   },
 }

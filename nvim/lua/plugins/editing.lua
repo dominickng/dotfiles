@@ -253,7 +253,8 @@ return {
   {
     "echasnovski/mini.surround",
     opts = {
-      respect_selection_type = true
+      respect_selection_type = true,
+      search_method = "cover_or_next",
     },
     version = false
   },

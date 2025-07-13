@@ -53,6 +53,36 @@ vim.keymap.set("n", "<leader>P", '"+P', { desc = "Paste from system clipboard" }
 vim.keymap.set("v", "<leader>q", "gq", { desc = "Hard re-wrap paragraph" })
 vim.keymap.set("n", "<leader>q", "gqip", { desc = "Hard re-wrap paragraph" })
 
+-- cmdline convenience mappings
+vim.keymap.set("c", "<M-f>", "<S-Right>", { desc = "Jump forward a word" })
+vim.keymap.set("c", "<M-b>", "<S-Left>", { desc = "Jump backward a word" })
+vim.keymap.set("c", "<C-a>", "<Home>", { desc = "Jump to start of line" })
+vim.keymap.set("c", "<C-e>", "<end>", { desc = "Jump to end of line" })
+
+-- Use %%  to get the current file's directory in cmdline
+vim.keymap.set('c', '%%', function()
+  if vim.fn.getcmdtype() == ':' then
+    return vim.fn.expand '%:h'
+  else
+    return '%%'
+  end
+end, { expr = true, desc = 'Get the directory of the current file (cmdline) mode' })
+
+-- C-w deletes path components in cmdline (or otherwise deletes words)
+-- https://vim.fandom.com/wiki/Command_line_file_name_completion
+vim.cmd([[
+function! s:RemoveLastPathComponent()
+  let l:cmdlineBeforeCursor = strpart(getcmdline(), 0, getcmdpos() - 1)
+  let l:cmdlineAfterCursor = strpart(getcmdline(), getcmdpos() - 1)
+
+  let l:cmdlineRoot = fnamemodify(cmdlineBeforeCursor, ':r')
+  let l:result = (l:cmdlineBeforeCursor ==# l:cmdlineRoot ? substitute(l:cmdlineBeforeCursor, '\%(\\ \|[\\/]\@!\f\)\+[\\/ ]\=$\|.$', '', '') : l:cmdlineRoot)
+  call setcmdpos(strlen(l:result) + 1)
+  return l:result . l:cmdlineAfterCursor
+endfunction
+cnoremap <C-w> <C-\>e(<SID>RemoveLastPathComponent())<CR>
+]])
+
 -- Use ,d (or ,dd or ,dj or 20,dd) to delete a line without adding it to the
 -- yanked stack (also, in visual mode)
 -- vim.keymap.set("n", "<leader>d", '"_d', { desc = "Delete and throw away" })

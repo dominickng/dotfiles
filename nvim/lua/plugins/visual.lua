@@ -340,7 +340,6 @@ return {
   },
   {
     "y3owk1n/undo-glow.nvim",
-    version = "*",
     event = { "VeryLazy" },
     ---@type UndoGlow.Config
     opts = {

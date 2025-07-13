@@ -26,23 +26,31 @@ return {
         "nvimdev/lspsaga.nvim",
         event        = "LspAttach",
         opts         = {
-          outline = {
-            win_position = "left",
-          },
-          symbol_in_winbar = {
-            enable = true,
-          },
-          lightbulb = {
-            enable = false,
-            virtual_text = false,
-          },
           definition = {
             keys = {
               vsplit = "<C-v>",
               split = "<C-s>",
               tabe = "<C-t>",
             }
-          }
+          },
+          diagnostic = {
+            auto_preview = true,
+            extend_relatedInformation = true,
+          },
+          lightbulb = {
+            enable = false,
+            virtual_text = false,
+          },
+          outline = {
+            win_position = "left",
+          },
+          scroll_preview = {
+            scroll_down = '<C-j>',
+            scroll_up = '<C-k>',
+          },
+          symbol_in_winbar = {
+            enable = true,
+          },
         },
         dependencies = {
           "nvim-treesitter/nvim-treesitter",
