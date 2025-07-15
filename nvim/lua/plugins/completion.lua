@@ -2,6 +2,7 @@ return {
   {
     "saghen/blink.cmp",
     dependencies = {
+      "fang2hou/blink-copilot",
       "folke/lazydev.nvim",
       "moyiz/blink-emoji.nvim",
       "rafamadriz/friendly-snippets",
@@ -81,7 +82,7 @@ return {
             border = "single",
             direction_priority = { "n", "s" },
             draw = {
-              columns = { { "kind_icon" }, { "label", gap = 1 } },
+              columns = { { "kind_icon" }, { "label", "source_name", gap = 1 } },
               components = {
                 label = {
                   text = function(ctx)
@@ -89,6 +90,12 @@ return {
                   end,
                   highlight = function(ctx)
                     return require("colorful-menu").blink_components_highlight(ctx)
+                  end,
+                },
+                source_name = {
+                  text = function(ctx)
+                    if ctx.source_id == 'cmdline' then return end
+                    return ctx.source_name:sub(1, 7)
                   end,
                 },
               },
@@ -139,11 +146,17 @@ return {
             if success and node and vim.tbl_contains({ "comment", "line_comment", "block_comment" }, node:type()) then
               return { "buffer", "emoji" }
             else
-              return { "lsp", "minuet", "path", "snippets" }
+              return { "lsp", "copilot", "path", "snippets" }
             end
           end,
 
           providers = {
+            copilot = {
+              name = "copilot",
+              module = "blink-copilot",
+              score_offset = 0,
+              async = true,
+            },
             cmdline = {
               min_keyword_length = function(ctx)
                 if string.find(ctx.line, " ") == nil then
@@ -177,15 +190,15 @@ return {
                 end, items)
               end,
             },
-            minuet = {
-              name = "minuet",
-              module = "minuet.blink",
-              async = true,
-              -- Should match minuet.config.request_timeout * 1000,
-              -- since minuet.config.request_timeout is in seconds
-              timeout_ms = 4000,
-              score_offset = 0,
-            },
+            -- minuet = {
+            --   name = "minuet",
+            --   module = "minuet.blink",
+            --   async = true,
+            --   -- Should match minuet.config.request_timeout * 1000,
+            --   -- since minuet.config.request_timeout is in seconds
+            --   timeout_ms = 4000,
+            --   score_offset = 0,
+            -- },
             path = {
               opts = {
                 get_cwd = function(_)
@@ -220,98 +233,99 @@ return {
       })
     end,
   },
-  {
-    "milanglacier/minuet-ai.nvim",
-    dependencies = {
-      {
-        "Davidyz/VectorCode",
-        version = "*",
-        dependencies = { "nvim-lua/plenary.nvim" },
-        cmd = "VectorCode",
-      }
-    },
-    config = function()
-      require('vectorcode').setup {
-        -- number of retrieved documents
-        n_query = 1,
-      }
-      local has_vc, vectorcode_config = pcall(require, 'vectorcode.config')
-      local vectorcode_cacher = nil
-      if has_vc then
-        vectorcode_cacher = vectorcode_config.get_cacher_backend()
-      end
-
-      -- roughly equate to 2000 tokens for LLM
-      local RAG_Context_Window_Size = 8000
-
-      require("minuet").setup({
-        request_timeout = 4,
-        provider = "gemini",
-        provider_options = {
-          gemini = {
-            model = "gemini-2.5-flash",
-            system = {
-              template = '{{{prompt}}}\n{{{guidelines}}}\n{{{n_completion_template}}}\n{{{repo_context}}}',
-              repo_context =
-              [[9. Additional context from other files in the repository will be enclosed in <repo_context> tags. Each file will be separated by <file_separator> tags, containing its relative path and content.]],
-            },
-            chat_input = {
-              template =
-              '{{{repo_context}}}\n{{{language}}}\n{{{tab}}}\n<contextBeforeCursor>\n{{{context_before_cursor}}}<cursorPosition>\n<contextAfterCursor>\n{{{context_after_cursor}}}',
-              repo_context = function(_, _, _)
-                local prompt_message = ''
-                if has_vc then
-                  local cache_result = vectorcode_cacher.query_from_cache(0)
-                  for _, file in ipairs(cache_result) do
-                    prompt_message = prompt_message .. '<file_separator>' .. file.path .. '\n' .. file.document
-                  end
-                end
-
-                prompt_message = vim.fn.strcharpart(prompt_message, 0, RAG_Context_Window_Size)
-
-                if prompt_message ~= '' then
-                  prompt_message = '<repo_context>\n' .. prompt_message .. '\n</repo_context>'
-                end
-                return prompt_message
-              end,
-            },
-            optional = {
-              generationConfig = {
-                maxOutputTokens = 256,
-                thinkingConfig = {
-                  thinkingBudget = 0,
-                },
-              },
-              safetySettings = {
-                {
-                  -- HARM_CATEGORY_HATE_SPEECH,
-                  -- HARM_CATEGORY_HARASSMENT
-                  -- HARM_CATEGORY_SEXUALLY_EXPLICIT
-                  category = "HARM_CATEGORY_DANGEROUS_CONTENT",
-                  -- BLOCK_NONE
-                  threshold = "BLOCK_ONLY_HIGH",
-                },
-              },
-            },
-          },
-        }
-      })
-    end,
-  },
+  -- {
+  --   "milanglacier/minuet-ai.nvim",
+  --   dependencies = {
+  --     {
+  --       "Davidyz/VectorCode",
+  --       version = "*",
+  --       dependencies = { "nvim-lua/plenary.nvim" },
+  --       cmd = "VectorCode",
+  --     }
+  --   },
+  --   config = function()
+  --     require('vectorcode').setup {
+  --       -- number of retrieved documents
+  --       n_query = 1,
+  --     }
+  --     local has_vc, vectorcode_config = pcall(require, 'vectorcode.config')
+  --     local vectorcode_cacher = nil
+  --     if has_vc then
+  --       vectorcode_cacher = vectorcode_config.get_cacher_backend()
+  --     end
+  --
+  --     -- roughly equate to 2000 tokens for LLM
+  --     local RAG_Context_Window_Size = 8000
+  --
+  --     require("minuet").setup({
+  --       request_timeout = 4,
+  --       provider = "gemini",
+  --       provider_options = {
+  --         gemini = {
+  --           model = "gemini-2.5-flash",
+  --           system = {
+  --             template = '{{{prompt}}}\n{{{guidelines}}}\n{{{n_completion_template}}}\n{{{repo_context}}}',
+  --             repo_context =
+  --             [[9. Additional context from other files in the repository will be enclosed in <repo_context> tags. Each file will be separated by <file_separator> tags, containing its relative path and content.]],
+  --           },
+  --           chat_input = {
+  --             template =
+  --             '{{{repo_context}}}\n{{{language}}}\n{{{tab}}}\n<contextBeforeCursor>\n{{{context_before_cursor}}}<cursorPosition>\n<contextAfterCursor>\n{{{context_after_cursor}}}',
+  --             repo_context = function(_, _, _)
+  --               local prompt_message = ''
+  --               if has_vc then
+  --                 local cache_result = vectorcode_cacher.query_from_cache(0)
+  --                 for _, file in ipairs(cache_result) do
+  --                   prompt_message = prompt_message .. '<file_separator>' .. file.path .. '\n' .. file.document
+  --                 end
+  --               end
+  --
+  --               prompt_message = vim.fn.strcharpart(prompt_message, 0, RAG_Context_Window_Size)
+  --
+  --               if prompt_message ~= '' then
+  --                 prompt_message = '<repo_context>\n' .. prompt_message .. '\n</repo_context>'
+  --               end
+  --               return prompt_message
+  --             end,
+  --           },
+  --           optional = {
+  --             generationConfig = {
+  --               maxOutputTokens = 256,
+  --               thinkingConfig = {
+  --                 thinkingBudget = 0,
+  --               },
+  --             },
+  --             safetySettings = {
+  --               {
+  --                 -- HARM_CATEGORY_HATE_SPEECH,
+  --                 -- HARM_CATEGORY_HARASSMENT
+  --                 -- HARM_CATEGORY_SEXUALLY_EXPLICIT
+  --                 category = "HARM_CATEGORY_DANGEROUS_CONTENT",
+  --                 -- BLOCK_NONE
+  --                 threshold = "BLOCK_ONLY_HIGH",
+  --               },
+  --             },
+  --           },
+  --         },
+  --       }
+  --     })
+  --   end,
+  -- },
   {
     "xzbdmw/colorful-menu.nvim",
     opts = {}
   },
-  -- {
-  --   "zbirenbaum/copilot.lua",
-  --   cmd = "Copilot",
-  --   event = "InsertEnter",
-  --   config = function()
-  --     require("copilot").setup({
-  --       suggestion = { enabled = false },
-  --       panel = { enabled = false },
-  --     })
-  --   end
+  {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = function()
+      require("copilot").setup({
+        suggestion = { enabled = false },
+        panel = { enabled = false },
+      })
+    end
+  },
   -- },
   -- {
   --   "zbirenbaum/copilot-cmp",

@@ -260,16 +260,41 @@ return {
           },
           pyright = {},
           terraformls = {},
-          ts_ls = {
-            init_options = {
-              plugins = {
-                {
-                  name = "@vue/typescript-plugin",
-                  location = vim.fn.stdpath("data") ..
-                      "/mason/packages/vue-language-server/node_modules/@vue/language-server",
-                  languages = { "vue" },
+          vtsls = {
+            root_markers = { 'tsconfig.json', 'package.json', 'jsconfig.json', '.git' },
+            settings = {
+              complete_function_calls = true,
+              vtsls = {
+                enableMoveToFileCodeAction = true,
+                tsserver = {
+                  globalPlugins = {
+                    {
+                      name = "@vue/typescript-plugin",
+                      location = vim.fn.stdpath("data") ..
+                          "/mason/packages/vue-language-server/node_modules/@vue/language-server",
+                      languages = { "vue" },
+                      configNamespace = "typescript",
+                    }
+                  }
                 },
               },
+            },
+            typescript = {
+              updateImportsOnFileMove = { enabled = "always" },
+              suggest = {
+                completeFunctionCalls = true,
+              },
+              inlayHints = {
+                enumMemberValues = { enabled = true },
+                functionLikeReturnTypes = { enabled = true },
+                parameterNames = { enabled = "literals" },
+                parameterTypes = { enabled = true },
+                propertyDeclarationTypes = { enabled = true },
+                variableTypes = { enabled = false },
+              },
+            },
+            javascript = {
+              updateImportsOnFileMove = { enabled = "always" },
             },
             filetypes = {
               "typescript",
@@ -279,7 +304,9 @@ return {
               "vue"
             },
           },
-          vue_ls = {},
+          vue_ls = {
+            typescript = {}
+          },
         },
         others = {}
       }

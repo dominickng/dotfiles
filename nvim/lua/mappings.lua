@@ -60,13 +60,13 @@ vim.keymap.set("c", "<C-a>", "<Home>", { desc = "Jump to start of line" })
 vim.keymap.set("c", "<C-e>", "<end>", { desc = "Jump to end of line" })
 
 -- Use %%  to get the current file's directory in cmdline
-vim.keymap.set('c', '%%', function()
-  if vim.fn.getcmdtype() == ':' then
-    return vim.fn.expand '%:h'
-  else
-    return '%%'
-  end
-end, { expr = true, desc = 'Get the directory of the current file (cmdline) mode' })
+-- vim.keymap.set('c', '%%', function()
+--   if vim.fn.getcmdtype() == ':' then
+--     return vim.fn.expand '%:h'
+--   else
+--     return '%%'
+--   end
+-- end, { expr = true, desc = 'Get the directory of the current file (cmdline) mode' })
 
 -- C-w deletes path components in cmdline (or otherwise deletes words)
 -- https://vim.fandom.com/wiki/Command_line_file_name_completion

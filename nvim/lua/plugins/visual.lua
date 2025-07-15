@@ -254,11 +254,11 @@ return {
               },
               spinner_symbols = { "🌑 ", "🌒 ", "🌓 ", "🌔 ", "🌕 ", "🌖 ", "🌗 ", "🌘 " },
             },
-            {
-              require("minuet.lualine"),
-              display_name = "provider",
-              display_on_idle = true,
-            },
+            -- {
+            --   require("minuet.lualine"),
+            --   display_name = "provider",
+            --   display_on_idle = true,
+            -- },
             {
               require("codecompanion_lualine"),
             },
