@@ -4,22 +4,58 @@ return {
     dependencies = { "folke/snacks.nvim" },
     config = true,
     keys = {
-      { "<leader>a",  nil,                              desc = "Claude Code" },
-      { "<leader>ac", "<cmd>ClaudeCode<cr>",            desc = "Toggle Claude" },
-      { "<leader>af", "<cmd>ClaudeCodeFocus<cr>",       desc = "Focus Claude" },
-      { "<leader>ar", "<cmd>ClaudeCode --resume<cr>",   desc = "Resume Claude" },
-      { "<leader>aC", "<cmd>ClaudeCode --continue<cr>", desc = "Continue Claude" },
-      { "<leader>ab", "<cmd>ClaudeCodeAdd %<cr>",       desc = "Add current buffer" },
-      { "<leader>as", "<cmd>ClaudeCodeSend<cr>",        mode = "v",                 desc = "Send to Claude" },
       {
-        "<leader>as",
+        "<leader>c",
+        nil,
+        desc = "Claude Code"
+      },
+      {
+        "<leader>cc",
+        "<cmd>ClaudeCode<cr>",
+        desc = "[C]laude [C]ode Toggle"
+      },
+      {
+        "<leader>cf",
+        "<cmd>ClaudeCodeFocus<cr>",
+        desc = "[C]laude Code [F]ocus"
+      },
+      {
+        "<leader>cr",
+        "<cmd>ClaudeCode --resume<cr>",
+        desc = "[C]laude Code [R]esume"
+      },
+      {
+        "<leader>cC",
+        "<cmd>ClaudeCode --continue<cr>",
+        desc = "[C]laude Code [C]ontinue"
+      },
+      {
+        "<leader>cA",
+        "<cmd>ClaudeCodeAdd %<cr>",
+        desc = "[C]laude Code [A]dd current buffer"
+      },
+      {
+        "<leader>cS",
+        "<cmd>ClaudeCodeSend<cr>",
+        mode = "v",
+        desc = "[C]laude Code [S]end"
+      },
+      {
+        "<leader>cA",
         "<cmd>ClaudeCodeTreeAdd<cr>",
-        desc = "Add file",
+        desc = "[C]laude Code [A]dd File",
         ft = { "NvimTree", "neo-tree", "oil" },
       },
-      -- Diff management
-      { "<leader>aa", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" },
-      { "<leader>ad", "<cmd>ClaudeCodeDiffDeny<cr>",   desc = "Deny diff" },
+      {
+        "<leader>cy",
+        "<cmd>ClaudeCodeDiffAccept<cr>",
+        desc = "[C]laude Code [Y]es Diff"
+      },
+      {
+        "<leader>cn",
+        "<cmd>ClaudeCodeDiffDeny<cr>",
+        desc = "[C]laude Code [N]o Diff"
+      },
     },
   }
 }

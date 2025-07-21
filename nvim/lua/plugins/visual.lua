@@ -1,7 +1,4 @@
 return {
-  -- {
-  --   "AndreM222/copilot-lualine"
-  -- },
   {
     "echasnovski/mini.basics",
     opts = {
@@ -107,6 +104,34 @@ return {
     opts = {},
     version = false
   },
+  -- {
+  --   "folke/noice.nvim",
+  --   event = "VeryLazy",
+  --   opts = {
+  --     cmdline = {
+  --       view = "cmdline",
+  --     },
+  --     lsp = {
+  --       override = {
+  --         ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+  --         ["vim.lsp.util.stylize_markdown"] = true,
+  --       },
+  --     },
+  --     errors = {
+  --       view = "cmdline"
+  --     },
+  --     presets = {
+  --       bottom_search = true,
+  --       command_palette = true,
+  --       long_message_to_split = true,
+  --       inc_rename = false,
+  --       lsp_doc_border = false,
+  --     },
+  --   },
+  --   dependencies = {
+  --     "MunifTanjim/nui.nvim",
+  --   }
+  -- },
   {
     "HiPhish/rainbow-delimiters.nvim",
     config = function()
@@ -137,6 +162,16 @@ return {
     end,
   },
   {
+    "jake-stewart/auto-cmdheight.nvim",
+    lazy = false,
+    opts = {
+      max_lines = 5,
+      duration = 2,
+      remove_on_key = true,
+      clear_always = false,
+    }
+  },
+  {
     "MeanderingProgrammer/render-markdown.nvim",
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
@@ -156,13 +191,13 @@ return {
     "nvim-lualine/lualine.nvim",
     dependencies = {
       {
+        "AndreM222/copilot-lualine"
+      },
+      {
         "arkav/lualine-lsp-progress"
       },
     },
     config = function()
-      -- local function filename()
-      --   return require("lspsaga.symbol.winbar").get_bar()
-      -- end
       local colors = require("solarized-osaka.colors").setup()
 
       require("lualine").setup({
@@ -194,7 +229,7 @@ return {
               file_status = true,
               newfile_status = false,
               path = 4,
-              shorting_target = 40, -- Shortens path to leave 40 spaces in the window
+              shorting_target = 60, -- Shortens path to leave 40 spaces in the window
               symbols = {
                 modified = "[+]",
                 readonly = "[-]",
@@ -259,13 +294,13 @@ return {
             --   display_name = "provider",
             --   display_on_idle = true,
             -- },
-            {
-              require("codecompanion_lualine"),
-            },
-            -- "copilot",
+            -- {
+            --   require("codecompanion_lualine"),
+            -- },
+            "copilot",
             "encoding",
             "fileformat",
-            "filetype"
+            -- "filetype"
           },
           lualine_y = {
             "progress",

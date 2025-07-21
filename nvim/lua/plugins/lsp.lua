@@ -57,13 +57,30 @@ return {
           "nvim-tree/nvim-web-devicons",
         },
       },
-      -- {
-      --   "hrsh7th/cmp-nvim-lsp",
-      -- },
+      {
+        "rachartier/tiny-code-action.nvim",
+        dependencies = {
+          { "nvim-lua/plenary.nvim" },
+        },
+        event = "LspAttach",
+        opts = {
+          picker = "buffer",
+          opts = {
+            hotkeys = true,
+            hotkeys_mode = "text_diff_based",
+            auto_preview = true,
+            auto_accept = false,
+            position = "cursor",
+            winborder = "single",
+            custom_keys = {
+              { key = 'm', pattern = 'Fill match arms' },
+              { key = 'r', pattern = 'Rename.*' },
+            },
+          },
+        },
+      }
     },
     config = function()
-      -- See `:help lsp-vs-treesitter` for a comparison of the two.
-      -- This function gets run when an LSP attaches to a particular buffer.
       vim.api.nvim_create_autocmd("LspAttach", {
         group = vim.api.nvim_create_augroup("lspconfig-lsp-attach", { clear = true }),
         callback = function(event)
@@ -78,7 +95,10 @@ return {
           local fzf = require("fzf-lua")
           map("gd", "<cmd>Lspsaga peek_definition<CR>", "[G]oto [D]efinition")
 
-          map("K", "<cmd>lua vim.lsp.buf.hover()<CR>", "Pee[K]")
+          -- map("K", "<cmd>lua vim.lsp.buf.hover()<CR>", "Pee[K]")
+          map("K", function()
+            require("pretty_hover").hover()
+          end, "Pee[K]")
 
           -- Find references for the word under your cursor.
           map("gR", fzf.lsp_references, "[G]oto [R]eferences")
@@ -88,39 +108,30 @@ return {
           map("gI", fzf.lsp_implementations, "[G]oto [I]mplementation")
 
           -- Jump to the type of the word under your cursor.
-          --  Useful when you're not sure what type a variable is and you want to see
-          --  the definition of its *type*, not where it was *defined*.
           map("<leader>D", fzf.lsp_typedefs, "Type [D]efinition")
 
-          -- Fuzzy find all the symbols in your current document.
+          -- Fuzzy find all the symbols in current document or workspace.
           --  Symbols are things like variables, functions, types, etc.
           map("<leader>ds", fzf.lsp_document_symbols, "[D]ocument [S]ymbols")
-
-          -- Fuzzy find all the symbols in your current workspace.
-          --  Similar to document symbols, except searches over your entire project.
           map("<leader>ws", fzf.lsp_live_workspace_symbols, "[W]orkspace [S]ymbols")
 
-          -- Rename the variable under your cursor.
-          --  Most Language Servers support renaming across files, etc.
           -- map("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
           map("<leader>rn", "<cmd>Lspsaga rename<CR>", "[R]e[n]ame")
 
-          map("<leader>o", "<cmd>Lspsaga outline<CR>", "Show [O]utline", { "n", "x", "o" })
+          map("<leader>do", "<cmd>Lspsaga outline<CR>", "Show [D]ocument [O]utline", { "n", "x", "o" })
 
-          -- Execute a code action, usually your cursor needs to be on top of an error
-          -- or a suggestion from your LSP for this to activate.
           -- map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction", { "n", "x" })
-          map("<leader>ca", "<cmd>Lspsaga code_action<CR>", "[C]ode [A]ction", { "n", "x" })
+          -- map("<leader>ca", "<cmd>Lspsaga code_action<CR>", "[C]ode [A]ction", { "n", "x" })
+          map("<leader>aa", function()
+            require("tiny-code-action").code_action()
+          end, "Code [A]ction", { "n", "x" })
 
-          -- View incoming calls to the function
-          map("<leader>ci", fzf.lsp_incoming_calls, "[C]alls ([I]ncoming)", { "n", "x" })
-
-          -- View outgoing calls from the function
-          map("<leader>co", fzf.lsp_outgoing_calls, "[C]alls ([O]utcoming)", { "n", "x" })
+          map("<leader>ai", fzf.lsp_incoming_calls, "[A]ll [I]ncoming Calls", { "n", "x" })
+          map("<leader>ao", fzf.lsp_outgoing_calls, "[A]ll [O]utgoing Calls", { "n", "x" })
 
           -- Jump through diagnostics
-          map("]d", "<cmd>Lspsaga diagnostic_jump_next<CR>", "Go to next [D]iagnostic", { "n", "x" })
-          map("[p", "<cmd>Lspsaga diagnostic_jump_prev<CR>", "Go to previous [D]iagnostic", { "n", "x" })
+          -- map("]d", "<cmd>Lspsaga diagnostic_jump_next<CR>", "Go to next [D]iagnostic", { "n", "x" })
+          -- map("[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>", "Go to previous [D]iagnostic", { "n", "x" })
           map("<leader>df", vim.diagnostic.open_float, "Open [D]iagnostics [F]loat")
 
           -- WARN: This is not Goto Definition, this is Goto Declaration.
@@ -133,69 +144,6 @@ return {
           -- vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
           -- vim.keymap.set('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
           -- vim.keymap.set({'n', 'x'}, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
-
-          -- This function resolves a difference between neovim nightly (version 0.11) and stable (version 0.10)
-          ---@param client vim.lsp.Client
-          ---@param method vim.lsp.protocol.Method
-          ---@param bufnr? integer some lsp support methods only in specific files
-          ---@return boolean
-          local function client_supports_method(client, method, bufnr)
-            if vim.fn.has("nvim-0.11") == 1 then
-              return client:supports_method(method, bufnr)
-            else
-              return client.supports_method(method, { bufnr = bufnr })
-            end
-          end
-
-          -- The following two autocommands are used to highlight references of the
-          -- word under your cursor when your cursor rests there for a little while.
-          --    See `:help CursorHold` for information about when this is executed
-          --
-          -- When you move your cursor, the highlights will be cleared (the second autocommand).
-          local client = vim.lsp.get_client_by_id(event.data.client_id)
-          if
-              client
-              and client_supports_method(
-                client,
-                vim.lsp.protocol.Methods.textDocument_documentHighlight,
-                event.buf
-              )
-          then
-            local highlight_augroup =
-                vim.api.nvim_create_augroup("lspconfig-lsp-highlight", { clear = false })
-            vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-              buffer = event.buf,
-              group = highlight_augroup,
-              callback = vim.lsp.buf.document_highlight,
-            })
-
-            vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
-              buffer = event.buf,
-              group = highlight_augroup,
-              callback = vim.lsp.buf.clear_references,
-            })
-
-            vim.api.nvim_create_autocmd("LspDetach", {
-              group = vim.api.nvim_create_augroup("lspconfig-lsp-detach", { clear = true }),
-              callback = function(event2)
-                vim.lsp.buf.clear_references()
-                vim.api.nvim_clear_autocmds({ group = "lspconfig-lsp-highlight", buffer = event2.buf })
-              end,
-            })
-          end
-
-          -- The following code creates a keymap to toggle inlay hints in your
-          -- code, if the language server you are using supports them
-          --
-          -- This may be unwanted, since they displace some of your code
-          if
-              client
-              and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf)
-          then
-            map("<leader>th", function()
-              vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
-            end, "[T]oggle Inlay [H]ints")
-          end
         end,
       })
 
@@ -228,13 +176,6 @@ return {
         },
       })
 
-      -- LSP servers and clients are able to communicate to each other what features they support.
-      --  By default, Neovim doesn't support everything that is in the LSP specification.
-      --  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
-      --  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
-      -- local capabilities = vim.lsp.protocol.make_client_capabilities()
-      -- capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
-
       --  Add any additional override configuration in the following tables. Available keys are:
       --  - cmd (table): Override the default command used to start the server
       --  - filetypes (table): Override the default list of associated filetypes for the server
@@ -260,6 +201,14 @@ return {
           },
           pyright = {},
           terraformls = {},
+          ts_ls = {
+            filetypes = {
+              "typescript",
+              "javascript",
+              "javascriptreact",
+              "typescriptreact",
+            },
+          },
           vtsls = {
             root_markers = { 'tsconfig.json', 'package.json', 'jsconfig.json', '.git' },
             settings = {
@@ -297,10 +246,6 @@ return {
               updateImportsOnFileMove = { enabled = "always" },
             },
             filetypes = {
-              "typescript",
-              "javascript",
-              "javascriptreact",
-              "typescriptreact",
               "vue"
             },
           },
@@ -337,19 +282,13 @@ return {
       end
     end,
   },
-  -- {
-  --   "onsails/lspkind.nvim",
-  --   config = function()
-  --     local lspkind = require("lspkind")
-  --     lspkind.init({
-  --       symbol_map = {
-  --         Copilot = "",
-  --         Minuet = "",
-  --       },
-  --     })
-  --
-  --     vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
-  --     vim.api.nvim_set_hl(0, "CmpItemKindMinuet", { fg = "#6CC644" })
-  --   end
-  -- },
+  {
+    "zeioth/garbage-day.nvim",
+    dependencies = "neovim/nvim-lspconfig",
+    event = "VeryLazy",
+    opts = {
+      grace_period = 60 * 5,
+      wakeup_delay = 5000
+    }
+  },
 }

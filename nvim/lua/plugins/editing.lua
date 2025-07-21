@@ -13,6 +13,7 @@ return {
   },
   {
     "AndrewRadev/switch.vim",
+    event = { "BufReadPost" },
     dependencies = {
       {
         "monaqa/dial.nvim",
@@ -173,7 +174,7 @@ return {
       },
     },
     config = function()
-      local spec_treesitter = require("mini.ai").gen_spec.treesitter
+      local gen_spec = require("mini.ai").gen_spec
       local gen_ai_spec = require("mini.extra").gen_ai_spec
       local get_find_pattern = function(pattern)
         return function(line, init)
@@ -192,28 +193,28 @@ return {
       require("mini.ai").setup({
         custom_textobjects = {
           -- Function definition
-          F = spec_treesitter({ a = "@function.outer", i = "@function.inner" }),
+          F = gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }),
 
           -- the nearest enclosing conditional or loop
-          o = spec_treesitter({
-            a = { "@conditional.outer", "@loop.outer" },
-            i = { "@conditional.inner", "@loop.inner" },
+          o = gen_spec.treesitter({
+            a = { "@block.outer", "@conditional.outer", "@loop.outer" },
+            i = { "@block.inner", "@conditional.inner", "@loop.inner" },
           }),
 
           -- variable
-          v = spec_treesitter({
+          v = gen_spec.treesitter({
             a = "@variable.outer",
             i = "@variable.inner",
           }),
 
           -- key: value property
-          [":"] = spec_treesitter({
+          [":"] = gen_spec.treesitter({
             a = "@property.outer",
             i = "@property.inner",
           }),
 
           -- assignment
-          ["="] = spec_treesitter({
+          ["="] = gen_spec.treesitter({
             a = "@assignment.outer",
             i = "@assignment.inner",
           }),
@@ -224,6 +225,9 @@ return {
           -- number (possibly including a decimal)
           -- %f is the frontier pattern: http://lua-users.org/wiki/FrontierPattern
           N = get_pattern_textobj_spec("%f[%d-%.]-?[%d%.]+[%d,.]*%f[%D]"),
+
+          -- function usage
+          u = gen_spec.function_call(),
 
           -- URL
           U = get_pattern_textobj_spec([[%f[%l]%l+://[^%s{}"'`<>]+]]),
@@ -236,15 +240,22 @@ return {
     version = false
   },
   {
+    "echasnovski/mini.move",
+    opts = {
+      mappings = {
+        left = 'H',
+        right = 'L',
+        down = 'J',
+        up = 'K',
+      }
+    },
+    version = false
+  },
+  {
     "echasnovski/mini.operators",
     opts = {},
     version = false
   },
-  -- {
-  --   "echasnovski/mini.pairs",
-  --   opts = {},
-  --   version = false
-  -- },
   {
     "echasnovski/mini.splitjoin",
     opts = {},
@@ -257,6 +268,11 @@ return {
       search_method = "cover_or_next",
     },
     version = false
+  },
+  {
+    "folke/ts-comments.nvim",
+    opts = {},
+    event = "VeryLazy",
   },
   {
     "Goose97/timber.nvim",
@@ -275,22 +291,28 @@ return {
           "bash",
           "c",
           "css",
+          "diff",
           "dockerfile",
           "gitignore",
           "html",
           "java",
           "javascript",
           "json",
+          "jsonc",
           "lua",
           "markdown",
           "markdown_inline",
+          "printf",
+          "python",
           "query",
           "regex",
+          "toml",
           "tsx",
           "typescript",
           "vim",
           "vimdoc",
           "vue",
+          "xml",
           "yaml",
         },
 
@@ -337,6 +359,7 @@ return {
   },
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
+    event = { "VeryLazy" },
     config = function()
       -- taken from https://github.com/nvim-treesitter/nvim-treesitter-textobjects/issues/713
       local function_node_types = {
@@ -588,27 +611,9 @@ return {
       fallback = {},
     }
   },
-  -- {
-  --   "windwp/nvim-autopairs",
-  --   event = "InsertEnter",
-  --   opts = {
-  --     enable_check_bracket_line = false
-  --   },
-  -- },
-  -- {
-  --   "windwp/nvim-ts-autotag",
-  --   event = { "BufReadPre", "BufNewFile" },
-  --   opts = {
-  --     opts = {
-  --       enable_close = true,          -- Auto close tags
-  --       enable_rename = true,         -- Auto rename pairs of tags
-  --       enable_close_on_slash = false -- Auto close on trailing </
-  --     },
-  --     per_filetype = {
-  --       ["html"] = {
-  --         enable_close = false
-  --       }
-  --     }
-  --   }
-  -- },
+  {
+    "wurli/contextindent.nvim",
+    opts = { pattern = "*" },
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+  }
 }

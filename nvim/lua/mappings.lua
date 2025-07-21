@@ -32,6 +32,10 @@ vim.keymap.set("n", "#", "g#")
 vim.keymap.set("x", "/", "<Esc>/\\%V", { silent = false, desc = "Search forward inside visual selection" })
 vim.keymap.set("x", "?", "<Esc>?\\%V", { silent = false, desc = "Search backward inside visual selection" })
 
+-- Search and replace word under the cursor
+vim.keymap.set("n", "<Leader>re", [[:%s/\<<C-r><C-w>\>//g<Left><Left>]],
+  { desc = "Search and replace word under cursor" })
+
 -- select visual block after indent/unindent
 vim.keymap.set("v", "<", "<gv")
 vim.keymap.set("v", ">", ">gv")
@@ -43,11 +47,20 @@ vim.keymap.set("n", "gV", '"`[" . strpart(getregtype(), 0, 1) . "`]"',
 -- map Y to be consistent with D, C, etc
 vim.keymap.set("n", "Y", "y$")
 
+-- duplicate line and comment out the first one
+vim.keymap.set("n", "yc", "yygccp", { remap = true, desc = "Duplicate and comment out first line" })
+
+-- git conflicts
+vim.keymap.set("n", "<leader>fc", "/<<<<CR>", { desc = "[F]ind [C]onflicts" })
+vim.keymap.set("n", "<leader>gcu", "dd/|||<CR>0v/>>><CR>$x", { desc = "[G]it [C]onflict Choose [U]pstream" })
+vim.keymap.set("n", "<leader>gcb", "0v/|||<CR>$x/====<CR>0v/>>><CR>$x", { desc = "[G]it [C]onflict Choose [B]ase" })
+vim.keymap.set("n", "<leader>gcs", "0v/====<CR>$x/>>><CR>dd", { desc = "[G]it [C]onflict Choose [S]tashed" })
+
 -- yank and paste to system clipboard
-vim.keymap.set("n", "<leader>y", '"+Y', { desc = "Yank to system clipboard" })
-vim.keymap.set("v", "<leader>y", '"+y', { desc = "Yank to system clipboard" })
-vim.keymap.set("n", "<leader>p", '"+p', { desc = "Paste from system clipboard" })
-vim.keymap.set("n", "<leader>P", '"+P', { desc = "Paste from system clipboard" })
+-- vim.keymap.set("n", "<leader>y", '"+Y', { desc = "Yank to system clipboard" })
+-- vim.keymap.set("v", "<leader>y", '"+y', { desc = "Yank to system clipboard" })
+-- vim.keymap.set("n", "<leader>p", '"+p', { desc = "Paste from system clipboard" })
+-- vim.keymap.set("n", "<leader>P", '"+P', { desc = "Paste from system clipboard" })
 
 -- hard re-wrap text
 vim.keymap.set("v", "<leader>q", "gq", { desc = "Hard re-wrap paragraph" })

@@ -2,12 +2,35 @@ return {
   {
     "saghen/blink.cmp",
     dependencies = {
-      "fang2hou/blink-copilot",
-      "folke/lazydev.nvim",
-      "moyiz/blink-emoji.nvim",
-      "rafamadriz/friendly-snippets",
+      {
+        "fang2hou/blink-copilot",
+      },
+      {
+        "folke/lazydev.nvim",
+      },
+      {
+        "moyiz/blink-emoji.nvim",
+      },
+      {
+        "rafamadriz/friendly-snippets",
+      },
+      {
+        "xzbdmw/colorful-menu.nvim",
+        opts = {}
+      },
+      {
+        "zbirenbaum/copilot.lua",
+        cmd = "Copilot",
+        event = "InsertEnter",
+        config = function()
+          require("copilot").setup({
+            suggestion = { enabled = false },
+            panel = { enabled = false },
+          })
+        end
+      },
     },
-    event = "VimEnter",
+    event = "InsertEnter",
     version = "1.*",
 
     config = function()
@@ -311,21 +334,6 @@ return {
   --     })
   --   end,
   -- },
-  {
-    "xzbdmw/colorful-menu.nvim",
-    opts = {}
-  },
-  {
-    "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
-    event = "InsertEnter",
-    config = function()
-      require("copilot").setup({
-        suggestion = { enabled = false },
-        panel = { enabled = false },
-      })
-    end
-  },
   -- },
   -- {
   --   "zbirenbaum/copilot-cmp",

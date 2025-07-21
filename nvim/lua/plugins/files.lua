@@ -129,6 +129,10 @@ return {
         fzf.grep_cWORD()
       end, { desc = "[G]rep [W]ORD under cursor" })
 
+      vim.keymap.set("n", "<Bslash>dc", function()
+        fzf.dap_configurations()
+      end, { desc = "[D]ebugging [C]onfigurations" })
+
       -- vim.keymap.set({ "i" }, "<C-x><C-f>",
       --   function()
       --     fzf.complete_file({
