@@ -67,7 +67,11 @@ return {
           picker = "buffer",
           opts = {
             hotkeys = true,
-            hotkeys_mode = "text_diff_based",
+            hotkeys_mode = function(titles, used_hotkeys)
+              local t = {}
+              for i = 1, #titles do t[i] = tostring(i) end
+              return t
+            end,
             auto_preview = true,
             auto_accept = false,
             position = "cursor",

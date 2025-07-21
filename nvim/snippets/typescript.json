@@ -1,0 +1,18 @@
+{
+  "it.each": {
+    "prefix": "iteach",
+    "body": [
+      "it.each([",
+      "\t{",
+      "\t\t${1:props}",
+      "\t}",
+      "])(",
+      "\t\"${2:description}\",",
+      "\tasync ({ ${1/: [^|;,]*(,*)[^a-zA-z]*/${1} /g} }) => {",
+      "\t\t${0}",
+      "\t}",
+      ")"
+    ],
+    "description": "Insert it.each statement"
+  }
+}

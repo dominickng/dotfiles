@@ -1,4 +1,5 @@
 {
+  "LuaSnip": { "branch": "master", "commit": "458560534a73f7f8d7a11a146c801db00b081df0" },
   "auto-cmdheight.nvim": { "branch": "main", "commit": "82619eab0268f27024e1e0981ec3721a003ab2b7" },
   "blink-copilot": { "branch": "main", "commit": "bdc45bbbed2ec252b3a29f4adecf031e157b5573" },
   "blink-emoji.nvim": { "branch": "master", "commit": "f22ce8cac02a6ece05368220f1e38bd34fe376f9" },
