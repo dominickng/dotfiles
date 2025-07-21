@@ -1,0 +1,36 @@
+{
+  "ref-commit": {
+    "prefix": "commitref",
+    "body": [
+      "${1:heading}",
+      "",
+      "${0}",
+      "",
+      "Ref: ${2:ref}",
+      ""
+    ],
+    "description": "git commit template (ref)"
+  },
+  "fix-commit": {
+    "prefix": "commitfix",
+    "body": [
+      "${1:heading}",
+      "",
+      "${0}",
+      "",
+      "Fixes: ${2:fixes}",
+      ""
+    ],
+    "description": "git commit template (fixes)"
+  },
+  "commit": {
+    "prefix": "commit",
+    "body": [
+      "${1:heading}",
+      "",
+      "${0}",
+      ""
+    ],
+    "description": "git commit template"
+  }
+}

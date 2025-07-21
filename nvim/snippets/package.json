@@ -5,6 +5,10 @@
       {
         "language": "typescript",
         "path": "./typescript.json"
+      },
+      {
+        "language": "gitcommit",
+        "path": "./gitcommit.json"
       }
     ]
   }
