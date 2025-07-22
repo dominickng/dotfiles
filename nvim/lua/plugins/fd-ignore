@@ -4,6 +4,8 @@
 *.jpeg
 *.png
 *.gif
-.nuxt*
-.output
+.nuxt/*
+.output/
 .DS_Store
+node_modules/*
+.git/*
