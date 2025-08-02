@@ -180,12 +180,6 @@ return {
         },
       })
 
-      --  Add any additional override configuration in the following tables. Available keys are:
-      --  - cmd (table): Override the default command used to start the server
-      --  - filetypes (table): Override the default list of associated filetypes for the server
-      --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
-      --  - settings (table): Override the default settings passed when initializing the server.
-      --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         mason = {
           bashls = {},
@@ -205,14 +199,21 @@ return {
           },
           pyright = {},
           terraformls = {},
-          ts_ls = {
-            filetypes = {
-              "typescript",
-              "javascript",
-              "javascriptreact",
-              "typescriptreact",
-            },
-          },
+          -- ts_ls = {
+          --   filetypes = {
+          --     "typescript",
+          --     "javascript",
+          --     "javascriptreact",
+          --     "typescriptreact",
+          --   },
+          --   init_options = {
+          --     preferences = {
+          --       includeCompletionsForModuleExports = true,
+          --       includeCompletionsForImportStatements = true,
+          --       importModuleSpecifierPreference = "relative",
+          --     },
+          --   },
+          -- },
           vtsls = {
             root_markers = { 'tsconfig.json', 'package.json', 'jsconfig.json', '.git' },
             settings = {
@@ -221,18 +222,40 @@ return {
                 enableMoveToFileCodeAction = true,
                 tsserver = {
                   globalPlugins = {
-                    {
-                      name = "@vue/typescript-plugin",
-                      location = vim.fn.stdpath("data") ..
-                          "/mason/packages/vue-language-server/node_modules/@vue/language-server",
-                      languages = { "vue" },
-                      configNamespace = "typescript",
-                    }
-                  }
+                    --   {
+                    --     name = "@vue/typescript-plugin",
+                    --     location = vim.fn.stdpath("data") ..
+                    --         "/mason/packages/vue-language-server/node_modules/@vue/language-server",
+                    --     languages = { "vue" },
+                    --     configNamespace = "typescript",
+                    --   }
+                  },
                 },
               },
             },
+            before_init = function(params, config)
+              local result = vim.system(
+                { "npm", "query", "#vue" },
+                { cwd = params.workspaceFolders[1].name, text = true }
+              ):wait()
+              if result.stdout ~= "[]" then
+                local vuePluginConfig = {
+                  name = "@vue/typescript-plugin",
+                  languages = { "vue" },
+                  location = vim.fn.stdpath("data") ..
+                      "/mason/packages/vue-language-server/node_modules/@vue/language-server",
+                  configNamespace = "typescript",
+                  enableForWorkspaceTypeScriptVersions = true,
+                }
+                table.insert(config.settings.vtsls.tsserver.globalPlugins, vuePluginConfig)
+              end
+            end,
             typescript = {
+              tsserver = {
+                -- Built from source with pointer compression to avoid running out of memory
+                nodePath = "/Users/dom/.nvm/versions/node/v22.18.0/bin/node",
+                maxTsServerMemory = 4096,
+              },
               updateImportsOnFileMove = { enabled = "always" },
               suggest = {
                 completeFunctionCalls = true,
@@ -245,12 +268,21 @@ return {
                 propertyDeclarationTypes = { enabled = true },
                 variableTypes = { enabled = false },
               },
+              preferences = {
+                includeCompletionsForModuleExports = true,
+                includeCompletionsForImportStatements = true,
+                importModuleSpecifier = "relative",
+              },
             },
             javascript = {
               updateImportsOnFileMove = { enabled = "always" },
             },
             filetypes = {
-              "vue"
+              "typescript",
+              "javascript",
+              "javascriptreact",
+              "typescriptreact",
+              "vue",
             },
           },
           vue_ls = {

@@ -525,7 +525,7 @@ return {
           lsp_format_opt = "fallback"
         end
         return {
-          timeout_ms = 500,
+          timeout_ms = 2500,
           lsp_format = lsp_format_opt,
         }
       end,

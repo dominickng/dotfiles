@@ -3,6 +3,9 @@ return {
     "coder/claudecode.nvim",
     dependencies = { "folke/snacks.nvim" },
     config = true,
+    opts = {
+      terminal_cmd = "~/.claude/local/claude",
+    },
     keys = {
       {
         "<leader>c",
@@ -55,6 +58,11 @@ return {
         "<leader>cn",
         "<cmd>ClaudeCodeDiffDeny<cr>",
         desc = "[C]laude Code [N]o Diff"
+      },
+      {
+        "<leader>cm",
+        "<cmd>ClaudeCodeSelectModel<cr>",
+        desc = "[C]laude Code Select [M]odel"
       },
     },
   }
