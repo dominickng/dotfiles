@@ -49,7 +49,9 @@ return {
                 augend.integer.alias.decimal,  -- nonnegative decimal number (0, 1, 2, 3, ...)
                 -- augend.integer.alias.decimal_int, -- nonnegative and negative decimal number
                 augend.integer.alias.hex,      -- nonnegative hex number  (0x01, 0x1a1f, etc.)
-                augend.date.alias["%Y/%m/%d"], -- date (2022/02/19, etc.)
+                augend.date.alias["%Y/%m/%d"], -- date (2022/02/19)
+                augend.date.alias["%Y-%m-%d"], -- date (2022-02-19)
+                augend.date.alias["%d/%m/%Y"], -- date (19/02/2022)
                 augend.constant.alias.bool,    -- boolean value (true <-> false)
                 logical_alias,
               },
@@ -121,7 +123,9 @@ return {
       local fiv = [=[\=substitute(submatch(0), '-\(\l\)', '\u\1', 'g')]=]
       vim.g["switch_custom_definitions"] = {
         vim.fn["switch#NormalizedCaseWords"] { "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday" },
+        vim.fn["switch#NormalizedCaseWords"] { "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december" },
         vim.fn["switch#NormalizedCaseWords"] { "first", "second", "third", "fourth", "fifth", "sixth", "seventh", "eighth", "ninth", "tenth" },
+        vim.fn["switch#NormalizedCaseWords"] { "1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th", "10th" },
         vim.fn["switch#NormalizedCase"] { "yes", "no" },
         vim.fn["switch#NormalizedCase"] { "on", "off" },
         vim.fn["switch#NormalizedCase"] { "left", "right" },
@@ -243,10 +247,10 @@ return {
     "echasnovski/mini.move",
     opts = {
       mappings = {
-        left = 'H',
-        right = 'L',
-        down = 'J',
-        up = 'K',
+        left = "<C-H>",
+        right = "<C-L>",
+        down = "<C-J>",
+        up = "<C-K>",
       }
     },
     version = false
@@ -265,7 +269,7 @@ return {
     "echasnovski/mini.surround",
     opts = {
       respect_selection_type = true,
-      search_method = "cover_or_next",
+      search_method = "cover_or_nearest",
     },
     version = false
   },
