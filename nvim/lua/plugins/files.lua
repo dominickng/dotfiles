@@ -96,10 +96,6 @@ return {
 
       vim.keymap.set("n", "<Bslash>f", function()
         fzf.files()
-        -- require("fzf-lua-enchanted-files").files({
-        --   fd_opts = [[--color=never --hidden --type f --type l --ignore-file ]]
-        --       .. vim.fn.stdpath("config") .. "/lua/plugins/fd-ignore"
-        -- })
       end, { desc = "FZF [F]iles" })
       vim.keymap.set("n", "<Bslash>b", function()
         fzf.buffers()
@@ -161,11 +157,4 @@ return {
       })
     end,
   },
-  {
-    "otavioschwanck/fzf-lua-enchanted-files",
-    dependencies = { "ibhagwan/fzf-lua" },
-    opts = {
-      max_history_per_cwd = 50,
-    }
-  }
 }
