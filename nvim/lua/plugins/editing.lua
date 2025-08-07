@@ -540,6 +540,7 @@ return {
         --
         javascript = { "prettier", "prettierd", stop_after_first = true },
         typescript = { "prettier", "prettierd", stop_after_first = true },
+        vue = { "prettier", "prettierd", stop_after_first = true },
       },
       default_format_opts = {
         lsp_format = "fallback",

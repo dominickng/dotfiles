@@ -21,7 +21,12 @@ return {
   {
     "ibhagwan/fzf-lua",
     dependencies = {
-      "nvim-tree/nvim-web-devicons",
+      {
+        "nvim-tree/nvim-web-devicons",
+      },
+      {
+        "elanmed/fzf-lua-frecency.nvim",
+      }
     },
     config = function()
       local fzf = require("fzf-lua")
@@ -95,8 +100,11 @@ return {
       })
 
       vim.keymap.set("n", "<Bslash>f", function()
-        fzf.files()
-      end, { desc = "FZF [F]iles" })
+        require("fzf-lua-frecency").frecency({ display_score = true, cwd_only = true, fzf_opts = { ["--no-sort"] = false } })
+      end, { desc = "FZF [F]iles by Frecency" })
+      vim.keymap.set("n", "<Bslash>p", function()
+        fzf.global()
+      end, { desc = "FZF [F]iles by Frecency" })
       vim.keymap.set("n", "<Bslash>b", function()
         fzf.buffers()
       end, { desc = "FZF [B]uffers" })
