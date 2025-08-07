@@ -22,11 +22,15 @@ return {
     "ibhagwan/fzf-lua",
     dependencies = {
       {
-        "nvim-tree/nvim-web-devicons",
+        "elanmed/fzf-lua-frecency.nvim",
       },
       {
-        "elanmed/fzf-lua-frecency.nvim",
-      }
+        "junegunn/fzf",
+        build = "./install --all"
+      },
+      {
+        "nvim-tree/nvim-web-devicons",
+      },
     },
     config = function()
       local fzf = require("fzf-lua")
@@ -104,7 +108,10 @@ return {
       end, { desc = "FZF [F]iles by Frecency" })
       vim.keymap.set("n", "<Bslash>p", function()
         fzf.global()
-      end, { desc = "FZF [F]iles by Frecency" })
+      end, { desc = "FZF Global" })
+      vim.keymap.set("n", "<Bslash>e", function()
+        fzf.combine({ pickers = "files;lsp_workspace_symbols" })
+      end, { desc = "FZF Buffers in [T]abs" })
       vim.keymap.set("n", "<Bslash>b", function()
         fzf.buffers()
       end, { desc = "FZF [B]uffers" })
@@ -120,9 +127,6 @@ return {
       vim.keymap.set("n", "<Bslash>k", function()
         fzf.keymaps()
       end, { desc = "FZF [K]eymaps" })
-      vim.keymap.set("n", "<Bslash>e", function()
-        fzf.oldfiles()
-      end, { desc = "FZF R[e]cent files" })
       vim.keymap.set("v", "<Bslash>g", function()
         fzf.grep_visual()
       end, { desc = "[G]rep visual selection" })

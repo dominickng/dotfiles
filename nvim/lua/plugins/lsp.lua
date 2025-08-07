@@ -1,5 +1,9 @@
 return {
   {
+    "dmmulroy/ts-error-translator.nvim",
+    opts = {}
+  },
+  {
     "folke/lazydev.nvim",
     ft = "lua",
     opts = {
