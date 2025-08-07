@@ -1,6 +1,10 @@
 return {
   {
     "dmmulroy/ts-error-translator.nvim",
+  },
+  {
+    "Fildo7525/pretty_hover",
+    event = "LspAttach",
     opts = {}
   },
   {
