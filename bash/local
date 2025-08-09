@@ -26,7 +26,7 @@ if [ `uname` = 'Darwin' ]; then
 	alias proxy='export http_proxy=`networksetup -getwebproxy Wi-Fi | awk '\''{ if(NR == 1) enabled=$2; else if(NR == 2) server=$2; else if(NR == 3) port=$2;} END {if(enabled == "Yes") print "http://" server ":" port}'\''`'
 
 	export COPYFILE_DISABLE=true #for stopping those damned ._ files
-	export PATH=/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:`xcode-select -print-path`/usr/bin:$HOME/Applications:/Library/TeX/texbin:/Users/dom/.deno/bin/:$HOME/.local/bin:$HOME/.claude/local
+	export PATH=/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:`xcode-select -print-path`/usr/bin:$HOME/Applications:/Library/TeX/texbin:/Users/dom/.deno/bin/:$HOME/.local/bin:$HOME/.claude/local:$HOME/.local/share/nvim/lazy/fzf/bin:/opt/homebrew/opt/libpq/bin:
 	export TEXINPUTS=".:.//:/usr/local/texlive/2023basic/texmf-dist/tex/latex//:/usr/local/texlive/2023basic/texmf-dist/tex/generic//:$HOME/working/reposs/tex//:"
 	export GNUTERM=x11 # for Octave
 

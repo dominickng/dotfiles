@@ -179,7 +179,7 @@ return {
           copilot = {
             name = "copilot",
             module = "blink-copilot",
-            score_offset = 0,
+            score_offset = 10,
             async = true,
           },
           cmdline = {
