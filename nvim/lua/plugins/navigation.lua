@@ -14,17 +14,7 @@ return {
       customPatterns = {},
     }
   },
-  {
-    "echasnovski/mini.bracketed",
-    opts = {
-      comment = { suffix = "" },
-      diagnostic = { suffix = "" },
-      file = { suffix = "" },
-      indent = { suffix = "" },
-      oldfile = { suffix = "" },
-    },
-    version = false
-  },
+
   {
     "jinh0/eyeliner.nvim",
     opts = {
@@ -34,5 +24,17 @@ return {
       disabled_filetypes = { "gitcommit", "help", "json", "terminal" },
       disabled_buftypes = { "nofile", "ministarter" }
     }
+  },
+
+  {
+    "nvim-mini/mini.bracketed",
+    opts = {
+      comment = { suffix = "" },
+      diagnostic = { suffix = "" },
+      file = { suffix = "" },
+      indent = { suffix = "" },
+      oldfile = { suffix = "" },
+    },
+    version = false
   },
 }

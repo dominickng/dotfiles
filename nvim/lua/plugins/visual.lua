@@ -1,109 +1,4 @@
 return {
-  {
-    "echasnovski/mini.basics",
-    opts = {
-      options = {
-        basic = false,
-        extra_ui = false,
-        win_borders = "double",
-      },
-      mappings = {
-        basic = false,
-        option_toggle_prefix = [[|]],
-        windows = false,
-        move_with_alt = false,
-      },
-      autocommands = {
-        basic = false,
-        relnum_in_visual_mode = false
-      }
-    },
-    version = false
-  },
-  {
-    "echasnovski/mini.cursorword",
-    config = function()
-      _G.cursorword_blocklist = function()
-        local curword = vim.fn.expand("<cword>")
-        local filetype = vim.bo.filetype
-
-        local blocklist = {}
-        if filetype == "lua" then
-          blocklist = {
-            "local",
-            "require",
-            "end",
-            "function",
-            "return",
-            "if",
-            "else",
-            "require",
-          }
-        elseif filetype == "javascript" or filetype == "typescript" then
-          blocklist = {
-            "import",
-            "const",
-            "let",
-            "function",
-            "class",
-            "export",
-            "await",
-            "async",
-            "return",
-            "for",
-            "if",
-            "while",
-            "else",
-            "private",
-            "implements",
-            "try",
-            "catch",
-          }
-        end
-
-        vim.b.minicursorword_disable = vim.tbl_contains(blocklist, curword)
-      end
-      vim.cmd("au CursorMoved * lua _G.cursorword_blocklist()")
-      require("mini.cursorword").setup()
-
-      vim.api.nvim_set_hl(0, "MiniCursorword", { italic = true, bg = "#2F4640" })
-      vim.api.nvim_set_hl(0, "MiniCursorwordCurrent", { italic = true, bg = "#2F4640" })
-    end,
-    version = false
-  },
-  {
-    "echasnovski/mini.indentscope",
-    config = function()
-      require("mini.indentscope").setup({
-        draw = {
-          animation = require("mini.indentscope").gen_animation.none()
-        }
-      })
-    end,
-    version = false
-  },
-  {
-    "echasnovski/mini.hipatterns",
-    config = function()
-      local hipatterns = require("mini.hipatterns")
-      hipatterns.setup({
-        highlighters = {
-          fixme     = { pattern = "%f[%w]()FIXME()%f[%W]", group = "MiniHipatternsFixme" },
-          hack      = { pattern = "%f[%w]()HACK()%f[%W]", group = "MiniHipatternsHack" },
-          todo      = { pattern = "%f[%w]()TODO()%f[%W]", group = "MiniHipatternsTodo" },
-          note      = { pattern = "%f[%w]()NOTE()%f[%W]", group = "MiniHipatternsNote" },
-
-          hex_color = hipatterns.gen_highlighter.hex_color(),
-        }
-      })
-    end,
-    version = false
-  },
-  {
-    "echasnovski/mini.starter",
-    opts = {},
-    version = false
-  },
   -- {
   --   "folke/noice.nvim",
   --   event = "VeryLazy",
@@ -132,6 +27,7 @@ return {
   --     "MunifTanjim/nui.nvim",
   --   }
   -- },
+
   {
     "HiPhish/rainbow-delimiters.nvim",
     config = function()
@@ -161,6 +57,7 @@ return {
       })
     end,
   },
+
   {
     "jake-stewart/auto-cmdheight.nvim",
     lazy = false,
@@ -171,6 +68,7 @@ return {
       clear_always = false,
     }
   },
+
   {
     "MeanderingProgrammer/render-markdown.nvim",
     dependencies = {
@@ -187,6 +85,7 @@ return {
       },
     },
   },
+
   {
     "nvim-lualine/lualine.nvim",
     dependencies = {
@@ -362,9 +261,127 @@ return {
       })
     end,
   },
+
+  {
+    "nvim-mini/mini.basics",
+    opts = {
+      options = {
+        basic = false,
+        extra_ui = false,
+        win_borders = "double",
+      },
+      mappings = {
+        basic = false,
+        option_toggle_prefix = [[|]],
+        windows = false,
+        move_with_alt = false,
+      },
+      autocommands = {
+        basic = false,
+        relnum_in_visual_mode = false
+      }
+    },
+    version = false
+  },
+
+  {
+    "nvim-mini/mini.cursorword",
+    config = function()
+      _G.cursorword_blocklist = function()
+        local curword = vim.fn.expand("<cword>")
+        local filetype = vim.bo.filetype
+
+        local blocklist = {}
+        if filetype == "lua" then
+          blocklist = {
+            "local",
+            "require",
+            "end",
+            "function",
+            "return",
+            "if",
+            "else",
+            "require",
+          }
+        elseif filetype == "javascript" or filetype == "typescript" then
+          blocklist = {
+            "import",
+            "const",
+            "let",
+            "function",
+            "class",
+            "export",
+            "await",
+            "async",
+            "return",
+            "for",
+            "if",
+            "while",
+            "else",
+            "private",
+            "implements",
+            "try",
+            "catch",
+          }
+        end
+
+        vim.b.minicursorword_disable = vim.tbl_contains(blocklist, curword)
+      end
+      vim.cmd("au CursorMoved * lua _G.cursorword_blocklist()")
+      require("mini.cursorword").setup()
+
+      vim.api.nvim_set_hl(0, "MiniCursorword", { italic = true, bg = "#2F4640" })
+      vim.api.nvim_set_hl(0, "MiniCursorwordCurrent", { italic = true, bg = "#2F4640" })
+    end,
+    version = false
+  },
+
+  {
+    "nvim-mini/mini.indentscope",
+    config = function()
+      require("mini.indentscope").setup({
+        draw = {
+          animation = require("mini.indentscope").gen_animation.none()
+        }
+      })
+    end,
+    version = false
+  },
+
+  {
+    "nvim-mini/mini.hipatterns",
+    config = function()
+      local hipatterns = require("mini.hipatterns")
+      hipatterns.setup({
+        highlighters = {
+          fixme     = { pattern = "%f[%w]()FIXME()%f[%W]", group = "MiniHipatternsFixme" },
+          hack      = { pattern = "%f[%w]()HACK()%f[%W]", group = "MiniHipatternsHack" },
+          todo      = { pattern = "%f[%w]()TODO()%f[%W]", group = "MiniHipatternsTodo" },
+          note      = { pattern = "%f[%w]()NOTE()%f[%W]", group = "MiniHipatternsNote" },
+          hex_color = hipatterns.gen_highlighter.hex_color(),
+        }
+      })
+    end,
+    version = false
+  },
+
+  {
+    "nvim-mini/mini.starter",
+    opts = {},
+    version = false
+  },
+
   {
     "nvim-tree/nvim-web-devicons",
   },
+
+  {
+    'oribarilan/lensline.nvim',
+    branch = 'release/2.x',
+    event = 'LspAttach',
+    opts = {},
+  },
+
   {
     "y3owk1n/undo-glow.nvim",
     event = { "VeryLazy" },

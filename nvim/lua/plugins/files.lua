@@ -18,6 +18,7 @@ return {
       { "<Bslash>d", function() require("nvim-possession").delete() end, desc = "📌 [D]elete selected session" },
     },
   },
+
   {
     "ibhagwan/fzf-lua",
     dependencies = {

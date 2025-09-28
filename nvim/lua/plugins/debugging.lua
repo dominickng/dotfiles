@@ -19,12 +19,14 @@ return {
   --     end
   --   end
   -- },
+
   {
     "jay-babu/mason-nvim-dap.nvim",
     dependencies = {
       "mason-org/mason.nvim"
     }
   },
+
   {
     "mfussenegger/nvim-dap",
     dependencies = {
@@ -235,6 +237,7 @@ return {
       end
     end
   },
+
   {
     "rcarriga/nvim-dap-ui",
     dependencies = {

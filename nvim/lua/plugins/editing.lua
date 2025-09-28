@@ -11,6 +11,7 @@ return {
       },
     },
   },
+
   {
     "AndrewRadev/switch.vim",
     event = { "BufReadPost" },
@@ -142,23 +143,24 @@ return {
         },
       }
       vim.keymap.set({ "n", "x" }, "<C-a>", function()
-        vim.cmd [[
+        vim.cmd([[
         :if !switch#Switch() | lua require("dial.map").manipulate("increment", "normal")
         :endif
-        ]]
+        ]])
       end, {
         desc = "Switch variant or increment number/date",
       })
       vim.keymap.set({ "n", "x" }, "<C-x>", function()
-        vim.cmd [[
+        vim.cmd([[
         :if !switch#Switch({"reverse": 1}) | lua require("dial.map").manipulate("decrement", "normal")
         :endif
-        ]]
+        ]])
       end, {
         desc = "Switch reverse variant or decrement number/date",
       })
     end
   },
+
   {
     "andymass/vim-matchup",
     event = "BufReadPost",
@@ -166,11 +168,35 @@ return {
       vim.api.nvim_set_hl(0, "MatchParen", { bg = "green" })
     end
   },
+
   {
-    "echasnovski/mini.ai",
+    "duqcyxwd/stringbreaker.nvim",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+    },
+    config = function()
+      require("string-breaker").setup()
+    end,
+  },
+
+  {
+    "folke/ts-comments.nvim",
+    opts = {},
+    event = "VeryLazy",
+  },
+
+  {
+    "Goose97/timber.nvim",
+    version = "*",
+    event = "VeryLazy",
+    opts = {},
+  },
+
+  {
+    "nvim-mini/mini.ai",
     dependencies = {
       {
-        "echasnovski/mini.extra",
+        "nvim-mini/mini.extra",
         version = false,
       },
       {
@@ -243,8 +269,9 @@ return {
     end,
     version = false
   },
+
   {
-    "echasnovski/mini.move",
+    "nvim-mini/mini.move",
     opts = {
       mappings = {
         left = "<C-H>",
@@ -255,35 +282,41 @@ return {
     },
     version = false
   },
+
   {
-    "echasnovski/mini.operators",
+    "nvim-mini/mini.operators",
     opts = {},
     version = false
   },
+
   {
-    "echasnovski/mini.splitjoin",
+    "nvim-mini/mini.splitjoin",
     opts = {},
     version = false
   },
+
   {
-    "echasnovski/mini.surround",
+    "nvim-mini/mini.surround",
     opts = {
       respect_selection_type = true,
       search_method = "cover_or_nearest",
     },
     version = false
   },
+
   {
     "folke/ts-comments.nvim",
     opts = {},
     event = "VeryLazy",
   },
+
   {
     "Goose97/timber.nvim",
     version = "*",
     event = "VeryLazy",
     opts = {}
   },
+
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
@@ -361,6 +394,7 @@ return {
       })
     end,
   },
+
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
     event = { "VeryLazy" },
@@ -476,15 +510,19 @@ return {
       })
     end
   },
+
   -- {
   --   "nvim-treesitter/nvim-treesitter-context",
   -- },
+
   {
     "RRethy/nvim-treesitter-textsubjects",
   },
+
   {
     "RRethy/nvim-treesitter-endwise",
   },
+
   {
     "stevearc/conform.nvim",
     event = { "BufWritePre" },
@@ -567,12 +605,15 @@ return {
       })
     end,
   },
+
   {
     "tpope/vim-abolish",
   },
+
   {
     "tpope/vim-ragtag",
   },
+
   {
     "Wansmer/sibling-swap.nvim",
     opts = {
@@ -616,6 +657,7 @@ return {
       fallback = {},
     }
   },
+
   {
     "wurli/contextindent.nvim",
     opts = { pattern = "*" },

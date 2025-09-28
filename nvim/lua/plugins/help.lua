@@ -1,6 +1,6 @@
 return {
   {
-    "echasnovski/mini.clue",
+    "nvim-mini/mini.clue",
     config = function()
       local miniclue = require('mini.clue')
       miniclue.setup({

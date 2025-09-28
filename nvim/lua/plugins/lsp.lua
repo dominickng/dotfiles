@@ -2,11 +2,13 @@ return {
   {
     "dmmulroy/ts-error-translator.nvim",
   },
+
   {
     "Fildo7525/pretty_hover",
     event = "LspAttach",
     opts = {}
   },
+
   {
     "folke/lazydev.nvim",
     ft = "lua",
@@ -17,6 +19,7 @@ return {
       },
     },
   },
+
   {
     "neovim/nvim-lspconfig",
     dependencies = {
@@ -323,6 +326,7 @@ return {
       end
     end,
   },
+
   {
     "zeioth/garbage-day.nvim",
     dependencies = "neovim/nvim-lspconfig",
