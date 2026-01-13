@@ -375,12 +375,12 @@ return {
     "nvim-tree/nvim-web-devicons",
   },
 
-  {
-    'oribarilan/lensline.nvim',
-    branch = 'release/2.x',
-    event = 'LspAttach',
-    opts = {},
-  },
+  -- {
+  --   'oribarilan/lensline.nvim',
+  --   branch = 'release/2.x',
+  --   event = 'LspAttach', -- Load only after LSP attaches to avoid conflicts with undo-glow
+  --   opts = {},
+  -- },
 
   {
     "y3owk1n/undo-glow.nvim",
@@ -416,7 +416,7 @@ return {
         --   hl_color = { bg = "#793D54" }, -- Dark muted pink
         -- },
       },
-      priority = 2048 * 3,
+      priority = 2048 * 2,
     },
     keys = {
       {

@@ -80,6 +80,20 @@ return {
       },
 
       completion = {
+        accept = {
+          auto_brackets = {
+            enabled = true,
+            kind_resolution = {
+              enabled = true,
+              blocked_filetypes = { 'typescriptreact', 'javascriptreact', 'vue' },
+            },
+            semantic_token_resolution = {
+              enabled = true,
+              blocked_filetypes = { 'java' },
+              timeout_ms = 400,
+            },
+          }
+        },
         ghost_text = {
           enabled = true,
           show_with_selection = true,

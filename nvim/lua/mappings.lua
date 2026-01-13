@@ -12,9 +12,9 @@ vim.keymap.set("i", "<S-Right>", "<C-o><cmd>tabnext<CR>",
   { silent = true, noremap = true, desc = "Switch to next tab" })
 vim.keymap.set("i", "<S-Left>", "<C-o><cmd>tabprev<CR>",
   { silent = true, noremap = true, desc = "Switch to previous tab" })
-vim.keymap.set("n", "<S-Right>", "<cmd>tabnext<CR>",
+vim.keymap.set({"n", "t"}, "<S-Right>", "<cmd>tabnext<CR>",
   { silent = true, noremap = true, desc = "Switch to next tab" })
-vim.keymap.set("n", "<S-Left>", "<cmd>tabprev<CR>",
+vim.keymap.set({"n", "t"}, "<S-Left>", "<cmd>tabprev<CR>",
   { silent = true, noremap = true, desc = "Switch to previous tab" })
 
 -- Make C-u and C-d centre after movement

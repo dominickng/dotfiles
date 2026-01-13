@@ -225,6 +225,7 @@ return {
           --     },
           --   },
           -- },
+          tsgo = {},
           vtsls = {
             root_markers = { 'tsconfig.json', 'package.json', 'jsconfig.json', '.git' },
             settings = {
@@ -286,10 +287,10 @@ return {
               updateImportsOnFileMove = { enabled = "always" },
             },
             filetypes = {
-              "typescript",
-              "javascript",
-              "javascriptreact",
-              "typescriptreact",
+              -- "typescript",
+              -- "javascript",
+              -- "javascriptreact",
+              -- "typescriptreact",
               "vue",
             },
           },
