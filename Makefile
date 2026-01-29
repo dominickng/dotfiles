@@ -7,7 +7,7 @@ ALL = $(HOME)/.bash $(HOME)/.bashrc $(HOME)/.inputrc \
 
 .PHONY	: all unlink destroy tpm vimplugins nvim
 
-all	: $(ALL) tpm nvim
+all	: $(ALL) tpm nvim claude
 
 tpm	:
 	-mkdir -p ~/.tmux/plugins
@@ -26,6 +26,10 @@ vimplugins:
 nvim:
 	mkdir -p ~/.config
 	ln -s $(CURDIR)/nvim ~/.config/nvim
+
+claude:
+	mkdir -p $(HOME)/.claude
+	ln -s $(CURDIR)/CLAUDE.md $(HOME)/.claude/CLAUDE.md
 
 $(HOME)/.%	: ./%
 	find $(HOME) -path $@ -maxdepth 1 -exec unlink {} \;
