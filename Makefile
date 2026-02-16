@@ -1,13 +1,17 @@
-ALL = $(HOME)/.bash $(HOME)/.bashrc $(HOME)/.inputrc \
+ALL = $(HOME)/.zsh $(HOME)/.zshrc \
       $(HOME)/.pythonrc.py $(HOME)/.vim $(HOME)/.vimrc \
-      $(HOME)/.inputrc $(HOME)/.tmux.conf \
+      $(HOME)/.tmux.conf \
+      $(HOME)/.config/ghostty \
       $(HOME)/.gdb $(HOME)/.gdbinit $(HOME)/.gitconfig \
       $(HOME)/.screenrc $(HOME)/.tmux.conf $(HOME)/.tmux-osx.conf \
       $(HOME)/.slate $(HOME)/.phoenix.js
 
 .PHONY	: all unlink destroy tpm vimplugins nvim
 
-all	: $(ALL) tpm nvim claude
+all	: $(ALL) config tpm ghostty nvim claude
+
+config:
+	mkdir -p ~/.config
 
 tpm	:
 	-mkdir -p ~/.tmux/plugins
@@ -19,13 +23,11 @@ unlink	:
 destroy	:
 	-echo $(ALL) | xargs -n 1 unlink >/dev/null 2>/dev/null
 
-vimplugins:
-	mkdir -p ~/.vim/bundle
-	git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
-
-nvim:
-	mkdir -p ~/.config
+nvim: config
 	ln -s $(CURDIR)/nvim ~/.config/nvim
+
+ghostty: config
+	ln -s $(CURDIR)/ghostty ~/.config/ghostty
 
 claude:
 	mkdir -p $(HOME)/.claude

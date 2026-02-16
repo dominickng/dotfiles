@@ -123,16 +123,59 @@ return {
       local fik = [=[\<\(\l\+\)\(-\l\+\)\+\>]=]
       local fiv = [=[\=substitute(submatch(0), '-\(\l\)', '\u\1', 'g')]=]
       vim.g["switch_custom_definitions"] = {
-        vim.fn["switch#NormalizedCaseWords"] { "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday" },
-        vim.fn["switch#NormalizedCaseWords"] { "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december" },
-        vim.fn["switch#NormalizedCaseWords"] { "first", "second", "third", "fourth", "fifth", "sixth", "seventh", "eighth", "ninth", "tenth" },
-        vim.fn["switch#NormalizedCaseWords"] { "1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th", "10th" },
-        vim.fn["switch#NormalizedCase"] { "yes", "no" },
-        vim.fn["switch#NormalizedCase"] { "on", "off" },
-        vim.fn["switch#NormalizedCase"] { "left", "right" },
-        vim.fn["switch#NormalizedCase"] { "up", "down" },
-        vim.fn["switch#NormalizedCase"] { "enable", "disable" },
-        vim.fn["switch#NormalizedCase"] { "true", "false" },
+        vim.fn["switch#NormalizedCaseWords"]({
+          "sunday",
+          "monday",
+          "tuesday",
+          "wednesday",
+          "thursday",
+          "friday",
+          "saturday",
+        }),
+        vim.fn["switch#NormalizedCaseWords"]({
+          "january",
+          "february",
+          "march",
+          "april",
+          "may",
+          "june",
+          "july",
+          "august",
+          "september",
+          "october",
+          "november",
+          "december",
+        }),
+        vim.fn["switch#NormalizedCaseWords"]({
+          "first",
+          "second",
+          "third",
+          "fourth",
+          "fifth",
+          "sixth",
+          "seventh",
+          "eighth",
+          "ninth",
+          "tenth",
+        }),
+        vim.fn["switch#NormalizedCaseWords"]({
+          "1st",
+          "2nd",
+          "3rd",
+          "4th",
+          "5th",
+          "6th",
+          "7th",
+          "8th",
+          "9th",
+          "10th",
+        }),
+        vim.fn["switch#NormalizedCase"]({ "yes", "no" }),
+        vim.fn["switch#NormalizedCase"]({ "on", "off" }),
+        vim.fn["switch#NormalizedCase"]({ "left", "right" }),
+        vim.fn["switch#NormalizedCase"]({ "up", "down" }),
+        vim.fn["switch#NormalizedCase"]({ "enable", "disable" }),
+        vim.fn["switch#NormalizedCase"]({ "true", "false" }),
         { "==", "!=" },
         {
           [fk] = fv,
@@ -158,7 +201,7 @@ return {
       end, {
         desc = "Switch reverse variant or decrement number/date",
       })
-    end
+    end,
   },
 
   {
@@ -166,7 +209,12 @@ return {
     event = "BufReadPost",
     init = function()
       vim.api.nvim_set_hl(0, "MatchParen", { bg = "green" })
-    end
+    end,
+  },
+
+  {
+    "bezhermoso/tree-sitter-ghostty",
+    build = "make nvim_install",
   },
 
   {
@@ -263,11 +311,13 @@ return {
           U = get_pattern_textobj_spec([[%f[%l]%l+://[^%s{}"'`<>]+]]),
 
           -- UUID
-          D = get_pattern_textobj_spec("%x%x%x%x%x%x%x%x%-%x%x%x%x%-%x%x%x%x%-%x%x%x%x%-%x%x%x%x%x%x%x%x%x%x%x%x"),
+          D = get_pattern_textobj_spec(
+            "%x%x%x%x%x%x%x%x%-%x%x%x%x%-%x%x%x%x%-%x%x%x%x%-%x%x%x%x%x%x%x%x%x%x%x%x"
+          ),
         },
       })
     end,
-    version = false
+    version = false,
   },
 
   {
@@ -278,21 +328,21 @@ return {
         right = "<C-L>",
         down = "<C-J>",
         up = "<C-K>",
-      }
+      },
     },
-    version = false
+    version = false,
   },
 
   {
     "nvim-mini/mini.operators",
     opts = {},
-    version = false
+    version = false,
   },
 
   {
     "nvim-mini/mini.splitjoin",
     opts = {},
-    version = false
+    version = false,
   },
 
   {
@@ -301,7 +351,7 @@ return {
       respect_selection_type = true,
       search_method = "cover_or_nearest",
     },
-    version = false
+    version = false,
   },
 
   {
@@ -314,7 +364,7 @@ return {
     "Goose97/timber.nvim",
     version = "*",
     event = "VeryLazy",
-    opts = {}
+    opts = {},
   },
 
   {
@@ -480,7 +530,7 @@ return {
       require("nvim-treesitter.configs").setup({
         textobjects = {
           select = {
-            enable = false
+            enable = false,
           },
           move = {
             enable = true,
@@ -506,9 +556,9 @@ return {
               -- ["[M"] = { query = "@function.outer", desc = "Previous [M]ethod/Function definition end" },
             },
           },
-        }
+        },
       })
-    end
+    end,
   },
 
   -- {
@@ -655,12 +705,12 @@ return {
       interline_swaps_without_separator = false,
       -- Fallbacks for tiny settings for langs and nodes. See #fallback
       fallback = {},
-    }
+    },
   },
 
   {
     "wurli/contextindent.nvim",
     opts = { pattern = "*" },
     dependencies = { "nvim-treesitter/nvim-treesitter" },
-  }
+  },
 }

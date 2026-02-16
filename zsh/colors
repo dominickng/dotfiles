@@ -1,0 +1,75 @@
+#! zsh
+
+# This file is responsible for setting up the pretty colours in 'ls' and
+# the zsh prompt.
+
+
+# Terminals that we want coloured prompts in
+[ -n "${COLORTERM}"      ] && PS1_COLOR=1
+[ "$(tput colors)" -gt 2 ] && PS1_COLOR=1
+
+# 30m - Black
+# 31m - Red
+# 32m - Green
+# 33m - Yellow
+# 34m - Blue
+# 35m - Purple
+# 36m - Cyan
+# 37m - White
+# Everything else is green...
+# 0 - Normal
+# 1 - Bold
+
+local BLACK=$'%{\033[0;30m%}'
+local DARKGREY=$'%{\033[1;30m%}'
+local RED=$'%{\033[0;31m%}'
+local LIGHTRED=$'%{\033[1;31m%}'
+
+local GREEN=$'%{\033[0;32m%}'
+local LIGHTGREEN=$'%{\033[1;32m%}'
+local BROWN=$'%{\033[0;33m%}'
+local YELLOW=$'%{\033[1;33m%}'
+
+local BLUE=$'%{\033[0;34m%}'
+local LIGHTBLUE=$'%{\033[1;34m%}'
+local PURPLE=$'%{\033[0;35m%}'
+local LIGHTPURPLE=$'%{\033[1;35m%}'
+
+local CYAN=$'%{\033[0;36m%}'
+local LIGHTCYAN=$'%{\033[1;36m%}'
+local LIGHTGREY=$'%{\033[0;37m%}'
+local WHITE=$'%{\033[1;37m%}'
+
+local OFF=$'%{\033[00m%}'
+local DARK=1
+
+# Set the prompt colour, and the colors for the 'ls' command
+if [ ${PS1_COLOR:-0} -eq 1 ]; then
+	export GREP_COLOR='0;31'
+	if [ -n "$SSH_CLIENT" ]; then
+		eval $(dircolors 2> /dev/null)
+		PS1="${LIGHTCYAN}%D{%d %b} %*${OFF} ${LIGHTGREEN}%n@%m${OFF} ${LIGHTPURPLE}%1~${OFF}\$ "
+
+		if [ ${DARK} -ne 0 ]; then
+		# We need to bold the PS1 environment variables
+		# so they show up on a dark terminal
+			PS1="$(echo "${PS1}" | sed 's/00;/01;/g')"
+		fi
+	else
+		PS1="${LIGHTCYAN}%D{%d %b} %*${OFF} ${PURPLE}%n@%m${OFF} ${LIGHTBLUE}%1~${OFF}\$ "
+	fi
+
+	if [ $(uname) = 'Darwin' ]; then
+		export LSCOLORS="DxGxCxDxCxEGExaBaGecec"
+	else
+		if [ ${DARK} -eq 0 ]; then
+			LS_COLORS="$(echo "${LS_COLORS}" | sed 's/01;/00;/g; s/34/33/')"
+		else
+		# We need to bold the LS_COLORS and PS1 environment variables
+		# so they show up on a dark terminal
+			LS_COLORS="$(echo "${LS_COLORS}" | sed 's/00;/01;/g; s/34/33/')"
+		fi
+
+		export LS_COLORS
+	fi
+fi

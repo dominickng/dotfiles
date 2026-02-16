@@ -1,0 +1,8 @@
+# vim: ft=ghostty
+
+theme = Solarized Dark Higher Contrast
+font-family = Monaco Nerd Font
+font-size = 11.5
+adjust-cell-height = 0
+background-opacity = 0.9
+background-blur-radius = 20

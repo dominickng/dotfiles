@@ -1,0 +1,30 @@
+#! zsh
+
+# Keybindings for zsh - translated from inputrc
+
+# Use emacs keymap as base
+bindkey -e
+
+# Completion configuration
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+zstyle ':completion:*' menu select
+
+# Basic movement
+bindkey '^B' backward-char
+bindkey '^F' forward-char
+bindkey '^[b' backward-word
+bindkey '^[n' forward-word
+bindkey '^[g' backward-kill-word
+bindkey '^G' backward-kill-word
+
+# History navigation
+bindkey '^J' down-line-or-history
+bindkey '^K' up-line-or-history
+
+# Arrow keys for history search
+bindkey '\e[A' history-search-backward
+bindkey '\e[B' history-search-forward
+
+# Page up/down for history search
+bindkey '\e[5~' history-search-backward
+bindkey '\e[6~' history-search-forward

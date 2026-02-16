@@ -1,0 +1,18 @@
+#! zsh
+
+# Sets up the shell for interactive commands
+
+# Prompt: user@host:directory%
+PS1='%n@%m:%~%# '
+
+# The all important colours!
+ssource "${HOME}/.zsh/colors"
+
+# Key bindings
+ssource "${HOME}/.zsh/keybindings"
+
+# Pull in local aliases
+ssource ${HOME}/.zsh/local
+
+# list any existing tmux sessions
+tmux list-sessions 2> /dev/null

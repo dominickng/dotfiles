@@ -5,7 +5,8 @@
 *.png
 *.gif
 .nuxt/*
-.output/
+.nuxt-backup/*
+.output/*
 .DS_Store
 node_modules/*
 .git/*
