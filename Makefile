@@ -1,4 +1,5 @@
 OS := $(shell uname -s)
+SYMLINK := ln -sfn
 
 COMMON = $(HOME)/.zsh $(HOME)/.zshrc \
          $(HOME)/.pythonrc.py $(HOME)/.vim $(HOME)/.vimrc \
@@ -42,8 +43,10 @@ config:
 	mkdir -p ~/.config
 
 tpm:
-	-mkdir -p ~/.tmux/plugins
-	git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+	@if [ ! -d $(HOME)/.tmux/plugins/tpm ]; then \
+		mkdir -p ~/.tmux/plugins && \
+		git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm; \
+	fi
 
 unlink:
 	echo $(ALL) | xargs -n 1 -I@ find $(HOME) -maxdepth 1 -path @ -exec unlink {} \;
@@ -52,15 +55,15 @@ destroy:
 	-echo $(ALL) | xargs -n 1 unlink >/dev/null 2>/dev/null
 
 nvim: config
-	ln -s $(CURDIR)/nvim ~/.config/nvim
+	$(SYMLINK) $(CURDIR)/nvim ~/.config/nvim
 
 ghostty: config
-	ln -s $(CURDIR)/ghostty ~/.config/ghostty
+	$(SYMLINK) $(CURDIR)/ghostty ~/.config/ghostty
 
 claude:
 	mkdir -p $(HOME)/.claude
-	ln -s $(CURDIR)/CLAUDE.md $(HOME)/.claude/CLAUDE.md
-	@which claude > /dev/null 2>&1 || npm install -g @anthropic-ai/claude-code
+	$(SYMLINK) $(CURDIR)/CLAUDE.md $(HOME)/.claude/CLAUDE.md
+	@which claude > /dev/null 2>&1 || curl -fsSL https://claude.ai/install.sh | bash
 
 xcode:
 	xcode-select --install || true
@@ -99,5 +102,4 @@ linux-shell:
 	fi
 
 $(HOME)/.%: ./%
-	find $(HOME) -path $@ -maxdepth 1 -exec unlink {} \;
-	ln -s $(CURDIR)/$* $@
+	$(SYMLINK) $(CURDIR)/$* $@
