@@ -1,0 +1,12 @@
+{
+    /* Additional Emacs bindings */
+    "~f" = "moveWordForward:";
+    "~b" = "moveWordBackward:";
+    "~<" = "moveToBeginningOfDocument:";
+    "~>" = "moveToEndOfDocument:";
+    "^w" = "deleteWordBackward:";
+    "^g" = "deleteWordBackward:";
+
+    /* Escape should really be complete: */
+    /*"\033" = "complete:";  [> Escape <]*/
+}

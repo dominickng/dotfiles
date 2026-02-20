@@ -4,19 +4,18 @@ SYMLINK := ln -sfn
 COMMON = $(HOME)/.zsh $(HOME)/.zshrc \
          $(HOME)/.pythonrc.py $(HOME)/.vim $(HOME)/.vimrc \
          $(HOME)/.tmux.conf \
-         $(HOME)/.gdb $(HOME)/.gdbinit $(HOME)/.gitconfig \
-         $(HOME)/.screenrc
+         $(HOME)/.gdb $(HOME)/.gdbinit $(HOME)/.gitconfig
 
-ALL = $(COMMON) \
-      $(HOME)/.config/ghostty \
-      $(HOME)/.tmux-osx.conf \
-      $(HOME)/.slate $(HOME)/.phoenix.js
+MAC_ONLY = $(HOME)/.config/ghostty \
+           $(HOME)/.tmux-osx.conf \
+           $(HOME)/.slate $(HOME)/.phoenix.js
 
-LINUX_ALL = $(COMMON) \
-            $(HOME)/.inputrc
+MAC_ALL = $(COMMON) $(MAC_ONLY)
+
+LINUX_ALL = $(COMMON)
 
 .PHONY: all mac linux linux-bootstrap linux-packages linux-nvim linux-shell \
-	ssh-key unlink destroy tpm vimplugins nvim ghostty claude \
+	ssh-key unlink destroy tpm vimplugins nvim ghostty claude keybindings \
 	xcode homebrew packages mac-bootstrap config
 
 all:
@@ -26,7 +25,7 @@ else
 	$(MAKE) linux
 endif
 
-mac: mac-bootstrap $(ALL) config tpm ghostty nvim claude ssh-key
+mac: mac-bootstrap $(MAC_ALL) config tpm ghostty keybindings nvim claude ssh-key
 
 linux: linux-bootstrap $(LINUX_ALL) config tpm nvim claude ssh-key linux-shell
 
@@ -49,16 +48,20 @@ tpm:
 	fi
 
 unlink:
-	echo $(ALL) | xargs -n 1 -I@ find $(HOME) -maxdepth 1 -path @ -exec unlink {} \;
+	echo $(MAC_ALL) | xargs -n 1 -I@ find $(HOME) -maxdepth 1 -path @ -exec unlink {} \;
 
 destroy:
-	-echo $(ALL) | xargs -n 1 unlink >/dev/null 2>/dev/null
+	-echo $(MAC_ALL) | xargs -n 1 unlink >/dev/null 2>/dev/null
 
 nvim: config
 	$(SYMLINK) $(CURDIR)/nvim ~/.config/nvim
 
 ghostty: config
 	$(SYMLINK) $(CURDIR)/ghostty ~/.config/ghostty
+
+keybindings:
+	mkdir -p $(HOME)/Library/KeyBindings
+	$(SYMLINK) $(CURDIR)/DefaultKeyBinding.dict $(HOME)/Library/KeyBindings/DefaultKeyBinding.dict
 
 claude:
 	mkdir -p $(HOME)/.claude
