@@ -1,5 +1,4 @@
 local fn = vim.fn
-local api = vim.api
 
 local utils = require("utils")
 
@@ -14,15 +13,15 @@ vim.g.logging_level = "info"
 ------------------------------------------------------------------------
 --                         builtin variables                          --
 ------------------------------------------------------------------------
-vim.g.loaded_perl_provider = 0      -- Disable perl provider
-vim.g.loaded_ruby_provider = 0      -- Disable ruby provider
-vim.g.loaded_node_provider = 0      -- Disable node provider
+vim.g.loaded_perl_provider = 0 -- Disable perl provider
+vim.g.loaded_ruby_provider = 0 -- Disable ruby provider
+vim.g.loaded_node_provider = 0 -- Disable node provider
 vim.g.did_install_default_menus = 1 -- do not load menu
 
 if vim.fn.executable("python3") then
   vim.g.python3_host_prog = fn.exepath("python3")
 else
-  api.nvim_err_writeln("Python3 executable not found! You must install Python3 and set its PATH correctly!")
+  vim.notify("Python3 executable not found! You must install Python3 and set its PATH correctly!", vim.log.levels.ERROR)
   return
 end
 
