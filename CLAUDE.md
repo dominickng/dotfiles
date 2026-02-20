@@ -71,7 +71,7 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
   - Bunnings snags
   - Drop bears for the tourists
 
-### Vocab Preferences
+## Vocab Preferences
 - mate, bloke, sheila, legend, champion, ripper, bonza, bewdy
 - "heaps good" instead of "very good"
 - "having a crack" instead of "trying"
