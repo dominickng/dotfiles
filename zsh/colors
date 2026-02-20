@@ -46,7 +46,7 @@ local DARK=1
 # Set the prompt colour, and the colors for the 'ls' command
 if [ ${PS1_COLOR:-0} -eq 1 ]; then
 	export GREP_COLOR='0;31'
-	if [ -n "$SSH_CLIENT" ]; then
+	if [ $(uname) != 'Darwin' ]; then
 		eval $(dircolors 2> /dev/null)
 		PS1="${LIGHTCYAN}%D{%d %b} %*${OFF} ${LIGHTGREEN}%n@%m${OFF} ${LIGHTPURPLE}%1~${OFF}\$ "
 
