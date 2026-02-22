@@ -16,3 +16,10 @@ ssource ${HOME}/.zsh/local
 
 # list any existing tmux sessions
 tmux list-sessions 2> /dev/null
+
+# Syntax highlighting — must be sourced last
+if [ $(uname) = 'Darwin' ]; then
+	ssource "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+else
+	ssource /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi

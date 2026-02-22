@@ -12,16 +12,36 @@ zstyle ':completion:*' expand prefix suffix               # expand-tilde on
 setopt NO_GLOB_DOTS                                       # match-hidden-files off
 setopt NO_LIST_AMBIGUOUS                                  # show-all-if-unmodified on
 
-autoload -U select-word-style
-select-word-style bash
+export WORDCHARS='*?_-.[]~=&;!#$%^(){}<>/\|`'"'"'"@:'
 
-# Basic movement
-bindkey '^B' backward-char
-bindkey '^F' forward-char
+bindkey '^W' backward-kill-word
+
+# C-g: delete word with standard punctuation WORDCHARS
+_backward-kill-word-punctuated() {
+	local WORDCHARS=''
+	zle .backward-kill-word
+}
+zle -N _backward-kill-word-punctuated
+bindkey '^G' _backward-kill-word-punctuated
+
+# M-g / M-f: move backward/forward word using same WORDCHARS as C-g
+_backward-word-punctuated() {
+	local WORDCHARS=''
+	zle .backward-word
+}
+zle -N _backward-word-punctuated
+bindkey '^[G' _backward-word-punctuated
+
+_forward-word-punctuated() {
+	local WORDCHARS=''
+	zle .forward-word
+}
+zle -N _forward-word-punctuated
+bindkey '^[F' _forward-word-punctuated
+
+# Basic movement with M-b / M-gn
 bindkey '^[b' backward-word
 bindkey '^[n' forward-word
-bindkey '^[g' backward-kill-word
-bindkey '^G' backward-kill-word
 
 bindkey '^[[3~' delete-char
 
