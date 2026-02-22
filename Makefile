@@ -12,7 +12,7 @@ MAC_ONLY = $(HOME)/.config/ghostty \
 
 MAC_ALL = $(COMMON) $(MAC_ONLY)
 
-LINUX_ALL = $(COMMON)
+LINUX_ALL = $(COMMON) $(HOME)/.inputrc
 
 .PHONY: all mac linux linux-bootstrap linux-packages linux-nvim linux-shell \
 	ssh-key unlink destroy tpm vimplugins nvim ghostty claude keybindings \
