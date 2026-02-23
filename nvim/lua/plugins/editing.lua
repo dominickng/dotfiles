@@ -417,6 +417,7 @@ return {
 
       -- Enable highlight and indent per-buffer; auto-install missing parsers
       vim.api.nvim_create_autocmd("FileType", {
+        pattern = { "<filetype>" },
         group = vim.api.nvim_create_augroup("treesitter-features", { clear = true }),
         callback = function(ev)
           local ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(ev.buf))
