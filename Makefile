@@ -64,8 +64,9 @@ keybindings:
 	$(SYMLINK) $(CURDIR)/DefaultKeyBinding.dict $(HOME)/Library/KeyBindings/DefaultKeyBinding.dict
 
 claude:
-	mkdir -p $(HOME)/.claude
-	$(SYMLINK) $(CURDIR)/CLAUDE.md $(HOME)/.claude/CLAUDE.md
+	mkdir -p $(HOME)/.claude/skills
+	$(SYMLINK) $(CURDIR)/claude/CLAUDE.md $(HOME)/.claude/CLAUDE.md
+	$(SYMLINK) $(CURDIR)/claude/commit $(HOME)/.claude/skills/commit
 	@which claude > /dev/null 2>&1 || curl -fsSL https://claude.ai/install.sh | bash
 
 xcode:
