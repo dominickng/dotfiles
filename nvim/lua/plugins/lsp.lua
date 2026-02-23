@@ -6,7 +6,7 @@ return {
   {
     "Fildo7525/pretty_hover",
     event = "LspAttach",
-    opts = {}
+    opts = {},
   },
 
   {
@@ -25,24 +25,24 @@ return {
     dependencies = {
       {
         "mason-org/mason.nvim",
-        opts = {}
+        opts = {},
       },
       {
-        "mason-org/mason-lspconfig.nvim"
+        "mason-org/mason-lspconfig.nvim",
       },
       {
-        "WhoIsSethDaniel/mason-tool-installer.nvim"
+        "WhoIsSethDaniel/mason-tool-installer.nvim",
       },
       {
         "nvimdev/lspsaga.nvim",
-        event        = "LspAttach",
-        opts         = {
+        event = "LspAttach",
+        opts = {
           definition = {
             keys = {
               vsplit = "<C-v>",
               split = "<C-s>",
               tabe = "<C-t>",
-            }
+            },
           },
           diagnostic = {
             auto_preview = true,
@@ -56,8 +56,8 @@ return {
             win_position = "left",
           },
           scroll_preview = {
-            scroll_down = '<C-j>',
-            scroll_up = '<C-k>',
+            scroll_down = "<C-j>",
+            scroll_up = "<C-k>",
           },
           symbol_in_winbar = {
             enable = true,
@@ -80,7 +80,9 @@ return {
             hotkeys = true,
             hotkeys_mode = function(titles, used_hotkeys)
               local t = {}
-              for i = 1, #titles do t[i] = tostring(i) end
+              for i = 1, #titles do
+                t[i] = tostring(i)
+              end
               return t
             end,
             auto_preview = true,
@@ -88,12 +90,12 @@ return {
             position = "cursor",
             winborder = "single",
             custom_keys = {
-              { key = 'm', pattern = 'Fill match arms' },
-              { key = 'r', pattern = 'Rename.*' },
+              { key = "m", pattern = "Fill match arms" },
+              { key = "r", pattern = "Rename.*" },
             },
           },
         },
-      }
+      },
     },
     config = function()
       vim.api.nvim_create_autocmd("LspAttach", {
@@ -227,7 +229,7 @@ return {
           -- },
           tsgo = {},
           vtsls = {
-            root_markers = { 'tsconfig.json', 'package.json', 'jsconfig.json', '.git' },
+            root_markers = { "tsconfig.json", "package.json", "jsconfig.json", ".git" },
             settings = {
               complete_function_calls = true,
               vtsls = {
@@ -246,14 +248,14 @@ return {
               },
             },
             before_init = function(params, config)
-              if vim.bo.filetype ~= 'vue' then
+              if vim.bo.filetype ~= "vue" then
                 return
               end
               local vuePluginConfig = {
                 name = "@vue/typescript-plugin",
                 languages = { "vue" },
-                location = vim.fn.stdpath("data") ..
-                    "/mason/packages/vue-language-server/node_modules/@vue/language-server",
+                location = vim.fn.stdpath("data")
+                    .. "/mason/packages/vue-language-server/node_modules/@vue/language-server",
                 configNamespace = "typescript",
                 enableForWorkspaceTypeScriptVersions = true,
               }
@@ -295,10 +297,12 @@ return {
             },
           },
           vue_ls = {
-            typescript = {}
+            typescript = {},
           },
         },
-        others = {}
+        others = {
+          sourcekit = {},
+        },
       }
 
       -- Ensure the servers and tools above are installed
@@ -311,7 +315,7 @@ return {
       -- Either merge all additional server configs from the `servers.mason` and `servers.others` tables
       -- to the default language server configs as provided by nvim-lspconfig or
       -- define a custom server config that's unavailable on nvim-lspconfig.
-      for server, config in pairs(vim.tbl_extend('keep', servers.mason, servers.others)) do
+      for server, config in pairs(vim.tbl_extend("keep", servers.mason, servers.others)) do
         if not vim.tbl_isempty(config) then
           vim.lsp.config(server, config)
         end
@@ -319,7 +323,7 @@ return {
 
       require("mason-lspconfig").setup({
         ensure_installed = {},
-        automatic_enable = true
+        automatic_enable = true,
       })
 
       if not vim.tbl_isempty(servers.others) then
@@ -334,7 +338,7 @@ return {
     event = "VeryLazy",
     opts = {
       grace_period = 60 * 5,
-      wakeup_delay = 5000
-    }
+      wakeup_delay = 5000,
+    },
   },
 }
