@@ -1,0 +1,8 @@
+node_modules/
+.git/
+.nuxt/
+.nuxt-backup/
+.output/
+pnpm-lock.yaml
+package-lock.json
+yarn.lock

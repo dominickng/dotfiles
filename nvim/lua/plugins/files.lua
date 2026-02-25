@@ -87,6 +87,10 @@ return {
           fd_opts = [[--color=never --hidden --type f --type l --ignore-file ]]
               .. vim.fn.stdpath("config") .. "/lua/plugins/fd-ignore",
         },
+        grep = {
+          rg_opts = "--column --line-number --no-heading --color=always --smart-case --max-columns=4096"
+            .. " --ignore-file=" .. vim.fn.stdpath("config") .. "/lua/plugins/rg-ignore" .. " -e",
+        },
         keymap = {
           builtin = {
             true,
