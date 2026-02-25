@@ -676,9 +676,9 @@ return {
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
-        javascript = { "prettier", "prettierd", stop_after_first = true },
-        typescript = { "prettier", "prettierd", stop_after_first = true },
-        vue = { "prettier", "prettierd", stop_after_first = true },
+        javascript = { "oxfmt", "prettier", "prettierd", stop_after_first = true },
+        typescript = { "oxfmt", "prettier", "prettierd", stop_after_first = true },
+        vue = { "oxfmt", "prettier", "prettierd", stop_after_first = true },
       },
       default_format_opts = {
         lsp_format = "fallback",
