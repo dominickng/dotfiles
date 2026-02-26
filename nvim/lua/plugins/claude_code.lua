@@ -3,6 +3,14 @@ return {
     "coder/claudecode.nvim",
     dependencies = { "folke/snacks.nvim" },
     config = true,
+    opts = {
+      diff_opts = {
+        auto_close_on_accept = true,
+        vertical_split = true,
+        open_in_new_tab = true,
+        keep_terminal_focus = true,
+      },
+    },
     keys = {
       {
         "<leader>c",

@@ -10,7 +10,11 @@ umask 0022
 # General environment settings
 export IFS=$' \t\n'
 export PAGER="less"
-export EDITOR="nvim"
+if [[ -n "$NVIM" ]]; then
+	export EDITOR="nvim --server $NVIM --remote-wait"
+else
+	export EDITOR="nvim"
+fi
 export CVS_RSH="ssh"
 export RSYNC_RSH="ssh"
 export PYTHONSTARTUP="${HOME}/.pythonrc.py"

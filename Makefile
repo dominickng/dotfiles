@@ -89,14 +89,14 @@ linux-packages:
 		zsh git tmux curl wget build-essential \
 		fd-find ripgrep python3 python3-pip nodejs npm \
 		zsh-syntax-highlighting
-	mkdir -p $(HOME)/local/bin
+	mkdir -p $(HOME)/.local/bin
 	ln -sf $$(which fdfind) $(HOME)/.local/bin/fd || true
 
 linux-nvim:
-	mkdir -p $(HOME)/local/bin
-	curl -Lo $(HOME)/local/bin/nvim \
+	mkdir -p $(HOME)/.local/bin
+	curl -Lo $(HOME)/.local/bin/nvim \
 		https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage
-	chmod u+x $(HOME)/local/bin/nvim
+	chmod u+x $(HOME)/.local/bin/nvim
 
 linux-shell:
 	@if [ "$${SHELL}" != "$$(which zsh)" ]; then \
