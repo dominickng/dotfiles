@@ -8,7 +8,7 @@ return {
         auto_close_on_accept = true,
         vertical_split = true,
         open_in_new_tab = true,
-        keep_terminal_focus = true,
+        keep_terminal_focus = false,
       },
     },
     keys = {

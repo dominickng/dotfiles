@@ -624,6 +624,15 @@ return {
   },
 
   {
+    "ruicsh/tailwindcss-dial.nvim",
+    dependencies = { "monaqa/dial.nvim" },
+    opts = {
+      -- group = "default", -- optional, defaults to "default"
+      ft = { "html", "vue" },
+    },
+  },
+
+  {
     "stevearc/conform.nvim",
     event = { "BufWritePre" },
     cmd = { "ConformInfo" },
