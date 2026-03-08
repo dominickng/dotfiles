@@ -47,13 +47,13 @@ return {
             },
             groups = {
               default = {
-                augend.integer.alias.decimal, -- nonnegative decimal number (0, 1, 2, 3, ...)
+                augend.integer.alias.decimal,  -- nonnegative decimal number (0, 1, 2, 3, ...)
                 -- augend.integer.alias.decimal_int, -- nonnegative and negative decimal number
-                augend.integer.alias.hex, -- nonnegative hex number  (0x01, 0x1a1f, etc.)
+                augend.integer.alias.hex,      -- nonnegative hex number  (0x01, 0x1a1f, etc.)
                 augend.date.alias["%Y/%m/%d"], -- date (2022/02/19)
                 augend.date.alias["%Y-%m-%d"], -- date (2022-02-19)
                 augend.date.alias["%d/%m/%Y"], -- date (19/02/2022)
-                augend.constant.alias.bool, -- boolean value (true <-> false)
+                augend.constant.alias.bool,    -- boolean value (true <-> false)
                 logical_alias,
               },
               vue = {
@@ -86,7 +86,7 @@ return {
               lua = {
                 augend.constant.new({
                   elements = { "and", "or" },
-                  word = true, -- if false, "sand" is incremented into "sor", "doctor" into "doctand", etc.
+                  word = true,   -- if false, "sand" is incremented into "sor", "doctor" into "doctand", etc.
                   cyclic = true, -- "or" is incremented into "and".
                 }),
               },
@@ -380,6 +380,7 @@ return {
         installed_set[lang] = true
       end
       local ensure_installed = {
+        "astro",
         "bash",
         "c",
         "css",
@@ -398,6 +399,7 @@ return {
         "python",
         "query",
         "regex",
+        "svelte",
         "swift",
         "toml",
         "tsx",
@@ -417,7 +419,7 @@ return {
 
       -- Enable highlight and indent per-buffer; auto-install missing parsers
       vim.api.nvim_create_autocmd("FileType", {
-        pattern = { "<filetype>" },
+        pattern = { "*" },
         group = vim.api.nvim_create_augroup("treesitter-features", { clear = true }),
         callback = function(ev)
           local ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(ev.buf))
