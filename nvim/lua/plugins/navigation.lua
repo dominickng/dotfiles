@@ -26,15 +26,4 @@ return {
     }
   },
 
-  {
-    "nvim-mini/mini.bracketed",
-    opts = {
-      comment = { suffix = "" },
-      diagnostic = { suffix = "" },
-      file = { suffix = "" },
-      indent = { suffix = "" },
-      oldfile = { suffix = "" },
-    },
-    version = false
-  },
 }
