@@ -56,11 +56,24 @@ return {
         TS.install(to_install)
       end
 
-      -- Enable highlight and indent per-buffer; auto-install missing parsers
+      local function installed_for_filetype(filetype)
+        local ok, lang = pcall(vim.treesitter.language.get_lang, filetype)
+        if not ok or not lang or lang == "" then
+          return false
+        end
+
+        return vim.tbl_contains(TS.get_installed() or {}, lang)
+      end
+
+      -- Enable highlight and indent per-buffer when a parser is available.
       vim.api.nvim_create_autocmd("FileType", {
         pattern = { "*" },
         group = vim.api.nvim_create_augroup("treesitter-features", { clear = true }),
         callback = function(ev)
+          if not installed_for_filetype(ev.match) then
+            return
+          end
+
           local ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(ev.buf))
           if ok and stats and stats.size > 100 * 1024 then
             return
@@ -68,14 +81,6 @@ return {
 
           local hl_ok = pcall(vim.treesitter.start, ev.buf)
           if not hl_ok then
-            -- Auto-install the parser for this filetype, then retry
-            local lang = vim.treesitter.language.get_lang(ev.match)
-            if lang then
-              TS.install({ lang }):await(function()
-                pcall(vim.treesitter.start, ev.buf)
-                vim.bo[ev.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-              end)
-            end
             return
           end
 
