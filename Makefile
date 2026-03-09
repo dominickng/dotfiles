@@ -9,7 +9,9 @@ DOTFILES = $(HOME)/.zsh $(HOME)/.zshrc \
 
 COMMON_SYMLINKS = $(DOTFILES) \
                   $(HOME)/.config/nvim \
-                  $(HOME)/.claude/CLAUDE.md $(HOME)/.claude/skills/commit
+                  $(HOME)/.claude/CLAUDE.md $(HOME)/.claude/skills/commit \
+                  $(HOME)/.codex/AGENTS.md \
+                  $(HOME)/.codex/skills/commit
 
 MAC_SYMLINKS = $(COMMON_SYMLINKS) \
                $(HOME)/.tmux-osx.conf $(HOME)/.slate $(HOME)/.phoenix.js \
@@ -18,7 +20,7 @@ MAC_SYMLINKS = $(COMMON_SYMLINKS) \
 
 LINUX_SYMLINKS = $(COMMON_SYMLINKS) $(HOME)/.inputrc
 
-COMMON = $(DOTFILES) config nvim claude ssh-key tpm
+COMMON = $(DOTFILES) config nvim claude codex ssh-key tpm
 
 MAC_ONLY = ghostty keybindings $(HOME)/.tmux-osx.conf \
            $(HOME)/.slate $(HOME)/.phoenix.js
@@ -28,7 +30,7 @@ MAC_ALL = $(COMMON) $(MAC_ONLY)
 LINUX_ALL = $(COMMON) $(HOME)/.inputrc
 
 .PHONY: all mac linux linux-bootstrap linux-packages linux-nvim linux-shell \
-	ssh-key unlink destroy tpm vimplugins nvim ghostty claude keybindings \
+	ssh-key unlink destroy tpm vimplugins nvim ghostty claude codex keybindings \
 	xcode homebrew packages mac-bootstrap config
 
 all:
@@ -118,6 +120,11 @@ claude:
 	$(SYMLINK) $(CURDIR)/claude/CLAUDE.md $(HOME)/.claude/CLAUDE.md
 	$(SYMLINK) $(CURDIR)/claude/commit $(HOME)/.claude/skills/commit
 	@which claude > /dev/null 2>&1 || curl -fsSL https://claude.ai/install.sh | bash
+
+codex:
+	mkdir -p $(HOME)/.codex/skills
+	$(SYMLINK) $(CURDIR)/codex/AGENTS.md $(HOME)/.codex/AGENTS.md
+	$(SYMLINK) $(CURDIR)/claude/commit $(HOME)/.codex/skills/commit
 
 # Maintenance
 

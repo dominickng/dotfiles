@@ -12,5 +12,6 @@ brew "xcode-build-server"
 brew "zsh-syntax-highlighting"
 
 # Casks
+cask "codex"
 cask "phoenix"
 cask "qlvideo"
