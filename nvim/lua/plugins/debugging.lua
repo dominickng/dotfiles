@@ -80,9 +80,11 @@ return {
       {
 
         "<leader>dz",
-        "<cmd>ZoomWinTabToggle<CR>",
+        function()
+          require("dapui").toggle({ reset = true })
+        end,
         mode = "n",
-        desc = ""
+        desc = "[D]ebugging Toggle UI"
       },
       {
         "<leader>dt",
@@ -163,9 +165,8 @@ return {
           {
             type = "pwa-node",
             request = "launch",
-            name = "pnpm",
-            runtimeExecutable = "pnpm",
-            runtimeArgs = { "--filter=@relevanceai/nodeapi", "run", "dev" },
+            name = "Current file",
+            program = "${file}",
             cwd = "${workspaceFolder}",
           },
           {
@@ -200,7 +201,7 @@ return {
           {
             type = "pwa-node",
             request = "launch",
-            name = "pnpm",
+            name = "pnpm script",
             runtimeExecutable = "pnpm",
             runtimeArgs = { "run", pick_script },
             cwd = "${workspaceFolder}",

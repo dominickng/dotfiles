@@ -21,6 +21,7 @@ return {
 
   {
     "ibhagwan/fzf-lua",
+    cmd = "FzfLua",
     dependencies = {
       {
         "elanmed/fzf-lua-frecency.nvim",
@@ -32,6 +33,30 @@ return {
       {
         "nvim-tree/nvim-web-devicons",
       },
+    },
+    keys = {
+      { "<Bslash>f" },
+      { "<Bslash>p" },
+      { "<Bslash>e" },
+      { "<Bslash>b" },
+      { "<Bslash>t" },
+      { "<Bslash>r" },
+      { "<Bslash>h" },
+      { "<Bslash>k" },
+      { "<Bslash>g", mode = "v" },
+      { "<Bslash>gr" },
+      { "<Bslash>gw" },
+      { "<Bslash>gW" },
+      { "<Bslash>dc" },
+      { "<C-x><C-f>", mode = { "n", "v", "i" } },
+      { "gd" },
+      { "gR" },
+      { "gI" },
+      { "<leader>D" },
+      { "<leader>ds" },
+      { "<leader>ws" },
+      { "<leader>ai", mode = { "n", "x" } },
+      { "<leader>ao", mode = { "n", "x" } },
     },
     config = function()
       local fzf = require("fzf-lua")

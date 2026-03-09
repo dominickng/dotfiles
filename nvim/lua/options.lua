@@ -3,6 +3,7 @@ local HOME = os.getenv("HOME")
 
 if vim.g.is_linux or vim.g.is_mac then
   utils.may_create_dir(HOME .. "/tmp/nvim")
+  utils.may_create_dir(HOME .. "/tmp/nvim/undodir")
 end
 vim.opt.backupdir = HOME .. "/tmp/nvim"
 vim.opt.directory = HOME .. "/tmp/nvim"
