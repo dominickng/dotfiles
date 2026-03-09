@@ -57,28 +57,30 @@ function mcd {
 CD_FILE="$HOME/.zsh/cd"
 
 function cds {
+	local dir
 	if [ $# -eq 0 ]; then
-            dir=$(cat $CD_FILE) && cd $dir
-        else
-            echo $1 > $CD_FILE && cd $1
-        fi
+		dir=$(cat "$CD_FILE") && cd "$dir"
+	else
+		echo "$1" > "$CD_FILE" && cd "$1"
+	fi
 }
 
 #go up a dir or up(num) dirs or up to (dir)
 function up {
-    dir=""
-    if [ -z "$1" ]; then
-        dir=..
-    elif [[ $1 =~ ^[0-9]+$ ]]; then
-        x=0
-        while [ $x -lt ${1:-1} ]; do
-            dir=${dir}../
-            x=$(($x+1))
-        done
-    else
-        dir=${PWD%/$1/*}/$1
-    fi
-    cd "$dir";
+	local dir=""
+	local x
+	if [ -z "$1" ]; then
+		dir=..
+	elif [[ $1 =~ ^[0-9]+$ ]]; then
+		x=0
+		while [ $x -lt ${1:-1} ]; do
+			dir=${dir}../
+			x=$(($x+1))
+		done
+	else
+		dir=${PWD%/$1/*}/$1
+	fi
+	cd "$dir"
 }
 
 function upstr {
@@ -86,15 +88,15 @@ function upstr {
 }
 
 function fargs() {
-    dir=$1
-    shift
-    name=$2
-    shift
-    find $dir -name $name -print0 | xargs -0 $@
+	local dir=$1
+	shift
+	local name=$1
+	shift
+	find "$dir" -name "$name" -print0 | xargs -0 "$@"
 }
 
 #grep through files returned by grep
-function grepfind { find . -type f -iname "$2" -print0 | xargs -0 grep "$1" ; }
+function grepfind { find . -type f -iname "$2" -print0 | xargs -0 grep -- "$1" ; }
 alias findgrep='grepfind'
 
 #go up and double up
@@ -110,7 +112,7 @@ alias sscdiff='diff --side-by-side --suppress-common-lines -W"$(tput cols)"'
 
 #compare two directories
 function compare() {
-    comm -3 <(ls -1 $1) <(ls -1 $2) # Compare the contents of 2 dirs. Show only 2 columns, each for files unique to the directory.
+	comm -3 <(ls -1 "$1") <(ls -1 "$2") # Compare the contents of 2 dirs. Show only 2 columns, each for files unique to the directory.
 }
 
 #see what on localhost is listening on localhost
@@ -119,5 +121,5 @@ function listening() {
 }
 
 function regain() {
-    find $1 -name "*mp3" -print0 | xargs -0 aacgain -r -t -k
+	find "$1" -name "*mp3" -print0 | xargs -0 aacgain -r -t -k
 }

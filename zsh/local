@@ -11,7 +11,6 @@ alias tm='tmux'
 export PYTHONSTARTUP=$HOME/.pythonrc.py
 export GOPATH=$HOME/gocode
 alias tat='tmux attach -t'
-export TERM=xterm-256color
 
 if [ $(uname) = 'Darwin' ]; then
 	alias top='top -s1 -F -R -o cpu'
@@ -19,15 +18,37 @@ if [ $(uname) = 'Darwin' ]; then
 	alias fixopenwith='/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user'
 
 	export COPYFILE_DISABLE=true #for stopping those damned ._ files
-	export PATH=/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:$(xcode-select -print-path)/usr/bin:$HOME/Applications:/Library/TeX/texbin:/Users/dom/.deno/bin/:$HOME/.local/bin:$HOME/.claude/local:$HOME/.local/share/nvim/lazy/fzf/bin:/opt/homebrew/opt/libpq/bin:
+	export PATH=/usr/bin:/bin:/usr/sbin:/sbin
+	pathprepend /opt/homebrew/bin
+	pathappend /opt/homebrew/sbin
+	pathappend /usr/local/bin
+	pathappend /usr/local/sbin
+	pathappend "$(xcode-select -print-path)/usr/bin"
+	pathappend "$HOME/Applications"
+	pathappend /Library/TeX/texbin
+	pathappend "$HOME/.local/bin"
+	pathappend "$HOME/.claude/local"
+	pathappend "$HOME/.local/share/nvim/lazy/fzf/bin"
 	export TEXINPUTS=".:.//:/usr/local/texlive/2023basic/texmf-dist/tex/latex//:/usr/local/texlive/2023basic/texmf-dist/tex/generic//:$HOME/working/reposs/tex//:"
-	export GNUTERM=x11 # for Octave
 
 	ssource "${HOME}/.secrets"
 
 	# zsh completion
 	FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
-	autoload -Uz compinit && compinit
+	autoload -Uz compinit
+	if [[ -n "${ZDOTDIR:-}" ]]; then
+		if [[ -f "${ZDOTDIR}/.zcompdump" ]]; then
+			compinit -C -d "${ZDOTDIR}/.zcompdump"
+		else
+			compinit -d "${ZDOTDIR}/.zcompdump"
+		fi
+	else
+		if [[ -f "${HOME}/.zcompdump" ]]; then
+			compinit -C -d "${HOME}/.zcompdump"
+		else
+			compinit -d "${HOME}/.zcompdump"
+		fi
+	fi
 else
 	alias ls='ls --color=auto'
 	alias fd='fdfind'
@@ -35,5 +56,18 @@ else
 	# local path modifications
 	export PATH=$HOME/bin:$HOME/local/bin:$GOPATH/bin:$PATH:$HOME/repos/depot_tools:$HOME/.local/bin
 
-	autoload -Uz compinit && compinit
+	autoload -Uz compinit
+	if [[ -n "${ZDOTDIR:-}" ]]; then
+		if [[ -f "${ZDOTDIR}/.zcompdump" ]]; then
+			compinit -C -d "${ZDOTDIR}/.zcompdump"
+		else
+			compinit -d "${ZDOTDIR}/.zcompdump"
+		fi
+	else
+		if [[ -f "${HOME}/.zcompdump" ]]; then
+			compinit -C -d "${HOME}/.zcompdump"
+		else
+			compinit -d "${HOME}/.zcompdump"
+		fi
+	fi
 fi
