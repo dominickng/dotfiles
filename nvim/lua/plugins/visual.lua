@@ -76,7 +76,6 @@ return {
       "nvim-tree/nvim-web-devicons",
     },
     ---@module "render-markdown"
-    ---@type render.md.UserConfig
     opts = {
       completions = {
         blink = {
@@ -100,7 +99,6 @@ return {
   {
     "y3owk1n/undo-glow.nvim",
     event = { "VeryLazy" },
-    ---@type UndoGlow.Config
     opts = {
       animation = {
         enabled = true,
@@ -255,7 +253,6 @@ return {
       vim.api.nvim_create_autocmd("FocusGained", {
         desc = "Highlight when focus gained",
         callback = function()
-          ---@type UndoGlow.CommandOpts
           local opts = {
             animation = {
               animation_type = "slide",

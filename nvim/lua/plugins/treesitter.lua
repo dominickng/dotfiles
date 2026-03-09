@@ -74,8 +74,8 @@ return {
             return
           end
 
-          local ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(ev.buf))
-          if ok and stats and stats.size > 100 * 1024 then
+          local file_size = vim.fn.getfsize(vim.api.nvim_buf_get_name(ev.buf))
+          if file_size > 100 * 1024 then
             return
           end
 

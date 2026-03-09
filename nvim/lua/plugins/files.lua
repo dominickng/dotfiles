@@ -8,7 +8,7 @@ return {
     build = function()
       local sessions_path = vim.fn.stdpath("data") .. "/sessions"
       if vim.fn.isdirectory(sessions_path) == 0 then
-        vim.uv.fs_mkdir(sessions_path, 511) -- 0777 permissions
+        vim.fn.mkdir(sessions_path, "p")
       end
     end,
     keys = {

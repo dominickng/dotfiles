@@ -3,7 +3,7 @@ local version = vim.version
 
 local M = {}
 
---- check whether a feature exists in Nvim
+--- Check whether a feature exists in neovim
 --- @param feat string the feature name, like `nvim-0.7` or `unix`.
 --- @return boolean
 M.has = function(feat)
@@ -29,7 +29,6 @@ end
 --- @param high integer the upper value for this range
 --- @return integer
 function M.rand_int(low, high)
-  -- Use lua to generate random int, see also: https://stackoverflow.com/a/20157671/6064933
   math.randomseed(os.time())
 
   return math.random(low, high)
@@ -43,17 +42,16 @@ function M.rand_element(seq)
   return seq[idx]
 end
 
---- check if the current nvim version is compatible with the allowed version
+--- Check if the current neovim version is compatible with the allowed version
 --- @param expected_version string
 --- @return boolean
 function M.is_compatible_version(expected_version)
-  -- check if we have the latest stable version of nvim
   local expect_ver = version.parse(expected_version)
   local actual_ver = vim.version()
 
   if expect_ver == nil then
     local msg = string.format("Unsupported version string: %s", expected_version)
-    vim.api.nvim_err_writeln(msg)
+    vim.notify(msg, vim.log.levels.ERROR)
     return false
   end
 
@@ -65,7 +63,7 @@ function M.is_compatible_version(expected_version)
       expected_version,
       _ver
     )
-    vim.api.nvim_err_writeln(msg)
+    vim.notify(msg, vim.log.levels.ERROR)
   end
 
   return true
