@@ -41,7 +41,6 @@ make linux
 | `ghostty/` | Ghostty terminal config (macOS) |
 | `gitconfig` | Git config |
 | `DefaultKeyBinding.dict` | macOS system-wide keybindings (Emacs-style word movement) |
-| `slate` | Slate window manager config (macOS) |
 | `phoenix.js` | Phoenix window manager config (macOS) |
 | `bash/` | Bash config |
 | `gdb/`, `gdbinit` | GDB config and pretty-printers |

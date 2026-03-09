@@ -14,7 +14,7 @@ COMMON_SYMLINKS = $(DOTFILES) \
                   $(HOME)/.codex/skills/commit
 
 MAC_SYMLINKS = $(COMMON_SYMLINKS) \
-               $(HOME)/.tmux-osx.conf $(HOME)/.slate $(HOME)/.phoenix.js \
+               $(HOME)/.tmux-osx.conf $(HOME)/.phoenix.js \
                $(HOME)/.config/ghostty \
                $(HOME)/Library/KeyBindings/DefaultKeyBinding.dict
 
@@ -23,7 +23,7 @@ LINUX_SYMLINKS = $(COMMON_SYMLINKS) $(HOME)/.inputrc
 COMMON = $(DOTFILES) config nvim claude codex ssh-key tpm
 
 MAC_ONLY = ghostty keybindings $(HOME)/.tmux-osx.conf \
-           $(HOME)/.slate $(HOME)/.phoenix.js
+           $(HOME)/.phoenix.js
 
 MAC_ALL = $(COMMON) $(MAC_ONLY)
 
