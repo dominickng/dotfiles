@@ -47,6 +47,7 @@ make linux
 | `pythonrc.py` | Python REPL config |
 | `inputrc` | Readline config (Linux) |
 | `claude/` | Claude Code skills and config |
+| `codex/` | Codex skills and config |
 
 ## Makefile targets
 
