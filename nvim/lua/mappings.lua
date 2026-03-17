@@ -8,14 +8,30 @@ vim.keymap.set("i", "<C-t>", "<Esc>b~lea", { desc = "Titlecase word under cursor
 -- vim.keymap.set("n", "<leader>p", "m`o<ESC>p``", { desc = "Paste below current line" })
 -- vim.keymap.set("n", "<leader>P", "m`O<ESC>p``", { desc = "Paste above current line" })
 
-vim.keymap.set("i", "<S-Right>", "<C-o><cmd>tabnext<CR>",
-  { silent = true, noremap = true, desc = "Switch to next tab" })
-vim.keymap.set("i", "<S-Left>", "<C-o><cmd>tabprev<CR>",
-  { silent = true, noremap = true, desc = "Switch to previous tab" })
-vim.keymap.set({"n", "t"}, "<S-Right>", "<cmd>tabnext<CR>",
-  { silent = true, noremap = true, desc = "Switch to next tab" })
-vim.keymap.set({"n", "t"}, "<S-Left>", "<cmd>tabprev<CR>",
-  { silent = true, noremap = true, desc = "Switch to previous tab" })
+vim.keymap.set(
+  "i",
+  "<S-Right>",
+  "<C-o><cmd>tabnext<CR>",
+  { silent = true, noremap = true, desc = "Switch to next tab" }
+)
+vim.keymap.set(
+  "i",
+  "<S-Left>",
+  "<C-o><cmd>tabprev<CR>",
+  { silent = true, noremap = true, desc = "Switch to previous tab" }
+)
+vim.keymap.set(
+  { "n", "t" },
+  "<S-Right>",
+  "<cmd>tabnext<CR>",
+  { silent = true, noremap = true, desc = "Switch to next tab" }
+)
+vim.keymap.set(
+  { "n", "t" },
+  "<S-Left>",
+  "<cmd>tabprev<CR>",
+  { silent = true, noremap = true, desc = "Switch to previous tab" }
+)
 
 -- Make C-u and C-d centre after movement
 vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Centre cursor after moving down half-page" })
@@ -33,16 +49,24 @@ vim.keymap.set("x", "/", "<Esc>/\\%V", { silent = false, desc = "Search forward 
 vim.keymap.set("x", "?", "<Esc>?\\%V", { silent = false, desc = "Search backward inside visual selection" })
 
 -- Search and replace word under the cursor
-vim.keymap.set("n", "<Leader>re", [[:%s/\<<C-r><C-w>\>//g<Left><Left>]],
-  { desc = "Search and replace word under cursor" })
+vim.keymap.set(
+  "n",
+  "<Leader>re",
+  [[:%s/\<<C-r><C-w>\>//g<Left><Left>]],
+  { desc = "Search and replace word under cursor" }
+)
 
 -- select visual block after indent/unindent
 vim.keymap.set("v", "<", "<gv")
 vim.keymap.set("v", ">", ">gv")
 
 -- reselect pasted text
-vim.keymap.set("n", "gV", '"`[" . strpart(getregtype(), 0, 1) . "`]"',
-  { expr = true, replace_keycodes = false, desc = "Reselect pasted text" })
+vim.keymap.set(
+  "n",
+  "gV",
+  '"`[" . strpart(getregtype(), 0, 1) . "`]"',
+  { expr = true, replace_keycodes = false, desc = "Reselect pasted text" }
+)
 
 -- map Y to be consistent with D, C, etc
 vim.keymap.set("n", "Y", "y$")
@@ -101,11 +125,49 @@ cnoremap <C-w> <C-\>e(<SID>RemoveLastPathComponent())<CR>
 -- vim.keymap.set("n", "<leader>d", '"_d', { desc = "Delete and throw away" })
 -- vim.keymap.set("v", "<leader>d", '"_d', { desc = "Delete and throw away" })
 
+-- Resize terminal window width with Shift-Up/Down
+local terminal_width_steps = { 0.3, 0.4, 0.5 }
+local function resize_terminal(direction)
+  local win
+  for _, w in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+    if vim.bo[vim.api.nvim_win_get_buf(w)].buftype == "terminal" then
+      win = w
+      break
+    end
+  end
+  if not win then
+    return
+  end
+  local total = vim.o.columns
+  local cur = vim.api.nvim_win_get_width(win)
+  if direction > 0 then
+    for _, frac in ipairs(terminal_width_steps) do
+      if math.floor(frac * total) > cur + 1 then
+        vim.api.nvim_win_set_width(win, math.floor(frac * total))
+        return
+      end
+    end
+  else
+    for i = #terminal_width_steps, 1, -1 do
+      if math.floor(terminal_width_steps[i] * total) < cur - 1 then
+        vim.api.nvim_win_set_width(win, math.floor(terminal_width_steps[i] * total))
+        return
+      end
+    end
+  end
+end
+vim.keymap.set({ "n", "t" }, "<S-Up>", function() resize_terminal(1) end, { desc = "Increase terminal width" })
+vim.keymap.set({ "n", "t" }, "<S-Down>", function() resize_terminal(-1) end, { desc = "Decrease terminal width" })
+
 -- k and j don't skip lines in wrapped mode
 local mux_with_g = function(key)
   local gkey = "g" .. key
   return function()
-    if vim.v.count == 0 then return gkey else return key end
+    if vim.v.count == 0 then
+      return gkey
+    else
+      return key
+    end
   end
 end
 vim.keymap.set({ "n", "x" }, "j", mux_with_g("j"), { expr = true })
