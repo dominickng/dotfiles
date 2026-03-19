@@ -127,10 +127,10 @@ return {
       },
       autocommands = {
         basic = false,
-        relnum_in_visual_mode = false
-      }
+        relnum_in_visual_mode = false,
+      },
     },
-    version = false
+    version = false,
   },
 
   {
@@ -142,13 +142,13 @@ return {
       indent = { suffix = "" },
       oldfile = { suffix = "" },
     },
-    version = false
+    version = false,
   },
 
   {
     "nvim-mini/mini.clue",
     config = function()
-      local miniclue = require('mini.clue')
+      local miniclue = require("mini.clue")
       miniclue.setup({
         window = {
           config = { anchor = "SE", row = "auto", col = "auto", width = 60 },
@@ -203,7 +203,7 @@ return {
         },
       })
     end,
-    version = false
+    version = false,
   },
 
   {
@@ -255,7 +255,7 @@ return {
       vim.api.nvim_set_hl(0, "MiniCursorword", { italic = true, bg = "#2F4640" })
       vim.api.nvim_set_hl(0, "MiniCursorwordCurrent", { italic = true, bg = "#2F4640" })
     end,
-    version = false
+    version = false,
   },
 
   {
@@ -264,15 +264,15 @@ return {
       local hipatterns = require("mini.hipatterns")
       hipatterns.setup({
         highlighters = {
-          fixme     = { pattern = "%f[%w]()FIXME()%f[%W]", group = "MiniHipatternsFixme" },
-          hack      = { pattern = "%f[%w]()HACK()%f[%W]", group = "MiniHipatternsHack" },
-          todo      = { pattern = "%f[%w]()TODO()%f[%W]", group = "MiniHipatternsTodo" },
-          note      = { pattern = "%f[%w]()NOTE()%f[%W]", group = "MiniHipatternsNote" },
+          fixme = { pattern = "%f[%w]()FIXME()%f[%W]", group = "MiniHipatternsFixme" },
+          hack = { pattern = "%f[%w]()HACK()%f[%W]", group = "MiniHipatternsHack" },
+          todo = { pattern = "%f[%w]()TODO()%f[%W]", group = "MiniHipatternsTodo" },
+          note = { pattern = "%f[%w]()NOTE()%f[%W]", group = "MiniHipatternsNote" },
           hex_color = hipatterns.gen_highlighter.hex_color(),
-        }
+        },
       })
     end,
-    version = false
+    version = false,
   },
 
   {
@@ -280,16 +280,24 @@ return {
     config = function()
       require("mini.indentscope").setup({
         draw = {
-          animation = require("mini.indentscope").gen_animation.none()
-        }
+          animation = require("mini.indentscope").gen_animation.none(),
+        },
       })
     end,
-    version = false
+    version = false,
   },
 
   {
     "nvim-mini/mini.starter",
-    opts = {},
-    version = false
+    opts = function()
+      local starter = require("mini.starter")
+      return {
+        items = {
+          starter.sections.recent_files(10, true),
+          starter.sections.builtin_actions(),
+        },
+      }
+    end,
+    version = false,
   },
 }
