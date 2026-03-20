@@ -1,11 +1,21 @@
 return {
   mason = {
+    astro = {},
+
     bashls = {},
+
     clangd = {},
+
     cssls = {},
+
     gh_actions_ls = {},
+
     html = {},
+
     jsonls = {},
+
+    kotlin_lsp = {},
+
     lua_ls = {
       settings = {
         Lua = {
@@ -15,8 +25,13 @@ return {
         },
       },
     },
+
     pyright = {},
+
+    svelte = {},
+
     terraformls = {},
+
     -- ts_ls = {
     --   filetypes = {
     --     "typescript",
@@ -32,9 +47,9 @@ return {
     --     },
     --   },
     -- },
-    svelte = {},
-    astro = {},
+
     tsgo = {},
+
     vtsls = {
       root_markers = { "tsconfig.json", "package.json", "jsconfig.json", ".git" },
       settings = {
@@ -101,6 +116,7 @@ return {
         "vue",
       },
     },
+
     vue_ls = {
       typescript = {},
     },
