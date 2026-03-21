@@ -7,6 +7,11 @@
 # Files will be created by default rwx user only
 umask 0022
 
+# Explicitly set generic terminfo on Linux
+if [[ "$OSTYPE" == linux* && "$TERM" == "xterm-ghostty" && -z "$(toe -a 2>/dev/null | grep xterm-ghostty)" ]]; then
+	export TERM="xterm-256color"
+fi
+
 # General environment settings
 export IFS=$' \t\n'
 export PAGER="less"
