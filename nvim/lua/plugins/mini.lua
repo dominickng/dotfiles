@@ -155,31 +155,26 @@ return {
           delay = 750,
         },
         triggers = {
-          -- Leader triggers
-          { mode = "n", keys = "<leader>" },
-          { mode = "x", keys = "<leader>" },
+          { mode = { "n", "x" }, keys = "<leader>" },
 
           -- Built-in completion
           { mode = "i", keys = "<C-x>" },
 
           -- `g` key
-          { mode = "n", keys = "g" },
-          { mode = "x", keys = "g" },
+          { mode = { "n", "x" }, keys = "g" },
 
           -- Marks
-          { mode = "n", keys = "'" },
-          { mode = "n", keys = "`" },
-          { mode = "x", keys = "'" },
-          { mode = "x", keys = "`" },
+          { mode = { "n", "x" }, keys = "'" },
+          { mode = { "n", "x" }, keys = "`" },
 
           -- Registers
-          { mode = "n", keys = '"' },
-          { mode = "x", keys = '"' },
-          { mode = "i", keys = "<C-r>" },
-          { mode = "c", keys = "<C-r>" },
+          { mode = { "n", "x" }, keys = '"' },
+          { mode = { "i", "c" }, keys = "<C-r>" },
 
           -- Window commands
           { mode = "n", keys = "<C-w>" },
+
+          { mode = "n", keys = "|" },
 
           -- Movement comments
           { mode = "n", keys = "[" },
@@ -189,8 +184,7 @@ return {
           { mode = "n", keys = "<Bslash>" },
 
           -- `z` key
-          { mode = "n", keys = "z" },
-          { mode = "x", keys = "z" },
+          { mode = { "n", "x" }, keys = "z" },
         },
 
         clues = {
@@ -198,6 +192,7 @@ return {
           miniclue.gen_clues.g(),
           miniclue.gen_clues.marks(),
           miniclue.gen_clues.registers(),
+          miniclue.gen_clues.square_brackets(),
           miniclue.gen_clues.windows(),
           miniclue.gen_clues.z(),
         },
@@ -295,6 +290,21 @@ return {
         items = {
           starter.sections.recent_files(10, true),
           starter.sections.builtin_actions(),
+        },
+        content_hooks = {
+          function(content)
+            for l = #content, 1, -1 do
+              for _, unit in ipairs(content[l]) do
+                if unit.item and unit.item.name:find("COMMIT_EDITMSG", 1, true) then
+                  table.remove(content, l)
+                  break
+                end
+              end
+            end
+            return content
+          end,
+          starter.gen_hook.adding_bullet(),
+          starter.gen_hook.aligning("center", "center"),
         },
       }
     end,
