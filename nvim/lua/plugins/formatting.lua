@@ -29,8 +29,7 @@ return {
         end
 
         -- Disable "format_on_save lsp_fallback" for languages that don't
-        -- have a well standardized coding style. You can add additional
-        -- languages here or re-enable it for the disabled ones.
+        -- have a well standardized coding style.
         local disable_filetypes = {
           c = true,
           cpp = true,
@@ -52,9 +51,17 @@ return {
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
+        css = { "oxfmt", "prettier", "prettierd", stop_after_first = true },
+        graphql = { "oxfmt", "prettier", "prettierd", stop_after_first = true },
+        html = { "oxfmt", "prettier", "prettierd", stop_after_first = true },
         javascript = { "oxfmt", "prettier", "prettierd", stop_after_first = true },
+        json = { "oxfmt", "prettier", "prettierd", stop_after_first = true },
+        jsonc = { "oxfmt", "prettier", "prettierd", stop_after_first = true },
+        markdown = { "oxfmt", "prettier", "prettierd", stop_after_first = true },
+        scss = { "oxfmt", "prettier", "prettierd", stop_after_first = true },
         typescript = { "oxfmt", "prettier", "prettierd", stop_after_first = true },
         vue = { "oxfmt", "prettier", "prettierd", stop_after_first = true },
+        yaml = { "oxfmt", "prettier", "prettierd", stop_after_first = true },
       },
       default_format_opts = {
         lsp_format = "fallback",
@@ -82,3 +89,4 @@ return {
     end,
   },
 }
+
