@@ -49,9 +49,27 @@ bindkey '^[[3~' delete-char
 bindkey '^J' down-line-or-history
 bindkey '^K' up-line-or-history
 
-# Arrow keys for history search (matches full prefix up to cursor)
-bindkey '\e[A' history-beginning-search-backward
-bindkey '\e[B' history-beginning-search-forward
+# Arrow keys for history search (matches prefix, cursor at end of line)
+_history-search-backward-eol() {
+	if [[ $LASTWIDGET != _history-search-*-eol ]]; then
+		_HISTORY_SEARCH_CURSOR=$CURSOR
+	fi
+	CURSOR=$_HISTORY_SEARCH_CURSOR
+	zle history-beginning-search-backward
+	zle end-of-line
+}
+zle -N _history-search-backward-eol
+_history-search-forward-eol() {
+	if [[ $LASTWIDGET != _history-search-*-eol ]]; then
+		_HISTORY_SEARCH_CURSOR=$CURSOR
+	fi
+	CURSOR=$_HISTORY_SEARCH_CURSOR
+	zle history-beginning-search-forward
+	zle end-of-line
+}
+zle -N _history-search-forward-eol
+bindkey '\e[A' _history-search-backward-eol
+bindkey '\e[B' _history-search-forward-eol
 
 # Page up/down for history search
 bindkey '\e[5~' history-search-backward
