@@ -13,6 +13,9 @@ export GOPATH=$HOME/gocode
 alias tat='tmux attach -t'
 export TERM=xterm-256color
 
+# Pull in any local secrets
+ssource "$HOME/.secrets"
+
 if [ `uname` = 'Darwin' ]; then
 	alias top='top -s1 -F -R -o cpu'
 	# alias tmux='tmux -f ~/.tmux-osx.conf'

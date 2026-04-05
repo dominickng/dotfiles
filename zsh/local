@@ -12,6 +12,9 @@ export PYTHONSTARTUP=$HOME/.pythonrc.py
 export GOPATH=$HOME/gocode
 alias tat='tmux attach -t'
 
+# Pull in any local secrets
+ssource "${HOME}/.secrets"
+
 if [ $(uname) = 'Darwin' ]; then
 	alias top='top -s1 -F -R -o cpu'
 	alias ls='ls -G'
@@ -30,8 +33,6 @@ if [ $(uname) = 'Darwin' ]; then
 	pathappend "$HOME/.claude/local"
 	pathappend "$HOME/.local/share/nvim/lazy/fzf/bin"
 	export TEXINPUTS=".:.//:/usr/local/texlive/2023basic/texmf-dist/tex/latex//:/usr/local/texlive/2023basic/texmf-dist/tex/generic//:$HOME/working/reposs/tex//:"
-
-	ssource "${HOME}/.secrets"
 
 	# zsh completion
 	FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
