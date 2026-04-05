@@ -32,18 +32,22 @@ return {
 
           return {
             dials_by_ft = {
+              astro = "web",
               css = "css",
-              vue = "vue",
+              html = "web",
+              htmldjango = "web",
               javascript = "typescript",
-              typescript = "typescript",
-              typescriptreact = "typescript",
               javascriptreact = "typescript",
               json = "json",
               lua = "lua",
               markdown = "markdown",
+              python = "python",
               sass = "css",
               scss = "css",
-              python = "python",
+              svelte = "web",
+              typescript = "typescript",
+              typescriptreact = "typescript",
+              vue = "web",
             },
             groups = {
               default = {
@@ -56,7 +60,7 @@ return {
                 augend.constant.alias.bool,    -- boolean value (true <-> false)
                 logical_alias,
               },
-              vue = {
+              web = {
                 augend.constant.new({ elements = { "let", "const" } }),
                 augend.hexcolor.new({ case = "lower" }),
                 augend.hexcolor.new({ case = "upper" }),
@@ -239,8 +243,7 @@ return {
     "ruicsh/tailwindcss-dial.nvim",
     dependencies = { "monaqa/dial.nvim" },
     opts = {
-      -- group = "default", -- optional, defaults to "default"
-      ft = { "html", "vue" },
+      group = "web",
     },
   },
 
