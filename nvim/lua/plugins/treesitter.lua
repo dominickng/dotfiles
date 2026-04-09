@@ -269,10 +269,4 @@ return {
   {
     "RRethy/nvim-treesitter-endwise",
   },
-
-  {
-    "wurli/contextindent.nvim",
-    opts = { pattern = "*" },
-    dependencies = { "nvim-treesitter/nvim-treesitter" },
-  },
 }
