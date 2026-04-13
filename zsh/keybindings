@@ -69,7 +69,9 @@ _history-search-forward-eol() {
 }
 zle -N _history-search-forward-eol
 bindkey '\e[A' _history-search-backward-eol
+bindkey '\eOA' _history-search-backward-eol
 bindkey '\e[B' _history-search-forward-eol
+bindkey '\eOB' _history-search-forward-eol
 
 # Page up/down for history search
 bindkey '\e[5~' history-search-backward
