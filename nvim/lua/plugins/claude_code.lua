@@ -47,14 +47,22 @@ return {
         end
       end
 
+      -- Last observed width of the Claude window, captured as a fraction of
+      -- the editor's total columns whenever the window is about to disappear
+      -- (TabLeave or our toggle close). Reused on the next open so manual
+      -- resizes via <S-Up>/<S-Down> persist across tab switches and
+      -- hide/show cycles, while still adapting if the terminal emulator is
+      -- resized. Nil until first capture; first open falls back to 30%.
+      local last_width_frac = nil
+
       -- Open the Claude buffer as a right-side vertical split in the current
-      -- tab and force a consistent width. 30% matches the first step of the
-      -- <S-Up>/<S-Down> resize sequence in mappings.lua and claudecode.nvim's
-      -- own split_width_percentage default, so the initial width lines up
-      -- with the smallest manual resize step.
+      -- tab. Width preference: the most recently observed fraction, else
+      -- 30%. 30% matches the first step of the <S-Up>/<S-Down> resize
+      -- sequence in mappings.lua and claudecode.nvim's
+      -- split_width_percentage default.
       local function open_claude_here(bufnr)
         vim.cmd("vertical rightbelow sbuffer " .. bufnr)
-        vim.api.nvim_win_set_width(0, math.floor(vim.o.columns * 0.3))
+        vim.api.nvim_win_set_width(0, math.floor(vim.o.columns * (last_width_frac or 0.3)))
       end
 
       -- Custom toggle bound to <leader>cc. We bypass `:ClaudeCode` (whose
@@ -70,7 +78,8 @@ return {
         end
         local win = find_win_in_tab(bufnr, 0)
         if win then
-          -- Visible here → hide it.
+          -- Visible here → remember its width, then hide it.
+          last_width_frac = vim.api.nvim_win_get_width(win) / vim.o.columns
           vim.api.nvim_win_close(win, true)
         else
           -- Hidden (or visible only in another tab) → move it here.
@@ -92,7 +101,13 @@ return {
             drag_to_next_tab = false
             return
           end
-          drag_to_next_tab = find_win_in_tab(bufnr, 0) ~= nil
+          local win = find_win_in_tab(bufnr, 0)
+          if win then
+            last_width_frac = vim.api.nvim_win_get_width(win) / vim.o.columns
+            drag_to_next_tab = true
+          else
+            drag_to_next_tab = false
+          end
         end,
       })
 
