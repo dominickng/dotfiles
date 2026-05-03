@@ -94,8 +94,16 @@ return {
       -- we only drag it along if it was on screen when you left.
       local drag_to_next_tab = false
 
+      -- Tab page count snapshotted at TabLeave so TabEnter can detect
+      -- whether the entered tab is freshly created (`:tabe`, `:tabnew`,
+      -- `:tab split`) versus an existing tab the user is switching to.
+      -- We skip the drag for new tabs so opening a file in a new tab
+      -- doesn't immediately get a Claude split tagging along.
+      local tab_count_at_leave = nil
+
       vim.api.nvim_create_autocmd("TabLeave", {
         callback = function()
+          tab_count_at_leave = #vim.api.nvim_list_tabpages()
           local bufnr = get_claude_bufnr()
           if not bufnr or not vim.api.nvim_buf_is_valid(bufnr) then
             drag_to_next_tab = false
@@ -111,26 +119,65 @@ return {
         end,
       })
 
+      -- Drag Claude into the current tab if its buffer exists. Used by both
+      -- the regular and deferred (new-tab) branches of TabEnter. If a Claude
+      -- window already exists in the current tab (e.g. claudecode's own
+      -- diff setup added one at its default 30% width), resize it to our
+      -- remembered fraction so width stays consistent across moves. Focus
+      -- is restored to whichever window was current on entry, so tab
+      -- switches don't dump the cursor into the Claude split.
+      local function drag_claude_here()
+        local bufnr = get_claude_bufnr()
+        if not bufnr or not vim.api.nvim_buf_is_valid(bufnr) then
+          return
+        end
+        local prev_win = vim.api.nvim_get_current_win()
+        close_claude_in_other_tabs(bufnr)
+        local existing = find_win_in_tab(bufnr, 0)
+        if existing then
+          vim.api.nvim_win_set_width(existing, math.floor(vim.o.columns * (last_width_frac or 0.3)))
+        else
+          open_claude_here(bufnr)
+        end
+        if vim.api.nvim_win_is_valid(prev_win) and vim.api.nvim_get_current_win() ~= prev_win then
+          vim.api.nvim_set_current_win(prev_win)
+        end
+      end
+
       -- On tab switch, drag the Claude window into the new tab iff it was
-      -- visible when we left the previous tab. Combined with the per-tab
-      -- close above, this keeps exactly one Claude window pinned to the
-      -- active tab while still respecting an explicit hide.
-      -- Note: this also fires when the diff workflow opens its own tab,
-      -- giving you a 3-pane "original | proposed | claude" review layout.
+      -- visible when we left the previous tab. For new tabs (created by
+      -- `:tabe` etc) we normally skip the drag — except for diff tabs,
+      -- where we want the 3-pane "original | proposed | claude" review
+      -- layout. Diff tabs are detected by checking for the window-local
+      -- `diff` option, which claudecode sets via `:diffthis` after the tab
+      -- is created, so the check is deferred via vim.schedule to run after
+      -- the plugin's diff setup completes.
       vim.api.nvim_create_autocmd("TabEnter", {
         callback = function()
           if not drag_to_next_tab then
             return
           end
-          local bufnr = get_claude_bufnr()
-          if not bufnr or not vim.api.nvim_buf_is_valid(bufnr) then
+          local is_new_tab = tab_count_at_leave
+            and #vim.api.nvim_list_tabpages() > tab_count_at_leave
+          if not is_new_tab then
+            drag_claude_here()
             return
           end
-          if find_win_in_tab(bufnr, 0) then
-            return
-          end
-          close_claude_in_other_tabs(bufnr)
-          open_claude_here(bufnr)
+          local entered_tab = vim.api.nvim_get_current_tabpage()
+          vim.schedule(function()
+            if not vim.api.nvim_tabpage_is_valid(entered_tab) then
+              return
+            end
+            if vim.api.nvim_get_current_tabpage() ~= entered_tab then
+              return
+            end
+            for _, win in ipairs(vim.api.nvim_tabpage_list_wins(entered_tab)) do
+              if vim.wo[win].diff then
+                drag_claude_here()
+                return
+              end
+            end
+          end)
         end,
       })
     end,
