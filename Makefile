@@ -74,7 +74,7 @@ linux-packages:
 linux-nvim:
 	mkdir -p $(HOME)/.local/bin
 	curl -Lo $(HOME)/.local/bin/nvim \
-		https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage
+		https://github.com/neovim/neovim/releases/latest/download/nvim-linux-$$(uname -m | sed 's/aarch64/arm64/').appimage
 	chmod u+x $(HOME)/.local/bin/nvim
 
 linux-shell:
@@ -91,10 +91,10 @@ config:
 	mkdir -p ~/.config
 
 ssh-key:
-	@if [ ! -f $(HOME)/.ssh/id_rsa ]; then \
+	@if [ ! -f $(HOME)/.ssh/id_ed25519 ]; then \
 		mkdir -p $(HOME)/.ssh && chmod 700 $(HOME)/.ssh; \
-		ssh-keygen -t rsa -b 4096 -f $(HOME)/.ssh/id_rsa -N ""; \
-		echo "SSH key generated at $(HOME)/.ssh/id_rsa"; \
+		ssh-keygen -t ed25519 -f $(HOME)/.ssh/id_ed25519 -N ""; \
+		echo "SSH key generated at $(HOME)/.ssh/id_ed25519"; \
 	else \
 		echo "SSH key already exists, skipping"; \
 	fi

@@ -4,6 +4,18 @@ Personal dotfiles for macOS and Linux. Managed with `make`.
 
 ## Install
 
+On a brand-new Mac or Debian/Ubuntu machine, run (tries `curl`, falls back to
+`wget` — needs one of them present to fetch the script):
+
+```sh
+/bin/sh -c "$(curl -fsSL https://raw.githubusercontent.com/dominickng/dotfiles/main/bootstrap.sh || wget -qO- https://raw.githubusercontent.com/dominickng/dotfiles/main/bootstrap.sh)"
+```
+
+This installs prerequisites, helps you add an SSH key to GitHub, clones the repo
+to `~/dotfiles`, and runs `make`.
+
+Or do it manually:
+
 ```sh
 git clone <this repo> ~/dotfiles
 cd ~/dotfiles
