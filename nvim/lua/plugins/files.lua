@@ -12,10 +12,34 @@ return {
       end
     end,
     keys = {
-      { "<Bslash>l", function() require("nvim-possession").list() end, desc = "📌 [L]ist sessions", },
-      { "<Bslash>c", function() require("nvim-possession").new() end, desc = "📌 [C]reate session", },
-      { "<Bslash>s", function() require("nvim-possession").update() end, desc = "📌 [S]ave session", },
-      { "<Bslash>d", function() require("nvim-possession").delete() end, desc = "📌 [D]elete selected session" },
+      {
+        "<Bslash>l",
+        function()
+          require("nvim-possession").list()
+        end,
+        desc = "📌 [L]ist sessions",
+      },
+      {
+        "<Bslash>c",
+        function()
+          require("nvim-possession").new()
+        end,
+        desc = "📌 [C]reate session",
+      },
+      {
+        "<Bslash>s",
+        function()
+          require("nvim-possession").update()
+        end,
+        desc = "📌 [S]ave session",
+      },
+      {
+        "<Bslash>d",
+        function()
+          require("nvim-possession").delete()
+        end,
+        desc = "📌 [D]elete selected session",
+      },
     },
   },
 
@@ -28,7 +52,7 @@ return {
       },
       {
         "junegunn/fzf",
-        build = "./install --all"
+        build = "./install --all",
       },
       {
         "nvim-tree/nvim-web-devicons",
@@ -48,6 +72,7 @@ return {
       { "<Bslash>gw" },
       { "<Bslash>gW" },
       { "<Bslash>dc" },
+      { "@", mode = { "i" } },
       { "<C-x><C-f>", mode = { "n", "v", "i" } },
       { "gd" },
       { "gR" },
@@ -63,7 +88,7 @@ return {
 
       local OutType = {
         OPEN = {},
-        NEW_TAB = {}
+        NEW_TAB = {},
       }
 
       -- fzf action which switches to the selected file if it's already open
@@ -95,10 +120,10 @@ return {
           files = {
             true, -- inherit defaults
             ["enter"] = function(selected, opts)
-              switch_or_drop(selected, opts, OutType.OPEN);
+              switch_or_drop(selected, opts, OutType.OPEN)
             end,
             ["ctrl-t"] = function(selected, opts)
-              switch_or_drop(selected, opts, OutType.NEW_TAB);
+              switch_or_drop(selected, opts, OutType.NEW_TAB)
             end,
             ["ctrl-v"] = function(selected, opts)
               switch_or_fallback(selected, opts, fzf.actions.file_vsplit)
@@ -110,11 +135,15 @@ return {
         },
         files = {
           fd_opts = [[--color=never --hidden --type f --type l --ignore-file ]]
-              .. vim.fn.stdpath("config") .. "/lua/plugins/fd-ignore",
+            .. vim.fn.stdpath("config")
+            .. "/lua/plugins/fd-ignore",
         },
         grep = {
           rg_opts = "--column --line-number --no-heading --color=always --smart-case --max-columns=4096"
-            .. " --ignore-file=" .. vim.fn.stdpath("config") .. "/lua/plugins/rg-ignore" .. " -e",
+            .. " --ignore-file="
+            .. vim.fn.stdpath("config")
+            .. "/lua/plugins/rg-ignore"
+            .. " -e",
         },
         keymap = {
           builtin = {
@@ -134,7 +163,11 @@ return {
       })
 
       vim.keymap.set("n", "<Bslash>f", function()
-        require("fzf-lua-frecency").frecency({ display_score = true, cwd_only = true, fzf_opts = { ["--no-sort"] = false } })
+        require("fzf-lua-frecency").frecency({
+          display_score = true,
+          cwd_only = true,
+          fzf_opts = { ["--no-sort"] = false },
+        })
       end, { desc = "FZF [F]iles by Frecency" })
       vim.keymap.set("n", "<Bslash>p", function()
         fzf.global()
@@ -174,6 +207,10 @@ return {
         fzf.dap_configurations()
       end, { desc = "[D]ebugging [C]onfigurations" })
 
+      -- vim.keymap.set("i", "@", function()
+      --   fzf.complete_path()
+      -- end, { silent = true })
+
       -- vim.keymap.set({ "i" }, "<C-x><C-f>",
       --   function()
       --     fzf.complete_file({
@@ -181,11 +218,9 @@ return {
       --       winopts = { preview = { hidden = true } }
       --     })
       --   end, { silent = true, desc = "Fuzzy complete file" })
-      vim.keymap.set({ "n", "v", "i" }, "<C-x><C-f>",
-        function()
-          fzf.complete_path()
-        end,
-        { silent = true, desc = "Fuzzy complete path" })
+      vim.keymap.set({ "n", "v", "i" }, "<C-x><C-f>", function()
+        fzf.complete_path()
+      end, { silent = true, desc = "Fuzzy complete path" })
 
       -- Ctrl-R <reg> pastes contents of a register into fzf-lua window
       local autogrp = vim.api.nvim_create_augroup("FZF", { clear = true })
@@ -193,8 +228,12 @@ return {
         pattern = "fzf",
         group = autogrp,
         callback = function()
-          vim.api.nvim_set_keymap("t", "<C-r>", "getreg(nr2char(getchar()))",
-            { noremap = true, expr = true, silent = true })
+          vim.api.nvim_set_keymap(
+            "t",
+            "<C-r>",
+            "getreg(nr2char(getchar()))",
+            { noremap = true, expr = true, silent = true }
+          )
         end,
       })
     end,
