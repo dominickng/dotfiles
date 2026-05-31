@@ -57,6 +57,7 @@ homebrew:
 
 packages: homebrew
 	PATH=/opt/homebrew/bin:$(PATH) brew bundle --file=$(CURDIR)/Brewfile
+	mkdir -p $(HOME)/.nvm
 
 # Linux bootstrap chain
 
