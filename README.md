@@ -70,8 +70,13 @@ make linux
 | `make linux` | Full Linux setup |
 | `make nvim` | Symlink Neovim config only |
 | `make ghostty` | Symlink Ghostty config only (macOS) |
+| `make fonts` | Install the Monaco Nerd Font (macOS) |
 | `make keybindings` | Symlink `DefaultKeyBinding.dict` (macOS) |
-| `make tpm` | Install tmux plugin manager |
+| `make tpm` | Install tmux plugin manager and its plugins |
 | `make claude` | Symlink Claude config and install claude CLI |
 | `make ssh-key` | Generate SSH key if one doesn't exist |
+| `make macos` | Apply macOS system defaults (not run by `make mac`) |
 | `make unlink` | Remove symlinks |
+
+`make macos` is intentionally separate from `make mac` — it changes system
+preferences and restarts Finder/Dock.

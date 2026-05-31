@@ -91,6 +91,32 @@ fi
 log "Running make (installs packages, neovim, and symlinks configs)"
 make -C "$DOTFILES_DIR"
 
+# macOS App Store apps. mas can no longer sign in from the CLI (Apple removed
+# that), so open the App Store, wait for the user to sign in, then install.
+if [ "$OS" = "Darwin" ] && command -v mas >/dev/null 2>&1; then
+  mas_apps="1615798039 1569813296"  # ReadKit, 1Password for Safari
+  attempt=0
+  while ! mas account >/dev/null 2>&1; do
+    attempt=$((attempt + 1))
+    if [ "$attempt" -ge 3 ]; then
+      log "Not signed in to the App Store — skipping. Install later with:"
+      echo "      mas install $mas_apps"
+      mas_apps=""
+      break
+    fi
+    log "Sign in to the App Store to install ReadKit and 1Password for Safari"
+    open -a "App Store" || true
+    printf '    Press Enter once signed in (or to retry)... '
+    read -r _
+  done
+  if [ -n "$mas_apps" ]; then
+    log "Installing App Store apps (ReadKit, 1Password for Safari)"
+    # word-split is intentional: mas install takes multiple ids
+    # shellcheck disable=SC2086
+    mas install $mas_apps || true
+  fi
+fi
+
 # Verify SSH and switch the remote to SSH
 verify_ssh() {
   ssh -o StrictHostKeyChecking=accept-new -T git@github.com 2>&1 \

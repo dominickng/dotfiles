@@ -22,7 +22,7 @@ LINUX_SYMLINKS = $(COMMON_SYMLINKS) $(HOME)/.inputrc
 
 COMMON = $(DOTFILES) config nvim claude codex ssh-key tpm
 
-MAC_ONLY = ghostty keybindings $(HOME)/.tmux-osx.conf \
+MAC_ONLY = ghostty keybindings fonts $(HOME)/.tmux-osx.conf \
            $(HOME)/.phoenix.js
 
 MAC_ALL = $(COMMON) $(MAC_ONLY)
@@ -31,7 +31,7 @@ LINUX_ALL = $(COMMON) $(HOME)/.inputrc
 
 .PHONY: all mac linux linux-bootstrap linux-packages linux-nvim linux-shell \
 	ssh-key unlink destroy tpm vimplugins nvim ghostty claude codex keybindings \
-	xcode homebrew packages mac-bootstrap config
+	xcode homebrew packages mac-bootstrap config fonts macos
 
 all:
 ifeq ($(OS),Darwin)
@@ -104,12 +104,26 @@ tpm:
 		mkdir -p ~/.tmux/plugins && \
 		git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm; \
 	fi
+	$(HOME)/.tmux/plugins/tpm/bin/install_plugins || true
 
 nvim: config
 	$(SYMLINK) $(CURDIR)/nvim ~/.config/nvim
 
 ghostty: config
 	$(SYMLINK) $(CURDIR)/ghostty ~/.config/ghostty
+
+# Monaco Nerd Font (used by the Ghostty config). Monaco is Apple-proprietary so
+# it can't ship as a Homebrew cask; pull the patched build from its release.
+fonts:
+	@if ls $(HOME)/Library/Fonts/MonacoNerdFont-*.ttf >/dev/null 2>&1; then \
+		echo "Monaco Nerd Font already installed"; \
+	else \
+		tmp=$$(mktemp -d); \
+		curl -fsSL -o $$tmp/font.zip https://github.com/thep0y/monaco-nerd-font/releases/latest/download/MonacoNerdFont.zip; \
+		unzip -o -q $$tmp/font.zip -d $(HOME)/Library/Fonts; \
+		rm -rf $$tmp; \
+		echo "Monaco Nerd Font installed"; \
+	fi
 
 keybindings:
 	mkdir -p $(HOME)/Library/KeyBindings
@@ -125,6 +139,37 @@ codex:
 	mkdir -p $(HOME)/.codex/skills
 	$(SYMLINK) $(CURDIR)/codex/AGENTS.md $(HOME)/.codex/AGENTS.md
 	$(SYMLINK) $(CURDIR)/claude/commit $(HOME)/.codex/skills/commit
+
+# macOS system defaults. Not part of `make mac` - run explicitly with
+# `make macos`. Some keyboard changes only take effect after re-login.
+
+macos:
+	# Keyboard: fast key repeat, enable repeat in editors, no auto text munging
+	defaults write -g KeyRepeat -int 2
+	defaults write -g InitialKeyRepeat -int 15
+	defaults write -g ApplePressAndHoldEnabled -bool false
+	defaults write -g NSAutomaticCapitalizationEnabled -bool false
+	defaults write -g NSAutomaticPeriodSubstitutionEnabled -bool false
+	defaults write -g NSAutomaticQuoteSubstitutionEnabled -bool false
+	defaults write -g NSAutomaticDashSubstitutionEnabled -bool false
+	defaults write -g NSAutomaticSpellingCorrectionEnabled -bool false
+	# Finder: path/status bars, column view, search the current folder
+	defaults write com.apple.finder ShowPathbar -bool true
+	defaults write com.apple.finder ShowStatusBar -bool true
+	defaults write com.apple.finder FXPreferredViewStyle -string clmv
+	defaults write com.apple.finder FXDefaultSearchScope -string SCcf
+	# Dock: small icons, left, no recents, no autohide
+	defaults write com.apple.dock tilesize -int 25
+	defaults write com.apple.dock orientation -string left
+	defaults write com.apple.dock show-recents -bool false
+	defaults write com.apple.dock autohide -bool false
+	# Screenshots: save PNGs without window shadow to ~/Screenshots
+	mkdir -p $(HOME)/Screenshots
+	defaults write com.apple.screencapture location -string "$(HOME)/Screenshots"
+	defaults write com.apple.screencapture type -string png
+	defaults write com.apple.screencapture disable-shadow -bool true
+	killall Finder Dock SystemUIServer || true
+	@echo "Some keyboard changes take effect after you log out and back in."
 
 # Maintenance
 
