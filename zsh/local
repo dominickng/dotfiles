@@ -35,7 +35,8 @@ if [ $(uname) = 'Darwin' ]; then
 	export TEXINPUTS=".:.//:/usr/local/texlive/2023basic/texmf-dist/tex/latex//:/usr/local/texlive/2023basic/texmf-dist/tex/generic//:$HOME/working/reposs/tex//:"
 
 	# zsh completion
-	FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+	HOMEBREW_PREFIX="$(brew --prefix)"
+	FPATH="$HOMEBREW_PREFIX/share/zsh/site-functions:${FPATH}"
 	autoload -Uz compinit
 	if [[ -n "${ZDOTDIR:-}" ]]; then
 		if [[ -f "${ZDOTDIR}/.zcompdump" ]]; then
@@ -50,6 +51,10 @@ if [ $(uname) = 'Darwin' ]; then
 			compinit -d "${HOME}/.zcompdump"
 		fi
 	fi
+
+	export NVM_DIR="$HOME/.nvm"
+	[ -s "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" ] && \. "$HOMEBREW_PREFIX/opt/nvm/nvm.sh"
+	[ -s "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm"
 else
 	alias ls='ls --color=auto'
 	alias fd='fdfind'
