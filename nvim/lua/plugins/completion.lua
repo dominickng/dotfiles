@@ -2,9 +2,9 @@ return {
   {
     "saghen/blink.cmp",
     dependencies = {
-      {
-        "fang2hou/blink-copilot",
-      },
+      -- {
+      --   "fang2hou/blink-copilot",
+      -- },
       {
         "folke/lazydev.nvim",
       },
@@ -30,17 +30,17 @@ return {
         "xzbdmw/colorful-menu.nvim",
         opts = {}
       },
-      {
-        "zbirenbaum/copilot.lua",
-        cmd = "Copilot",
-        event = "InsertEnter",
-        config = function()
-          require("copilot").setup({
-            suggestion = { enabled = false },
-            panel = { enabled = false },
-          })
-        end
-      },
+      -- {
+      --   "zbirenbaum/copilot.lua",
+      --   cmd = "Copilot",
+      --   event = "InsertEnter",
+      --   config = function()
+      --     require("copilot").setup({
+      --       suggestion = { enabled = false },
+      --       panel = { enabled = false },
+      --     })
+      --   end
+      -- },
     },
     event = "InsertEnter",
     version = "1.*",
@@ -185,17 +185,18 @@ return {
           if success and node and vim.tbl_contains({ "comment", "line_comment", "block_comment" }, node:type()) then
             return { "buffer", "emoji" }
           else
-            return { "lsp", "copilot", "path", "snippets" }
+            -- return { "lsp", "copilot", "path", "snippets" }
+            return { "lsp", "path", "snippets" }
           end
         end,
 
         providers = {
-          copilot = {
-            name = "copilot",
-            module = "blink-copilot",
-            score_offset = 10,
-            async = true,
-          },
+          -- copilot = {
+          --   name = "copilot",
+          --   module = "blink-copilot",
+          --   score_offset = 10,
+          --   async = true,
+          -- },
           cmdline = {
             min_keyword_length = function(ctx)
               if string.find(ctx.line, " ") == nil then
