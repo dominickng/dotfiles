@@ -15,7 +15,7 @@ brew "zsh-syntax-highlighting"
 brew "mas"
 
 # Casks
-cask "aquarium"
+cask "zimengxiong/tools/aquarium"
 cask "codex"
 cask "phoenix"
 cask "qlvideo"
