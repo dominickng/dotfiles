@@ -1,0 +1,14 @@
+#!/bin/bash
+# Sandvault shim for `swift`. SwiftPM's build sandbox can't nest inside
+# sandvault's own sandbox, so disable the inner sandbox for build-like
+# subcommands when running inside a sandvault ($SANDVAULT set). Outside a
+# sandvault this is a transparent passthrough to the real swift.
+
+args=()
+case "${1:-}" in
+	build|test|run|package)
+		[ -n "${SANDVAULT:-}" ] && args+=(--disable-sandbox)
+		;;
+esac
+
+exec /usr/bin/swift "$@" "${args[@]}"

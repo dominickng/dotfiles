@@ -1,8 +1,9 @@
 
 OS := $(shell uname -s)
 SYMLINK := ln -sfn
+SANDVAULT_HOME := /Users/Shared/sv-$(USER)/user
 
-DOTFILES = $(HOME)/.zsh $(HOME)/.zshrc \
+DOTFILES = $(HOME)/.zsh $(HOME)/.zshrc $(HOME)/.zshenv \
            $(HOME)/.pythonrc.py $(HOME)/.vim $(HOME)/.vimrc \
            $(HOME)/.tmux.conf \
            $(HOME)/.gdb $(HOME)/.gdbinit $(HOME)/.gitconfig
@@ -31,7 +32,7 @@ LINUX_ALL = $(COMMON) $(HOME)/.inputrc
 
 .PHONY: all mac linux linux-bootstrap linux-packages linux-nvim linux-shell \
 	ssh-key unlink destroy tpm vimplugins nvim ghostty claude codex keybindings \
-	xcode homebrew packages mac-bootstrap config fonts macos
+	xcode homebrew packages mac-bootstrap config fonts macos sandvault
 
 all:
 ifeq ($(OS),Darwin)
@@ -171,6 +172,30 @@ macos:
 	defaults write com.apple.screencapture disable-shadow -bool true
 	killall Finder Dock SystemUIServer || true
 	@echo "Some keyboard changes take effect after you log out and back in."
+
+# Copy selected dotfiles into the Sandvault guest home so sandboxed agents
+# inherit Dom's config. Copies (not symlinks) because the repo isn't visible
+# inside the sandbox. Opt-in: run `make sandvault`; no-op if sandvault is absent.
+
+sandvault:
+	@command -v sv >/dev/null 2>&1 || { echo "sandvault (sv) not installed, skipping"; exit 0; }
+	mkdir -p $(SANDVAULT_HOME)/.zsh \
+	         $(SANDVAULT_HOME)/.claude/skills \
+	         $(SANDVAULT_HOME)/.codex/skills \
+	         $(SANDVAULT_HOME)/.config \
+	         $(SANDVAULT_HOME)/.sandvault/bin
+	rsync -a  $(CURDIR)/sandvault/bin/   $(SANDVAULT_HOME)/.sandvault/bin/
+	rsync -a  $(CURDIR)/zshrc            $(SANDVAULT_HOME)/.zshrc
+	rsync -a  $(CURDIR)/zshenv           $(SANDVAULT_HOME)/.zshenv
+	rsync -a  $(CURDIR)/zsh/             $(SANDVAULT_HOME)/.zsh/
+	rsync -a  $(CURDIR)/gitconfig        $(SANDVAULT_HOME)/.gitconfig
+	rsync -a  $(CURDIR)/pythonrc.py      $(SANDVAULT_HOME)/.pythonrc.py
+	rsync -a  $(CURDIR)/tmux.conf        $(SANDVAULT_HOME)/.tmux.conf
+	rsync -a  $(CURDIR)/nvim/            $(SANDVAULT_HOME)/.config/nvim/
+	rsync -aL $(CURDIR)/claude/CLAUDE.md $(SANDVAULT_HOME)/.claude/CLAUDE.md
+	rsync -a  $(CURDIR)/claude/commit/   $(SANDVAULT_HOME)/.claude/skills/commit/
+	rsync -aL $(CURDIR)/claude/CLAUDE.md $(SANDVAULT_HOME)/.codex/AGENTS.md
+	rsync -a  $(CURDIR)/claude/commit/   $(SANDVAULT_HOME)/.codex/skills/commit/
 
 # Maintenance
 

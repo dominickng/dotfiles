@@ -1,0 +1,17 @@
+#!/bin/bash
+# Sandvault shim for `xcodebuild`. xcodebuild drives swift/SwiftPM, whose build
+# sandbox can't nest inside sandvault's own sandbox. When running inside a
+# sandvault ($SANDVAULT set) disable the nested manifest/package sandboxes.
+# Outside a sandvault this is a transparent passthrough to the real xcodebuild.
+
+args=()
+if [ -n "${SANDVAULT:-}" ]; then
+	export SWIFTPM_DISABLE_SANDBOX=1
+	export SWIFT_BUILD_USE_SANDBOX=0
+	args+=(-IDEPackageSupportDisableManifestSandbox=1)
+	args+=(-IDEPackageSupportDisablePackageSandbox=1)
+	# shellcheck disable=SC2016 # $(inherited) is xcodebuild syntax, not shell
+	args+=('OTHER_SWIFT_FLAGS=$(inherited) -disable-sandbox')
+fi
+
+exec /usr/bin/xcodebuild "$@" "${args[@]}"

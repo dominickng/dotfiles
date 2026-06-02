@@ -32,6 +32,8 @@ if [ $(uname) = 'Darwin' ]; then
 	pathappend "$HOME/.local/bin"
 	pathappend "$HOME/.claude/local"
 	pathappend "$HOME/.local/share/nvim/lazy/fzf/bin"
+	# Sandvault swift/xcodebuild shims must win even after the PATH reset above
+	[ -n "${SANDVAULT}" ] && pathprepend "$HOME/.sandvault/bin"
 	export TEXINPUTS=".:.//:/usr/local/texlive/2023basic/texmf-dist/tex/latex//:/usr/local/texlive/2023basic/texmf-dist/tex/generic//:$HOME/working/reposs/tex//:"
 
 	# zsh completion

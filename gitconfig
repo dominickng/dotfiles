@@ -69,3 +69,5 @@
 	conflictstyle = zdiff3
 [pull]
 	rebase = true
+[safe]
+	directory = /Users/Shared/sv-dom/working/*

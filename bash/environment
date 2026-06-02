@@ -7,6 +7,9 @@
 # Files will be created by default rwx user only
 umask 0022
 
+# Flag when we're running inside a Sandvault sandbox (user is sandvault-<name>)
+[ "${USER:0:9}" = "sandvault" ] && export SANDVAULT=1
+
 # General environment settings
 export IFS=$' \t\n'
 export PAGER="less"

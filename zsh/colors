@@ -46,9 +46,19 @@ local DARK=1
 # Set the prompt colour, and the colors for the 'ls' command
 if [ ${PS1_COLOR:-0} -eq 1 ]; then
 	export GREP_COLOR='0;31'
+
+	# Username/host colour — yellow inside a Sandvault to flag the sandbox
+	if [ -n "${SANDVAULT}" ]; then
+		local USERCOLOR=$YELLOW
+	elif [ $(uname) = 'Darwin' ]; then
+		local USERCOLOR=$PURPLE
+	else
+		local USERCOLOR=$LIGHTGREEN
+	fi
+
 	if [ $(uname) != 'Darwin' ]; then
 		eval $(dircolors 2> /dev/null)
-		PS1="${LIGHTCYAN}%D{%d %b} %*${OFF} ${LIGHTGREEN}%n@%m${OFF} ${LIGHTPURPLE}%1~${OFF}\$ "
+		PS1="${LIGHTCYAN}%D{%d %b} %*${OFF} ${USERCOLOR}%n@%m${OFF} ${LIGHTPURPLE}%1~${OFF}\$ "
 
 		if [ ${DARK} -ne 0 ]; then
 		# We need to bold the PS1 environment variables
@@ -56,7 +66,7 @@ if [ ${PS1_COLOR:-0} -eq 1 ]; then
 			PS1="$(echo "${PS1}" | sed 's/00;/01;/g')"
 		fi
 	else
-		PS1="${LIGHTCYAN}%D{%d %b} %*${OFF} ${PURPLE}%n@%m${OFF} ${LIGHTBLUE}%1~${OFF}\$ "
+		PS1="${LIGHTCYAN}%D{%d %b} %*${OFF} ${USERCOLOR}%n@%m${OFF} ${LIGHTBLUE}%1~${OFF}\$ "
 	fi
 
 	if [ $(uname) = 'Darwin' ]; then
