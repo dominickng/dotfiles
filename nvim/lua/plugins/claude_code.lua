@@ -183,8 +183,7 @@ return {
     end,
     opts = {
       diff_opts = {
-        auto_close_on_accept = true,
-        vertical_split = true,
+        layout = "vertical",
         open_in_new_tab = true,
         keep_terminal_focus = false,
       },
