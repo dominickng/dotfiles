@@ -6,179 +6,10 @@ return {
     config = function(_, opts)
       require("codex").setup(opts)
 
-      -- Sticky-terminal logic: neovim windows are tab-local, so by default the
-      -- Codex split lives only in the tab where it's opened. Enforce a
-      -- "single window that follows the active tab" model by managing the
-      -- window and ignoring snacks' internal `terminal.win` tracking
-      -- (which only ever points at one window and gets confused across tabs).
-
-      -- Pull the buffer id from snacks' provider. Returns nil if the terminal
-      -- has never been opened or has been wiped.
-      local function get_codex_bufnr()
-        local ok, provider = pcall(require, "codex.terminal.snacks")
-        if not ok then
-          return nil
-        end
-        return provider.get_active_bufnr()
-      end
-
-      -- Find the window in `tabpage` displaying `bufnr`, if any. Pass 0 for
-      -- the current tab.
-      local function find_win_in_tab(bufnr, tabpage)
-        for _, win in ipairs(vim.api.nvim_tabpage_list_wins(tabpage)) do
-          if vim.api.nvim_win_get_buf(win) == bufnr then
-            return win
-          end
-        end
-        return nil
-      end
-
-      -- Tear down stale Codex windows in every tab except the current one,
-      -- so the terminal is only ever visible in one place at a time. This is
-      -- what makes it feel like the same window "moves" with you.
-      local function close_codex_in_other_tabs(bufnr)
-        local current = vim.api.nvim_get_current_tabpage()
-        for _, tab in ipairs(vim.api.nvim_list_tabpages()) do
-          if tab ~= current then
-            local win = find_win_in_tab(bufnr, tab)
-            if win then
-              vim.api.nvim_win_close(win, true)
-            end
-          end
-        end
-      end
-
-      -- Last observed width of the Codex window, captured as a fraction of
-      -- the editor's total columns whenever the window is about to disappear
-      -- (TabLeave or our toggle close). Reused on the next open so manual
-      -- resizes via <S-Up>/<S-Down> persist across tab switches and
-      -- hide/show cycles, while still adapting if the terminal emulator is
-      -- resized. Nil until first capture; first open falls back to 30%.
-      local last_width_frac = nil
-
-      -- Open the Codex buffer as a right-side vertical split in the current
-      -- tab. Width preference: the most recently observed fraction, else
-      -- 30%. 30% matches the first step of the <S-Up>/<S-Down> resize
-      -- sequence in mappings.lua and codex.nvim's
-      -- split_width_percentage default.
-      local function open_codex_here(bufnr)
-        vim.cmd("vertical rightbelow sbuffer " .. bufnr)
-        vim.api.nvim_win_set_width(0, math.floor(vim.o.columns * (last_width_frac or 0.3)))
-      end
-
-      -- Custom toggle bound to <leader>cd. We bypass `:Codex` (whose
-      -- toggle relies on snacks' single tracked win id) and instead operate
-      -- on whichever window in the current tab shows the Codex buffer.
-      vim.api.nvim_create_user_command("CodexStickyToggle", function()
-        local bufnr = get_codex_bufnr()
-        -- No terminal yet — fall back to the plugin's bootstrap path so it
-        -- spawns the Codex process and creates the buffer.
-        if not bufnr or not vim.api.nvim_buf_is_valid(bufnr) then
-          vim.cmd("Codex")
-          return
-        end
-        local win = find_win_in_tab(bufnr, 0)
-        if win then
-          -- Visible here → remember its width, then hide it.
-          last_width_frac = vim.api.nvim_win_get_width(win) / vim.o.columns
-          vim.api.nvim_win_close(win, true)
-        else
-          -- Hidden (or visible only in another tab) → move it here.
-          close_codex_in_other_tabs(bufnr)
-          open_codex_here(bufnr)
-        end
-      end, {})
-
-      -- "Should the terminal follow me on the next tab switch?" derived from
-      -- whether Codex was visible in the tab we're leaving. This means
-      -- hiding Codex with <leader>cd keeps it hidden across tab switches —
-      -- we only drag it along if it was on screen when you left.
-      local drag_to_next_tab = false
-
-      -- Tab page count snapshotted at TabLeave so TabEnter can detect
-      -- whether the entered tab is freshly created (`:tabe`, `:tabnew`,
-      -- `:tab split`) versus an existing tab the user is switching to.
-      -- We skip the drag for new tabs so opening a file in a new tab
-      -- doesn't immediately get a Codex split tagging along.
-      local tab_count_at_leave = nil
-
-      vim.api.nvim_create_autocmd("TabLeave", {
-        callback = function()
-          tab_count_at_leave = #vim.api.nvim_list_tabpages()
-          local bufnr = get_codex_bufnr()
-          if not bufnr or not vim.api.nvim_buf_is_valid(bufnr) then
-            drag_to_next_tab = false
-            return
-          end
-          local win = find_win_in_tab(bufnr, 0)
-          if win then
-            last_width_frac = vim.api.nvim_win_get_width(win) / vim.o.columns
-            drag_to_next_tab = true
-          else
-            drag_to_next_tab = false
-          end
-        end,
-      })
-
-      -- Drag Codex into the current tab if its buffer exists. Used by both
-      -- the regular and deferred (new-tab) branches of TabEnter. If a Codex
-      -- window already exists in the current tab (e.g. codex.nvim's own
-      -- diff setup added one at its default 30% width), resize it to our
-      -- remembered fraction so width stays consistent across moves. Focus
-      -- is restored to whichever window was current on entry, so tab
-      -- switches don't dump the cursor into the Codex split.
-      local function drag_codex_here()
-        local bufnr = get_codex_bufnr()
-        if not bufnr or not vim.api.nvim_buf_is_valid(bufnr) then
-          return
-        end
-        local prev_win = vim.api.nvim_get_current_win()
-        close_codex_in_other_tabs(bufnr)
-        local existing = find_win_in_tab(bufnr, 0)
-        if existing then
-          vim.api.nvim_win_set_width(existing, math.floor(vim.o.columns * (last_width_frac or 0.3)))
-        else
-          open_codex_here(bufnr)
-        end
-        if vim.api.nvim_win_is_valid(prev_win) and vim.api.nvim_get_current_win() ~= prev_win then
-          vim.api.nvim_set_current_win(prev_win)
-        end
-      end
-
-      -- On tab switch, drag the Codex window into the new tab iff it was
-      -- visible when we left the previous tab. For new tabs (created by
-      -- `:tabe` etc) we normally skip the drag — except for diff tabs,
-      -- where we want the 3-pane "original | proposed | codex" review
-      -- layout. Diff tabs are detected by checking for the window-local
-      -- `diff` option, which codex.nvim sets via `:diffthis` after the tab
-      -- is created, so the check is deferred via vim.schedule to run after
-      -- the plugin's diff setup completes.
-      vim.api.nvim_create_autocmd("TabEnter", {
-        callback = function()
-          if not drag_to_next_tab then
-            return
-          end
-          local is_new_tab = tab_count_at_leave and #vim.api.nvim_list_tabpages() > tab_count_at_leave
-          if not is_new_tab then
-            drag_codex_here()
-            return
-          end
-          local entered_tab = vim.api.nvim_get_current_tabpage()
-          vim.schedule(function()
-            if not vim.api.nvim_tabpage_is_valid(entered_tab) then
-              return
-            end
-            if vim.api.nvim_get_current_tabpage() ~= entered_tab then
-              return
-            end
-            for _, win in ipairs(vim.api.nvim_tabpage_list_wins(entered_tab)) do
-              if vim.wo[win].diff then
-                drag_codex_here()
-                return
-              end
-            end
-          end)
-        end,
+      require("sticky_terminal").setup({
+        command = "CodexStickyToggle",
+        bootstrap_command = "Codex",
+        provider = "codex.terminal.snacks",
       })
     end,
     opts = {
@@ -194,10 +25,9 @@ return {
       },
     },
     keys = {
-      { "<leader>cd",  "<cmd>CodexStickyToggle<cr>", desc = "Codex: Toggle" },
-      { "<leader>cdf", "<cmd>CodexFocus<cr>",        desc = "Codex: Focus" },
-      { "<leader>cds", "<cmd>CodexSend<cr>",         mode = "v",            desc = "Codex: Send selection" },
+      { "<leader>cd", "<cmd>CodexStickyToggle<cr>", desc = "Codex: Toggle" },
+      { "<leader>cdf", "<cmd>CodexFocus<cr>", desc = "Codex: Focus" },
+      { "<leader>cds", "<cmd>CodexSend<cr>", mode = "v", desc = "Codex: Send selection" },
     },
   },
 }
-
