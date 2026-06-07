@@ -158,8 +158,7 @@ return {
           if not drag_to_next_tab then
             return
           end
-          local is_new_tab = tab_count_at_leave
-            and #vim.api.nvim_list_tabpages() > tab_count_at_leave
+          local is_new_tab = tab_count_at_leave and #vim.api.nvim_list_tabpages() > tab_count_at_leave
           if not is_new_tab then
             drag_codex_here()
             return
@@ -189,6 +188,10 @@ return {
         keep_terminal_focus = false,
       },
       terminal_cmd = "/opt/homebrew/bin/codex",
+      env = {
+        ENABLE_IDE_INTEGRATION = "true",
+        CODEX_CODE_SSE_PORT = "12345",
+      },
     },
     keys = {
       { "<leader>cd",  "<cmd>CodexStickyToggle<cr>", desc = "Codex: Toggle" },
@@ -197,3 +200,4 @@ return {
     },
   },
 }
+
