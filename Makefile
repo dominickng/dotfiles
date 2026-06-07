@@ -194,7 +194,7 @@ sandvault:
 	rsync -a  $(CURDIR)/nvim/            $(SANDVAULT_HOME)/.config/nvim/
 	rsync -aL $(CURDIR)/claude/CLAUDE.md $(SANDVAULT_HOME)/.claude/CLAUDE.md
 	rsync -a  $(CURDIR)/claude/commit/   $(SANDVAULT_HOME)/.claude/skills/commit/
-	rsync -aL $(CURDIR)/claude/CLAUDE.md $(SANDVAULT_HOME)/.codex/AGENTS.md
+	rsync -aL $(CURDIR)/codex/AGENTS.md $(SANDVAULT_HOME)/.codex/AGENTS.md
 	rsync -a  $(CURDIR)/claude/commit/   $(SANDVAULT_HOME)/.codex/skills/commit/
 
 # Maintenance
