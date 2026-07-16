@@ -3,6 +3,15 @@ OS := $(shell uname -s)
 SYMLINK := ln -sfn
 SANDVAULT_HOME := /Users/Shared/sv-$(USER)/user
 
+# Git identity. Written to the untracked ~/.gitconfig.local that the tracked
+# gitconfig includes. Prompted for interactively during make; skip the prompt
+# by passing them, e.g. make GIT_NAME="Jane Doe" GIT_EMAIL="jane@example.com"
+# An email without an @ is treated as a GitHub username and expanded to
+# <username>@$(GIT_NOREPLY).
+GIT_NAME    ?=
+GIT_EMAIL   ?=
+GIT_NOREPLY ?= users.noreply.github.com
+
 DOTFILES = $(HOME)/.zsh $(HOME)/.zshrc $(HOME)/.zshenv \
            $(HOME)/.pythonrc.py $(HOME)/.vim $(HOME)/.vimrc \
            $(HOME)/.tmux.conf \
@@ -21,7 +30,7 @@ MAC_SYMLINKS = $(COMMON_SYMLINKS) \
 
 LINUX_SYMLINKS = $(COMMON_SYMLINKS) $(HOME)/.inputrc
 
-COMMON = $(DOTFILES) config nvim claude codex ssh-key tpm
+COMMON = $(DOTFILES) config nvim claude codex ssh-key tpm git-identity
 
 MAC_ONLY = ghostty keybindings fonts $(HOME)/.tmux-osx.conf \
            $(HOME)/.phoenix.js
@@ -32,7 +41,8 @@ LINUX_ALL = $(COMMON) $(HOME)/.inputrc
 
 .PHONY: all mac linux linux-bootstrap linux-packages linux-nvim linux-shell \
 	ssh-key unlink destroy tpm vimplugins nvim ghostty claude codex keybindings \
-	xcode homebrew packages mac-bootstrap config fonts macos sandvault
+	xcode homebrew packages mac-bootstrap config fonts macos sandvault \
+	git-identity
 
 all:
 ifeq ($(OS),Darwin)
@@ -91,6 +101,23 @@ linux-shell:
 
 config:
 	mkdir -p ~/.config
+
+# Write the git identity to ~/.gitconfig.local (included by the tracked
+# gitconfig). Prompts for name/email unless passed as GIT_NAME/GIT_EMAIL.
+# Skips if the file already exists so re-runs don't clobber a machine-specific
+# identity. Force a rewrite with `rm ~/.gitconfig.local`.
+git-identity:
+	@if [ -f $(HOME)/.gitconfig.local ]; then \
+		echo "~/.gitconfig.local exists, skipping (rm it to regenerate)"; \
+	else \
+		name="$(GIT_NAME)"; email="$(GIT_EMAIL)"; \
+		[ -n "$$name" ]  || { printf 'Git user name: ';  read name; }; \
+		[ -n "$$email" ] || { printf 'Git user email or GitHub username: '; read email; }; \
+		case "$$email" in ''|*@*) ;; *) email="$$email@$(GIT_NOREPLY)";; esac; \
+		printf '[user]\n\tname = %s\n\temail = %s\n' \
+			"$$name" "$$email" > $(HOME)/.gitconfig.local; \
+		echo "Wrote git identity ($$name <$$email>) to ~/.gitconfig.local"; \
+	fi
 
 ssh-key:
 	@if [ ! -f $(HOME)/.ssh/id_ed25519 ]; then \
@@ -174,7 +201,7 @@ macos:
 	@echo "Some keyboard changes take effect after you log out and back in."
 
 # Copy selected dotfiles into the Sandvault guest home so sandboxed agents
-# inherit Dom's config. Copies (not symlinks) because the repo isn't visible
+# inherit the config. Copies (not symlinks) because the repo isn't visible
 # inside the sandbox. Opt-in: run `make sandvault`; no-op if sandvault is absent.
 
 sandvault:
@@ -189,6 +216,8 @@ sandvault:
 	rsync -a  $(CURDIR)/zshenv           $(SANDVAULT_HOME)/.zshenv
 	rsync -a  $(CURDIR)/zsh/             $(SANDVAULT_HOME)/.zsh/
 	rsync -a  $(CURDIR)/gitconfig        $(SANDVAULT_HOME)/.gitconfig
+	@[ -f $(HOME)/.gitconfig.local ] && rsync -a $(HOME)/.gitconfig.local $(SANDVAULT_HOME)/.gitconfig.local \
+		|| echo "no ~/.gitconfig.local yet; run 'make git-identity' first for a sandbox git identity"
 	rsync -a  $(CURDIR)/pythonrc.py      $(SANDVAULT_HOME)/.pythonrc.py
 	rsync -a  $(CURDIR)/tmux.conf        $(SANDVAULT_HOME)/.tmux.conf
 	rsync -a  $(CURDIR)/nvim/            $(SANDVAULT_HOME)/.config/nvim/
