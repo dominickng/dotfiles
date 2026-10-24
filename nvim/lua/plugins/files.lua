@@ -54,9 +54,6 @@ return {
         "junegunn/fzf",
         build = "./install --all",
       },
-      {
-        "nvim-tree/nvim-web-devicons",
-      },
     },
     keys = {
       { "<Bslash>f" },
@@ -131,7 +128,12 @@ return {
             ["ctrl-s"] = function(selected, opts)
               switch_or_fallback(selected, opts, fzf.actions.file_split)
             end,
+            ["ctrl-q"] = { fn = fzf.actions.file_sel_to_qf, prefix = "select-all" },
           },
+        },
+        fzf_opts = {
+          ["--no-sort"] = false,
+          ["--history"] = vim.fn.stdpath("data") .. "/fzf-lua-history",
         },
         files = {
           fd_opts = [[--color=never --hidden --type f --type l --ignore-file ]]
@@ -155,6 +157,10 @@ return {
             true,
             ["ctrl-k"] = "preview-page-up",
             ["ctrl-j"] = "preview-page-down",
+            ["ctrl-p"] = "up",
+            ["ctrl-n"] = "down",
+            ["up"] = "prev-history",
+            ["down"] = "next-history",
           },
         },
         oldfiles = {
@@ -166,7 +172,6 @@ return {
         require("fzf-lua-frecency").frecency({
           display_score = true,
           cwd_only = true,
-          fzf_opts = { ["--no-sort"] = false },
         })
       end, { desc = "FZF [F]iles by Frecency" })
       vim.keymap.set("n", "<Bslash>p", function()

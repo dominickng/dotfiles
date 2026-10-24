@@ -33,69 +33,6 @@ return {
       {
         "WhoIsSethDaniel/mason-tool-installer.nvim",
       },
-      {
-        "nvimdev/lspsaga.nvim",
-        event = "LspAttach",
-        opts = {
-          definition = {
-            keys = {
-              vsplit = "<C-v>",
-              split = "<C-s>",
-              tabe = "<C-t>",
-            },
-          },
-          diagnostic = {
-            auto_preview = true,
-            extend_relatedInformation = true,
-          },
-          lightbulb = {
-            enable = false,
-            virtual_text = false,
-          },
-          outline = {
-            win_position = "left",
-          },
-          scroll_preview = {
-            scroll_down = "<C-j>",
-            scroll_up = "<C-k>",
-          },
-          symbol_in_winbar = {
-            enable = true,
-          },
-        },
-        dependencies = {
-          "nvim-treesitter/nvim-treesitter",
-          "nvim-tree/nvim-web-devicons",
-        },
-      },
-      {
-        "rachartier/tiny-code-action.nvim",
-        dependencies = {
-          { "nvim-lua/plenary.nvim" },
-        },
-        event = "LspAttach",
-        opts = {
-          picker = "buffer",
-          opts = {
-            hotkeys = true,
-            hotkeys_mode = function(titles, used_hotkeys)
-              local t = {}
-              for i = 1, #titles do
-                t[i] = tostring(i)
-              end
-              return t
-            end,
-            auto_preview = true,
-            auto_accept = false,
-            position = "cursor",
-            winborder = "single",
-            custom_keys = {
-              { key = "m", pattern = "Fill match arms" },
-              { key = "r", pattern = "Rename.*" },
-            },
-          },
-        },
-      },
     },
     config = function()
       vim.api.nvim_create_autocmd("LspAttach", {
@@ -106,17 +43,19 @@ return {
             vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
           end
 
-          -- Jump to the definition of the word under your cursor.
-          --  This is where a variable was first declared, or where a function is defined, etc.
-          --  To jump back, press <C-t>.
-          local fzf = require("fzf-lua")
-          map("gd", "<cmd>Lspsaga peek_definition<CR>", "[G]oto [D]efinition")
+          map("gd", function()
+            require("lspeek").peek_definition()
+          end, "[G]oto [D]efinition")
+          map("gT", function()
+            require("lspeek").peek_type_definition()
+          end, "[G]oto [Type] Definition")
 
           -- map("K", "<cmd>lua vim.lsp.buf.hover()<CR>", "Pee[K]")
           map("K", function()
             require("pretty_hover").hover()
           end, "Pee[K]")
 
+          local fzf = require("fzf-lua")
           -- Find references for the word under your cursor.
           map("gR", fzf.lsp_references, "[G]oto [R]eferences")
 
@@ -132,13 +71,9 @@ return {
           map("<leader>ds", fzf.lsp_document_symbols, "[D]ocument [S]ymbols")
           map("<leader>ws", fzf.lsp_live_workspace_symbols, "[W]orkspace [S]ymbols")
 
-          -- map("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
-          map("<leader>rn", "<cmd>Lspsaga rename<CR>", "[R]e[n]ame")
-
-          map("<leader>do", "<cmd>Lspsaga outline<CR>", "Show [D]ocument [O]utline", { "n", "x", "o" })
+          map("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
 
           -- map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction", { "n", "x" })
-          -- map("<leader>ca", "<cmd>Lspsaga code_action<CR>", "[C]ode [A]ction", { "n", "x" })
           map("<leader>aa", function()
             require("tiny-code-action").code_action()
           end, "Code [A]ction", { "n", "x" })
@@ -147,8 +82,6 @@ return {
           map("<leader>ao", fzf.lsp_outgoing_calls, "[A]ll [O]utgoing Calls", { "n", "x" })
 
           -- Jump through diagnostics
-          -- map("]d", "<cmd>Lspsaga diagnostic_jump_next<CR>", "Go to next [D]iagnostic", { "n", "x" })
-          -- map("[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>", "Go to previous [D]iagnostic", { "n", "x" })
           map("<leader>df", vim.diagnostic.open_float, "Open [D]iagnostics [F]loat")
 
           -- WARN: This is not Goto Definition, this is Goto Declaration.
@@ -222,6 +155,84 @@ return {
 
       require("lsp.xcode").setup()
     end,
+  },
+
+  {
+    "rachartier/tiny-code-action.nvim",
+    dependencies = {
+      { "nvim-lua/plenary.nvim" },
+    },
+    event = "LspAttach",
+    opts = {
+      picker = "buffer",
+      opts = {
+        hotkeys = true,
+        hotkeys_mode = function(titles, used_hotkeys)
+          local t = {}
+          for i = 1, #titles do
+            t[i] = tostring(i)
+          end
+          return t
+        end,
+        auto_preview = true,
+        auto_accept = false,
+        position = "cursor",
+        winborder = "single",
+        custom_keys = {
+          { key = "m", pattern = "Fill match arms" },
+          { key = "r", pattern = "Rename.*" },
+        },
+      },
+    },
+  },
+
+  {
+    "r4ppz/lspeek.nvim",
+    opts = {
+      window = {
+        width = 110,
+        height = 40,
+        border = "single", -- double | rounded | solid | shadow
+        win_opts = {
+          number = true,
+        },
+      },
+
+      stack_limit = 5,
+
+      select_first = false,
+
+      -- Keymaps available inside the preview window.
+      keymaps = {
+        close = "q",
+        split = "<C-s>",
+        vsplit = "<C-v>",
+        enter = "<CR>",
+        tab = "<C-t>",
+        prev = "[",
+        next = "]",
+      },
+    },
+
+    -- Keymaps call the Lua API. Alternatively, use user commands:
+    -- :LSPeekDef      -> Peek Definition
+    -- :LSPeekTypeDef  -> Peek Type Definition
+    keys = {
+      {
+        "gD",
+        function()
+          require("lspeek").peek_definition()
+        end,
+        desc = "Peek Definition (lspeek)",
+      },
+      {
+        "gT",
+        function()
+          require("lspeek").peek_type_definition()
+        end,
+        desc = "Peek Type Definition (lspeek)",
+      },
+    },
   },
 
   {

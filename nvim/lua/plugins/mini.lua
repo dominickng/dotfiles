@@ -271,6 +271,14 @@ return {
   },
 
   {
+    "nvim-mini/mini.icons",
+    config = function()
+      require("mini.icons").setup()
+    end,
+    version = false,
+  },
+
+  {
     "nvim-mini/mini.indentscope",
     config = function()
       require("mini.indentscope").setup({
