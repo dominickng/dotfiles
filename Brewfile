@@ -15,7 +15,6 @@ brew "zsh-syntax-highlighting"
 brew "mas"
 
 # Casks
-cask "zimengxiong/tools/aquarium"
 cask "codex"
 cask "phoenix"
 cask "qlvideo"
@@ -25,3 +24,5 @@ cask "google-drive"
 cask "ghostty"
 cask "scroll-reverser"
 cask "slack"
+cask "betterdisplay"
+cask "pearcleaner"
