@@ -12,3 +12,4 @@ copy-on-select = both
 macos-option-as-alt = true
 link-osc8 = true
 selection-clear-on-copy = false
+macos-titlebar-style = native
