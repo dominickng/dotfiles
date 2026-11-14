@@ -33,7 +33,7 @@ LINUX_SYMLINKS = $(COMMON_SYMLINKS) $(HOME)/.inputrc
 COMMON = $(DOTFILES) config nvim claude codex ssh-key tpm git-identity
 
 MAC_ONLY = ghostty keybindings fonts $(HOME)/.tmux-osx.conf \
-           $(HOME)/.phoenix.js
+           $(HOME)/.phoenix.js macos
 
 MAC_ALL = $(COMMON) $(MAC_ONLY)
 
@@ -169,9 +169,6 @@ codex:
 	$(SYMLINK) $(CURDIR)/codex/AGENTS.md $(HOME)/.codex/AGENTS.md
 	$(SYMLINK) $(CURDIR)/claude/commit $(HOME)/.codex/skills/commit
 
-# macOS system defaults. Not part of `make mac` - run explicitly with
-# `make macos`. Some keyboard changes only take effect after re-login.
-
 macos:
 	# Keyboard: fast key repeat, enable repeat in editors, no auto text munging
 	defaults write -g KeyRepeat -int 2
@@ -188,17 +185,42 @@ macos:
 	defaults write com.apple.finder FXPreferredViewStyle -string clmv
 	defaults write com.apple.finder FXDefaultSearchScope -string SCcf
 	# Dock: small icons, left, no recents, no autohide
-	defaults write com.apple.dock tilesize -int 25
+	defaults write com.apple.dock tilesize -int 27
 	defaults write com.apple.dock orientation -string left
 	defaults write com.apple.dock show-recents -bool false
 	defaults write com.apple.dock autohide -bool false
+	# Desktop: hide widgets
+	defaults write com.apple.WindowManager StandardHideWidgets -bool true
 	# Screenshots: save PNGs without window shadow to ~/Screenshots
 	mkdir -p $(HOME)/Screenshots
 	defaults write com.apple.screencapture location -string "$(HOME)/Screenshots"
 	defaults write com.apple.screencapture type -string png
 	defaults write com.apple.screencapture disable-shadow -bool true
-	killall Finder Dock SystemUIServer || true
-	@echo "Some keyboard changes take effect after you log out and back in."
+	# Scroll bars: always shown, clicking jumps to the clicked spot
+	defaults write -g AppleShowScrollBars -string Always
+	defaults write -g AppleScrollerPagingBehavior -bool true
+	# Trackpad: tap to click, two-finger click/tap for secondary click
+	defaults write com.apple.AppleMultitouchTrackpad Clicking -bool true
+	defaults write com.apple.AppleMultitouchTrackpad TrackpadRightClick -bool true
+	defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+	defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadRightClick -bool true
+	defaults -currentHost write -g com.apple.mouse.tapBehavior -int 1
+	defaults -currentHost write -g com.apple.trackpad.enableSecondaryClick -bool true
+	# Mouse speed
+	defaults write -g com.apple.mouse.scaling -float 2
+	# Hot corners: TL Mission Control, BL Desktop, BR App Windows
+	defaults write com.apple.dock wvous-tl-corner -int 2
+	defaults write com.apple.dock wvous-tl-modifier -int 0
+	defaults write com.apple.dock wvous-bl-corner -int 4
+	defaults write com.apple.dock wvous-bl-modifier -int 0
+	defaults write com.apple.dock wvous-br-corner -int 3
+	defaults write com.apple.dock wvous-br-modifier -int 0
+	# Menu bar: 24-hour clock without AM/PM, battery percentage
+	defaults write -g AppleICUForce24HourTime -bool true
+	defaults write com.apple.menuextra.clock ShowAMPM -bool false
+	defaults -currentHost write com.apple.controlcenter BatteryShowPercentage -bool true
+	killall Finder Dock SystemUIServer ControlCenter || true
+	@echo "Some keyboard and trackpad changes take effect after you log out and back in."
 
 # Copy selected dotfiles into the Sandvault guest home so sandboxed agents
 # inherit the config. Copies (not symlinks) because the repo isn't visible
