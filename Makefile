@@ -103,11 +103,13 @@ linux-packages-apt:
 # node, npm and chsh are requested by path because their package names vary
 # by release (e.g. nodejs24 on Amazon Linux 2027, chsh in util-linux-user vs
 # util-linux). curl is skipped if present: Amazon Linux ships curl-minimal,
-# which conflicts with the full curl package.
+# which conflicts with the full curl package. glibc-langpack-en provides the
+# en_US.UTF-8 locale that the nvim config sets (minimal images lack it).
 linux-packages-dnf:
 	sudo dnf install -y \
 		zsh git tmux wget gcc gcc-c++ make tar gzip \
-		python3 python3-pip /usr/bin/node /usr/bin/npm /usr/bin/chsh
+		python3 python3-pip /usr/bin/node /usr/bin/npm /usr/bin/chsh \
+		glibc-langpack-en
 	command -v curl >/dev/null 2>&1 || sudo dnf install -y curl
 	@command -v gh >/dev/null 2>&1 || { \
 		sudo curl -fsSL -o /etc/yum.repos.d/gh-cli.repo \
