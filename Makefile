@@ -100,12 +100,14 @@ linux-packages-apt:
 			| sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null && \
 		sudo apt-get update && sudo apt-get install -y gh; }
 
-# curl is skipped if present: Amazon Linux ships curl-minimal, which conflicts
-# with the full curl package. util-linux-user provides chsh.
+# node, npm and chsh are requested by path because their package names vary
+# by release (e.g. nodejs24 on Amazon Linux 2027, chsh in util-linux-user vs
+# util-linux). curl is skipped if present: Amazon Linux ships curl-minimal,
+# which conflicts with the full curl package.
 linux-packages-dnf:
 	sudo dnf install -y \
 		zsh git tmux wget gcc gcc-c++ make tar gzip \
-		python3 python3-pip nodejs npm util-linux-user
+		python3 python3-pip /usr/bin/node /usr/bin/npm /usr/bin/chsh
 	command -v curl >/dev/null 2>&1 || sudo dnf install -y curl
 	@command -v gh >/dev/null 2>&1 || { \
 		sudo curl -fsSL -o /etc/yum.repos.d/gh-cli.repo \
