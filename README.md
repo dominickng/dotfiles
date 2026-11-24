@@ -4,7 +4,7 @@ Personal dotfiles for macOS and Linux. Managed with `make`.
 
 ## Install
 
-On a brand-new Mac or Debian/Ubuntu machine, run (tries `curl`, falls back to
+On a brand-new Mac, Debian/Ubuntu, or Amazon Linux 2023/Fedora machine, run (tries `curl`, falls back to
 `wget` — needs one of them present to fetch the script):
 
 ```sh
@@ -33,10 +33,12 @@ symlinks everything:
 make mac
 ```
 
-### Linux (Ubuntu/Debian)
+### Linux (Debian/Ubuntu, Amazon Linux 2023/Fedora)
 
-Installs packages via `apt`, downloads the latest Neovim AppImage, and
-symlinks everything:
+Installs packages via `apt` or `dnf` (including `gh` from GitHub's package
+repo), downloads the latest Neovim release to `~/.local/nvim`, and symlinks
+everything. On `dnf` systems, `ripgrep`, `fd`, and `zsh-syntax-highlighting`
+aren't packaged, so they're fetched into `~/.local` instead:
 
 ```sh
 make linux

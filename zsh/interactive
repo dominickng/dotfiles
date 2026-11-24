@@ -18,5 +18,6 @@ ssource ${HOME}/.zsh/local
 if [ $(uname) = 'Darwin' ]; then
 	ssource "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 else
-	ssource /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+	ssource /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh || \
+		ssource "${HOME}/.local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 fi

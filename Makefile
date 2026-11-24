@@ -1,5 +1,8 @@
 
 OS := $(shell uname -s)
+# Linux package manager: apt (Debian/Ubuntu) or dnf (Amazon Linux 2023/Fedora)
+PKG := $(shell command -v apt-get >/dev/null 2>&1 && echo apt || \
+         { command -v dnf >/dev/null 2>&1 && echo dnf; })
 SYMLINK := ln -sfn
 SANDVAULT_HOME := /Users/Shared/sv-$(USER)/user
 
@@ -39,7 +42,8 @@ MAC_ALL = $(COMMON) $(MAC_ONLY)
 
 LINUX_ALL = $(COMMON) $(HOME)/.inputrc
 
-.PHONY: all mac linux linux-bootstrap linux-packages linux-nvim linux-shell \
+.PHONY: all mac linux linux-bootstrap linux-packages linux-packages-apt \
+	linux-packages-dnf linux-packages- linux-extras linux-nvim linux-shell \
 	ssh-key unlink destroy tpm vimplugins nvim ghostty claude codex keybindings \
 	xcode homebrew packages mac-bootstrap config fonts macos sandvault \
 	git-identity
@@ -63,7 +67,7 @@ xcode:
 	xcode-select --install || true
 
 homebrew:
-	@which brew > /dev/null 2>&1 || \
+	@command -v brew > /dev/null 2>&1 || \
 		/bin/bash -c "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 packages: homebrew
@@ -74,24 +78,67 @@ packages: homebrew
 
 linux-bootstrap: linux-packages linux-nvim linux-shell
 
-linux-packages:
+linux-packages: linux-packages-$(PKG)
+
+linux-packages-:
+	@echo "No supported package manager found (need apt-get or dnf)" >&2; exit 1
+
+linux-packages-apt:
 	sudo apt-get update
 	sudo apt-get install -y \
 		zsh git tmux curl wget build-essential \
 		fd-find ripgrep python3 python3-pip nodejs npm \
 		zsh-syntax-highlighting
 	mkdir -p $(HOME)/.local/bin
-	ln -sf $$(which fdfind) $(HOME)/.local/bin/fd || true
+	ln -sf $$(command -v fdfind) $(HOME)/.local/bin/fd || true
+	@command -v gh >/dev/null 2>&1 || { \
+		sudo mkdir -p -m 755 /etc/apt/keyrings && \
+		curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg \
+			| sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg >/dev/null && \
+		sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg && \
+		echo "deb [arch=$$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" \
+			| sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null && \
+		sudo apt-get update && sudo apt-get install -y gh; }
+
+# curl is skipped if present: Amazon Linux ships curl-minimal, which conflicts
+# with the full curl package. util-linux-user provides chsh.
+linux-packages-dnf:
+	sudo dnf install -y \
+		zsh git tmux wget gcc gcc-c++ make tar gzip \
+		python3 python3-pip nodejs npm util-linux-user
+	command -v curl >/dev/null 2>&1 || sudo dnf install -y curl
+	@command -v gh >/dev/null 2>&1 || { \
+		sudo curl -fsSL -o /etc/yum.repos.d/gh-cli.repo \
+			https://cli.github.com/packages/rpm/gh-cli.repo && \
+		sudo dnf install -y gh; }
+	$(MAKE) linux-extras
+
+# ripgrep, fd and zsh-syntax-highlighting aren't packaged for Amazon Linux
+# 2023 (and it has no EPEL), so fetch them directly.
+linux-extras:
+	mkdir -p $(HOME)/.local/bin
+	@command -v rg >/dev/null 2>&1 || { \
+		tag=$$(curl -fsSLI -o /dev/null -w '%{url_effective}' https://github.com/BurntSushi/ripgrep/releases/latest | sed 's|.*/||'); \
+		curl -fsSL https://github.com/BurntSushi/ripgrep/releases/download/$$tag/ripgrep-$$tag-$$(uname -m)-unknown-linux-musl.tar.gz \
+			| tar -xz -C $(HOME)/.local/bin --strip-components=1 --wildcards '*/rg'; }
+	@command -v fd >/dev/null 2>&1 || { \
+		tag=$$(curl -fsSLI -o /dev/null -w '%{url_effective}' https://github.com/sharkdp/fd/releases/latest | sed 's|.*/||'); \
+		curl -fsSL https://github.com/sharkdp/fd/releases/download/$$tag/fd-$$tag-$$(uname -m)-unknown-linux-musl.tar.gz \
+			| tar -xz -C $(HOME)/.local/bin --strip-components=1 --wildcards '*/fd'; }
+	@[ -d $(HOME)/.local/share/zsh-syntax-highlighting ] || \
+		git clone --depth 1 https://github.com/zsh-users/zsh-syntax-highlighting \
+			$(HOME)/.local/share/zsh-syntax-highlighting
 
 linux-nvim:
 	mkdir -p $(HOME)/.local/bin
-	curl -Lo $(HOME)/.local/bin/nvim \
-		https://github.com/neovim/neovim/releases/latest/download/nvim-linux-$$(uname -m | sed 's/aarch64/arm64/').appimage
-	chmod u+x $(HOME)/.local/bin/nvim
+	rm -rf $(HOME)/.local/nvim && mkdir -p $(HOME)/.local/nvim
+	curl -fsSL https://github.com/neovim/neovim/releases/latest/download/nvim-linux-$$(uname -m | sed 's/aarch64/arm64/').tar.gz \
+		| tar -xz -C $(HOME)/.local/nvim --strip-components=1
+	ln -sf $(HOME)/.local/nvim/bin/nvim $(HOME)/.local/bin/nvim
 
 linux-shell:
-	@if [ "$${SHELL}" != "$$(which zsh)" ]; then \
-		chsh -s $$(which zsh); \
+	@if [ "$${SHELL}" != "$$(command -v zsh)" ]; then \
+		sudo chsh -s $$(command -v zsh) $(USER); \
 		echo "Default shell set to zsh - re-login to take effect"; \
 	else \
 		echo "zsh is already the default shell"; \
@@ -162,7 +209,7 @@ claude:
 	mkdir -p $(HOME)/.claude/skills
 	$(SYMLINK) $(CURDIR)/claude/CLAUDE.md $(HOME)/.claude/CLAUDE.md
 	$(SYMLINK) $(CURDIR)/claude/commit $(HOME)/.claude/skills/commit
-	@which claude > /dev/null 2>&1 || curl -fsSL https://claude.ai/install.sh | bash
+	@command -v claude > /dev/null 2>&1 || curl -fsSL https://claude.ai/install.sh | bash
 
 codex:
 	mkdir -p $(HOME)/.codex/skills

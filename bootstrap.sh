@@ -1,6 +1,7 @@
 #!/bin/sh
 #
-# Bootstrap a brand-new Mac or Debian/Ubuntu machine with these dotfiles.
+# Bootstrap a brand-new Mac, Debian/Ubuntu, or Amazon Linux 2023/Fedora machine
+# with these dotfiles.
 #
 # Run on a fresh machine with (tries curl, falls back to wget):
 #
@@ -45,9 +46,19 @@ install_prereqs_mac() {
 }
 
 install_prereqs_linux() {
-  log "Installing prerequisites (git, curl) via apt"
-  sudo apt-get update
-  sudo apt-get install -y git curl
+  if command -v apt-get >/dev/null 2>&1; then
+    log "Installing prerequisites (git, curl, make) via apt"
+    sudo apt-get update
+    sudo apt-get install -y git curl make openssh-client
+  elif command -v dnf >/dev/null 2>&1; then
+    log "Installing prerequisites (git, curl, make) via dnf"
+    sudo dnf install -y git make openssh-clients
+    # Amazon Linux ships curl-minimal, which conflicts with the curl package
+    command -v curl >/dev/null 2>&1 || sudo dnf install -y curl
+  else
+    echo "No supported package manager found (need apt-get or dnf)" >&2
+    exit 1
+  fi
 }
 
 if [ "$OS" = "Darwin" ]; then
