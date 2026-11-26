@@ -48,7 +48,7 @@ return {
     --   },
     -- },
 
-    tsgo = {},
+    tsc = {},
 
     vtsls = {
       root_markers = { "tsconfig.json", "package.json", "jsconfig.json", ".git" },
